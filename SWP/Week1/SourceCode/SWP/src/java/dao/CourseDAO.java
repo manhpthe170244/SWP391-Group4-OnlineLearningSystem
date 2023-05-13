@@ -18,11 +18,11 @@ import dal.DBConnect;
  *
  * @author ACER
  */
-public class CourseDAO extends DBConnect {
+public class CourseDAO extends MyDAO {
 
     public int addCourse(Course course) {
         int n = 0;
-        String sql = "INSERT INTO [dbo].[Course]\n"
+        xSql = "INSERT INTO [dbo].[Course]\n"
                 + "           ([course_id]\n"
                 + "           ,[course_name]\n"
                 + "           ,[course_title]\n"
@@ -38,21 +38,21 @@ public class CourseDAO extends DBConnect {
                 + "           ,[course_status])\n"
                 + "     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ";
         try {
-            PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, course.getCourse_id());
-            pre.setString(2, course.getCourse_name());
-            pre.setString(3, course.getCourse_title());
-            pre.setString(4, course.getCourse_img());
-            pre.setFloat(5, course.getCourse_price());
-            pre.setString(6, course.getCourse_desc());
-            pre.setString(7, course.getCourse_start());
-            pre.setString(8, course.getCourse_stop());
-            pre.setString(9, course.getCourse_public());
-            pre.setInt(10, course.getSub_id());
-            pre.setInt(10, course.getLecturer_id());
-            pre.setInt(10, course.getLevel_id());
-            pre.setBoolean(10, course.getCourse_status());
-            n = pre.executeUpdate();
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, course.getCourse_id());
+            ps.setString(2, course.getCourse_name());
+            ps.setString(3, course.getCourse_title());
+            ps.setString(4, course.getCourse_img());
+            ps.setFloat(5, course.getCourse_price());
+            ps.setString(6, course.getCourse_desc());
+            ps.setString(7, course.getCourse_start());
+            ps.setString(8, course.getCourse_stop());
+            ps.setString(9, course.getCourse_public());
+            ps.setInt(10, course.getSub_id());
+            ps.setInt(10, course.getLecturer_id());
+            ps.setInt(10, course.getLevel_id());
+            ps.setBoolean(10, course.getCourse_status());
+            n = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,10 +61,10 @@ public class CourseDAO extends DBConnect {
 
     public Vector<Course> getAll() {
         Vector<Course> vector = new Vector<Course>();
-        String sql = "select * from Course";
+        xSql = "select * from Course";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 String course_id = rs.getString("course_id");
                 String course_name=  rs.getString("course_name");
@@ -101,12 +101,5 @@ public class CourseDAO extends DBConnect {
         }
         return vector;
     }
-    
-    public static void main(String[] args) {
-        CourseDAO courseD = new CourseDAO();
-        Vector<Course> courses = courseD.getAll();
-        for(Course c : courses){
-            System.out.println(c);
-        }
-    }
+   
 }
