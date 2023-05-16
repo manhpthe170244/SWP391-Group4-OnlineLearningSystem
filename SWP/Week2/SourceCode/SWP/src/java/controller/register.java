@@ -36,7 +36,11 @@ public class register extends HttpServlet {
             out.println("<title>Servlet register</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet register at " + request.getContextPath () + "</h1>");
+            out.println("<p>This module introduces a powerful process for solving any programming problem&mdash;the Seven Steps.</p>\n" +
+"\n" +
+"<p>You will learn how to approach a programming problem methodically, so you can formulate an algorithm that is specific and correct.</p>\n" +
+"\n" +
+"<p>You will work through examples with sequences of numbers and graphical patterns to develop the skill of algorithm development.</p>");
             out.println("</body>");
             out.println("</html>");
         }
