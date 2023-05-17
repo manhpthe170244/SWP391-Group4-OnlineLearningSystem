@@ -4,8 +4,16 @@
         <servlet-name>registerServlet</servlet-name>
         <servlet-class>controller.registerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>homepage</servlet-name>
+        <servlet-class>homepage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registerServlet</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>homepage</servlet-name>
+        <url-pattern>/homepage</url-pattern>
     </servlet-mapping>
 </web-app>
