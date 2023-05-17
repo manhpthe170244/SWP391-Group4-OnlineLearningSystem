@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dao.UserDAO;
+import entity.User;
 import java.io.*;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +16,10 @@ import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Date;
+
+import java.time.LocalDate;
+
 
 /**
  *
@@ -55,17 +61,37 @@ public class registerServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
-//        String email = request.getParameter("email");
-//        String password1 = request.getParameter("password1");
-//        String password2 = request.getParameter("password2");
-//        String fullname = request.getParameter("fullname");
+        String email = request.getParameter("email");
+        String password1 = request.getParameter("password1");
+        String password2 = request.getParameter("password2");
+        String fullname = request.getParameter("fullname");
         Part filePart = request.getPart("userImg");
         String saveDirectory = "E:/img/";
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        String filePath = saveDirectory + "/" + fileName;
+        String filePath = saveDirectory + fileName;
         InputStream fileContent = filePart.getInputStream();
         Files.copy(fileContent, Paths.get(filePath));
+        String gender = request.getParameter("gender");
+        String dobRaw =  request.getParameter("dob");
+        Date dob = Date.valueOf(dobRaw);
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String role = request.getParameter("role");
+        LocalDate ld = java.time.LocalDate.now();
+        UserDAO ud = new UserDAO();
+        Date userTime = Date.valueOf(ld);
+        if(ud.getUserByEmail(email)!=null){
+            out.println("Sign Up Failed ! The email has been registered.");
+            out.print(ud.getUserByEmail(email).toString());
+            //request.getRequestDispatcher("Register.jsp").include(request, response);
+        }else{
+            User newUser = new User(0, email, password2, fullname, filePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime , 1);
+            ud.addNewUser(newUser);
+            out.println(newUser.toString());
+        }
+        
+        
+        
     }
 
 }

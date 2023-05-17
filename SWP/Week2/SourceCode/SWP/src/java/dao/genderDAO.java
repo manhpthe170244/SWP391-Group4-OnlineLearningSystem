@@ -4,17 +4,17 @@
  */
 package dao;
 
-import entity.gender;
+import entity.Gender;
 import java.util.Vector;
 
 /**
  *
  * @author FPT
  */
-public class genderDAO extends MyDAO{
-    public Vector<gender> getAllGender(){
+public class GenderDAO extends MyDAO{
+    public Vector<Gender> getAllGender(){
         xSql = "select * from Gender";
-        Vector<gender> gv = new Vector<>();
+        Vector<Gender> gv = new Vector<>();
         int xgenderId;
         String xgenderName;
         try {
@@ -23,7 +23,7 @@ public class genderDAO extends MyDAO{
             while(rs.next()){
                 xgenderId = rs.getInt("gender_id");
                 xgenderName = rs.getString("gender_name");
-                gv.add(new gender(xgenderId, xgenderName));
+                gv.add(new Gender(xgenderId, xgenderName));
             }
         } catch (Exception e) {
             e.printStackTrace();

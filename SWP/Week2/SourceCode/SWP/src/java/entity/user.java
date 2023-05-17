@@ -11,7 +11,7 @@ package entity;
 import java.sql.Date;
 
 
-public class user {
+public class User {
     int userId; 
     String userEmail;
     String password; 
@@ -26,7 +26,7 @@ public class user {
     Date userTime;
     int userStatus;
 
-    public user(int userId, String userEmail, String password, String fullName, String userImg, int genderId, Date dob, String userPhone, String userAddress, String userWallet, int roleId, Date userTime, int userStatus) {
+    public User(int userId, String userEmail, String password, String fullName, String userImg, int genderId, Date dob, String userPhone, String userAddress, String userWallet, int roleId, Date userTime, int userStatus) {
         this.userId = userId;
         this.userEmail = userEmail;
         this.password = password;
@@ -147,6 +147,11 @@ public class user {
 
     public void setUserStatus(int userStatus) {
         this.userStatus = userStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", userEmail=" + userEmail + ", password=" + password + ", fullName=" + fullName + ", userImg=" + userImg + ", genderId=" + genderId + ", dob=" + dob + ", userPhone=" + userPhone + ", userAddress=" + userAddress + ", userWallet=" + userWallet + ", roleId=" + roleId + ", userTime=" + userTime + ", userStatus=" + userStatus + '}';
     }
     
     

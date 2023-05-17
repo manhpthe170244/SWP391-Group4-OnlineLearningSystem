@@ -3,19 +3,19 @@
     Created on : May 15, 2023, 1:45:24 PM
     Author     : FPT
 --%>
-<%@page import="entity.user" %>
-<%@page import="entity.gender" %>
+<%@page import="entity.User" %>
+<%@page import="entity.Gender" %>
 <%@page import="entity.Role" %>
 <%@page import="dao.RoleDAO" %>
-<%@page import="dao.userDAO" %>
-<%@page import="dao.genderDAO" %>
+<%@page import="dao.UserDAO" %>
+<%@page import="dao.GenderDAO" %>
 <%@page import="java.util.Vector" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%
-    genderDAO gd = new genderDAO();
+    GenderDAO gd = new GenderDAO();
     RoleDAO rd = new RoleDAO();
-    Vector<gender> genderList = gd.getAllGender();
+    Vector<Gender> genderList = gd.getAllGender();
     Vector<Role> roleList = rd.getAllRoleNotAdmin();
     pageContext.setAttribute("genderList", genderList);
     pageContext.setAttribute("roleList", roleList);
@@ -46,6 +46,8 @@
                     <option value="${g.getGenderId()}">${g.getGenderName()}</option>
                 </c:forEach>
             </select><br>
+            Date of Birth: 
+            <input type="date" name="dob"><br>
             Phone number: 
             <input type="tel" name="phone"><br>
             Address: 
