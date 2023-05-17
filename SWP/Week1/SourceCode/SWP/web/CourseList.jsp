@@ -113,10 +113,12 @@ https://templatemo.com/tm-569-edu-meeting
             <div class="col-lg-12">
               <div class="filters">
                 <ul>
-                  <li data-filter="*"  class="active">All Meetings</li>
-                  <li data-filter=".soon">Soon</li>
-                  <li data-filter=".imp">Important</li>
-                  <li data-filter=".att">Attractive</li>
+                  <li data-filter="*"  class="active">Information Technology</li>
+                  <li data-filter=".soon">Mathematics</li>
+                  <li data-filter=".imp">Musical Instrument</li>
+                  <li data-filter=".att">Language</li>
+                  <li data-filter=".att">Business</li>
+                  <li data-filter=".att">Health</li>
                 </ul>
               </div>
             </div>
