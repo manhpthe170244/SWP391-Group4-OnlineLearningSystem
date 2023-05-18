@@ -69,8 +69,7 @@ public class registerServlet extends HttpServlet {
         String saveDirectory = "E:/img/";
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String filePath = saveDirectory + fileName;
-        InputStream fileContent = filePart.getInputStream();
-        Files.copy(fileContent, Paths.get(filePath));
+        InputStream fileContent = filePart.getInputStream();      
         String gender = request.getParameter("gender");
         String dobRaw =  request.getParameter("dob");
         Date dob = Date.valueOf(dobRaw);
@@ -84,6 +83,7 @@ public class registerServlet extends HttpServlet {
             out.println("Sign Up Failed ! The email has been registered.");
             request.getRequestDispatcher("Register.jsp").include(request, response);
         }else{
+            Files.copy(fileContent, Paths.get(filePath));
             User newUser = new User(0, email, password2, fullname, filePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime , 1);
             ud.addNewUser(newUser);
             out.println(newUser.toString());
