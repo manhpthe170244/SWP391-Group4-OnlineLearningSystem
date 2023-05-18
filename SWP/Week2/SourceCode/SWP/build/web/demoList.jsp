@@ -23,21 +23,7 @@
     </head>
     <body>
         <div class="mainContent">
-<<<<<<< HEAD
             <%=CourseList.size()%>
-=======
-            <%
-            for(Course c : CourseList){
-            %>
-            <div class="courseBlock">
-                <img src="<%=c.getCourse_img()%>" alt="alt"/>
-                <h3><%=c.getCourse_title()%></h3>
-            </div>
-            <%
-
-               }
-            %>
->>>>>>> e14f367f5142a3c2c79ec1198c1ae988b185d920
         </div>
     </body>
 </html>
