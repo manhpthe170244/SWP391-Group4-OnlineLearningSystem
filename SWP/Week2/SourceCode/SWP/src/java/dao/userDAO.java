@@ -6,6 +6,7 @@ package dao;
 
 import entity.User;
 import java.sql.Date;
+import java.sql.SQLException;
 
 /**
  *
@@ -66,5 +67,42 @@ public class UserDAO extends MyDAO {
             e.printStackTrace();
         }
         return uByEmail;
+    }
+    public User login(String email, String password) {
+        
+        xSql = "SELECT * FROM [dbo].[User] WHERE [user_email] = ? AND [password] = ?";
+        
+        User userLogin = null;
+        
+        try {
+            
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            
+            rs = ps.executeQuery();
+            
+            if(rs.next()) {
+                userLogin = new User(
+                        rs.getInt("user_id"), 
+                        rs.getString("user_email"), 
+                        rs.getString("password"),
+                        rs.getString("full_name"), 
+                        rs.getString("user_img"), 
+                        rs.getInt("gender_id"), 
+                        rs.getDate("user_dob"),
+                        rs.getString("user_phone"), 
+                        rs.getString("user_address"),
+                        rs.getString("user_wallet"),
+                        rs.getInt("role_id"), 
+                        rs.getDate("user_time"),
+                        rs.getByte("user_status")
+                );
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return userLogin;
     }
 }
