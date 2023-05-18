@@ -8,11 +8,11 @@ package entity;
  *
  * @author FPT
  */
-public class gender {
+public class Gender {
     int genderId;
     String genderName;
 
-    public gender(int genderId, String genderName) {
+    public Gender(int genderId, String genderName) {
         this.genderId = genderId;
         this.genderName = genderName;
     }

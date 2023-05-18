@@ -4,30 +4,30 @@
  */
 package dao;
 
-import entity.Gender;
+import entity.Role;
 import java.util.Vector;
 
 /**
  *
  * @author FPT
  */
-public class GenderDAO extends MyDAO{
-    public Vector<Gender> getAllGender(){
-        xSql = "select * from Gender";
-        Vector<Gender> gv = new Vector<>();
-        int xgenderId;
-        String xgenderName;
+public class RoleDAO extends MyDAO{
+    public Vector<Role> getAllRoleNotAdmin(){
+        xSql = "select * from role where role_name not like 'Guest' and role_name not like 'Admin'";
+        Vector<Role> rv = new Vector<>();
+        int xroleId;
+        String xroleName;
         try {
             ps = con.prepareStatement(xSql);
             rs = ps.executeQuery();
             while(rs.next()){
-                xgenderId = rs.getInt("gender_id");
-                xgenderName = rs.getString("gender_name");
-                gv.add(new Gender(xgenderId, xgenderName));
+                xroleId = rs.getInt("role_id");
+                xroleName = rs.getString("role_name");
+                rv.add(new Role(xroleId, xroleName));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return gv;
+        return rv;
     }
 }

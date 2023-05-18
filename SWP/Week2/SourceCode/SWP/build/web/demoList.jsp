@@ -23,6 +23,9 @@
     </head>
     <body>
         <div class="mainContent">
+<<<<<<< HEAD
+            <%=CourseList.size()%>
+=======
             <%
             for(Course c : CourseList){
             %>
@@ -34,6 +37,7 @@
 
                }
             %>
+>>>>>>> e14f367f5142a3c2c79ec1198c1ae988b185d920
         </div>
     </body>
 </html>
