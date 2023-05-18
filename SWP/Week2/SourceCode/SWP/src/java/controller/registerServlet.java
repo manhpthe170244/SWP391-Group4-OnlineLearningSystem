@@ -82,8 +82,7 @@ public class registerServlet extends HttpServlet {
         Date userTime = Date.valueOf(ld);
         if(ud.getUserByEmail(email)!=null){
             out.println("Sign Up Failed ! The email has been registered.");
-            out.print(ud.getUserByEmail(email).toString());
-            //request.getRequestDispatcher("Register.jsp").include(request, response);
+            request.getRequestDispatcher("Register.jsp").include(request, response);
         }else{
             User newUser = new User(0, email, password2, fullname, filePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime , 1);
             ud.addNewUser(newUser);
