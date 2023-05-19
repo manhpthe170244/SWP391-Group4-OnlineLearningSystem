@@ -4,12 +4,20 @@
  */
 package controller;
 
+import dao.CourseDAO;
+import dao.SubjectDAO;
+import entity.Course;
+import entity.Subject;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Vector;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -34,7 +42,7 @@ public class courseList extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet courseList</title>");            
+            out.println("<title>Servlet courseList</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet courseList at " + request.getContextPath() + "</h1>");
@@ -55,7 +63,48 @@ public class courseList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String search = request.getParameter("search");
+        
+        String subIdString = request.getParameter("sub_id");
+        int sub_id;
+        if (subIdString == null) {
+            sub_id = 1;
+        } else {
+            sub_id = Integer.parseInt(subIdString);
+        }
+
+        String currentPageString = request.getParameter("currentPage");
+        int currentPage;
+        if (currentPageString == null) {
+            currentPage = 1;
+        } else {
+            currentPage = Integer.parseInt(currentPageString);
+        }
+
+        int recordsPerPage = 2;
+
+        CourseDAO courseDAO = new CourseDAO();
+        Vector<Course> courseToDisplay = new Vector<>();
+        
+        SubjectDAO subjectDAO = new SubjectDAO();
+        List<Subject> subjectList = subjectDAO.getAll();
+        request.setAttribute("subjectList", subjectList);
+
+        List<Course> courseList = courseDAO.getAll().stream().filter(s -> s.getSub_id() == sub_id).collect(Collectors.toList());
+        for(int i = recordsPerPage * (currentPage - 1); i < recordsPerPage * currentPage; i++){
+            courseToDisplay.add(courseList.get(i));
+        }
+        
+        int totalRecords = courseList.size();
+        int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
+
+        request.setAttribute("courseToDisplay", courseToDisplay);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", currentPage);
+
+        RequestDispatcher rd = request.getRequestDispatcher("CourseList.jsp");
+        rd.forward(request, response);
     }
 
     /**

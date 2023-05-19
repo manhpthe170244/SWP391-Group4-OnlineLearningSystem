@@ -1,6 +1,10 @@
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="entity.Course" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Vector" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%-- 
     Document   : CourseList
     Created on : May 16, 2023, 10:21:25 AM
@@ -101,13 +105,13 @@
                     <div class="col-12">
                         <nav class="main-nav">
                             <!-- *** Logo Start *** -->
-                            <a href="index.html" class="logo">
+                            <a href="homepage" class="logo">
                                 Edu Meeting
                             </a>
                             <!-- *** Logo End *** -->
                             <!-- *** Menu Start *** -->
                             <ul class="nav">
-                                <li class="scroll-to-section"><a href="#top" class="active">TRANG CHỦ</a></li>
+                                <li class="scroll-to-section"><a href="homepage" class="active">TRANG CHỦ</a></li>
                                 <li><a href="meetings.html">KHÓA HỌC CỦA TÔI</a></li>
                                 <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
                                 <li class="has-sub">
@@ -144,7 +148,7 @@
         <section class="meetings-page" id="meetings" style="padding-top: 50px">
             <div class="topnav">
                 <div class="search-container">
-                    <form action="">
+                    <form action="#">
                         <input type="text" placeholder="Search.." name="search">
                         <button type="submit"><i class="fa fa-search"></i></button>
                     </form>
@@ -155,16 +159,12 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-12">
-
                                 <div class="filters">
                                     <ul>
-                                        <li data-filter="*"  class="active">Information Technology</li>
-                                        <li data-filter=".Mathematics">Mathematics</li>
-                                        <li data-filter=".imp">Musical Instrument</li>
-                                        <li data-filter=".imp">Language</li>
-                                        <li data-filter=".imp">Business</li>
-                                        <li data-filter=".att">Health</li>
-                                         </ul>
+                                        <c:forEach items="${requestScope.subjectList}" var="subject">
+                                            <li><a href="?sub_id=${subject.getSub_id()}">${subject.getSub_name()}</a></li>
+                                        </c:forEach>
+                                    </ul>
                                 </div>
                             </div>
                             <div style="color: white;margin-bottom: 50px" class="col-lg-12">
@@ -172,172 +172,66 @@
                                     <option>Recent days</option>
                                 </select>
                             </div>
+
                             <div class="col-lg-12">
                                 <div class="row grid">
-                                    <div class="col-lg-4 templatemo-item-col all soon">
-                                        <div class="meeting-item">
-                                            <div class="thumb">
-                                                <div class="price">
-                                                    <span>$14.00</span>
+                                    <c:forEach items="${requestScope.courseToDisplay}" var="course">
+                                        <div class="col-lg-4 templatemo-item-col all soon">
+                                            <div class="meeting-item">
+                                                <div class="thumb">
+                                                    <div class="price">
+                                                        <span>${course.getCourse_price()} VNĐ</span>
+                                                    </div>
+                                                    <a href="meeting-details.html"><img src="${course.getCourse_img()}" alt=""></a>
                                                 </div>
-                                                <a href="meeting-details.html"><img src="assets/images/meeting-01.jpg" alt=""></a>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="date">
-                                                    <h6>Nov <span>12</span></h6>
+                                                <div class="down-content">
+                                                    <div class="date">
+                                                        <h6>${course.getCourse_public()}</h6>
+                                                    </div>
+                                                    <a href="meeting-details.html"><h4>${course.getCourse_name()}</h4></a><br>
+                                                            ${course.getCourse_title()}
                                                 </div>
-                                                <a href="meeting-details.html"><h4>New Lecturers Meeting</h4></a>
-                                                <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 templatemo-item-col all imp">
-                                        <div class="meeting-item">
-                                            <div class="thumb">
-                                                <div class="price">
-                                                    <span>$22.00</span>
-                                                </div>
-                                                <a href="meeting-details.html"><img src="assets/images/meeting-02.jpg" alt=""></a>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="date">
-                                                    <h6>Nov <span>14</span></h6>
-                                                </div>
-                                                <a href="meeting-details.html"><h4>Online Teaching Techniques</h4></a>
-                                                <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 templatemo-item-col all soon">
-                                        <div class="meeting-item">
-                                            <div class="thumb">
-                                                <div class="price">
-                                                    <span>$24.00</span>
-                                                </div>
-                                                <a href="meeting-details.html"><img src="assets/images/meeting-03.jpg" alt=""></a>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="date">
-                                                    <h6>Nov <span>16</span></h6>
-                                                </div>
-                                                <a href="meeting-details.html"><h4>Network Teaching Concept</h4></a>
-                                                <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 templatemo-item-col all att">
-                                        <div class="meeting-item">
-                                            <div class="thumb">
-                                                <div class="price">
-                                                    <span>$32.00</span>
-                                                </div>
-                                                <a href="meeting-details.html"><img src="assets/images/meeting-04.jpg" alt=""></a>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="date">
-                                                    <h6>Nov <span>18</span></h6>
-                                                </div>
-                                                <a href="meeting-details.html"><h4>Online Teaching Tools</h4></a>
-                                                <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 templatemo-item-col all att">
-                                        <div class="meeting-item">
-                                            <div class="thumb">
-                                                <div class="price">
-                                                    <span>$34.00</span>
-                                                </div>
-                                                <a href="meeting-details.html"><img src="assets/images/meeting-02.jpg" alt=""></a>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="date">
-                                                    <h6>Nov <span>22</span></h6>
-                                                </div>
-                                                <a href="meeting-details.html"><h4>New Teaching Techniques</h4></a>
-                                                <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 templatemo-item-col all imp">
-                                        <div class="meeting-item">
-                                            <div class="thumb">
-                                                <div class="price">
-                                                    <span>$45.00</span>
-                                                </div>
-                                                <a href="meeting-details.html"><img src="assets/images/meeting-03.jpg" alt=""></a>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="date">
-                                                    <h6>Nov <span>24</span></h6>
-                                                </div>
-                                                <a href="meeting-details.html"><h4>Technology Conference</h4></a>
-                                                <p>TemplateMo is the best website<br>when it comes to Free CSS.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 templatemo-item-col all imp att">
-                                        <div class="meeting-item">
-                                            <div class="thumb">
-                                                <div class="price">
-                                                    <span>$52.00</span>
-                                                </div>
-                                                <a href="meeting-details.html"><img src="assets/images/meeting-01.jpg" alt=""></a>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="date">
-                                                    <h6>Nov <span>27</span></h6>
-                                                </div>
-                                                <a href="meeting-details.html"><h4>Online Teaching Techniques</h4></a>
-                                                <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 templatemo-item-col all soon imp">
-                                        <div class="meeting-item">
-                                            <div class="thumb">
-                                                <div class="price">
-                                                    <span>$64.00</span>
-                                                </div>
-                                                <a href="meeting-details.html"><img src="assets/images/meeting-02.jpg" alt=""></a>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="date">
-                                                    <h6>Nov <span>28</span></h6>
-                                                </div>
-                                                <a href="meeting-details.html"><h4>Instant Lecture Design</h4></a>
-                                                <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 templatemo-item-col all att soon">
-                                        <div class="meeting-item">
-                                            <div class="thumb">
-                                                <div class="price">
-                                                    <span>$74.00</span>
-                                                </div>
-                                                <a href="meeting-details.html"><img src="assets/images/meeting-03.jpg" alt=""></a>
-                                            </div>
-                                            <div class="down-content">
-                                                <div class="date">
-                                                    <h6>Nov <span>30</span></h6>
-                                                </div>
-                                                <a href="meeting-details.html"><h4>Online Social Networking</h4></a>
-                                                <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </c:forEach>   
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="pagination">
-                                    <ul>
-                                        <li><a href="#">1</a></li>
-                                        <li class="active"><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                                    </ul>
-                                </div>
+
+                                <c:if test="${totalPages > 1}">
+                                    <div class="pagination">
+                                        <ul>
+                                            <c:choose>
+                                                <c:when test="${currentPage > 1}">
+                                                    <li><a href="?currentPage=${currentPage - 1}"><i class="fa fa-angle-left"></i></a></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                    <span class="disabled">Previous</span>
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                                <c:choose>
+                                                    <c:when test="${currentPage == i}">
+                                                        <li class="active"><a href="current">${i}</a></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        <li><a href="?currentPage=${i}">${i}</a></li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+
+                                            <c:choose>
+                                                <c:when test="${currentPage < totalPages}">
+                                                    <li><a href="?currentPage=${currentPage + 1}"><i class="fa fa-angle-right"></i></a></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                    <span class="disabled">Next</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </ul>
+                                    </div>
+                                </c:if>
                             </div>
                         </div>
                     </div>
