@@ -124,8 +124,15 @@
                                         </div>
                                         <c:if test="${err != null}">
                                             <div class="col-lg-12">
-                                                <div class="alert alert-warning">
-                                                    <strong>Warning!</strong> ${err}
+                                                <div class="alert alert-danger">
+                                                    <strong>Wrong!</strong> ${err}
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${success != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-success">
+                                                    <strong>Success!</strong> Login Success
                                                 </div>
                                             </div>
                                         </c:if>
