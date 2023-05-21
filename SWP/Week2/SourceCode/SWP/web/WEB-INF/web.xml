@@ -12,6 +12,18 @@
         <servlet-name>courseList</servlet-name>
         <servlet-class>controller.courseList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>courseDetails</servlet-name>
+        <servlet-class>controller.courseDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>controller.ChangePasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <servlet-class>controller.ResetPasswordController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registerServlet</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -31,5 +43,17 @@
     <servlet-mapping>
         <servlet-name>courseList</servlet-name>
         <url-pattern>/courseList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>courseDetails</servlet-name>
+        <url-pattern>/courseDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <url-pattern>/resetPassword</url-pattern>
     </servlet-mapping>
 </web-app>

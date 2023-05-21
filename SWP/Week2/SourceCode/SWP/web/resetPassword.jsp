@@ -104,8 +104,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h6>Login</h6>
-                        <h2>Login Here</h2>
+                        <h6>Password</h6>
+                        <h2>Reset Password</h2>
                     </div>
                 </div>
             </div>
@@ -117,22 +117,22 @@
                     <div class="col-lg-12 align-self-center">
                         <div class="row align-content-center justify-content-center">
                             <div class="col-lg-6">
-                                <form id="contact" action="login" method="post">
+                                <form id="contact" action="resetPassword" method="post">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h2 class="text-center" >Login</h2>
+                                            <h2 class="text-center" >Reset Password</h2>
                                         </div>
                                         <c:if test="${err != null}">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-danger">
-                                                    <strong>Wrong!</strong> ${err}
+                                                    <strong>Error!</strong> ${err}
                                                 </div>
                                             </div>
                                         </c:if>
                                         <c:if test="${success != null}">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-success">
-                                                    <strong>Success!</strong> Login Success
+                                                    <strong>Success!</strong> Password Reset: "defaultpassword123@"
                                                 </div>
                                             </div>
                                         </c:if>
@@ -150,7 +150,7 @@
 
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <button type="submit" id="form-submit" class="button">LOGIN</button>
+                                                <button type="submit" id="form-submit" class="button">RESET</button>
                                             </fieldset>
                                         </div>
                                     </div>
