@@ -62,13 +62,13 @@ public class ChangePasswordController extends HttpServlet {
             return;
         }
 
-        boolean f = ud.changePass(checkEmail.getUserId(), newPassword);
-
-        if (!f) {
-            request.setAttribute("err", "Wrong when Change password!");
-            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-            return;
-        }
+//        boolean f = ud.changePass(checkEmail.getUserId(), newPassword);
+//
+//        if (!f) {
+//            request.setAttribute("err", "Wrong when Change password!");
+//            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+//            return;
+//        }
 
         request.setAttribute("success", "Sucess");
         request.getRequestDispatcher("changePassword.jsp").forward(request, response);

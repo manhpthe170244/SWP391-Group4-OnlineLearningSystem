@@ -64,13 +64,13 @@ public class ResetPasswordController extends HttpServlet {
             return;
         }
 
-        boolean f = ud.changePass(checkEmail.getUserId(), "defaultpassword123@");
+        //boolean f = ud.changePass(checkEmail.getUserId(), "defaultpassword123@");
 
-        if (!f) {
-            request.setAttribute("err", "Wrong when Reset password!");
-            request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
-            return;
-        }
+//        if (!f) {
+//            request.setAttribute("err", "Wrong when Reset password!");
+//            request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
+//            return;
+//        }
 
         request.setAttribute("success", "Sucess");
         request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
