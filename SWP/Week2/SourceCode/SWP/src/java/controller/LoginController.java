@@ -45,13 +45,16 @@ public class LoginController extends HttpServlet {
                 UserDAO ud = new UserDAO();
                 User userLogin = ud.login(email, password);               
                 if(userLogin != null) {
-<<<<<<< HEAD
+
                     request.setAttribute("success", "Wrong email or password!");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
-=======
+
                     System.out.println("Login Success!");
                     response.sendRedirect("login");
->>>>>>> ea6d65d9d9cc03cb844f4e8db17600fb13134edd
+
+                    System.out.println("Login Success!");
+                    response.sendRedirect("login");
+
                 } else {
                     request.setAttribute("err", "Wrong email or password!");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
