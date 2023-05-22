@@ -124,7 +124,6 @@
                                         </div>
                                         <c:if test="${err != null}">
                                             <div class="col-lg-12">
-<<<<<<< HEAD
                                                 <div class="alert alert-danger">
                                                     <strong>Wrong!</strong> ${err}
                                                 </div>
@@ -134,10 +133,8 @@
                                             <div class="col-lg-12">
                                                 <div class="alert alert-success">
                                                     <strong>Success!</strong> Login Success
-=======
                                                 <div class="alert alert-warning">
                                                     <strong>Warning!</strong> ${err}
->>>>>>> ea6d65d9d9cc03cb844f4e8db17600fb13134edd
                                                 </div>
                                             </div>
                                         </c:if>
