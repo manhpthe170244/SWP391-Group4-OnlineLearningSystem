@@ -4,6 +4,7 @@ package controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 import dao.CourseDAO;
 import dao.PostDAO;
 import dao.SubjectDAO;
@@ -53,9 +54,10 @@ public class homepage extends HttpServlet {
             throws ServletException, IOException {
         String subIdString = request.getParameter("sub_id");
         int sub_id;
-        if (subIdString == null) {
+        if(subIdString == null){
             sub_id = 2;
-        } else {
+        }
+        else{
             sub_id = Integer.parseInt(subIdString);
         }
 
@@ -67,7 +69,7 @@ public class homepage extends HttpServlet {
         SubjectDAO subjectDAO = new SubjectDAO();
         List<Subject> subjectList = subjectDAO.getAll();
         request.setAttribute("subjectList", subjectList);
-
+        
         PostDAO postDAO = new PostDAO();
         List<Post> postList = postDAO.getAll();
         postList.sort(Comparator.comparing(Post::getPost_date).reversed());

@@ -62,6 +62,15 @@
             </div>
         </header>
         
-        
+        <section class="heading-page header-text" id="top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h6>Thông tin khóa hoc</h6>
+                        <h2>Các khóa học online hiệu quả</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
     </body>
 </html>

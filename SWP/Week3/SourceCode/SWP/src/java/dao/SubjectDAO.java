@@ -28,9 +28,10 @@ public class SubjectDAO extends MyDAO {
                 String sub_name = rs.getString("sub_name");
                 String sub_img = rs.getString("sub_img");
                 String sub_desc = rs.getString("sub_desc");
+                int subject_cate_id = rs.getInt("subject_cate_id");
 
                 // create object
-                Subject sub = new Subject(sub_id, sub_name, sub_img, sub_desc);
+                Subject sub = new Subject(sub_id, sub_name, sub_img, sub_desc, subject_cate_id);
                 vector.add(sub);
             }
         } catch (SQLException ex) {

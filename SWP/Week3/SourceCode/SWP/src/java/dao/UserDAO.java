@@ -15,21 +15,8 @@ import java.sql.SQLException;
 public class UserDAO extends MyDAO {
 
     public void addNewUser(User nu) {
-        xSql = "INSERT INTO [dbo].[User]"
-                + "([user_email],"
-                + "[password],"
-                + "[full_name],"
-                + "[user_img],"
-                + "[gender_id],"
-                + "[user_dob],"
-                + "[user_phone],"
-                + "[user_address],"
-                + "[user_wallet],"
-                + "[role_id],"
-                + "[user_time],"
-                + "[user_status],"
-                + "[Score]) \n"
-                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?, ?)";
+        xSql = "INSERT INTO [dbo].[User]([user_email],[password],[full_name],[user_img],[gender_id],[user_dob],[user_phone],[user_address],[user_wallet],[role_id],[user_time],[user_status]) \n"
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         String dobraw = nu.getDob().toString();
         String userTime = nu.getUserTime().toString();
         try {
@@ -45,8 +32,7 @@ public class UserDAO extends MyDAO {
             ps.setString(9, nu.getUserWallet());
             ps.setInt(10, nu.getRoleId());
             ps.setDate(11, Date.valueOf(userTime));
-            ps.setBoolean(12, nu.isUserStatus());
-            ps.setInt(13, nu.getScore());
+            ps.setInt(12, nu.getUserStatus());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,8 +60,7 @@ public class UserDAO extends MyDAO {
                         rs.getString("user_wallet"),
                         rs.getInt("role_id"),
                         rs.getDate("user_time"),
-                        rs.getBoolean("user_status"),
-                        rs.getInt("Score")
+                        rs.getByte("user_status")
                 );
             }
         } catch (Exception e) {
@@ -83,40 +68,38 @@ public class UserDAO extends MyDAO {
         }
         return uByEmail;
     }
-
     public User login(String email, String password) {
-
+        
         xSql = "SELECT * FROM [dbo].[User] WHERE [user_email] = ? AND [password] = ?";
-
+        
         User userLogin = null;
-
+        
         try {
-
+            
             ps = con.prepareStatement(xSql);
             ps.setString(1, email);
             ps.setString(2, password);
-
+            
             rs = ps.executeQuery();
-
-            if (rs.next()) {
+            
+            if(rs.next()) {
                 userLogin = new User(
-                        rs.getInt("user_id"),
-                        rs.getString("user_email"),
+                        rs.getInt("user_id"), 
+                        rs.getString("user_email"), 
                         rs.getString("password"),
-                        rs.getString("full_name"),
-                        rs.getString("user_img"),
-                        rs.getInt("gender_id"),
+                        rs.getString("full_name"), 
+                        rs.getString("user_img"), 
+                        rs.getInt("gender_id"), 
                         rs.getDate("user_dob"),
-                        rs.getString("user_phone"),
+                        rs.getString("user_phone"), 
                         rs.getString("user_address"),
                         rs.getString("user_wallet"),
-                        rs.getInt("role_id"),
+                        rs.getInt("role_id"), 
                         rs.getDate("user_time"),
-                        rs.getBoolean("user_status"),
-                        rs.getInt("Score")
+                        rs.getByte("user_status")
                 );
             }
-
+            
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

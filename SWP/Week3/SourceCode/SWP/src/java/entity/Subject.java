@@ -14,15 +14,17 @@ public class Subject {
     String sub_name;
     String sub_img;
     String sub_desc;
+    int subject_cate_id;
 
     public Subject() {
     }
 
-    public Subject(int sub_id, String sub_name, String sub_img, String sub_desc) {
+    public Subject(int sub_id, String sub_name, String sub_img, String sub_desc, int subject_cate_id) {
         this.sub_id = sub_id;
         this.sub_name = sub_name;
         this.sub_img = sub_img;
         this.sub_desc = sub_desc;
+        this.subject_cate_id = subject_cate_id;
     }
 
     public int getSub_id() {
@@ -57,5 +59,12 @@ public class Subject {
         this.sub_desc = sub_desc;
     }
 
+    public int getSubject_cate_id() {
+        return subject_cate_id;
+    }
+
+    public void setSubject_cate_id(int subject_cate_id) {
+        this.subject_cate_id = subject_cate_id;
+    }
 
 }

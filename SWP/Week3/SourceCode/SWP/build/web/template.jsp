@@ -61,7 +61,7 @@
     </head>
     <body>
         <jsp:include page="header.jsp"/>
-        <section class="main_content" id="meetings" style="padding-top: 50px">
+        <section class="meetings-page" id="meetings" style="padding-top: 50px">
 
             <jsp:include page="footer.jsp"/>
         </section>
