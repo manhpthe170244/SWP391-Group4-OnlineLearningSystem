@@ -12,8 +12,9 @@ import java.util.Vector;
  * @author FPT
  */
 public class RoleDAO extends MyDAO{
-    public Vector<Role> getAllRoleNotAdmin(){
-        xSql = "select * from role where role_name not like 'Guest' and role_name not like 'Admin'";
+    public Vector<Role> getRegisterRoles(){
+        xSql = "select * from role where role_name like 'Student' "
+                + "or role_name like 'Lecturer'";
         Vector<Role> rv = new Vector<>();
         int xroleId;
         String xroleName;

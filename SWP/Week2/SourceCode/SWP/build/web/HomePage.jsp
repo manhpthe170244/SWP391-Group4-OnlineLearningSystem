@@ -58,13 +58,13 @@
                     <div class="col-12">
                         <nav class="main-nav">
                             <!-- *** Logo Start *** -->
-                            <a href="index.html" class="logo">
+                            <a href="homepage" class="logo">
                                 Edu Meeting
                             </a>
                             <!-- *** Logo End *** -->
                             <!-- *** Menu Start *** -->
                             <ul class="nav">
-                                <li class="scroll-to-section"><a href="#top" class="active">TRANG CHỦ</a></li>
+                                <li class="scroll-to-section"><a href="homepage" class="active">TRANG CHỦ</a></li>
                                 <li><a href="meetings.html">KHÓA HỌC CỦA TÔI</a></li>
                                 <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
                                 <li class="has-sub">
@@ -188,10 +188,10 @@
                             <ul>
                                 <c:forEach items="${requestScope.subjectList}" var="subject">
                                     <li><a href="homepage?sub_id=${subject.getSub_id()}">${subject.getSub_name()}</a></li><br>
-                                    </c:forEach>
+                                </c:forEach>
                             </ul>
                             <div class="main-button-red">
-                                <a href="meetings.html">Xem Tất Cả Các Khóa Học</a>
+                                <a href="courseList?sub_id=1">Xem Tất Cả Các Khóa Học</a>
                             </div>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
                                             <h6>Nov <span>10</span></h6>
                                         </div>
                                         <a href="meeting-details.html"><h4><%=courseList.get(0).getCourse_name()%></h4></a>
-                                        <p><%=courseList.get(0).getCourse_title()%></p>
+                                        <p><%=courseList.get(0).getCourseTilte()%></p>
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
                                             <h6>Nov <span>24</span></h6>
                                         </div>
                                         <a href="meeting-details.html"><h4><%=courseList.get(1).getCourse_name()%></h4></a>
-                                        <p><%=courseList.get(1).getCourse_title()%></p>
+                                        <p><%=courseList.get(1).getCourseTilte()%></p>
                                     </div>
                                 </div>
                             </div>
@@ -248,7 +248,7 @@
                                             <h6>Nov <span>26</span></h6>
                                         </div>
                                         <a href="meeting-details.html"><h4><%=courseList.get(0).getCourse_name()%></h4></a>
-                                        <p><%=courseList.get(1).getCourse_title()%></p>
+                                        <p><%=courseList.get(1).getCourseTilte()%></p>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +265,7 @@
                                             <h6>Nov <span>30</span></h6>
                                         </div>
                                         <a href="meeting-details.html"><h4><%=courseList.get(1).getCourse_name()%></h4></a>
-                                        <p><%=courseList.get(0).getCourse_title()%></p>
+                                        <p><%=courseList.get(0).getCourseTilte()%></p>
                                     </div>
                                 </div>
                             </div>

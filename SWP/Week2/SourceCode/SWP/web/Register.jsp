@@ -16,7 +16,7 @@
     GenderDAO gd = new GenderDAO();
     RoleDAO rd = new RoleDAO();
     Vector<Gender> genderList = gd.getAllGender();
-    Vector<Role> roleList = rd.getAllRoleNotAdmin();
+    Vector<Role> roleList = rd.getRegisterRoles();
     pageContext.setAttribute("genderList", genderList);
     pageContext.setAttribute("roleList", roleList);
 %>

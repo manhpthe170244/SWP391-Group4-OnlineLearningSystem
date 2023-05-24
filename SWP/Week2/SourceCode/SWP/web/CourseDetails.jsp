@@ -27,6 +27,39 @@
     <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/lightbox.css">
+     <style>
+            .topnav {
+                width: 20%;
+                margin: 0 auto;
+                overflow: hidden;
+                margin-bottom: 50px;
+            }
+            .topnav .search-container {
+                float: right;
+            }
+
+            .topnav input[type=text] {
+                padding: 6px;
+                margin-top: 8px;
+                font-size: 17px;
+                border: none;
+            }
+
+            .topnav .search-container button {
+                float: right;
+                padding: 6px 10px;
+                margin-top: 8px;
+                margin-right: 16px;
+                background: #ddd;
+                font-size: 17px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .topnav .search-container button:hover {
+                background: #ccc;
+            }
+        </style>
 <!--
 
 TemplateMo 569 Edu Meeting
@@ -108,6 +141,15 @@ https://templatemo.com/tm-569-edu-meeting
   </section>
 
   <section class="meetings-page" id="meetings">
+       <div class="topnav">
+                <div class="search-container">
+                    <form action="">
+                        <input type="text" placeholder="Search.." name="search">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+      
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -134,20 +176,20 @@ https://templatemo.com/tm-569-edu-meeting
                   <div class="row">
                     <div class="col-lg-4">
                       <div class="hours">
-                        <h5>Hours</h5>
+                        <h5>Khóa kim cương</h5>
                         <p>Monday - Friday: 07:00 AM - 13:00 PM<br>Saturday- Sunday: 09:00 AM - 15:00 PM</p>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="location">
-                        <h5>Location</h5>
+                        <h5>Khóa học vàng</h5>
                         <p>Recreio dos Bandeirantes, 
                         <br>Rio de Janeiro - RJ, 22795-008, Brazil</p>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="book now">
-                        <h5>Book Now</h5>
+                        <h5>Khóa học bạc</h5>
                         <p>010-020-0340<br>090-080-0760</p>
                       </div>
                     </div>
@@ -168,7 +210,7 @@ https://templatemo.com/tm-569-edu-meeting
             </div>
             <div class="col-lg-12">
               <div class="main-button-red">
-                <a href="meetings.html">Back To Meetings List</a>
+                <a href="meetings.html"> ÐANG KÍ NGAY </a>
               </div>
             </div>
           </div>

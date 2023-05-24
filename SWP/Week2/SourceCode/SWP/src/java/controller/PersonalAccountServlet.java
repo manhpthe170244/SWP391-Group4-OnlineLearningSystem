@@ -30,26 +30,24 @@ public class PersonalAccountServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        User currUser = (User)request.getSession().getAttribute("currUser");
+        User currUser = (User) request.getSession().getAttribute("currUser");
         GenderDAO gd = new GenderDAO();
         RoleDAO rd = new RoleDAO();
         CourseDAO cd = new CourseDAO();
-        if(currUser == null){
+        if (currUser == null) {
             response.sendRedirect("login.jsp");
-        }else{
+        } else {
             Gender g = gd.getGenderById(currUser.getGenderId());
-            Role r = rd.getRoleById(currUser.getRoleId()); 
-            Vector<Course> currUserCourses = cd.getmyCourseList(currUser.getUserId());
-            request.setAttribute("currUserCourses", currUserCourses);
+            Role r = rd.getRoleById(currUser.getRoleId());
+            //Vector<Course> currUserCourses = cd.getmyCourseList(currUser.getUserId());
+            //request.setAttribute("currUserCourses", currUserCourses);
             request.setAttribute("currUser", currUser);
             request.setAttribute("gender", g);
             request.setAttribute("role", r);
             request.getRequestDispatcher("PersonalAccount.jsp").forward(request, response);
             return;
         }
-        
-    }
 
-    
+    }
 
 }

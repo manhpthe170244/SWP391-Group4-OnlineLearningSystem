@@ -87,9 +87,9 @@ public class registerServlet extends HttpServlet {
             request.getRequestDispatcher("Register.jsp").include(request, response);
         } else {
             Files.copy(fileContent, Paths.get(filePath));
-            User newUser = new User(0, email, password2, fullname, sqlFilePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime, 1);
+            User newUser = new User(0, email, password2, fullname, sqlFilePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime, true, 0);
             ud.addNewUser(newUser);
-            out.println(newUser.toString());
+            response.sendRedirect("homepage");
         }
 
     }

@@ -14,19 +14,19 @@ public class Course {
     String course_img;
     float course_price;
     String course_desc;
-    String course_public;
+    String last_update;
     int sub_id;
     int level_id;
     Boolean course_status;
     int duration;
     String courseTilte;
-    public Course(String course_id, String course_name, String course_img, float course_price, String course_desc, String course_public, int sub_id, int level_id, Boolean course_status, int duration, String CourseTitle) {
+    public Course(String course_id, String course_name, String course_img, float course_price, String course_desc, String last_update, int sub_id, int level_id, Boolean course_status, int duration, String CourseTitle) {
         this.course_id = course_id;
         this.course_name = course_name;
         this.course_img = course_img;
         this.course_price = course_price;
         this.course_desc = course_desc;
-        this.course_public = course_public;
+        this.last_update = last_update;
         this.sub_id = sub_id;
         this.level_id = level_id;
         this.course_status = course_status;
@@ -74,13 +74,14 @@ public class Course {
         this.course_desc = course_desc;
     }
 
-    public String getCourse_public() {
-        return course_public;
+    public String getLast_update() {
+        return last_update;
     }
 
-    public void setCourse_public(String course_public) {
-        this.course_public = course_public;
+    public void setLast_update(String last_update) {
+        this.last_update = last_update;
     }
+
 
     public int getSub_id() {
         return sub_id;
