@@ -11,8 +11,9 @@ import java.util.Vector;
  *
  * @author FPT
  */
-public class GenderDAO extends MyDAO{
-    public Vector<Gender> getAllGender(){
+public class GenderDAO extends MyDAO {
+
+    public Vector<Gender> getAllGender() {
         xSql = "select * from Gender";
         Vector<Gender> gv = new Vector<>();
         int xgenderId;
@@ -20,7 +21,7 @@ public class GenderDAO extends MyDAO{
         try {
             ps = con.prepareStatement(xSql);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 xgenderId = rs.getInt("gender_id");
                 xgenderName = rs.getString("gender_name");
                 gv.add(new Gender(xgenderId, xgenderName));
@@ -29,5 +30,26 @@ public class GenderDAO extends MyDAO{
             e.printStackTrace();
         }
         return gv;
+    }
+
+    public Gender getGenderById(int gId) {
+        xSql = "select * from Gender where gender_id = ?";
+        Gender g = null;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, gId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                g = new Gender(
+                rs.getInt("gender_id"),
+                rs.getString("gender_name")
+                );
+            
+         
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return g;
     }
 }

@@ -74,7 +74,7 @@
                                         <li><a href="meeting-details.html">Meeting Details</a></li>
                                     </ul>
                                 </li>
-                                <li class="scroll-to-section"><a href="#courses">TRANG CÁ NHÂN</a></li> 
+                                <li class="scroll-to-section"><a href="PersonalAccountServlet">TRANG CÁ NHÂN</a></li> 
                             </ul>        
                             <a class='menu-trigger'>
                                 <span>Menu</span>

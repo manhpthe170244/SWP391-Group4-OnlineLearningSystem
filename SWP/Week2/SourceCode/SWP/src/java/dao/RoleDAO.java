@@ -30,4 +30,23 @@ public class RoleDAO extends MyDAO{
         }
         return rv;
     }
+    public Role getRoleById(int roleId){
+        xSql = "select * from role where role_id = ?";
+        Role r = null;
+        int xroleId;
+        String xroleName;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, roleId);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                xroleId = rs.getInt("role_id");
+                xroleName = rs.getString("role_name");
+                r = new Role(roleId, xroleName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return r;
+    }
 }
