@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div class="row LogOutButton">
-                    <a href="#">Log Out</a>
+                    <a href="logout">Log Out</a>
                 </div>
             </div>
         </section>

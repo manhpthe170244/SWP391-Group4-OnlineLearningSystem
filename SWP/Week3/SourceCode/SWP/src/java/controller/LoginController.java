@@ -41,11 +41,13 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
+                final String secretKey = "a/f/gr'fw=q-=d-";
 		PrintWriter out = response.getWriter();
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
                 UserDAO ud = new UserDAO();
-                User userLogin = ud.login(email, password);   
+                String decryptedPassword = AES.encrypt(password, secretKey);
+                User userLogin = ud.login(email, decryptedPassword);
                 HttpSession session = request.getSession(true);
                 request.getSession().setAttribute("currUser", userLogin); 
                 if(userLogin != null) {
