@@ -6,11 +6,14 @@ values
 
 DELETE FROM "User"
 
-INSERT INTO gender (gender_name) VALUES 
-('Nam'), 
-('Nữ');
+SET IDENTITY_INSERT [dbo].[Gender] ON
+INSERT INTO gender (gender_id, gender_name) VALUES 
+(1, N'Nam'), 
+(2, N'Nữ');
 
+delete from gender
 
+select * from "user"
 
 
 insert into Role(role_name) values 
