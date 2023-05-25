@@ -89,18 +89,22 @@ public class courseList extends HttpServlet {
         
         SubjectDAO subjectDAO = new SubjectDAO();
         List<Subject> subjectList = subjectDAO.getAll();
+        PrintWriter out = response.getWriter();
+
         request.setAttribute("subjectList", subjectList);
 
         List<Course> courseList = courseDAO.getAll().stream().filter(s -> s.getSub_id() == sub_id).collect(Collectors.toList());
+
         for(int i = recordsPerPage * (currentPage - 1); i < recordsPerPage * currentPage; i++){
             courseToDisplay.add(courseList.get(i));
         }
         
         int totalRecords = courseList.size();
         int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
-
+        
+        
         request.setAttribute("courseToDisplay", courseToDisplay);
-        request.setAttribute("totalPages", totalPages);
+       request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", currentPage);
 
         RequestDispatcher rd = request.getRequestDispatcher("CourseList.jsp");

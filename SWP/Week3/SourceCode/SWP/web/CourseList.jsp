@@ -186,10 +186,10 @@
                                                 </div>
                                                 <div class="down-content">
                                                     <div class="date">
-                                                        <h6>${course.getCourse_public()}</h6>
+                                                        <h6>${course.getLast_update()}</h6>
                                                     </div>
                                                     <a href="meeting-details.html"><h4>${course.getCourse_name()}</h4></a><br>
-                                                            ${course.getCourse_title()}
+                                                            ${course.getCourseTilte()}
                                                 </div>
                                             </div>
                                         </div>

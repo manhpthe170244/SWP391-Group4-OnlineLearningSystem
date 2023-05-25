@@ -137,19 +137,25 @@
                                         <div class="col-lg-12">
                                             <h2 class="text-center" >Sign Up</h2>
                                         </div>
-                                        <c:if test="${err != null}">
+                                        <c:if test="${duplicateEmailErr != null}">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-warning">
-                                                    <strong>Warning!</strong> ${err}
+                                                    <strong>Warning!</strong> ${duplicateEmailErr}
                                                 </div>
                                             </div>
                                         </c:if>
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="YOUR EMAIL..." required="">
+                                                <input name="email" type="text" id="email" placeholder="YOUR EMAIL..." required="">
                                             </fieldset>
                                         </div>
-
+                                        <c:if test="${emailerr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${emailerr}
+                                                </div>
+                                            </div>
+                                        </c:if>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <input name="password1" type="password" id="password" placeholder="YOUR PASSWORD..." required="">
@@ -160,6 +166,13 @@
                                                 <input name="password2" type="password" id="password" placeholder="RE-ENTER YOUR PASSWORD..." required="">
                                             </fieldset>
                                         </div>
+                                        <c:if test="${passworderr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${passworderr}
+                                                </div>
+                                            </div>
+                                        </c:if>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <input name="fullname" type="text" id="fullname" placeholder="YOUR FULLNAME..." required="">
@@ -180,7 +193,7 @@
                                         <div class="col-lg-12">
                                             <p style="opacity: 0.7; margin-left: 10px">YOUR DATE OF BIRTH</p>
                                             <fieldset>
-                                                <input name="dob" type="date" id="date" required="">
+                                                <input name="dob" type="date" id="date" value="2000-1-1" required="">
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
@@ -188,6 +201,13 @@
                                                 <input name="phone" type="tel" id="phone" placeholder="YOUR PHONE NUMBER..." required="">
                                             </fieldset>
                                         </div>
+                                        <c:if test="${phoneErr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${phoneErr}
+                                                </div>
+                                            </div>
+                                        </c:if>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <input name="address" type="text" id="address" placeholder="YOUR ADDRESS..." required="">

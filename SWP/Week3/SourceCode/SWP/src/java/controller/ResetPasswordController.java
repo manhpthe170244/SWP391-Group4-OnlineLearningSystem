@@ -42,7 +42,7 @@ public class ResetPasswordController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-
+        final String secretKey = "a/f/gr'fw=q-=d-";
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -50,7 +50,7 @@ public class ResetPasswordController extends HttpServlet {
 
         User checkEmail = ud.getUserByEmail(email);
 
-        User checkEmailPassword = ud.login(email, password);
+        User checkEmailPassword = ud.login(email, AES.encrypt(password, secretKey));
 
         if (checkEmail == null) {
             request.setAttribute("err", "Email does not exist!");
@@ -64,13 +64,13 @@ public class ResetPasswordController extends HttpServlet {
             return;
         }
 
-        //boolean f = ud.changePass(checkEmail.getUserId(), "defaultpassword123@");
+        boolean f = ud.changePass(checkEmail.getUserEmail(),AES.encrypt("defaultpassword123@", secretKey));
 
-//        if (!f) {
-//            request.setAttribute("err", "Wrong when Reset password!");
-//            request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
-//            return;
-//        }
+        if (!f) {
+            request.setAttribute("err", "Wrong when Reset password!");
+            request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
+            return;
+        }
 
         request.setAttribute("success", "Sucess");
         request.getRequestDispatcher("resetPassword.jsp").forward(request, response);

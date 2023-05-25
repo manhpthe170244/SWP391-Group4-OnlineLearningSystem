@@ -17,8 +17,13 @@ import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Date;
-
 import java.time.LocalDate;
+import java.util.regex.Pattern;
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -38,60 +43,70 @@ public class registerServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet registerServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet registerServlet at " + request.getContextPath() + "</h1>s");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        final String secretKey = "a/f/gr'fw=q-=d-";
         String email = request.getParameter("email");
+        Pattern emailRegex = Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
+        String emailerr = "";
+        if (!emailRegex.matcher(email).find()) {
+            emailerr = "Invalid Email !";
+            request.setAttribute("emailerr", emailerr);
+        }
         String password1 = request.getParameter("password1");
         String password2 = request.getParameter("password2");
+        String passworderr = "";
+        if (!password1.equals(password2)) {
+            passworderr = "The re-entered password does not match the first one !";
+            request.setAttribute("passworderr", passworderr);
+        }
+        String encryptedPassword = AES.encrypt(password2, secretKey);
         String fullname = request.getParameter("fullname");
-
         Part filePart = request.getPart("userImg");
-        String saveDirectory = "E:/swp391/SWP391_Project/SWP/Week2/SourceCode/SWP/web/img/";
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        String saveDirectory = "E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/web/img/";
+        String fileName;
+        if (filePart == null) {
+            fileName = "tempAvatar.jpg";
+        } else {
+            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        }
         String filePath = saveDirectory + fileName;
         InputStream fileContent = filePart.getInputStream();
         String sqlFilePath = "img/" + fileName;
-
-
         String gender = request.getParameter("gender");
         String dobRaw = request.getParameter("dob");
         Date dob = Date.valueOf(dobRaw);
+        Pattern phoneRegex = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})\\b");
         String phone = request.getParameter("phone");
+        String phoneErr = "";
+        if (!phoneRegex.matcher(phone).find()) {
+            phoneErr = "Invalid phone number!";
+            request.setAttribute("phoneErr", phoneErr);
+        }
         String address = request.getParameter("address");
         String role = request.getParameter("role");
         LocalDate ld = java.time.LocalDate.now();
         UserDAO ud = new UserDAO();
         Date userTime = Date.valueOf(ld);
-        if (ud.getUserByEmail(email) != null) {
-            out.println("Sign Up Failed ! The email has been registered.");
-            request.getRequestDispatcher("Register.jsp").include(request, response);
+        if (!phoneErr.isEmpty() || !emailerr.isEmpty() || !passworderr.isEmpty()) {
+            request.getRequestDispatcher("Register.jsp").forward(request, response);
+        } else if (ud.getUserByEmail(email) != null) {
+            request.setAttribute("duplicateEmailErr", "Register failed, Duplicated email!");
+            request.getRequestDispatcher("Register.jsp").forward(request, response);
         } else {
-            Files.copy(fileContent, Paths.get(filePath));
-            User newUser = new User(0, email, password2, fullname, sqlFilePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime, true, 0);
+            if (filePart != null) {
+                Files.copy(fileContent, Paths.get(filePath));
+            }
+
+            User newUser = new User(0, email, encryptedPassword, fullname, sqlFilePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime, true, 0);
             ud.addNewUser(newUser);
             response.sendRedirect("homepage");
         }
-
     }
 
 }

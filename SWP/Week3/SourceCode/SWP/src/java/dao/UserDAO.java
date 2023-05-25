@@ -122,4 +122,20 @@ public class UserDAO extends MyDAO {
         }
         return userLogin;
     }
+
+    public boolean changePass(String email, String newPassword) {
+     
+        xSql = "update [dbo].[User] set [password] = '"+newPassword+"'"
+                + "where [user_email] = '"+email+"'";
+        boolean f = false;
+        try {
+
+            ps = con.prepareStatement(xSql);           
+            ps.executeUpdate();
+            f = true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return f;
+    }
 }
