@@ -33,7 +33,7 @@ public class SliderDAO extends MyDAO {
                 vector.add(sl);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SliderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
 
