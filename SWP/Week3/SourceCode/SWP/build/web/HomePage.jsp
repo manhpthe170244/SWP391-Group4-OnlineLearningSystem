@@ -74,7 +74,7 @@
                                         <li><a href="meeting-details.html">Meeting Details</a></li>
                                     </ul>
                                 </li>
-                                <li class="scroll-to-section"><a href="#courses">TRANG CÁ NHÂN</a></li> 
+                                <li><a href="PersonalAccountServlet">Trang Cá Nhân</a></li> 
                             </ul>        
                             <a class='menu-trigger'>
                                 <span>Menu</span>
@@ -214,7 +214,7 @@
                                             <h6>Nov <span>10</span></h6>
                                         </div>
                                         <a href="meeting-details.html"><h4><%=courseList.get(0).getCourse_name()%></h4></a>
-                                        <p><%=courseList.get(0).getCourse_title()%></p>
+                                        <p><%=courseList.get(0).getCourseTilte()%></p>
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
                                             <h6>Nov <span>24</span></h6>
                                         </div>
                                         <a href="meeting-details.html"><h4><%=courseList.get(1).getCourse_name()%></h4></a>
-                                        <p><%=courseList.get(1).getCourse_title()%></p>
+                                        <p><%=courseList.get(1).getCourseTilte()%></p>
                                     </div>
                                 </div>
                             </div>
@@ -248,7 +248,7 @@
                                             <h6>Nov <span>26</span></h6>
                                         </div>
                                         <a href="meeting-details.html"><h4><%=courseList.get(0).getCourse_name()%></h4></a>
-                                        <p><%=courseList.get(1).getCourse_title()%></p>
+                                        <p><%=courseList.get(1).getCourseTilte()%></p>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +265,7 @@
                                             <h6>Nov <span>30</span></h6>
                                         </div>
                                         <a href="meeting-details.html"><h4><%=courseList.get(1).getCourse_name()%></h4></a>
-                                        <p><%=courseList.get(0).getCourse_title()%></p>
+                                        <p><%=courseList.get(0).getCourseTilte()%></p>
                                     </div>
                                 </div>
                             </div>

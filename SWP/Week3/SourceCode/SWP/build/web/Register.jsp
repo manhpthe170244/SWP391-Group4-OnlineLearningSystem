@@ -16,48 +16,292 @@
     GenderDAO gd = new GenderDAO();
     RoleDAO rd = new RoleDAO();
     Vector<Gender> genderList = gd.getAllGender();
-    Vector<Role> roleList = rd.getAllRoleNotAdmin();
+    Vector<Role> roleList = rd.getRegisterRoles();
     pageContext.setAttribute("genderList", genderList);
     pageContext.setAttribute("roleList", roleList);
 %>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Template Mo">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+        <title>Education Template - Meeting Detail Page</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" href="assets/css/fontawesome.css">
+        <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
+        <link rel="stylesheet" href="assets/css/owl.css">
+        <link rel="stylesheet" href="assets/css/lightbox.css">
+        <!--
+        
+        TemplateMo 569 Edu Meeting
+        
+        https://templatemo.com/tm-569-edu-meeting
+        
+        -->
     </head>
+
     <body>
-        <form action="register" enctype="multipart/form-data" method="POST">
-            
-            <h1>Please fill in your information</h1>
-            Email: 
-            <input type="text" name="email"><br>
-            Password:
-            <input type="type" name="password1"><br>
-            Re-enter your password:
-            <input type="type" name="password2"><br>
-            Full name:
-            <input type="text" name="fullname"><br>
-            Image: 
-            <input type="file" name="userImg" accept="image/*"><br>
-            Gender: 
-            <select name="gender">
-                <c:forEach items="${genderList}" var="g">
-                    <option value="${g.getGenderId()}">${g.getGenderName()}</option>
-                </c:forEach>
-            </select><br>
-            Date of Birth: 
-            <input type="date" name="dob"><br>
-            Phone number: 
-            <input type="tel" name="phone"><br>
-            Address: 
-            <input type="text" name="address"><br>
-            Sign Up as: <br>
-            <input type="radio" name="role" value="${roleList.get(0).getRoleId()}" checked="true"><c:out value="${roleList.get(0).getRoleName()}"/>
-            <c:forEach var="r" begin="1" end="${roleList.size()-1}">
-                <input type="radio" name="role" value="${roleList.get(r).getRoleId()}"><c:out value="${roleList.get(r).getRoleName()}"/>
-            </c:forEach><br>
-            <input type="submit" name="submit" value="Sign Up">
-        </form>
+
+
+
+        <!-- Sub Header -->
+        <div class="sub-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-sm-8">
+                        <div class="left-content">
+                            <p>This is an educational <em>HTML CSS</em> template by TemplateMo website.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4">
+                        <div class="right-icons">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ***** Header Area Start ***** -->
+        <header class="header-area header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="main-nav">
+                            <!-- ***** Logo Start ***** -->
+                            <a href="index.html" class="logo">
+                                Edu Meeting
+                            </a>
+                            <!-- ***** Logo End ***** -->
+                            <!-- ***** Menu Start ***** -->
+                            <ul class="nav">
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="meetings.html" class="active">Meetings</a></li>
+                                <li><a href="index.html">Apply Now</a></li>
+                                <li class="has-sub">
+                                    <a href="javascript:void(0)">Pages</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="meetings.html">Upcoming Meetings</a></li>
+                                        <li><a href="meeting-details.html">Meeting Details</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="index.html">Courses</a></li> 
+                                <li><a href="index.html">Contact Us</a></li> 
+                            </ul>        
+                            <a class='menu-trigger'>
+                                <span>Menu</span>
+                            </a>
+                            <!-- ***** Menu End ***** -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- ***** Header Area End ***** -->
+
+        <section class="heading-page header-text" id="top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Sign Up Here</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-us" id="contact">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 align-self-center">
+                        <div class="row align-content-center justify-content-center">
+                            <div class="col-lg-6">
+                                <form id="contact" action="register" method="post" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h2 class="text-center" >Sign Up</h2>
+                                        </div>
+                                        <c:if test="${duplicateEmailErr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${duplicateEmailErr}
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                                <input name="email" type="text" id="email" placeholder="YOUR EMAIL..." required="">
+                                            </fieldset>
+                                        </div>
+                                        <c:if test="${emailerr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${emailerr}
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                                <input name="password1" type="password" id="password" placeholder="YOUR PASSWORD..." required="">
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                                <input name="password2" type="password" id="password" placeholder="RE-ENTER YOUR PASSWORD..." required="">
+                                            </fieldset>
+                                        </div>
+                                        <c:if test="${passworderr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${passworderr}
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                                <input name="fullname" type="text" id="fullname" placeholder="YOUR FULLNAME..." required="">
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
+                                            <p style="opacity: 0.7">YOUR PROFILE PICTURE</p>
+                                            <input name="userImg" type="file" accept="image/*" id="userImg" style="all:unset">
+                                        </div>
+                                        <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
+                                            <p style="opacity: 0.7">YOUR GENDER</p>
+                                            <select name="gender">
+                                                <c:forEach items="${genderList}" var="g">
+                                                    <option value="${g.getGenderId()}">${g.getGenderName()}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <p style="opacity: 0.7; margin-left: 10px">YOUR DATE OF BIRTH</p>
+                                            <fieldset>
+                                                <input name="dob" type="date" id="date" value="2000-1-1" required="">
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                                <input name="phone" type="tel" id="phone" placeholder="YOUR PHONE NUMBER..." required="">
+                                            </fieldset>
+                                        </div>
+                                        <c:if test="${phoneErr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${phoneErr}
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                                <input name="address" type="text" id="address" placeholder="YOUR ADDRESS..." required="">
+                                            </fieldset>   
+                                        </div>
+                                        <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
+                                            <p style="opacity: 0.7; display: inline-block">SIGN UP AS:&emsp;</p>
+                                            <select name="role">
+                                                <c:forEach items="${roleList}" var="r">
+                                                    <option value="${r.getRoleId()}">${r.getRoleName()}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                                <button type="submit" id="form-submit" class="button">SIGN UP</button>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
+                    <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p>
+            </div>
+        </section>
+
+
+        <!-- Scripts -->
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <script src="assets/js/isotope.min.js"></script>
+        <script src="assets/js/owl-carousel.js"></script>
+        <script src="assets/js/lightbox.js"></script>
+        <script src="assets/js/tabs.js"></script>
+        <script src="assets/js/video.js"></script>
+        <script src="assets/js/slick-slider.js"></script>
+        <script src="assets/js/custom.js"></script>
+        <script>
+            //according to loftblog tut
+            $('.nav li:first').addClass('active');
+
+            var showSection = function showSection(section, isAnimate) {
+                var
+                        direction = section.replace(/#/, ''),
+                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                        reqSectionPos = reqSection.offset().top - 0;
+
+                if (isAnimate) {
+                    $('body, html').animate({
+                        scrollTop: reqSectionPos},
+                            800);
+                } else {
+                    $('body, html').scrollTop(reqSectionPos);
+                }
+
+            };
+
+            var checkSection = function checkSection() {
+                $('.section').each(function () {
+                    var
+                            $this = $(this),
+                            topEdge = $this.offset().top - 80,
+                            bottomEdge = topEdge + $this.height(),
+                            wScroll = $(window).scrollTop();
+                    if (topEdge < wScroll && bottomEdge > wScroll) {
+                        var
+                                currentId = $this.data('section'),
+                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                        reqLink.closest('li').addClass('active').
+                                siblings().removeClass('active');
+                    }
+                });
+            };
+
+            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                e.preventDefault();
+                showSection($(this).attr('href'), true);
+            });
+
+            $(window).scroll(function () {
+                checkSection();
+            });
+        </script>
     </body>
+
+
+</body>
+
 </html>
+

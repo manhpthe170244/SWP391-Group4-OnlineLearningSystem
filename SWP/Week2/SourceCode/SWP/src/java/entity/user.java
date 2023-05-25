@@ -24,9 +24,10 @@ public class User {
     String userWallet;
     int roleId;
     Date userTime;
-    int userStatus;
+    boolean userStatus;
+    int Score;
 
-    public User(int userId, String userEmail, String password, String fullName, String userImg, int genderId, Date dob, String userPhone, String userAddress, String userWallet, int roleId, Date userTime, int userStatus) {
+    public User(int userId, String userEmail, String password, String fullName, String userImg, int genderId, Date dob, String userPhone, String userAddress, String userWallet, int roleId, Date userTime, boolean userStatus, int Score) {
         this.userId = userId;
         this.userEmail = userEmail;
         this.password = password;
@@ -40,11 +41,9 @@ public class User {
         this.roleId = roleId;
         this.userTime = userTime;
         this.userStatus = userStatus;
+        this.Score = Score;
     }
 
-    
-    
-    
     public int getUserId() {
         return userId;
     }
@@ -141,13 +140,26 @@ public class User {
         this.userTime = userTime;
     }
 
-    public int getUserStatus() {
+    public boolean isUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(int userStatus) {
+    public void setUserStatus(boolean userStatus) {
         this.userStatus = userStatus;
     }
+
+    public int getScore() {
+        return Score;
+    }
+
+    public void setScore(int Score) {
+        this.Score = Score;
+    }
+
+    
+    
+    
+    
 
     @Override
     public String toString() {

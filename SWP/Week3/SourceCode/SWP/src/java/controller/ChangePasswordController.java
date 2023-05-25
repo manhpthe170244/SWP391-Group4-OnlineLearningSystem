@@ -39,16 +39,16 @@ public class ChangePasswordController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-
+        final String secretKey = "a/f/gr'fw=q-=d-";
         String email = request.getParameter("email");
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
-
+        
         UserDAO ud = new UserDAO();
 
         User checkEmail = ud.getUserByEmail(email);
 
-        User checkEmailPassword = ud.login(email, oldPassword);
+        User checkEmailPassword = ud.login(email, AES.encrypt(oldPassword, secretKey));
 
         if (checkEmail == null) {
             request.setAttribute("err", "Email does not exist!");
@@ -62,13 +62,14 @@ public class ChangePasswordController extends HttpServlet {
             return;
         }
 
-//        boolean f = ud.changePass(checkEmail.getUserId(), newPassword);
-//
-//        if (!f) {
-//            request.setAttribute("err", "Wrong when Change password!");
-//            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
-//            return;
-//        }
+        boolean f = ud.changePass(checkEmail.getUserEmail(), AES.encrypt(newPassword, secretKey));
+        
+
+        if (!f) {
+            request.setAttribute("err", "Wrong when Change password!");
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+            return;
+        }
 
         request.setAttribute("success", "Sucess");
         request.getRequestDispatcher("changePassword.jsp").forward(request, response);
