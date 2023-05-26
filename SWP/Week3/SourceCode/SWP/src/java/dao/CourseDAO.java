@@ -110,5 +110,31 @@ public class CourseDAO extends MyDAO {
         }
         return vector;
     }
+    public void searchByName(String course_name) {
+        xSql = "select*from Course where course_name like ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, course_name);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                rs.getString("course_id");
+                rs.getString("course_name");
+                rs.getString("course_title");
+                rs.getString("course_img");
+                rs.getFloat("course_price");
+                rs.getString("course_desc");
+                rs.getString("course_start");
+                rs.getString("course_stop");
+                rs.getString("course_public");
+                rs.getInt("sub_id");
+                rs.getInt("lecturer_id");
+                rs.getInt("level_id");
+                rs.getBoolean("course_status");
+            }
+        } catch (Exception e) {
+            System.out.println("checkCourse: " + e.getMessage());
+        }
+
+    }
 
 }
