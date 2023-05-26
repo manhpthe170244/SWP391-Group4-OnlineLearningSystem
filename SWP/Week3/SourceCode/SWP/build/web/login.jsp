@@ -133,29 +133,36 @@
                                             <div class="col-lg-12">
                                                 <div class="alert alert-success">
                                                     <strong>Success!</strong> Login Success
-                                                <div class="alert alert-warning">
-                                                    <strong>Warning!</strong> ${err}
+                                                    <div class="alert alert-warning">
+                                                        <strong>Warning!</strong> ${err}
+                                                    </div>
                                                 </div>
+                                            </c:if>
+                                            <div class="col-lg-12">
+                                                <fieldset>
+                                                    <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="YOUR EMAIL..." required="">
+                                                </fieldset>
                                             </div>
-                                        </c:if>
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="YOUR EMAIL..." required="">
-                                            </fieldset>
-                                        </div>
 
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <input name="password" type="password" id="password" placeholder="YOUR PASSWORD..." required="">
-                                            </fieldset>
-                                        </div>
+                                            <div class="col-lg-12">
+                                                <fieldset>
+                                                    <input name="password" type="password" id="password" placeholder="YOUR PASSWORD..." required="">
+                                                </fieldset>
+                                            </div>
 
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <button type="submit" id="form-submit" class="button">LOGIN</button>
-                                            </fieldset>
+                                            <div class="col-lg-12">
+                                                <fieldset>
+                                                    <button type="submit" id="form-submit" class="button">LOGIN</button>
+                                                </fieldset>
+                                            </div>
+                                            <div style="margin: 5px 0 0 5px">
+                                                Don't have an account ? Sign up <a href="Register.jsp"> here</a>
+                                            </div>
+                                            <div style="margin: 5px 0 0 5px">
+                                                Forgot your password ? Reset <a href="Register.jsp">here</a>
+                                            </div>
+                                            
                                         </div>
-                                    </div>
                                 </form>
                             </div>
                         </div>

@@ -67,9 +67,7 @@
         <servlet-name>ResetPasswordController</servlet-name>
         <url-pattern>/resetPassword</url-pattern>
     </servlet-mapping>
-<<<<<<< HEAD
-</web-app>
-=======
+
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
@@ -78,5 +76,7 @@
         <servlet-name>logout</servlet-name>
         <servlet-class>controller.logout</servlet-class>
     </servlet>
+
+    
 </web-app>
->>>>>>> 65a3b84447cc3e825dbae0b25162ae6ec90a1771
+
