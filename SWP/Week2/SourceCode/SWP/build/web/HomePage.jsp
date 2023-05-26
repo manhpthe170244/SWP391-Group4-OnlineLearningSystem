@@ -117,57 +117,17 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="owl-service-item owl-carousel">
-
-                            <div class="item">
-                                <div class="icon">
-                                    <img src="assets/images/service-icon-01.png" alt="">
+                            <c:forEach items="${requestScope.sliderList}" var="slider">
+                                <div class="item">
+                                    <div class="icon">
+                                        <img src="${slider.getSlider_img()}" alt="">
+                                    </div>
+                                    <div class="down-content">
+                                        <h4><<a href="${slider.getSlider_link()}">${slider.getSlider_name()}</a></h4>
+                                        <p>${slider.getSlier_title()}</p>
+                                    </div>
                                 </div>
-                                <div class="down-content">
-                                    <h4>Best Education</h4>
-                                    <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
-                                </div>
-                            </div>
-
-                            <div class="item">
-                                <div class="icon">
-                                    <img src="assets/images/service-icon-02.png" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Best Teachers</h4>
-                                    <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
-                                </div>
-                            </div>
-
-                            <div class="item">
-                                <div class="icon">
-                                    <img src="assets/images/service-icon-03.png" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Best Students</h4>
-                                    <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
-                                </div>
-                            </div>
-
-                            <div class="item">
-                                <div class="icon">
-                                    <img src="assets/images/service-icon-02.png" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Online Meeting</h4>
-                                    <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
-                                </div>
-                            </div>
-
-                            <div class="item">
-                                <div class="icon">
-                                    <img src="assets/images/service-icon-03.png" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Best Networking</h4>
-                                    <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
-                                </div>
-                            </div>
-
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -188,7 +148,7 @@
                             <ul>
                                 <c:forEach items="${requestScope.subjectList}" var="subject">
                                     <li><a href="homepage?sub_id=${subject.getSub_id()}">${subject.getSub_name()}</a></li><br>
-                                </c:forEach>
+                                    </c:forEach>
                             </ul>
                             <div class="main-button-red">
                                 <a href="courseList?sub_id=1">Xem Tất Cả Các Khóa Học</a>
@@ -294,7 +254,7 @@
                                         <div class="info">
                                             <div class="row">
                                                 <div class="col-4">
-                                                    
+
                                                 </div>
                                                 <div class="col-8">
                                                     <span>${post.getPost_date()}</span>
