@@ -1,20 +1,20 @@
 ﻿insert into "user" (user_email, password, full_name, user_img, gender_id, user_dob, user_phone, user_address, user_wallet, role_id, user_time, user_status, Score) 
 values 
-('son@gmail.com','12345', N'chu sơn', 'img/tempAvatar.jpg', 1, '2003-05-27', '0363938085', N'Sơn Tây', 1000, 2, '2003-05-27', 1, 0),
-('chi@gmail.com','12345', N'Minh Chi', 'img/tempAvatar.jpg', 2, '2003-05-27', '0363938085', 'Hà Nội', 1000, 2, '2003-05-27', 1, 0),
-('manh@gmai.coml', '12345', N'Phan Tiến Mạnh', 'img/tempAvatar.jpg', 1, '2003-01-01', '0442511630', N'Hà Nội', 1000, 1, '2023-05-26', 1, 0),
-('linh@gmai.coml', '12345', N'Nguyễn Thị Ngọc Linh', 'img/tempAvatar.jpg', 2, '2003-01-01', '0460429023', N'Hà Nội', 1000, 1, '2023-05-26', 1, 0),
-('quocAnh@gmai.coml', '12345', N'Võ Quốc Anh', 'img/tempAvatar.jpg', 1, '2003-01-01', '0827784536', N'Hà Nội', 1000, 1, '2023-05-26', 1, 0),
-('TuAnh@gmail.com', '12345', N'Phan Nguyễn Tú Anh', 'img/tempAvatar.jpg', 2, '2003-01-01', '0197295039', N'Hà Nội', 1000, 1, '2023-05-26', 1, 0),
-('dinhvu@gmai.coml', '12345', N'Trịnh Đình Vũ', 'img/tempAvatar.jpg', 1, '2003-01-01', '0442511630', N'Nam Định', 1000, 2, '2023-05-26', 1, 0),
-('haianh@gmai.coml', '12345', N'Nguyễn Hải Anh', 'img/tempAvatar.jpg', 1, '2003-01-01', '0577951519', N'Hồ Chí Minh', 1000, 2, '2023-05-26', 1, 0),
-('nhatlinh@gmai.coml', '12345', N'Chu Nhật Linh', 'img/tempAvatar.jpg', 2, '2003-01-01', '0783130637', N'Thanh Hoá', 1000, 2, '2023-05-26', 1, 0),
-('thanhtra@gmai.coml', '12345', N'Phùng Thanh Trà', 'img/tempAvatar.jpg', 2, '2003-01-01', '0168700393', N'Đà Nẵng', 1000, 2, '2023-05-26', 1, 0),
-('minhtam@gmail.com', '12345', N'Đinh Ngọc Minh Tâm', 'img/tempAvatar.jpg', 2, '2003-05-27', '0556335383', N'Hải Phòng', 1000, 4, '2023-05-26', 1, 0),
-('tiendat@gmai.coml', '12345', N'Trần Tiến Đạt', 'img/tempAvatar.jpg', 1, '2003-01-01', '0836942901', N'Cà Mau', 1000, 3, '2023-05-26', 1, 0),
-('quanghuy@gmail.com', '12345', N'Đỗ Quang Huy', 'img/tempAvatar.jpg', 1, '2003-01-01', '0239381909', N'Hà Nội', 1000, 3, '2023-05-26', 1, 0),
-('maihuong@gmai.coml', '12345', N'Nguyễn Mai Hương', 'img/tempAvatar.jpg', 2, '2003-01-01', '0231248582', N'Hà Nội', 1000, 3, '2023-05-26', 1, 0),
-('thaoduong@gmai.coml', '12345', N'Vũ Thị Thảo Dương', 'img/tempAvatar.jpg', 2, '2003-01-01', '0593996287', N'Hà Nội', 1000, 5, '2023-05-26', 1, 0)
+('son@gmail.com','YvzV1AkiYao7bz5c9EHeow==', N'chu sơn', 'img/tempAvatar.jpg', 1, '2003-05-27', '0363938085', N'Sơn Tây', 1000, 2, '2003-05-27', 1, 0),
+('chi@gmail.com','YvzV1AkiYao7bz5c9EHeow==', N'Minh Chi', 'img/tempAvatar.jpg', 2, '2003-05-27', '0363938085', 'Hà Nội', 1000, 2, '2003-05-27', 1, 0),
+('manh@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Phan Tiến Mạnh', 'img/tempAvatar.jpg', 1, '2003-01-01', '0442511630', N'Hà Nội', 1000, 1, '2023-05-26', 1, 0),
+('linh@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Nguyễn Thị Ngọc Linh', 'img/tempAvatar.jpg', 2, '2003-01-01', '0460429023', N'Hà Nội', 1000, 1, '2023-05-26', 1, 0),
+('quocAnh@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Võ Quốc Anh', 'img/tempAvatar.jpg', 1, '2003-01-01', '0827784536', N'Hà Nội', 1000, 1, '2023-05-26', 1, 0),
+('TuAnh@gmail.com', 'YvzV1AkiYao7bz5c9EHeow==', N'Phan Nguyễn Tú Anh', 'img/tempAvatar.jpg', 2, '2003-01-01', '0197295039', N'Hà Nội', 1000, 1, '2023-05-26', 1, 0),
+('dinhvu@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Trịnh Đình Vũ', 'img/tempAvatar.jpg', 1, '2003-01-01', '0442511630', N'Nam Định', 1000, 2, '2023-05-26', 1, 0),
+('haianh@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Nguyễn Hải Anh', 'img/tempAvatar.jpg', 1, '2003-01-01', '0577951519', N'Hồ Chí Minh', 1000, 2, '2023-05-26', 1, 0),
+('nhatlinh@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Chu Nhật Linh', 'img/tempAvatar.jpg', 2, '2003-01-01', '0783130637', N'Thanh Hoá', 1000, 2, '2023-05-26', 1, 0),
+('thanhtra@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Phùng Thanh Trà', 'img/tempAvatar.jpg', 2, '2003-01-01', '0168700393', N'Đà Nẵng', 1000, 2, '2023-05-26', 1, 0),
+('minhtam@gmail.com', 'YvzV1AkiYao7bz5c9EHeow==', N'Đinh Ngọc Minh Tâm', 'img/tempAvatar.jpg', 2, '2003-05-27', '0556335383', N'Hải Phòng', 1000, 4, '2023-05-26', 1, 0),
+('tiendat@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Trần Tiến Đạt', 'img/tempAvatar.jpg', 1, '2003-01-01', '0836942901', N'Cà Mau', 1000, 3, '2023-05-26', 1, 0),
+('quanghuy@gmail.com', 'YvzV1AkiYao7bz5c9EHeow==', N'Đỗ Quang Huy', 'img/tempAvatar.jpg', 1, '2003-01-01', '0239381909', N'Hà Nội', 1000, 3, '2023-05-26', 1, 0),
+('maihuong@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Nguyễn Mai Hương', 'img/tempAvatar.jpg', 2, '2003-01-01', '0231248582', N'Hà Nội', 1000, 3, '2023-05-26', 1, 0),
+('thaoduong@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Vũ Thị Thảo Dương', 'img/tempAvatar.jpg', 2, '2003-01-01', '0593996287', N'Hà Nội', 1000, 5, '2023-05-26', 1, 0)
 
 
 
