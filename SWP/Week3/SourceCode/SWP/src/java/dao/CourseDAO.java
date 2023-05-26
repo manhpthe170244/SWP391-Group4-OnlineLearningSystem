@@ -110,29 +110,30 @@ public class CourseDAO extends MyDAO {
         }
         return vector;
     }
-    public void searchByName(String course_name) {
+    public Vector<Course> searchByName(String search_name) {
+        Vector<Course> vector = new Vector<Course>();
         xSql = "select*from Course where course_name like ?";
         try {
             ps = con.prepareStatement(xSql);
-             ps.setString(1, "%" + course_name + "%");
+             ps.setString(1, "%" + search_name + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                rs.getString("course_id");
-                rs.getString("course_name");
-                rs.getString("course_title");
-                rs.getString("course_img");
-                rs.getFloat("course_price");
-                rs.getString("course_desc");
-                rs.getString("course_start");
-                rs.getString("course_stop");
-                rs.getString("course_public");
-                rs.getInt("sub_id");
-                rs.getInt("lecturer_id");
-                rs.getInt("level_id");
-                rs.getBoolean("course_status");
+                String course_id = rs.getString("course_id");
+                String course_name = rs.getString("course_name");
+                String course_img = rs.getString("course_img");
+                float course_price = rs.getFloat("course_price");
+                String course_desc = rs.getString("course_desc");
+                Date last_update = rs.getDate("last_update");
+                int sub_id = rs.getInt("sub_id");
+                int level_id = rs.getInt("level_id");
+                Boolean course_status = rs.getBoolean("course_status");
+                int duration = rs.getInt("durationDAY");
+                String courseTitle = rs.getString("course_Title");
+                vector.add(new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
             }
         } catch (Exception e) {
             System.out.println("checkCourse: " + e.getMessage());
         }
+        return vector;
     }
 }
