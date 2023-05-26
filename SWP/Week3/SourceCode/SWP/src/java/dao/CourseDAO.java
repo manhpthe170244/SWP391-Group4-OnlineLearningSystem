@@ -134,7 +134,5 @@ public class CourseDAO extends MyDAO {
         } catch (Exception e) {
             System.out.println("checkCourse: " + e.getMessage());
         }
-
     }
-
 }
