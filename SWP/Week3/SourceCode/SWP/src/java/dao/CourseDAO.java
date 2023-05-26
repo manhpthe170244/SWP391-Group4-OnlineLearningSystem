@@ -114,7 +114,7 @@ public class CourseDAO extends MyDAO {
         xSql = "select*from Course where course_name like ?";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setString(1, course_name);
+             ps.setString(1, "%" + course_name + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 rs.getString("course_id");
