@@ -266,9 +266,9 @@
             const sortType = document.getElementById("sortType");
             sortType.addEventListener("change", function () {
                 if (sortType.value === "recent") {
-                    window.location.href = "courseList?sort_type=recent";
+                    window.location.href = "?sort_type=recent";
                 } else if (sortType.value === "name") {
-                    window.location.href = "courseList?sort_type=name";
+                    window.location.href = "?sort_type=name";
                 }
             });
 

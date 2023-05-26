@@ -73,7 +73,8 @@ public class courseList extends HttpServlet {
         String search = request.getParameter("search");
 
         // Sort type
-        String sort_type = request.getParameter("sub_id");
+        String sort_type = request.getParameter("sort_type");
+        System.out.println(sort_type);
         if (sort_type == null) {
             if (session.getAttribute("sort_type") != null) {
                 sort_type = (String) session.getAttribute("sort_type");
