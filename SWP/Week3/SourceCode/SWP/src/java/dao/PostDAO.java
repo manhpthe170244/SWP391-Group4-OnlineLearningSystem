@@ -45,6 +45,27 @@ public class PostDAO extends MyDAO {
         }
         return vector;
     }
+    
+    public void searchByName(String post_title) {
+        xSql = "select* from Post where post_title like ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, "%" + post_title + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                rs.getInt("post_id");
+                rs.getString("post_img");
+                rs.getString("post_title");
+                rs.getString("post_desc");
+                rs.getDate("post_date");
+                rs.getBoolean("post_status");
+                rs.getInt("blog_id");
+            }
+        } catch (Exception e) {
+            System.out.println("checkPost: " + e.getMessage());
+        }
+
+    }
       public static void main(String[] args) {
         PostDAO cd = new PostDAO();
         Vector<Post> list = cd.getAll();
