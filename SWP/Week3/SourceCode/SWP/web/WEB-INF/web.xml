@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>postList</servlet-name>
+        <servlet-class>controller.postList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>postDetails</servlet-name>
+        <servlet-class>controller.postDetails</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PersonalAccountServlet</servlet-name>
         <url-pattern>/PersonalAccountServlet</url-pattern>
@@ -7,6 +15,14 @@
     <servlet-mapping>
         <servlet-name>courseList</servlet-name>
         <url-pattern>/courseList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>postList</servlet-name>
+        <url-pattern>/postList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>postDetails</servlet-name>
+        <url-pattern>/postDetails</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homepage</welcome-file>
@@ -67,7 +83,6 @@
         <servlet-name>ResetPasswordController</servlet-name>
         <url-pattern>/resetPassword</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
@@ -76,7 +91,4 @@
         <servlet-name>logout</servlet-name>
         <servlet-class>controller.logout</servlet-class>
     </servlet>
-
-    
 </web-app>
-
