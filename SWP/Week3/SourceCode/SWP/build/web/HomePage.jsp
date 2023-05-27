@@ -169,7 +169,7 @@
                                         <div class="price">
                                             <span>$ <%=courseList.get(0).getCourse_price()%></span>
                                         </div>
-                                        <a href="meeting-details.html"><img src="<%=courseList.get(0).getCourse_img()%>" alt="New Lecturer Meeting"></a>
+                                        <a href="meeting-details.html"><img src="img/course-2-1.png" alt="New Lecturer Meeting"></a>
                                     </div>
                                     <div class="down-content">
                                         <div class="date">
