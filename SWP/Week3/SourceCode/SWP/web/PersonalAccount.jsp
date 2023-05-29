@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css?version=12">
         <link rel="stylesheet" href="assets/css/owl.css?version=10">
         <link rel="stylesheet" href="assets/css/lightbox.css?version=10">
-        <link rel="stylesheet" href="assets/css/styling.css?version=14">
+        <link rel="stylesheet" href="assets/css/styling.css?version=3">
         <!--
         
         TemplateMo 569 Edu Meeting
@@ -136,17 +136,23 @@
                         <h2 style="font-size: 150%; text-align: left">My Courses</h2> 
                     </div>
                     <div class="cucourseList col-lg-10 offset-1">
-                        <c:forEach items="${currUserCourses}" var="cuc">
-                            <a href="#">
-                                <div class="CourseCell">
-                                    <img src="${cuc.getCourse_img()}" alt="alt"/>
-                                    <div class="CourseCell_Info">
-                                        <h4>${cuc.getCourse_name()}</h4>
-                                        <p>${cuc.getCourse_desc()}</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </c:forEach>
+                        <ul class="dropdown">
+                            <c:forEach items="${currUserCourses}" var="cuc">
+                                <li>
+                                    <a href="#">
+                                        <div class="CourseCell">
+                                            <img src="${cuc.getUserCourse().getCourse_img()}" alt="alt"/>
+                                            <div class="CourseCell_Info">
+                                                <h4>${cuc.getUserCourse().getCourse_name()}</h4>
+                                                <p>${cuc.getUserCourse().getCourse_desc()}</p>
+                                                <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDate()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDate()}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+
                     </div>
                 </div>
                 <div class="row LogOutButton">

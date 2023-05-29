@@ -11,6 +11,7 @@ import entity.Course;
 import entity.Gender;
 import entity.Role;
 import entity.User;
+import entity.ManageCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -39,8 +40,8 @@ public class PersonalAccountServlet extends HttpServlet {
         } else {
             Gender g = gd.getGenderById(currUser.getGenderId());
             Role r = rd.getRoleById(currUser.getRoleId());
-            //Vector<Course> currUserCourses = cd.getmyCourseList(currUser.getUserId());
-            //request.setAttribute("currUserCourses", currUserCourses);
+            Vector<ManageCourse> currUserCourses = cd.getmyCourseList(currUser.getUserId());
+            request.setAttribute("currUserCourses", currUserCourses);
             request.setAttribute("currUser", currUser);
             request.setAttribute("gender", g);
             request.setAttribute("role", r);

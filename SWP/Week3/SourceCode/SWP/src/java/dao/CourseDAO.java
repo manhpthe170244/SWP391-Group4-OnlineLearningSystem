@@ -13,6 +13,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import dal.DBConnect;
+import entity.ManageCourse;
 import java.sql.Date;
 
 /**
@@ -56,9 +57,9 @@ public class CourseDAO extends MyDAO {
         return n;
     }
 
-    public Vector<Course> getmyCourseList(int user_Id) {
-        Vector<Course> vector = new Vector<Course>();
-        xSql = "select c.* from Course c, Manage_Course mc\n"
+    public Vector<ManageCourse> getmyCourseList(int user_Id) {
+        Vector<ManageCourse> vector = new Vector<ManageCourse>();
+        xSql = "select c.*,mc.course_Start, mc.course_end from Course c, Manage_Course mc\n"
                 + "where c.course_id = mc.course_id\n"
                 + "and mc.user_id = ?";
         try {
@@ -77,7 +78,9 @@ public class CourseDAO extends MyDAO {
                 Boolean course_status = rs.getBoolean("course_status");
                 int duration = rs.getInt("durationDAY");
                 String courseTitle = rs.getString("course_Title");
-                vector.add(new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
+                Date course_Start = rs.getDate("course_Start");
+                Date course_End = rs.getDate("course_end");
+                vector.add(new ManageCourse(course_Start, course_End, course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);

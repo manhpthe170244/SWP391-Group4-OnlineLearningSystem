@@ -1,7 +1,7 @@
 ﻿CREATE TABLE district (
   district_id int NOT NULL,
-  province_id int NOT NULL,
-  name nvarchar(64) NOT NULL
+  province_id int NOT NULL foreign key references province(province_id),
+  name nvarchar(64) NOT NULL 
 ) 
 
 

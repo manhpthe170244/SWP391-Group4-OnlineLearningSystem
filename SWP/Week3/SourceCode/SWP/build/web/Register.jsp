@@ -4,6 +4,10 @@
     Author     : FPT
 --%>
 <%@page import="entity.User" %>
+<%@page import="entity.Province" %>
+<%@page import="entity.District" %>
+<%@page import="dao.DistrictDAO" %>
+<%@page import="dao.ProvinceDAO" %>
 <%@page import="entity.Gender" %>
 <%@page import="entity.Role" %>
 <%@page import="dao.RoleDAO" %>
@@ -15,10 +19,15 @@
 <%
     GenderDAO gd = new GenderDAO();
     RoleDAO rd = new RoleDAO();
+    ProvinceDAO pd = new ProvinceDAO();
+    DistrictDAO dd = new DistrictDAO();
+    Vector<Province> provinceList = pd.getAllProvince();
     Vector<Gender> genderList = gd.getAllGender();
     Vector<Role> roleList = rd.getRegisterRoles();
     pageContext.setAttribute("genderList", genderList);
     pageContext.setAttribute("roleList", roleList);
+    pageContext.setAttribute("provinceList", provinceList);
+    String pname = "";
 %>
 
 <!DOCTYPE html>
@@ -196,10 +205,14 @@
                                                 <input name="dob" type="date" id="date" value="2000-1-1" required="">
                                             </fieldset>
                                         </div>
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <input name="phone" type="tel" id="phone" placeholder="YOUR PHONE NUMBER..." required="">
-                                            </fieldset>
+                                        <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
+                                            <p style="opacity: 0.7">ADDRESS: </p>                                            
+                                                <select name="address" id="province">
+                                                    <c:forEach items="${provinceList}" var="p">
+                                                        <option value="${p.getName()}">${p.getName()}</option>
+                                                    </c:forEach>
+                                                </select>                                         
+<!--                                                <input type="text" id="temp" name="temp">-->
                                         </div>
                                         <c:if test="${phoneErr != null}">
                                             <div class="col-lg-12">
@@ -210,7 +223,8 @@
                                         </c:if>
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <input name="address" type="text" id="address" placeholder="YOUR ADDRESS..." required="">
+                                                <input name="phone" type="text" id="phone" placeholder="YOUR PHONE NUMBER..." required="">
+
                                             </fieldset>   
                                         </div>
                                         <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
@@ -288,7 +302,11 @@
                     }
                 });
             };
+            document.getElementById("province").addEventListener("input", function () {
+                document.getElementById("temp").value = this.value;
+            });
 
+           
             $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
                 e.preventDefault();
                 showSection($(this).attr('href'), true);
