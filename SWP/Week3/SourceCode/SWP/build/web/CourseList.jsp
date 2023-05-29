@@ -162,14 +162,15 @@
                                 <div class="filters">
                                     <ul>
                                         <c:forEach items="${requestScope.subjectList}" var="subject">
-                                            <li><a href="?sub_id=${subject.getSub_id()}">${subject.getSub_name()}</a></li>
-                                        </c:forEach>
+                                            <a href="?sub_id=${subject.getSub_id()}"><li>${subject.getSub_name()}</li></a>
+                                                </c:forEach>
                                     </ul>
                                 </div>
                             </div>
                             <div style="color: white;margin-bottom: 50px" class="col-lg-12">
-                                Sort By <select>
-                                    <option>Recent days</option>
+                                Sort By <select id="sortType">
+                                    <option value="recent">Recent days</option>
+                                    <option value="name">Name</option>
                                 </select>
                             </div>
 
@@ -182,13 +183,13 @@
                                                     <div class="price">
                                                         <span>${course.getCourse_price()} VNĐ</span>
                                                     </div>
-                                                    <a href="meeting-details.html"><img src="${course.getCourse_img()}" alt=""></a>
+                                                    <a href="/SWP/courseDetails?course_id=${course.getCourse_id()}"><img src="${course.getCourse_img()}" alt=""></a>
                                                 </div>
                                                 <div class="down-content">
                                                     <div class="date">
                                                         <h6>${course.getLast_update()}</h6>
                                                     </div>
-                                                    <a href="meeting-details.html"><h4>${course.getCourse_name()}</h4></a><br>
+                                                    <a href="/SWP/courseDetails?course_id=${course.getCourse_id()}"><h4>${course.getCourse_name()}</h4></a><br>
                                                             ${course.getCourseTilte()}
                                                 </div>
                                             </div>
@@ -260,6 +261,26 @@
         <script>
             //according to loftblog tut
             $('.nav li:first').addClass('active');
+
+            // set sort_type
+            const sortType = document.getElementById("sortType");
+            sortType.addEventListener("change", function () {
+                if (sortType.value === "recent") {
+                    window.location.href = "?sort_type=recent";
+                } else if (sortType.value === "name") {
+                    window.location.href = "?sort_type=name";
+                }
+            });
+
+            var paramValue = "${sessionScope.sort_type}";
+            for (var i = 0; i < sortType.options.length; i++) {
+                if (sortType.options[i].value === paramValue) {
+                    sortType.options[i].selected = true;
+                    break;
+                }
+            }
+
+
 
             var showSection = function showSection(section, isAnimate) {
                 var

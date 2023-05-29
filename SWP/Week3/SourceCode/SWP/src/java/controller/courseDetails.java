@@ -4,15 +4,17 @@
  */
 package controller;
 
+import dao.CourseDAO;
+import dao.PricePackageDAO;
 import entity.Course;
+import entity.Price_Package;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Vector;
 
 /**
  *
@@ -31,19 +33,7 @@ public class courseDetails extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet courseDetails</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet courseDetails at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,8 +48,19 @@ public class courseDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String course_id = request.getParameter("course_id");
+        String courseIdString = request.getParameter("course_id");
+        int course_id = Integer.parseInt(courseIdString);
+        CourseDAO courseDAO = new CourseDAO();
+        Course course = courseDAO.searchById(course_id);
+        request.setAttribute("course", course);
         
+        PricePackageDAO pricePackageDAO = new PricePackageDAO();
+        Vector<Price_Package> pricePackageList = pricePackageDAO.getAll();
+        
+        request.setAttribute("pricePackageList", pricePackageList);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("CourseDetails.jsp");
+        rd.forward(request, response);
     }
 
     /**
