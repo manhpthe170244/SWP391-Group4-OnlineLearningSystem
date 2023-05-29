@@ -169,13 +169,13 @@
                                         <div class="price">
                                             <span>$ <%=courseList.get(0).getCourse_price()%></span>
                                         </div>
-                                        <a href="meeting-details.html"><img src="<%=courseList.get(0).getCourse_img()%>" alt="New Lecturer Meeting"></a>
+                                        <a href="/SWP/courseDetails?course_id=<%=courseList.get(0).getCourse_id()%>"><img src="<%=courseList.get(0).getCourse_img()%>" alt="New Lecturer Meeting"></a>
                                     </div>
                                     <div class="down-content">
                                         <div class="date">
                                             <h6>Nov <span>10</span></h6>
                                         </div>
-                                        <a href="meeting-details.html"><h4><%=courseList.get(0).getCourse_name()%></h4></a>
+                                        <a href="/SWP/courseDetails?course_id=<%=courseList.get(0).getCourse_id()%>"><h4><%=courseList.get(0).getCourse_name()%></h4></a>
                                         <p><%=courseList.get(0).getCourseTilte()%></p>
                                     </div>
                                 </div>
@@ -186,13 +186,13 @@
                                         <div class="price">
                                             <span>$ <%=courseList.get(1).getCourse_price()%></span>
                                         </div>
-                                        <a href="meeting-details.html"><img src="<%=courseList.get(1).getCourse_img()%>" alt="Online Teaching"></a>
+                                        <a href="/SWP/courseDetails?course_id=<%=courseList.get(1).getCourse_id()%>"><img src="<%=courseList.get(1).getCourse_img()%>" alt="Online Teaching"></a>
                                     </div>
                                     <div class="down-content">
                                         <div class="date">
                                             <h6>Nov <span>24</span></h6>
                                         </div>
-                                        <a href="meeting-details.html"><h4><%=courseList.get(1).getCourse_name()%></h4></a>
+                                        <a href="/SWP/courseDetails?course_id=<%=courseList.get(1).getCourse_id()%>"><h4><%=courseList.get(1).getCourse_name()%></h4></a>
                                         <p><%=courseList.get(1).getCourseTilte()%></p>
                                     </div>
                                 </div>
@@ -203,13 +203,13 @@
                                         <div class="price">
                                             <span>$ <%=courseList.get(2).getCourse_price()%></span>
                                         </div>
-                                        <a href="meeting-details.html"><img src="<%=courseList.get(2).getCourse_img()%>" alt="Higher Education"></a>
+                                        <a href="/SWP/courseDetails?course_id=<%=courseList.get(2).getCourse_id()%>"><img src="<%=courseList.get(2).getCourse_img()%>" alt="Higher Education"></a>
                                     </div>
                                     <div class="down-content">
                                         <div class="date">
                                             <h6>Nov <span>26</span></h6>
                                         </div>
-                                        <a href="meeting-details.html"><h4><%=courseList.get(2).getCourse_name()%></h4></a>
+                                        <a href="/SWP/courseDetails?course_id=<%=courseList.get(2).getCourse_id()%>"><h4><%=courseList.get(2).getCourse_name()%></h4></a>
                                         <p><%=courseList.get(2).getCourseTilte()%></p>
                                     </div>
                                 </div>
@@ -220,13 +220,13 @@
                                         <div class="price">
                                             <span>$ <%=courseList.get(3).getCourse_price()%></span>
                                         </div>
-                                        <a href="meeting-details.html"><img src="<%=courseList.get(3).getCourse_img()%>" alt="Student Training"></a>
+                                        <a href="/SWP/courseDetails?course_id=<%=courseList.get(3).getCourse_id()%>"><img src="<%=courseList.get(3).getCourse_img()%>" alt="Student Training"></a>
                                     </div>
                                     <div class="down-content">
                                         <div class="date">
                                             <h6>Nov <span>30</span></h6>
                                         </div>
-                                        <a href="meeting-details.html"><h4><%=courseList.get(3).getCourse_name()%></h4></a>
+                                        <a href="/SWP/courseDetails?course_id=<%=courseList.get(3).getCourse_id()%>"><h4><%=courseList.get(3).getCourse_name()%></h4></a>
                                         <p><%=courseList.get(3).getCourseTilte()%></p>
                                     </div>
                                 </div>
