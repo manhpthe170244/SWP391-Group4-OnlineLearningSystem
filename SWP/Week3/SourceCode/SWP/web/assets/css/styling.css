@@ -51,7 +51,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 .Per h2{
     position: relative;
-    left: -145px;
+    left: -73px;
 }
 .EditProfileButton{
     display: inline-block;
@@ -98,4 +98,8 @@ hr{
     margin-top: 20px !important; 
     font-weight: bold;
     color: #d0d656 !important; 
+}
+.EditProfileButton a{
+    position: relative;
+    left: -13px;
 }
