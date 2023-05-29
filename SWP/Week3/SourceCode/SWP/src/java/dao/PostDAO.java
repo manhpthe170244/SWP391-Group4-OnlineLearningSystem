@@ -45,28 +45,55 @@ public class PostDAO extends MyDAO {
         }
         return vector;
     }
-    
-    public void searchByName(String post_title) {
+
+    public Vector<Post> searchByName(String search_title) {
+        Vector<Post> vector = new Vector<Post>();
         xSql = "select* from Post where post_title like ?";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setString(1, "%" + post_title + "%");
+            ps.setString(1, "%" + search_title + "%");
             rs = ps.executeQuery();
-            while (rs.next()) {
-                rs.getInt("post_id");
-                rs.getString("post_img");
-                rs.getString("post_title");
-                rs.getString("post_desc");
-                rs.getDate("post_date");
-                rs.getBoolean("post_status");
-                rs.getInt("blog_id");
-            }
+            int post_id = rs.getInt("post_id");
+            String post_img = rs.getString("post_img");
+            String post_title = rs.getString("post_title");
+            String post_desc = rs.getString("post_desc");
+            Date post_date = rs.getDate("post_date");
+            Boolean post_status = rs.getBoolean("post_status");
+            int blog_id = rs.getInt("blog_id");
+
+            // create object
+            Post post = new Post(post_id, post_img, post_title, post_desc, post_date, post_status, blog_id);
+            vector.add(post);
         } catch (Exception e) {
             System.out.println("checkPost: " + e.getMessage());
         }
-
+        return vector;
     }
-      public static void main(String[] args) {
+    
+    public Post searchById(int search_id) {
+        Post post = null;
+        xSql = "select* from Post where post_title = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, search_id);
+            rs = ps.executeQuery();
+            int post_id = rs.getInt("post_id");
+            String post_img = rs.getString("post_img");
+            String post_title = rs.getString("post_title");
+            String post_desc = rs.getString("post_desc");
+            Date post_date = rs.getDate("post_date");
+            Boolean post_status = rs.getBoolean("post_status");
+            int blog_id = rs.getInt("blog_id");
+
+            // create object
+            post = new Post(post_id, post_img, post_title, post_desc, post_date, post_status, blog_id);
+        } catch (Exception e) {
+            System.out.println("checkPost: " + e.getMessage());
+        }
+        return post;
+    }
+
+    public static void main(String[] args) {
         PostDAO cd = new PostDAO();
         Vector<Post> list = cd.getAll();
         for (Post c : list) {

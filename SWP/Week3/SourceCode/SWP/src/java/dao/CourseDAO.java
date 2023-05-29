@@ -13,6 +13,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import dal.DBConnect;
+import entity.ManageCourse;
 import java.sql.Date;
 
 /**
@@ -38,7 +39,7 @@ public class CourseDAO extends MyDAO {
                 + "     VALUES (?,?,?,?,?,?,?,?,?,?,?) ";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setString(1, course.getCourse_id());
+            ps.setInt(1, course.getCourse_id());
             ps.setString(2, course.getCourse_name());
             ps.setString(3, course.getCourseTilte());
             ps.setString(4, course.getCourse_img());
@@ -56,9 +57,9 @@ public class CourseDAO extends MyDAO {
         return n;
     }
 
-    public Vector<Course> getmyCourseList(int user_Id) {
-        Vector<Course> vector = new Vector<Course>();
-        xSql = "select c.* from Course c, Manage_Course mc\n"
+    public Vector<ManageCourse> getmyCourseList(int user_Id) {
+        Vector<ManageCourse> vector = new Vector<ManageCourse>();
+        xSql = "select c.*,mc.course_Start, mc.course_end from Course c, Manage_Course mc\n"
                 + "where c.course_id = mc.course_id\n"
                 + "and mc.user_id = ?";
         try {
@@ -66,7 +67,7 @@ public class CourseDAO extends MyDAO {
             ps.setInt(1, user_Id);
             rs = ps.executeQuery();
             while (rs.next()) {
-                String course_id = rs.getString("course_id");
+                int course_id = rs.getInt("course_id");
                 String course_name = rs.getString("course_name");
                 String course_img = rs.getString("course_img");
                 float course_price = rs.getFloat("course_price");
@@ -77,7 +78,9 @@ public class CourseDAO extends MyDAO {
                 Boolean course_status = rs.getBoolean("course_status");
                 int duration = rs.getInt("durationDAY");
                 String courseTitle = rs.getString("course_Title");
-                vector.add(new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
+                Date course_Start = rs.getDate("course_Start");
+                Date course_End = rs.getDate("course_end");
+                vector.add(new ManageCourse(course_Start, course_End, course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,7 +95,7 @@ public class CourseDAO extends MyDAO {
             ps = con.prepareStatement(xSql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                String course_id = rs.getString("course_id");
+                int course_id = rs.getInt("course_id");
                 String course_name = rs.getString("course_name");
                 String course_img = rs.getString("course_img");
                 float course_price = rs.getFloat("course_price");
@@ -118,7 +121,7 @@ public class CourseDAO extends MyDAO {
              ps.setString(1, "%" + search_name + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                String course_id = rs.getString("course_id");
+                int course_id = rs.getInt("course_id");
                 String course_name = rs.getString("course_name");
                 String course_img = rs.getString("course_img");
                 float course_price = rs.getFloat("course_price");
@@ -135,5 +138,32 @@ public class CourseDAO extends MyDAO {
             System.out.println("checkCourse: " + e.getMessage());
         }
         return vector;
+    }
+    
+    public Course searchById(int search_id) {
+        Course course = null;
+        xSql = "select*from Course where course_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+             ps.setInt(1, search_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int course_id = rs.getInt("course_id");
+                String course_name = rs.getString("course_name");
+                String course_img = rs.getString("course_img");
+                float course_price = rs.getFloat("course_price");
+                String course_desc = rs.getString("course_desc");
+                Date last_update = rs.getDate("last_update");
+                int sub_id = rs.getInt("sub_id");
+                int level_id = rs.getInt("level_id");
+                Boolean course_status = rs.getBoolean("course_status");
+                int duration = rs.getInt("durationDAY");
+                String courseTitle = rs.getString("course_Title");
+                course = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
+            }
+        } catch (Exception e) {
+            System.out.println("checkCourse: " + e.getMessage());
+        }
+        return course;
     }
 }

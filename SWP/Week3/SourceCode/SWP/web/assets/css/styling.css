@@ -51,7 +51,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 .Per h2{
     position: relative;
-    left: -145px;
+    left: -73px;
 }
 .EditProfileButton{
     display: inline-block;
@@ -74,7 +74,7 @@ hr{
     width: 20%;
 }
 .CourseCell_Info{
-    background-color: #34648b;
+    background-color: #2d5163;
     width: 75%;
     text-align: left;
 
@@ -90,5 +90,31 @@ hr{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis-"........";
+    text-overflow: ellipsis;
+    width: 85%; 
+    font-size: 110%
+}
+
+.meeting-item p{
+    color: white;
+    margin: 5px 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 85%; 
+    font-size: 110%
+}
+
+
+
+.courseDate{
+    margin-top: 20px !important; 
+    font-weight: bold;
+    color: #d0d656 !important; 
+}
+.EditProfileButton a{
+    position: relative;
+    left: -13px;
 }

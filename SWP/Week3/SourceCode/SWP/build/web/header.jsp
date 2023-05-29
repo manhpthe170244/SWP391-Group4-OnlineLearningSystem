@@ -40,7 +40,7 @@
                             <!-- *** Logo End *** -->
                             <!-- *** Menu Start *** -->
                             <ul class="nav">
-                                <li class="scroll-to-section"><a href="#top" class="active">TRANG CHỦ</a></li>
+                                <li><a href="homepage" class="active">TRANG CHỦ</a></li>
                                 <li><a href="meetings.html">KHÓA HỌC CỦA TÔI</a></li>
                                 <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
                                 <li class="has-sub">
@@ -50,7 +50,7 @@
                                         <li><a href="meeting-details.html">Meeting Details</a></li>
                                     </ul>
                                 </li>
-                                <li class="scroll-to-section"><a href="#courses">TRANG CÁ NHÂN</a></li> 
+                                <li><a href="PersonalAccountServlet">TRANG CÁ NHÂN</a></li> 
                             </ul>        
                             <a class='menu-trigger'>
                                 <span>Menu</span>
