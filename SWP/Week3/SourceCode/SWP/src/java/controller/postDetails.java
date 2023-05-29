@@ -4,13 +4,17 @@
  */
 package controller;
 
+import dao.PostDAO;
+import dao.PricePackageDAO;
+import entity.Post;
+import entity.Price_Package;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Vector;
 
 /**
  *
@@ -46,7 +50,17 @@ public class postDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String postIdString = request.getParameter("post_id");
+        int post_id = Integer.parseInt(postIdString);
+        PostDAO postDAO = new PostDAO();
+        Post post = postDAO.searchById(post_id);
+        request.setAttribute("post", post);
+        
+        PricePackageDAO pricePackageDAO = new PricePackageDAO();
+        Vector<Price_Package> pricePackageList = pricePackageDAO.getAll();
+        
+        request.setAttribute("pricePackageList", pricePackageList);
+
         RequestDispatcher rd = request.getRequestDispatcher("PostDetails.jsp");
         rd.forward(request, response);
     }

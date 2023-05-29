@@ -34,6 +34,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
+        <link rel="stylesheet" href="assets/css/styling.css">
         <style>
             .topnav {
                 width: 20%;
@@ -136,8 +137,11 @@
                                                     <div class="date">
                                                         <h6>${course.getLast_update()}</h6>
                                                     </div>
-                                                    <a href="/SWP/courseDetails?course_id=${course.getCourse_id()}"><h4>${course.getCourse_name()}</h4></a><br>
-                                                            ${course.getCourseTilte()}
+                                                    <br>
+                                                    <div>
+                                                        <a href="/SWP/courseDetails?course_id=${course.getCourse_id()}"><h4 style="font-size: 100%">${course.getCourse_name()}</h4></a><br>
+                                                    <p>${course.getCourseTilte()}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
