@@ -17,7 +17,7 @@ values
 ('thaoduong@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Vũ Thị Thảo Dương', 'img/tempAvatar.jpg', 2, '2003-01-01', '0593996287', N'Hà Nội', 1000, 5, '2023-05-26', 1, 0),
 ('nguyenhongnhung@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Nguyễn Hồng Nhung', 'img/tempAvatar.jpg', 2, '2003-01-01', '0438875162', N'Nam Định', 1000, 3, '2023-05-26', 1, 0),
 ('nguyenmanhtrung@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Nguyễn Mạnh Trung', 'img/tempAvatar.jpg', 1, '2003-01-01', '0437905918', N'Bình Định', 1000, 2, '2023-05-26', 1, 0),
-('dangquy@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Đặng Hoàng Quý', 'img/tempAvatar.jpg', 2, '2003-01-01', '0333842851', N'Bình Định', 1000, 3, '2023-05-26', 1, 0),
+('dangquy@gmai.coml', 'YvzV1AkiYao7bz5c9EHeow==', N'Đặng Hoàng Quý', 'img/tempAvatar.jpg', 2, '2003-01-01', '0333842851', N'Bình Định', 1000, 3, '2023-05-26', 1, 0)
 
 
 
@@ -83,3 +83,5 @@ insert into Manage_Course(user_id, course_id, course_Start, course_end) values
 select c.*, mc.course_Start, mc.course_end from Course c, Manage_Course mc
 where c.course_id = mc.course_id
 and mc.user_id = 11
+
+update course set course_img = 'img/tempAvatar.jpg'

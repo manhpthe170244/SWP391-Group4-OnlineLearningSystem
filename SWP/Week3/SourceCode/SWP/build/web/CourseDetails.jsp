@@ -89,9 +89,9 @@
 
         <section class="meetings-page" id="meetings">
             <div class="topnav">
-                
+
             </div>
-            
+
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -115,25 +115,14 @@
                                             ${requestScope.course.getCourse_desc()}
                                         </p>
                                         <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="hours">
-                                                    <h5>Khóa kim cương</h5>
-                                                    <p>Monday - Friday: 07:00 AM - 13:00 PM<br>Saturday- Sunday: 09:00 AM - 15:00 PM</p>
+                                            <c:forEach items="${requestScope.pricePackageList}" var="pricePakage">  
+                                                <div class="col-lg-4">
+                                                    <div class="hours">
+                                                        <h5>${pricePakage.getPackage_name()}</h5>
+                                                        <p>${requestScope.course.getCourse_price() * pricePakage.getMultiple()} VNĐ</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="location">
-                                                    <h5>Khóa học vàng</h5>
-                                                    <p>Recreio dos Bandeirantes, 
-                                                        <br>Rio de Janeiro - RJ, 22795-008, Brazil</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="book now">
-                                                    <h5>Khóa học bạc</h5>
-                                                    <p>010-020-0340<br>090-080-0760</p>
-                                                </div>
-                                            </div>
+                                            </c:forEach>
                                             <div class="col-lg-12">
                                                 <div class="share">
                                                     <a href="/SWP/courseList">Back to course list</a>
