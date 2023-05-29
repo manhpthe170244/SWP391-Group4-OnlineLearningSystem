@@ -183,13 +183,13 @@
                                                     <div class="price">
                                                         <span>${course.getCourse_price()} VNĐ</span>
                                                     </div>
-                                                    <a href="meeting-details.html"><img src="${course.getCourse_img()}" alt=""></a>
+                                                    <a href="/SWP/courseDetails?course_id=${course.getCourse_id()}"><img src="${course.getCourse_img()}" alt=""></a>
                                                 </div>
                                                 <div class="down-content">
                                                     <div class="date">
                                                         <h6>${course.getLast_update()}</h6>
                                                     </div>
-                                                    <a href="meeting-details.html"><h4>${course.getCourse_name()}</h4></a><br>
+                                                    <a href="/SWP/courseDetails?course_id=${course.getCourse_id()}"><h4>${course.getCourse_name()}</h4></a><br>
                                                             ${course.getCourseTilte()}
                                                 </div>
                                             </div>

@@ -96,8 +96,7 @@ public class postList extends HttpServlet {
         if (search == null) {
             postList = postDAO.getAll().stream().filter(s -> s.getBlog_id() == blog_id).collect(Collectors.toList());
         } else {
-            //postList = postDAO.searchByName(search).stream().filter(s -> s.getBlog_id() == blog_id).collect(Collectors.toList());
-            postList = postDAO.getAll().stream().filter(s -> s.getBlog_id() == blog_id).collect(Collectors.toList());
+            postList = postDAO.searchByName(search).stream().filter(s -> s.getBlog_id() == blog_id).collect(Collectors.toList());
         }
 
         // Sort postList by name
