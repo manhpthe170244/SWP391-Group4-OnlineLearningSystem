@@ -133,6 +133,8 @@
                                             <div class="col-lg-12">
                                                 <div class="alert alert-success">
                                                     <strong>Success!</strong> Login Success
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${err}
                                                 </div>
                                             </div>
                                         </c:if>

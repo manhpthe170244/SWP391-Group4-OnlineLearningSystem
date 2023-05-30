@@ -62,7 +62,7 @@ public class ChangePasswordController extends HttpServlet {
             return;
         }
 
-        boolean f = ud.changePass(checkEmail.getUserId(), newPassword);
+        boolean f = ud.changePass(checkEmail.getUserEmail(), ae);
 
         if (!f) {
             request.setAttribute("err", "Wrong when Change password!");

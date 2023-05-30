@@ -5,6 +5,8 @@
 package controller;
 
 import dao.UserDAO;
+import entity.Gender;
+import entity.Role;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -38,18 +41,20 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
+                final String secretKey = "a/f/gr'fw=q-=d-";
 		PrintWriter out = response.getWriter();
-
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
                 UserDAO ud = new UserDAO();
-                User userLogin = ud.login(email, password);               
+                User userLogin = ud.login(email, password);   
+                HttpSession session = request.getSession(true);
+                request.getSession().setAttribute("currUser", userLogin); 
                 if(userLogin != null) {
-                    request.setAttribute("success", "Wrong email or password!");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    response.sendRedirect("homepage");
                 } else {
                     request.setAttribute("err", "Wrong email or password!");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
+                    return;
                 }
                 
                 

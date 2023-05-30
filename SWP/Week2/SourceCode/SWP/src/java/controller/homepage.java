@@ -4,12 +4,13 @@ package controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 import dao.CourseDAO;
 import dao.PostDAO;
+import dao.SliderDAO;
 import dao.SubjectDAO;
 import entity.Course;
 import entity.Post;
+import entity.Slider;
 import entity.Subject;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -52,28 +53,37 @@ public class homepage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        // Get sub_id parameter from jsp
         String subIdString = request.getParameter("sub_id");
         int sub_id;
-        if(subIdString == null){
+        if (subIdString == null) {
             sub_id = 2;
-        }
-        else{
+        } else {
             sub_id = Integer.parseInt(subIdString);
         }
 
+        // Get course list from database
         CourseDAO courseDAO = new CourseDAO();
-        // Select course with sub_id
+        // Select from course list with sub_id
         List<Course> courseList = courseDAO.getAll().stream().filter(s -> s.getSub_id() == sub_id).collect(Collectors.toList());
         request.setAttribute("courseList", courseList);
 
+        // Get subject list from database
         SubjectDAO subjectDAO = new SubjectDAO();
         List<Subject> subjectList = subjectDAO.getAll();
         request.setAttribute("subjectList", subjectList);
-        
+
+        // Get post list from database
         PostDAO postDAO = new PostDAO();
         List<Post> postList = postDAO.getAll();
+        // Sort post list by date
         postList.sort(Comparator.comparing(Post::getPost_date).reversed());
         request.setAttribute("postList", postList);
+        
+        SliderDAO sliderDAO = new SliderDAO();
+        List<Slider> sliderList = sliderDAO.getAll();
+        request.setAttribute("sliderList", sliderList);
 
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }

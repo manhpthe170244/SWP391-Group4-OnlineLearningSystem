@@ -42,7 +42,7 @@ public class ResetPasswordController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-
+        final String secretKey = "a/f/gr'fw=q-=d-";
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -64,7 +64,7 @@ public class ResetPasswordController extends HttpServlet {
             return;
         }
 
-        boolean f = ud.changePass(checkEmail.getUserId(), "defaultpassword123@");
+        boolean f = ud.changePass(checkEmail.getUserEmail(),);
 
         if (!f) {
             request.setAttribute("err", "Wrong when Reset password!");
