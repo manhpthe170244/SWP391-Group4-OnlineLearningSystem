@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 import dal.DBConnect;
 import entity.ManageCourse;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -57,11 +59,24 @@ public class CourseDAO extends MyDAO {
         return n;
     }
 
-    public Vector<ManageCourse> getmyCourseList(int user_Id) {
+    public Vector<ManageCourse> getmyCourseList(int user_Id, String sub_idRaw, String searchName, String sortType) {
         Vector<ManageCourse> vector = new Vector<ManageCourse>();
         xSql = "select c.*,mc.course_Start, mc.course_end from Course c, Manage_Course mc\n"
                 + "where c.course_id = mc.course_id\n"
                 + "and mc.user_id = ?";
+          if(sub_idRaw != null){
+              xSql += " and sub_id = '"+Integer.parseInt(sub_idRaw)+"'";
+          }
+          if(searchName != null){
+              xSql += " and course_name like '%"+searchName+"%'";
+          }
+          if(sortType != null){
+              if(sortType.equals("recent")){
+                  xSql += " order by c.last_update asc";
+              }else{
+                  xSql += " order by course_name asc";
+              }
+          }
         try {
             ps = con.prepareStatement(xSql);
             ps.setInt(1, user_Id);
@@ -88,6 +103,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+
     public Vector<Course> getAll() {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select c.* from Course c";
@@ -113,12 +129,13 @@ public class CourseDAO extends MyDAO {
         }
         return vector;
     }
+
     public Vector<Course> searchByName(String search_name) {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select*from Course where course_name like ?";
         try {
             ps = con.prepareStatement(xSql);
-             ps.setString(1, "%" + search_name + "%");
+            ps.setString(1, "%" + search_name + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 int course_id = rs.getInt("course_id");
@@ -139,13 +156,13 @@ public class CourseDAO extends MyDAO {
         }
         return vector;
     }
-    
+
     public Course searchById(int search_id) {
         Course course = null;
         xSql = "select*from Course where course_id = ?";
         try {
             ps = con.prepareStatement(xSql);
-             ps.setInt(1, search_id);
+            ps.setInt(1, search_id);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int course_id = rs.getInt("course_id");

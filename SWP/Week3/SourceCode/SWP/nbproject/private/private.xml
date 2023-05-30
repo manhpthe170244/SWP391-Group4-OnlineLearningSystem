@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/src/java/controller/registerServlet.java</file>
-            <file>file:/E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/web/PersonalAccount.jsp</file>
-            <file>file:/E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/web/assets/css/styling.css</file>
-            <file>file:/E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/src/java/dao/CourseDAO.java</file>
-            <file>file:/E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/src/java/entity/Course.java</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/src/java/controller/MyCourseListServlet.java</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/web/header.jsp</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/web/WEB-INF/web.xml</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/web/MyCourseList.jsp</file>
         </group>
     </open-files>
 </project-private>
