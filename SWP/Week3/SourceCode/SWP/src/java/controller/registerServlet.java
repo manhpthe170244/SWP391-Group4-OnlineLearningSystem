@@ -99,10 +99,7 @@ public class registerServlet extends HttpServlet {
             request.setAttribute("duplicateEmailErr", "Register failed, Duplicated email!");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
         } else {
-            if (filePart != null) {
-                Files.copy(fileContent, Paths.get(filePath));
-            }
-
+            Files.copy(fileContent, Paths.get(filePath));
             User newUser = new User(0, email, encryptedPassword, fullname, sqlFilePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime, true, 0);
             ud.addNewUser(newUser);
             response.sendRedirect("homepage");
