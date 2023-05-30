@@ -100,3 +100,5 @@ VALUES (1,N'Hãy chọn đáp án đúng: 5 + 3 x 2 = ?',N'Đây là dạng toá
 	(98,N'Hãy chọn đáp án đúng: 3 + 2 - 1 x 5 = ?',N'Đây là dạng toán cơ bản, dựa vào các tính chất của phép tính để thực hiện',10),
 	(99,N'Hãy chọn đáp án đúng: 8 - (3 + 2 x 4) = ?',N'Đây là dạng toán cơ bản, dựa vào các tính chất của phép tính để thực hiện',10),
 	(100,N'Hãy chọn đáp án đúng: 6 x 3 + 4 - 5 = ?',N'Đây là dạng toán cơ bản, dựa vào các tính chất của phép tính để thực hiện',10);
+
+	select * from Question

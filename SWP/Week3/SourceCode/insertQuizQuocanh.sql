@@ -120,3 +120,5 @@ VALUES (1,N'Bài quiz 1: Xác suất và xác suất đồng thời',N'Làm bài
 	(118,N'Bài quiz 2: Sắp xếp một mảng số thực theo thứ tự giảm dần sử dụng thuật toán Selection Sort.',N'Làm bài quiz 2',59,N'True'),
 	(119,N'Bài quiz 1: Tính tích hai ma trận vuông cùng kích thước.',N'Làm bài quiz 1',60,N'True'),
 	(120,N'Bài quiz 2: Áp dụng phép nhân ma trận để tính toán hệ phương trình tuyến tính.',N'Làm bài quiz 2',60,N'True');
+
+	select * from Quiz
