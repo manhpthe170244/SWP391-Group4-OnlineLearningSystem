@@ -25,7 +25,8 @@ values
 
 select * from Role
 
-SET IDENTITY_INSERT [dbo].[Gender] ON
+SET IDENTITY_INSERT Gender OFF
+SET IDENTITY_INSERT Gender ON
 INSERT INTO gender (gender_id, gender_name) VALUES 
 (1, N'Nam'), 
 (2, N'Nữ');
@@ -57,13 +58,12 @@ INSERT [dbo].[Subject] ([sub_name], [sub_img], [sub_desc]) VALUES (N'Sức kho�
 
 select * from Subject
 
+delete from Level
 
-SET IDENTITY_INSERT [dbo].[Level] ON 
-
+SET IDENTITY_INSERT Level ON 
 INSERT [dbo].[Level] ([level_id], [level_name]) VALUES (1, N'Basic')
 INSERT [dbo].[Level] ([level_id], [level_name]) VALUES (2, N'Intermediate')
 INSERT [dbo].[Level] ([level_id], [level_name]) VALUES (3, N'Advanced')
-SET IDENTITY_INSERT [dbo].[Level] OFF
 
 select * from Course
 
