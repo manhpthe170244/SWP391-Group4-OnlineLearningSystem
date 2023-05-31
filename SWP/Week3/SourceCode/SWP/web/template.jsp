@@ -25,45 +25,22 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <style>
-            .topnav {
-                width: 20%;
-                margin: 0 auto;
-                overflow: hidden;
-                margin-bottom: 50px;
-            }
-            .topnav .search-container {
-                float: right;
-            }
 
-            .topnav input[type=text] {
-                padding: 6px;
-                margin-top: 8px;
-                font-size: 17px;
-                border: none;
-            }
-
-            .topnav .search-container button {
-                float: right;
-                padding: 6px 10px;
-                margin-top: 8px;
-                margin-right: 16px;
-                background: #ddd;
-                font-size: 17px;
-                border: none;
-                cursor: pointer;
-            }
-
-            .topnav .search-container button:hover {
-                background: #ccc;
-            }
-        </style>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
-        <section class="main_content" id="meetings" style="padding-top: 50px">
+        
+        <!-- Cach su dung template: dung 2 the include de lay header va footer, sau do pass section o be duoi vao 
+        giua roi chen noi dug trang vao phan ben duoi -->
+        <section class="heading-page header-text">
+            <div class="container">
+                <div class="row">
 
-            <jsp:include page="footer.jsp"/>
+                </div>
+            </div>
         </section>
+
+        <jsp:include page="footer.jsp"/>
+
     </body>
 </html>

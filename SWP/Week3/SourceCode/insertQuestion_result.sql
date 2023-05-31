@@ -1,4 +1,4 @@
-SET IDENTITY_INSERT [dbo].[Ques_Result] ON
+
 INSERT INTO Ques_Result(ques_result_id, ques_id, user_id, ques_status, ques_flag, ques_answer, quiz_result_id) 
 VALUES (1,1,1,N'True',N'False',3,1),
 	(2,2,1,N'True',N'False',3,1),
@@ -100,3 +100,5 @@ VALUES (1,1,1,N'True',N'False',3,1),
 	(98,38,10,N'True',N'False',0,10),
 	(99,39,10,N'True',N'False',0,10),
 	(100,40,10,N'True',N'False',0,10);
+
+	select * from Ques_Result

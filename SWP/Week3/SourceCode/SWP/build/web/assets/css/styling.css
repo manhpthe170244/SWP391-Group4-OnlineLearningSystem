@@ -91,7 +91,7 @@ hr{
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 85%; 
+    width: 85%;
     font-size: 110%
 }
 
@@ -103,18 +103,43 @@ hr{
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 85%; 
+    width: 85%;
     font-size: 110%
 }
 
 
 
 .courseDate{
-    margin-top: 20px !important; 
+    margin-top: 20px !important;
     font-weight: bold;
-    color: #d0d656 !important; 
+    color: #d0d656 !important;
 }
 .EditProfileButton a{
     position: relative;
     left: -13px;
+}
+.emptyCourse{
+    position: relative;
+    top: -50px;
+}
+.emptyCourse img{
+    width: 30%;
+}
+.filters ul{
+    display: flex;
+    justify-content: center;
+}
+.filters a{
+    color: rgb(166, 56, 47);
+    margin: 0 10px;
+
+}
+.subjectfilter{
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-weight: bold;
+}
+.pageT, .filters{
+    margin-bottom: 70px;
 }
