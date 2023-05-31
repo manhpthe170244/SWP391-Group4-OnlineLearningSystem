@@ -40,7 +40,7 @@ public class PersonalAccountServlet extends HttpServlet {
         } else {
             Gender g = gd.getGenderById(currUser.getGenderId());
             Role r = rd.getRoleById(currUser.getRoleId());
-            Vector<ManageCourse> currUserCourses = cd.getmyCourseList(currUser.getUserId());
+            Vector<ManageCourse> currUserCourses = cd.getmyCourseList(currUser.getUserId(), null, null, null);
             request.setAttribute("currUserCourses", currUserCourses);
             request.setAttribute("currUser", currUser);
             request.setAttribute("gender", g);

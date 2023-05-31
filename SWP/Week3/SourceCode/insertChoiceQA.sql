@@ -400,3 +400,4 @@ VALUES (251,85,N'False',63),
 	(398,91,N'False',100),
 	(399,85,N'False',100),
 	(400,27,N'False',100);
+	select * from choices

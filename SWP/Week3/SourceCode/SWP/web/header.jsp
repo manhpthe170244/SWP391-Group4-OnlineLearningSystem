@@ -41,7 +41,7 @@
                             <!-- *** Menu Start *** -->
                             <ul class="nav">
                                 <li><a href="homepage" class="active">TRANG CHỦ</a></li>
-                                <li><a href="meetings.html">KHÓA HỌC CỦA TÔI</a></li>
+                                <li><a href="mycourselistservlet">KHÓA HỌC CỦA TÔI</a></li>
                                 <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
                                 <li class="has-sub">
                                     <a href="javascript:void(0)">Pages</a>
