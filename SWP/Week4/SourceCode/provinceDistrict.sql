@@ -1,12 +1,4 @@
-﻿CREATE TABLE district (
-  district_id int NOT NULL,
-  province_id int NOT NULL foreign key references province(province_id),
-  name nvarchar(64) NOT NULL 
-) 
-
-
-
-INSERT INTO district (district_id, province_id, name) VALUES
+﻿INSERT INTO district (district_id, province_id, name) VALUES
 (1, 1, N'Quận Ba Đình'),
 (2, 1, N'Quận Hoàn Kiếm'),
 (3, 1, N'Quận Tây Hồ'),
@@ -721,11 +713,6 @@ INSERT INTO district (district_id, province_id, name) VALUES
 -- Cấu trúc bảng cho bảng `province`
 --
 
-
-CREATE TABLE province (
-  province_id int NOT NULL,
-  name nvarchar(64)  NOT NULL
-) 
 
 --
 -- Đang đổ dữ liệu cho bảng `province`
