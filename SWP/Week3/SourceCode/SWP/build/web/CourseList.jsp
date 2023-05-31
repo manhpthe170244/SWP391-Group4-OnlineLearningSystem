@@ -119,6 +119,7 @@
                                 Sort By <select id="sortType">
                                     <option value="recent">Recent days</option>
                                     <option value="name">Name</option>
+                                    <option value="price">Price</option>
                                 </select>
                             </div>
 
