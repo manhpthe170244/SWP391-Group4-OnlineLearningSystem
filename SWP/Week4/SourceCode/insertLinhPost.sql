@@ -304,3 +304,5 @@ Thật là một phần thưởng tuyệt vời khi biết rằng nhiều ngư�
 	(38,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(39,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(40,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+	select * from Post
