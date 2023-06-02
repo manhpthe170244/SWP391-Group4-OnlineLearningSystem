@@ -1,7 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="entity.Course" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Vector" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -111,7 +108,7 @@
                                     <ul>
                                         <c:forEach items="${requestScope.subjectList}" var="subject">
                                             <a href="?sub_id=${subject.getSub_id()}"><li>${subject.getSub_name()}</li></a>
-                                                </c:forEach>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>

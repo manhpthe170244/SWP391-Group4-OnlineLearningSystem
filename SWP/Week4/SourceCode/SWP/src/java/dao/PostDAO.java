@@ -48,7 +48,7 @@ public class PostDAO extends MyDAO {
 
     public Vector<Post> searchByName(String search_title) {
         Vector<Post> vector = new Vector<Post>();
-        xSql = "select* from Post where post_title like ?";
+        xSql = "select * from Post where post_title like ?";
         try {
             ps = con.prepareStatement(xSql);
             ps.setString(1, "%" + search_title + "%");
@@ -69,10 +69,10 @@ public class PostDAO extends MyDAO {
         }
         return vector;
     }
-    
+
     public Post searchById(int search_id) {
         Post post = null;
-        xSql = "select* from Post where post_title = ?";
+        xSql = "select * from Post where post_id = ?";
         try {
             ps = con.prepareStatement(xSql);
             ps.setInt(1, search_id);
@@ -94,10 +94,13 @@ public class PostDAO extends MyDAO {
     }
 
     public static void main(String[] args) {
-        PostDAO cd = new PostDAO();
-        Vector<Post> list = cd.getAll();
-        for (Post c : list) {
-            System.out.println(c.getPost_id());
+        PostDAO pd = new PostDAO();
+        Post post = pd.searchById(1);
+        System.out.println(post);
+        
+        Vector<Post> postSearchByName = pd.searchByName("M");
+        for(Post p : postSearchByName){
+            System.out.println(p);
         }
     }
 }

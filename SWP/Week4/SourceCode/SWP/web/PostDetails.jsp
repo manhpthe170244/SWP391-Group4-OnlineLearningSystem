@@ -4,6 +4,7 @@
     Author     : Phan Nguyen Tu Anh
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -134,7 +135,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <!--          <h6>Get all details</h6>-->
-                        <h2>Chi tiết khóa học</h2>
+                        <h2>${requestScope.post}</h2>
                     </div>
                 </div>
             </div>
@@ -152,37 +153,25 @@
                             <div class="col-lg-12">
                                 <div class="meeting-single-item">
                                     <div class="thumb">
-                                        <div class="price">
-                                            <span>$14.00</span>
-                                        </div>
                                         <div class="date">
-                                            <h6>Nov <span>12</span></h6>
+                                            <h6>${requestScope.post.getPost_date()}</h6>
                                         </div>
-                                        <a ><img src="assets/images/single-meeting.jpg" alt=""></a>
+                                        <a href="meeting-details.html"><img src="${requestScope.post.getPost_img()}" alt=""></a>
                                     </div>
                                     <div class="down-content">
-                                        <a ><h4>Online Teaching and Learning Tools</h4></a>
-                                        <p>Recreio dos Bandeirantes, Rio de Janeiro - RJ, 22795-008, Brazil</p>
+                                        <a href="meeting-details.html"><h4>${requestScope.post.getPost_title()}</h4></a>
+                                        <p>${requestScope.post.getCourseTilte()}</p>
                                         <p class="description">
-                                            This is an edu meeting HTML CSS template provided by <a href="https://templatemo.com/" target="_blank" rel="nofollow">TemplateMo website</a>. This is a Bootstrap v5.1.3 layout. If you need more free website templates like this one, please visit our website TemplateMo. Please tell your friends about our website. Thank you. If you want to get the latest collection of HTML CSS templates for your websites, you may visit <a rel="nofollow" href="https://www.toocss.com/" target="_blank">Too CSS website</a>. If you need a working contact form script, please visit <a href="https://templatemo.com/contact" target="_parent">our contact page</a> for more info.
-
-                                            <br><br>You are allowed to use this edu meeting CSS template for your school or university or business. You can feel free to modify or edit this layout. You are not allowed to redistribute the template ZIP file on any other template website. Please contact us for more information.
+                                            ${requestScope.post.getPost_desc()}
                                         </p>
                                         <div class="row">
-
                                             <div class="col-lg-12">
                                                 <div class="share">
-                                                    <a href="PostList.jsp" target="_blank" rel="nofollow">Back to Post List</a>
-
+                                                    <a href="/SWP/postList">Back to post list</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="main-button-red">
-                                    <a href="meetings.html"> ÐANG KÍ NGAY </a>
                                 </div>
                             </div>
                         </div>

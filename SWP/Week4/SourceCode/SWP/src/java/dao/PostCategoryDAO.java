@@ -19,7 +19,7 @@ public class PostCategoryDAO extends MyDAO {
 
     public Vector<PostCategory> getAll() {
         Vector<PostCategory> vector = new Vector<PostCategory>();
-        xSql = "select * from Blog";
+        xSql = "select * from Post_Category";
         try {
             ps = con.prepareStatement(xSql);
             rs = ps.executeQuery();
