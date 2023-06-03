@@ -187,23 +187,23 @@ public class CourseDAO extends MyDAO {
 
     public Map<String, Integer> getDashBoardDataPar(String sortType) {
         Map<String, Integer> map = new LinkedHashMap<>();
-        xSql = "select distinct c.course_name, count(mc.user_id) as participants\n"
+        xSql = "select distinct top 5 c.course_name, count(mc.user_id) as participants\n"
                 + "from Manage_Course mc, Course c, \"User\" u\n"
                 + "where mc.course_id = c.course_id \n"
                 + "and u.user_id = mc.user_id\n"
                 + "group by c.course_name, mc.course_id, mc.user_id";
         if (sortType.equalsIgnoreCase("most")) {
-            xSql += "order by uNumber desc";
+            xSql += " order by participants desc";
         } else {
-            xSql += "order by uNumber asc";
+            xSql += " order by participants desc";
         }
         try {
             ps = con.prepareStatement(xSql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                String provinceName = rs.getNString("course_name");
-                int uNumber = rs.getInt("participants");
-                map.put(provinceName, uNumber);
+                String courseName = rs.getNString("course_name");
+                int participants = rs.getInt("participants");
+                map.put(courseName, participants);
 
             }
         } catch (SQLException e) {

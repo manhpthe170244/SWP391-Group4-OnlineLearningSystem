@@ -33,6 +33,8 @@
         <%
             String[] keys = (String[])request.getAttribute("key");
             Integer[] value = (Integer[])request.getAttribute("values");
+            String[] keys1 = (String[])request.getAttribute("key1");
+            Integer[] value1 = (Integer[])request.getAttribute("values1");
         %>
         <jsp:include page="header.jsp"/>
 
@@ -40,7 +42,7 @@
             <div class="container">
                 <div class="row">
                     Sort:
-                    <select class="dashBoardInput" name="sortType" id="sortTypePop">
+                    <select class="dashBoardInput" name="sortTypePop" id="sortTypePop">
                         <option value="most">Nhiều học sinh nhất</option>
                         <option value="least">Ít học sinh nhất</option>
                     </select>
@@ -48,7 +50,7 @@
                 </div>
                 <div class="row">
                     Sort:
-                    <select class="dashBoardInput" name="sortType" id="sortTypePar">
+                    <select class="dashBoardInput" name="sortTypePar" id="sortTypePar">
                         <option value="most">Nhiều học sinh nhất</option>
                         <option value="least">Ít học sinh nhất</option>
                     </select>
@@ -60,7 +62,7 @@
         <jsp:include page="footer.jsp"/>
         <script>
 
-            var xValues = [<% 
+            var xValuesPop = [<% 
                for (int i = 0; i < keys.length; i++) {
                     out.print("'" + keys[i] + "'");
                     if (i < keys.length - 1) {
@@ -68,7 +70,7 @@
                     }
                 }
             %>];
-            var yValues = [<% 
+            var yValuesPop = [<% 
                for (int i = 0; i < value.length; i++) {
                     out.print("'" + value[i] + "'");
                     if (i < value.length - 1) {
@@ -80,10 +82,10 @@
             new Chart("population", {
                 type: "bar",
                 data: {
-                    labels: xValues,
+                    labels: xValuesPop,
                     datasets: [{
                             backgroundColor: barColors,
-                            data: yValues,
+                            data: yValuesPop,
                             label: "aa"
                         }]
                 },
@@ -124,13 +126,30 @@
 
                 }
             });
+            var xValuesPar = [<% 
+               for (int i = 0; i < keys1.length; i++) {
+                    out.print("'" + keys1[i] + "'");
+                    if (i < keys1.length - 1) {
+                      out.print(", ");
+                    }
+                }
+            %>];
+            var yValuesPar = [<% 
+               for (int i = 0; i < value1.length; i++) {
+                    out.print("'" + value1[i] + "'");
+                    if (i < value1.length - 1) {
+                      out.print(", ");
+                    }
+                }
+            %>];
+            var barColors = ["#FA8C51", "#EA98DA", "#6CE2D2", "#f5f588", "#EB9898"];
             new Chart("myChart1", {
                 type: "participant",
                 data: {
-                    labels: xValues,
+                    labels: xValuesPar,
                     datasets: [{
                             backgroundColor: barColors,
-                            data: yValues,
+                            data: yValuesPar,
                             label: "aa"
                         }]
                 },
