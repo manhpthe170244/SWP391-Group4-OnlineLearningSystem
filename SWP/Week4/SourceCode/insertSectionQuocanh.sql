@@ -60,3 +60,4 @@ VALUES (1,1,N'Xác suất và phân phối xác suất',1),
 	(58,29,N'Kiểm định t-Student',1),
 	(59,30,N'Sắp xếp mảng',1),
 	(60,30,N'Tính toán ma trận',1);
+

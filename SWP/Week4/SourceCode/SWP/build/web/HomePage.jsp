@@ -246,7 +246,6 @@
                         </div>
                     </div>   
                     <div class="col-lg-12">
-
                         <div class="owl-courses-item owl-carousel">
                             <c:forEach items="${requestScope.postList}" var="post">
                                 <div class="item">

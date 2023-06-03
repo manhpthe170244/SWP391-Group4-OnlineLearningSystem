@@ -55,12 +55,6 @@ public class postDetails extends HttpServlet {
         PostDAO postDAO = new PostDAO();
         Post post = postDAO.searchById(post_id);
         request.setAttribute("post", post);
-        
-        PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        Vector<Price_Package> pricePackageList = pricePackageDAO.getAll();
-        
-        request.setAttribute("pricePackageList", pricePackageList);
-
         RequestDispatcher rd = request.getRequestDispatcher("PostDetails.jsp");
         rd.forward(request, response);
     }

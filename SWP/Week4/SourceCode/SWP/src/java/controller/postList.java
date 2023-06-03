@@ -79,10 +79,11 @@ public class postList extends HttpServlet {
         } else {
             currentPage = Integer.parseInt(currentPageString);
         }
-
+        
         int recordsPerPage = 9;
-
+        
         PostDAO postDAO = new PostDAO();
+        
         Vector<Post> postToDisplay = new Vector<>();
 
         PostCategoryDAO blogDAO = new PostCategoryDAO();

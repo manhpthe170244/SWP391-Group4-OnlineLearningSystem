@@ -1,4 +1,4 @@
-
+SET IDENTITY_INSERT Ques_Result ON
 INSERT INTO Ques_Result(ques_result_id, ques_id, user_id, ques_status, ques_flag, ques_answer, quiz_result_id) 
 VALUES (1,1,1,N'True',N'False',3,1),
 	(2,2,1,N'True',N'False',3,1),

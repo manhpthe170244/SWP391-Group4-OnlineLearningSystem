@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -155,9 +157,9 @@
                             <div class="col-lg-12">
                                 <div class="filters">
                                     <ul>
-                                        <c:forEach items="${requestScope.postCategoryList}" var="postCategory">
-                                            <a href="?sub_id=${postCategory.getPostCategory_id()}"><li>${postCategory.getPostCategory_name()}</li></a>
-                                                </c:forEach>
+                                        <c:forEach items="${requestScope.blogList}" var="postCategory">
+                                            <a href="?blog_id=${postCategory.getBlog_id()}"><li>${postCategory.getBlog_name()}</li></a>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
@@ -174,13 +176,13 @@
                                         <div class="col-lg-4 templatemo-item-col all soon">
                                             <div class="meeting-item">
                                                 <div class="thumb">
-                                                    <a href="meeting-details.html"><img src="${post.getPost_img()}" alt=""></a>
+                                                    <a href="/SWP/postDetails?post_id=${post.getPost_id()}"><img src="${post.getPost_img()}" alt=""></a>
                                                 </div>
                                                 <div class="down-content">
                                                     <div class="date">
                                                         <h6>${post.getPost_date()}</h6>
                                                     </div>
-                                                    <a href="meeting-details.html"><h4>${post.getPost_title()}</h4></a><br>
+                                                    <a href="/SWP/postDetails?post_id=${post.getPost_id()}"><h4>${post.getPost_title()}</h4></a><br>
                                                 </div>
                                             </div>
                                         </div>
@@ -252,6 +254,24 @@
             //according to loftblog tut
             $('.nav li:first').addClass('active');
 
+            // set sort_type
+            const sortType = document.getElementById("sortType");
+            sortType.addEventListener("change", function () {
+                if (sortType.value === "recent") {
+                    window.location.href = "?sort_type=recent";
+                } else if (sortType.value === "name") {
+                    window.location.href = "?sort_type=name";
+                }
+            });
+
+            var paramValue = "${sessionScope.sort_type}";
+            for (var i = 0; i < sortType.options.length; i++) {
+                if (sortType.options[i].value === paramValue) {
+                    sortType.options[i].selected = true;
+                    break;
+                }
+            }
+            
             var showSection = function showSection(section, isAnimate) {
                 var
                         direction = section.replace(/#/, ''),
