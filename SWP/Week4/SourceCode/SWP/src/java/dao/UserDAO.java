@@ -7,6 +7,8 @@ package dao;
 import entity.User;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
@@ -124,18 +126,45 @@ public class UserDAO extends MyDAO {
     }
 
     public boolean changePass(String email, String newPassword) {
-     
-        xSql = "update [dbo].[User] set [password] = '"+newPassword+"'"
-                + "where [user_email] = '"+email+"'";
+
+        xSql = "update [dbo].[User] set [password] = '" + newPassword + "'"
+                + "where [user_email] = '" + email + "'";
         boolean f = false;
         try {
 
-            ps = con.prepareStatement(xSql);           
+            ps = con.prepareStatement(xSql);
             ps.executeUpdate();
             f = true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return f;
+    }
+
+    public Map<String, Integer> getDashBoardDataPop(String sortType) {
+        Map<String, Integer> map = new LinkedHashMap<>();
+        xSql = "select top 5 u.user_address, COUNT(u.user_id) as uNumber\n"
+                + "from \"User\" u, province p\n"
+                + "where u.user_address = p.name\n"
+                + "group by (u.user_address)\n";
+                if(sortType.equalsIgnoreCase("most")){
+                    xSql += "order by uNumber desc";
+                }else{
+                    xSql += "order by uNumber asc";
+                }
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String provinceName = rs.getNString("user_address");
+                int uNumber = rs.getInt("uNumber");
+                map.put(provinceName, uNumber);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
+
     }
 }

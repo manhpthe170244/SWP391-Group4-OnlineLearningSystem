@@ -116,7 +116,7 @@ hr{
 }
 .EditProfileButton a{
     position: relative;
-    left: -13px;
+    left: -105px;
 }
 .emptyCourse{
     position: relative;
@@ -142,4 +142,15 @@ hr{
 }
 .pageT, .filters{
     margin-bottom: 70px;
+}
+.myChart{
+    border: 3px solid rgba(160, 159, 159, 0.5);
+    border-radius: 1px;
+    
+}
+.dashBoardInput{
+    width: 17%;
+    position: relative;
+    top: 40px;
+    left: 750px;
 }

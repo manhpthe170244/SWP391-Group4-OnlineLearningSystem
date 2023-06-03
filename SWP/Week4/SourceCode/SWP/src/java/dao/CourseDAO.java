@@ -16,7 +16,9 @@ import dal.DBConnect;
 import entity.ManageCourse;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -64,19 +66,19 @@ public class CourseDAO extends MyDAO {
         xSql = "select c.*,mc.course_Start, mc.course_end from Course c, Manage_Course mc\n"
                 + "where c.course_id = mc.course_id\n"
                 + "and mc.user_id = ?";
-          if(sub_idRaw != null){
-              xSql += " and sub_id = '"+Integer.parseInt(sub_idRaw)+"'";
-          }
-          if(searchName != null){
-              xSql += " and course_name like '%"+searchName+"%'";
-          }
-          if(sortType != null){
-              if(sortType.equals("recent")){
-                  xSql += " order by c.last_update asc";
-              }else{
-                  xSql += " order by course_name asc";
-              }
-          }
+        if (sub_idRaw != null) {
+            xSql += " and sub_id = '" + Integer.parseInt(sub_idRaw) + "'";
+        }
+        if (searchName != null) {
+            xSql += " and course_name like '%" + searchName + "%'";
+        }
+        if (sortType != null) {
+            if (sortType.equals("recent")) {
+                xSql += " order by c.last_update asc";
+            } else {
+                xSql += " order by course_name asc";
+            }
+        }
         try {
             ps = con.prepareStatement(xSql);
             ps.setInt(1, user_Id);
@@ -102,7 +104,6 @@ public class CourseDAO extends MyDAO {
         }
         return vector;
     }
-
 
     public Vector<Course> getAll() {
         Vector<Course> vector = new Vector<Course>();
@@ -132,7 +133,7 @@ public class CourseDAO extends MyDAO {
 
     public Vector<Course> searchByName(String search_name) {
         Vector<Course> vector = new Vector<Course>();
-        xSql = "select*from Course where course_name like ?";
+        xSql = "select * from Course where course_name like ?";
         try {
             ps = con.prepareStatement(xSql);
             ps.setString(1, "%" + search_name + "%");
@@ -182,5 +183,33 @@ public class CourseDAO extends MyDAO {
             System.out.println("checkCourse: " + e.getMessage());
         }
         return course;
+    }
+
+    public Map<String, Integer> getDashBoardDataPar(String sortType) {
+        Map<String, Integer> map = new LinkedHashMap<>();
+        xSql = "select distinct c.course_name, count(mc.user_id) as participants\n"
+                + "from Manage_Course mc, Course c, \"User\" u\n"
+                + "where mc.course_id = c.course_id \n"
+                + "and u.user_id = mc.user_id\n"
+                + "group by c.course_name, mc.course_id, mc.user_id";
+        if (sortType.equalsIgnoreCase("most")) {
+            xSql += "order by uNumber desc";
+        } else {
+            xSql += "order by uNumber asc";
+        }
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String provinceName = rs.getNString("course_name");
+                int uNumber = rs.getInt("participants");
+                map.put(provinceName, uNumber);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
+
     }
 }
