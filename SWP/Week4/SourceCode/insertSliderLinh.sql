@@ -1,0 +1,9 @@
+﻿SET IDENTITY_INSERT [dbo].[Slider] ON 
+
+INSERT [dbo].[Slider] ([slider_id], [slider_title], [slider_img], [slider_link], [slider_status], [slider_note]) VALUES (1, N'Tham gia với chúng tôi để mở mang kiến ​​thức của bạn về khoa học trên thế giới...Chào mừng bạn đến với cuộc hành trình của chúng tôi và chúc bạn may mắn!', N'img/tempAvatar.jpg', N'courselist?subject=1', 1, N'but you didnt have to cut me off')
+INSERT [dbo].[Slider] ([slider_id], [slider_title], [slider_img], [slider_link], [slider_status], [slider_note]) VALUES (2, N'Chỉ để trở thành phiên bản tốt nhất của chính bạn để thích nghi với cơ hội của thế giới1...Chào mừng bạn đến với cuộc hành trình của chúng tôi và chúc bạn may mắn!', N'img/tempAvatar.jpg', N'courselist?subject=3', 1, N'Make out like it never happened and that we were nothing')
+INSERT [dbo].[Slider] ([slider_id], [slider_title], [slider_img], [slider_link], [slider_status], [slider_note]) VALUES (3, N'Tắt những cuộc gọi tắt cả email Flow anh sẽ dắt tay em đi theo', N'img/tempAvatar.jpg', N'courselist?subject=2', 1, N'And I dont even need your love')
+INSERT [dbo].[Slider] ([slider_id], [slider_title], [slider_img], [slider_link], [slider_status], [slider_note]) VALUES (4, N'Đến nột nơi chẳng ai biết là nơi nào Nơi mà nỗi buồn trở nên bé tí teo', N'img/tempAvatar.jpg', N'courselist?subject=2', 1, N'But you treat me like a stranger, and that feels so rough')
+INSERT [dbo].[Slider] ([slider_id], [slider_title], [slider_img], [slider_link], [slider_status], [slider_note]) VALUES (5, N'Nơi mà u sầu mỏng như là cánh ve Nụ cười em nở tròn như là bánh xe', N'img/tempAvatar.jpg', N'courselist?subject=2', 1, N'But you treat me like a stranger, and that feels so rough')
+
+SET IDENTITY_INSERT [dbo].[Slider] OFF

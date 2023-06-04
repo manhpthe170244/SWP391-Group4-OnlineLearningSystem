@@ -55,7 +55,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 .EditProfileButton{
     display: inline-block;
-
+    position: relative;
+    left: 90px;
 }
 .myCourse{
     text-align: center;
@@ -153,4 +154,7 @@ hr{
     position: relative;
     top: 40px;
     left: 750px;
+}
+.noDirectEdit{
+    margin: 0px 0px 20px 10px;
 }

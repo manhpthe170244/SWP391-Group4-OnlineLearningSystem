@@ -104,7 +104,7 @@
                         <p style="color: white; margin-top: 15px">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
                     </div>
                     <div class="col-lg-8 Per">
-                        <h2 style="font-size: 150%; display: inline-block; position: relative; left: -165px">Personal Info</h2> 
+                        <h2 style="font-size: 150%; display: inline-block; position: relative; left: -85px">Personal Info</h2> 
                         <div class="EditProfileButton">
                             <a href="EditProfile.jsp">Edit Profile</a>
                         </div>
