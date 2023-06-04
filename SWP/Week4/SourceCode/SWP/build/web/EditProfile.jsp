@@ -1,5 +1,19 @@
-
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="entity.Province" %>
+<%@page import="dao.ProvinceDAO" %>
+<%@page import="entity.Gender" %>
+<%@page import="dao.GenderDAO" %>
+<%@page import="java.util.Vector" %>
+<%
+    GenderDAO gd = new GenderDAO();
+    ProvinceDAO pd = new ProvinceDAO();
+    Vector<Province> provinceList = pd.getAllProvince();
+    Vector<Gender> genderList = gd.getAllGender();
+    pageContext.setAttribute("genderList", genderList);
+    pageContext.setAttribute("provinceList", provinceList);
+    String pname = "";
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,68 +34,37 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-
+        <link rel="stylesheet" href="assets/css/styling.css?version=20">
     </head>
     <body>
         <jsp:include page="header.jsp"/>
-        
+
         <!-- Cach su dung template: dung 2 the include de lay header va footer, sau do pass section o be duoi vao 
         giua roi chen noi dug trang vao phan ben duoi -->
-        <section class="heading-page header-text">
+        <section class="contact-us" id="contact">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 align-self-center">
                         <div class="row align-content-center justify-content-center">
                             <div class="col-lg-6">
-                                <form id="contact" action="register" method="post" enctype="multipart/form-data">
+                                <form id="contact" action="editprofile" method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h2 class="text-center" >Sign Up</h2>
+                                            <h2 class="text-center" >Edit Profile</h2>
                                         </div>
-                                        <c:if test="${duplicateEmailErr != null}">
-                                            <div class="col-lg-12">
-                                                <div class="alert alert-warning">
-                                                    <strong>Warning!</strong> ${duplicateEmailErr}
-                                                </div>
-                                            </div>
-                                        </c:if>
+
+                                        <div class="col-lg-12 noDirectEdit">
+                                            <p>Email: ${currUser.getUserEmail()}</p>
+                                        </div>
+
+                                        <div class="col-lg-12 noDirectEdit">
+                                            <p>Change your password <a href="changePassword.jsp">here</a>  </p>
+                                        </div>
+
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <input name="email" type="text" id="email" placeholder="YOUR EMAIL..." required="">
+                                                <input name="fullname" type="text" id="fullname" placeholder="YOUR FULLNAME..." value="${currUser.getFullName()}" required="">
                                             </fieldset>
-                                        </div>
-                                        <c:if test="${emailerr != null}">
-                                            <div class="col-lg-12">
-                                                <div class="alert alert-warning">
-                                                    <strong>Warning!</strong> ${emailerr}
-                                                </div>
-                                            </div>
-                                        </c:if>
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <input name="password1" type="password" id="password" placeholder="YOUR PASSWORD..." required="">
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <input name="password2" type="password" id="password" placeholder="RE-ENTER YOUR PASSWORD..." required="">
-                                            </fieldset>
-                                        </div>
-                                        <c:if test="${passworderr != null}">
-                                            <div class="col-lg-12">
-                                                <div class="alert alert-warning">
-                                                    <strong>Warning!</strong> ${passworderr}
-                                                </div>
-                                            </div>
-                                        </c:if>
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <input name="fullname" type="text" id="fullname" placeholder="YOUR FULLNAME..." required="">
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
-                                            <p style="opacity: 0.7">YOUR PROFILE PICTURE</p>
-                                            <input name="userImg" type="file" accept="image/*" id="userImg" style="all:unset">
                                         </div>
                                         <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
                                             <p style="opacity: 0.7">YOUR GENDER</p>
@@ -94,17 +77,17 @@
                                         <div class="col-lg-12">
                                             <p style="opacity: 0.7; margin-left: 10px">YOUR DATE OF BIRTH</p>
                                             <fieldset>
-                                                <input name="dob" type="date" id="date" value="2000-1-1" required="">
+                                                <input name="dob" type="date" id="date" value="${currUser.getDob()}" required="">
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
                                             <p style="opacity: 0.7">ADDRESS: </p>                                            
-                                                <select name="address" id="province">
-                                                    <c:forEach items="${provinceList}" var="p">
-                                                        <option value="${p.getName()}">${p.getName()}</option>
-                                                    </c:forEach>
-                                                </select>                                         
-<!--                                                <input type="text" id="temp" name="temp">-->
+                                            <select name="address" id="province">
+                                                <c:forEach items="${provinceList}" var="p">
+                                                    <option value="${p.getName()}">${p.getName()}</option>
+                                                </c:forEach>
+                                            </select>                                         
+                                            <!--                                                <input type="text" id="temp" name="temp">-->
                                         </div>
                                         <c:if test="${phoneErr != null}">
                                             <div class="col-lg-12">
@@ -115,21 +98,13 @@
                                         </c:if>
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <input name="phone" type="text" id="phone" placeholder="YOUR PHONE NUMBER..." required="">
+                                                <input name="phone" type="text" id="phone" value="${currUser.getUserPhone()}" placeholder="YOUR PHONE NUMBER..." required="">
 
                                             </fieldset>   
                                         </div>
-                                        <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
-                                            <p style="opacity: 0.7; display: inline-block">SIGN UP AS:&emsp;</p>
-                                            <select name="role">
-                                                <c:forEach items="${roleList}" var="r">
-                                                    <option value="${r.getRoleId()}">${r.getRoleName()}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <button type="submit" id="form-submit" class="button">SIGN UP</button>
+                                                <button type="submit" id="form-submit" class="button">Update</button>
                                             </fieldset>
                                         </div>
                                     </div>

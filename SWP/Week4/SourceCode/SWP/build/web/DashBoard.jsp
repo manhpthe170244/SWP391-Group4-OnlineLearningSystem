@@ -114,7 +114,8 @@
                                 ticks: {
                                     fontColor: '#E8E8E8',
                                     beginAtZero: true,
-                                    fontSize: 15
+                                    fontSize: 15,
+                                    callback: function(value) {if (value % 1 === 0) {return value;}}
                                 },
                                 gridLines: {
                                     color: '#A09F9F',
@@ -143,8 +144,8 @@
                 }
             %>];
             var barColors = ["#FA8C51", "#EA98DA", "#6CE2D2", "#f5f588", "#EB9898"];
-            new Chart("myChart1", {
-                type: "participant",
+            new Chart("participant", {
+                type: "bar",
                 data: {
                     labels: xValuesPar,
                     datasets: [{
@@ -165,20 +166,22 @@
                         xAxes: [{
                                 ticks: {
                                     fontColor: '#E8E8E8',
-                                    fontSize: 15,
+                                    fontSize: 10,
 
                                 },
                                 gridLines: {
                                     color: '#A09F9F',
                                     lineWidth: 1
-                                }
+                                }, 
+                                
                             }],
                         yAxes: [{
 
                                 ticks: {
                                     fontColor: '#E8E8E8',
                                     beginAtZero: true,
-                                    fontSize: 15
+                                    fontSize: 15,
+                                    callback: function(value) {if (value % 1 === 0) {return value;}}
                                 },
                                 gridLines: {
                                     color: '#A09F9F',
@@ -193,9 +196,9 @@
             const sortType = document.getElementById("sortTypePop");
             sortType.addEventListener("change", function () {
                 if (sortType.value === "most") {
-                    window.location.href = "?sortType=most";
+                    window.location.href = "?sortTypePop=most";
                 } else if (sortType.value === "least") {
-                    window.location.href = "?sortType=least";
+                    window.location.href = "?sortTypePop=least";
 
                 }
 
@@ -204,6 +207,23 @@
             for (var i = 0; i < sortType.options.length; i++) {
                 if (sortType.options[i].value === paramValue) {
                     sortType.options[i].selected = true;
+                    break;
+                }
+            }
+            const sortTypePar = document.getElementById("sortTypePar");
+            sortTypePar.addEventListener("change", function () {
+                if (sortTypePar.value === "most") {
+                    window.location.href = "?sortTypePar=most";
+                } else if (sortTypePar.value === "least") {
+                    window.location.href = "?sortTypePar=least";
+
+                }
+
+            });
+            var paramValuePar = "${sessionScope.sort_typePar}";
+            for (var i = 0; i < sortType.options.length; i++) {
+                if (sortTypePar.options[i].value === paramValuePar) {
+                    sortTypePar.options[i].selected = true;
                     break;
                 }
             }
