@@ -160,7 +160,6 @@
                                     </div>
                                     <div class="down-content">
                                         <a href="meeting-details.html"><h4>${requestScope.post.getPost_title()}</h4></a>
-                                        <p>${requestScope.post.getCourseTilte()}</p>
                                         <p class="description">
                                             ${requestScope.post.getPost_desc()}
                                         </p>

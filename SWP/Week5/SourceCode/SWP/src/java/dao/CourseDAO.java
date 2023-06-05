@@ -130,6 +130,61 @@ public class CourseDAO extends MyDAO {
         }
         return vector;
     }
+    
+    public Vector<Course> getCourseBySubId(int filter_sub_id) {
+        Vector<Course> vector = new Vector<Course>();
+        xSql = "select c.* from Course c where sub_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, filter_sub_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int course_id = rs.getInt("course_id");
+                String course_name = rs.getString("course_name");
+                String course_img = rs.getString("course_img");
+                float course_price = rs.getFloat("course_price");
+                String course_desc = rs.getString("course_desc");
+                Date last_update = rs.getDate("last_update");
+                int sub_id = rs.getInt("sub_id");
+                int level_id = rs.getInt("level_id");
+                Boolean course_status = rs.getBoolean("course_status");
+                int duration = rs.getInt("durationDAY");
+                String courseTitle = rs.getString("course_Title");
+                vector.add(new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+    
+    // Linh viet lai cai nay nhe
+    public Vector<Course> get4LastestCourse(){
+        Vector<Course> vector = new Vector<Course>();
+        // Sua cai dong duoi nay ne
+        xSql = "select c.* from Course c where sub_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int course_id = rs.getInt("course_id");
+                String course_name = rs.getString("course_name");
+                String course_img = rs.getString("course_img");
+                float course_price = rs.getFloat("course_price");
+                String course_desc = rs.getString("course_desc");
+                Date last_update = rs.getDate("last_update");
+                int sub_id = rs.getInt("sub_id");
+                int level_id = rs.getInt("level_id");
+                Boolean course_status = rs.getBoolean("course_status");
+                int duration = rs.getInt("durationDAY");
+                String courseTitle = rs.getString("course_Title");
+                vector.add(new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
 
     public Vector<Course> searchByName(String search_name) {
         Vector<Course> vector = new Vector<Course>();
