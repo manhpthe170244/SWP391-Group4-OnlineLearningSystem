@@ -78,6 +78,7 @@ public class registerServlet extends HttpServlet {
         String filePath = saveDirectory + fileName;
 
         String sqlFilePath = "img/" + fileName;
+
         String gender = request.getParameter("gender");
         String dobRaw = request.getParameter("dob");
         Date dob = Date.valueOf(dobRaw);
@@ -103,6 +104,7 @@ public class registerServlet extends HttpServlet {
                 InputStream fileContent = filePart.getInputStream();
                 Files.copy(fileContent, Paths.get(filePath));
             }
+
             User newUser = new User(0, email, encryptedPassword, fullname, sqlFilePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime, true, 0);
             ud.addNewUser(newUser);
             response.sendRedirect("homepage");

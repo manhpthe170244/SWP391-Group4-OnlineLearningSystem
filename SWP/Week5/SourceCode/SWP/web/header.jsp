@@ -34,7 +34,7 @@
                     <div class="col-12">
                         <nav class="main-nav">
                             <!-- *** Logo Start *** -->
-                            <a href="index.html" class="logo">
+                            <a href="homepage" class="logo">
                                 Edu Meeting
                             </a>
                             <!-- *** Logo End *** -->

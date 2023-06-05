@@ -72,7 +72,7 @@ public class homepage extends HttpServlet {
 
         PostDAO postDAO = new PostDAO();
         List<Post> postList = postDAO.getAll();
-        postList.sort(Comparator.comparing(Post::getPost_date).reversed());
+        //postList.sort(Comparator.comparing(Post::getPost_date).reversed());
         request.setAttribute("postList", postList);
         
         SliderDAO sliderDAO = new SliderDAO();
