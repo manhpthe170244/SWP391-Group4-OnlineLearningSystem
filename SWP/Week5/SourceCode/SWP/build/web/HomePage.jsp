@@ -37,54 +37,8 @@
 
     <body>
 
-        <!-- Sub Header -->
-        <div class="sub-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-sm-8">
-                        <div class="left-content">
-                            <p>Đây là một website giúp các bạn tìm kiếm khóa học online phù hợp</p>
-                            <a href="register?method=POST"> register </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- *** Header Area Start *** -->
-        <header class="header-area header-sticky">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <nav class="main-nav">
-                            <!-- *** Logo Start *** -->
-                            <a href="homepage" class="logo">
-                                Edu Meeting
-                            </a>
-                            <!-- *** Logo End *** -->
-                            <!-- *** Menu Start *** -->
-                            <ul class="nav">
-                                <li class="scroll-to-section"><a href="homepage" class="active">TRANG CHỦ</a></li>
-                                <li><a href="mycourselistservlet">KHÓA HỌC CỦA TÔI</a></li>
-                                <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
-                                <li class="has-sub">
-                                    <a href="javascript:void(0)">Blog</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                        <li><a href="meeting-details.html">Meeting Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="PersonalAccountServlet">Trang Cá Nhân</a></li> 
-                            </ul>        
-                            <a class='menu-trigger'>
-                                <span>Menu</span>
-                            </a>
-                            <!-- *** Menu End *** -->
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <jsp:include page="header.jsp"/>
         <!-- *** Header Area End *** -->
 
         <!-- *** Main Banner Area Start *** -->
