@@ -439,10 +439,10 @@ public class CourseDAO extends MyDAO {
         for (Course c : cv4) {
             System.out.println(c);
         }
-//        System.out.println("Test searchByNameAndSubIdSortByHottest");
-//        Vector<Course> cv5 = pd.searchByNameAndSubIdSortByHottest("N", 2);
-//        for (Course c : cv5) {
-//            System.out.println(c);
-//        }
+        System.out.println("Test searchByNameAndSubIdSortByHottest");
+        Vector<Course> cv5 = pd.searchByNameAndSubIdSortByHottest("N", 2);
+        for (Course c : cv5) {
+            System.out.println(c);
+        }
     }
 }
