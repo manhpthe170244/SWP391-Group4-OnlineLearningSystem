@@ -292,7 +292,7 @@ public class CourseDAO extends MyDAO {
                 + "FROM course\n"
                 + "INNER JOIN Manage_Course ON course.course_id = Manage_Course.course_id\n"
                 + "INNER JOIN [User] ON Manage_Course.user_id = [User].user_id\n"
-                + "WHERE course.sub_id = [sub_id]\n"
+                + "WHERE course.sub_id = ?\n"
                 + "GROUP BY course.course_id, course.course_name, course.course_img, \n"
                 + "course.course_price, course.course_desc, course.last_update, \n"
                 + "course.sub_id, course.level_id, course.course_status, \n"
@@ -388,7 +388,7 @@ public class CourseDAO extends MyDAO {
                 + "FROM course\n"
                 + "JOIN Manage_Course ON course.course_id = Manage_Course.course_id\n"
                 + "JOIN [User] ON Manage_Course.user_id = [User].user_id\n"
-                + "WHERE course.sub_id = [sub_id] AND course.course_name LIKE ?\n"
+                + "WHERE course.sub_id = ? AND course.course_name LIKE ?\n"
                 + "GROUP BY course.course_id, course.course_name, course.course_img, \n"
                 + "       course.course_price, course.course_desc, course.last_update, \n"
                 + "       course.sub_id, course.level_id, course.course_status, \n"
@@ -396,8 +396,8 @@ public class CourseDAO extends MyDAO {
                 + "ORDER BY user_count DESC";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setString(1, "%" + search_name + "%");
-            ps.setInt(2, search_sub_id);
+            ps.setString(2, "%" + search_name + "%");
+            ps.setInt(1, search_sub_id);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int course_id = rs.getInt("course_id");
@@ -438,7 +438,7 @@ public class CourseDAO extends MyDAO {
 //            System.out.println(c);
 //        }
         System.out.println("Test searchNameSortByHottest");
-        Vector<Course> cv3 = pd.searchNameSortByHottest("G");
+        Vector<Course> cv3 = pd.searchNameSortByHottest("m");
         for (Course c : cv3) {
             System.out.println(c);
         }
