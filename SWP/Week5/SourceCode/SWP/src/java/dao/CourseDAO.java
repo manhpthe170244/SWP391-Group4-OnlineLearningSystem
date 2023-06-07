@@ -250,13 +250,15 @@ public class CourseDAO extends MyDAO {
     public Vector<Course> searchNameSortByHottest(String search_name) {
         Vector<Course> vector = new Vector<Course>();
 
-        xSql = "SELECT top 1000 c.course_id, c.course_name, c.course_img, c.course_price, c.course_desc, c.last_update, c.sub_id, c.level_id, c.course_status, c.durationDAY, c.course_Title, COUNT(*) as user_count\n"
-                + "FROM course c\n"
-                + "INNER JOIN Manage_Course cm ON c.course_id = cm.course_id\n"
-                + "INNER JOIN [User] u ON cm.user_id = u.user_id\n"
-                + "WHERE c.course_name LIKE ?\n"
-                + "GROUP BY c.course_id, c.course_name, c.course_img, c.course_price, c.course_desc, c.last_update, c.sub_id, c.level_id, c.course_status, c.durationDAY, c.course_Title\n"
-                + "ORDER BY user_count DESC";
+        xSql = "SELECT c.*, COALESCE(u.user_count, 0) AS user_count\n"
+                + "                FROM course c\n"
+                + "                LEFT JOIN (\n"
+                + "                  SELECT course_id, COUNT(user_id) AS user_count\n"
+                + "                  FROM manage_course\n"
+                + "                  GROUP BY course_id\n"
+                + "                ) u ON c.course_id = u.course_id\n"
+                + "                WHERE c.course_name like ?\n"
+                + "                ORDER BY user_count DESC";
         try {
             ps = con.prepareStatement(xSql);
             ps.setString(1, "%" + search_name + "%");
@@ -284,23 +286,18 @@ public class CourseDAO extends MyDAO {
     public Vector<Course> searchSubIdSortByHottest(int search_sub_id) {
         Vector<Course> vector = new Vector<Course>();
 
-        xSql = "SELECT top 1000 course.course_id, course.course_name, course.course_img, \n"
-                + "course.course_price, course.course_desc, course.last_update, \n"
-                + "course.sub_id, course.level_id, course.course_status, \n"
-                + "course.durationDAY, course.course_Title,\n"
-                + "COUNT([User].user_id) AS user_count\n"
-                + "FROM course\n"
-                + "INNER JOIN Manage_Course ON course.course_id = Manage_Course.course_id\n"
-                + "INNER JOIN [User] ON Manage_Course.user_id = [User].user_id\n"
-                + "WHERE course.sub_id = [sub_id]\n"
-                + "GROUP BY course.course_id, course.course_name, course.course_img, \n"
-                + "course.course_price, course.course_desc, course.last_update, \n"
-                + "course.sub_id, course.level_id, course.course_status, \n"
-                + "course.durationDAY, course.course_Title\n"
-                + "ORDER BY user_count DESC";
+        xSql = "SELECT c.*, COALESCE(u.user_count, 0) AS user_count\n"
+                + "                FROM course c\n"
+                + "                LEFT JOIN (\n"
+                + "                  SELECT course_id, COUNT(user_id) AS user_count\n"
+                + "                  FROM manage_course\n"
+                + "                  GROUP BY course_id\n"
+                + "                ) u ON c.course_id = u.course_id\n"
+                + "                WHERE c.sub_id = 3\n"
+                + "                ORDER BY user_count DESC";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setInt(1, search_sub_id);
+//            ps.setInt(1, search_sub_id);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int course_id = rs.getInt("course_id");
@@ -380,24 +377,19 @@ public class CourseDAO extends MyDAO {
 
     public Vector<Course> searchByNameAndSubIdSortByHottest(String search_name, int search_sub_id) {
         Vector<Course> vector = new Vector<Course>();
-        xSql = "SELECT top 1000 course.course_id, course.course_name, course.course_img, \n"
-                + "       course.course_price, course.course_desc, course.last_update, \n"
-                + "       course.sub_id, course.level_id, course.course_status, \n"
-                + "       course.durationDAY, course.course_Title,\n"
-                + "       COUNT([User].user_id) AS user_count\n"
-                + "FROM course\n"
-                + "JOIN Manage_Course ON course.course_id = Manage_Course.course_id\n"
-                + "JOIN [User] ON Manage_Course.user_id = [User].user_id\n"
-                + "WHERE course.sub_id = [sub_id] AND course.course_name LIKE ?\n"
-                + "GROUP BY course.course_id, course.course_name, course.course_img, \n"
-                + "       course.course_price, course.course_desc, course.last_update, \n"
-                + "       course.sub_id, course.level_id, course.course_status, \n"
-                + "       course.durationDAY, course.course_Title\n"
-                + "ORDER BY user_count DESC";
+        xSql = "SELECT c.*, COALESCE(u.user_count, 0) AS user_count\n"
+                + "FROM course c\n"
+                + "LEFT JOIN (\n"
+                + "  SELECT course_id, COUNT(user_id) AS user_count\n"
+                + "  FROM manage_course\n"
+                + "  GROUP BY course_id\n"
+                + ") u ON c.course_id = u.course_id\n"
+                + "WHERE c.sub_id = ? and c.course_name like ?\n"
+                + "ORDER BY user_count DESC;";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setString(1, "%" + search_name + "%");
-            ps.setInt(2, search_sub_id);
+            ps.setString(2, "%" + search_name + "%");
+            ps.setInt(1, search_sub_id);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int course_id = rs.getInt("course_id");
