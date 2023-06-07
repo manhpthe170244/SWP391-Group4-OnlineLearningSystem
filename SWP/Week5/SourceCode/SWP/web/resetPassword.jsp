@@ -75,19 +75,13 @@
                                         <c:if test="${success != null}">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-success">
-                                                    <strong>Success!</strong> Password Reset: "defaultpassword123@"
+                                                    <strong>Reset tha</strong> 
                                                 </div>
                                             </div>
                                         </c:if>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="YOUR EMAIL..." required="">
-                                            </fieldset>
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <input name="password" type="password" id="password" placeholder="YOUR PASSWORD..." required="">
                                             </fieldset>
                                         </div>
 

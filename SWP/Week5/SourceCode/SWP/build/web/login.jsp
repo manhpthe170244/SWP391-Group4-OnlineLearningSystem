@@ -102,7 +102,7 @@
                                                 Don't have an account ? Sign up <a href="Register.jsp"> here</a>
                                             </div>
                                             <div style="margin: 5px 0 0 5px">
-                                                Forgot your password ? Reset <a href="Register.jsp">here</a>
+                                                Forgot your password ? Reset <a href="resetPassword.jsp">here</a>
                                             </div>
 
                                         </div>
