@@ -94,6 +94,7 @@ public class PostDAO extends MyDAO {
         return post;
     }
     
+    // Manh
     public Boolean addPost(String post_img, String post_title, String post_desc, Date post_date, Boolean post_status, int blog_id){
         xSql = "INSERT INTO post (post_img, post_title, post_desc, post_date, post_status, blog_id) VALUES (?, ?, ?, ?, ?, ?)";
         try{

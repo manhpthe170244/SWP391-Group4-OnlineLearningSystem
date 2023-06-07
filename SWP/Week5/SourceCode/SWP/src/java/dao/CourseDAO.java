@@ -5,19 +5,14 @@
 package dao;
 
 import entity.Course;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import dal.DBConnect;
 import entity.ManageCourse;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +21,7 @@ import java.util.Map;
  */
 public class CourseDAO extends MyDAO {
 
+    // Son
     public int addCourse(Course course) {
         int n = 0;
         xSql = "INSERT INTO [dbo].[Course]\n"
@@ -61,6 +57,7 @@ public class CourseDAO extends MyDAO {
         return n;
     }
 
+    // Son
     public Vector<ManageCourse> getmyCourseList(int user_Id, String sub_idRaw, String searchName, String sortType) {
         Vector<ManageCourse> vector = new Vector<ManageCourse>();
         xSql = "select c.*,mc.course_Start, mc.course_end from Course c, Manage_Course mc\n"
@@ -105,6 +102,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Vector<Course> getAll() {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select c.* from Course c";
@@ -131,6 +129,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Vector<Course> getCourseBySubId(int filter_sub_id) {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select c.* from Course c where sub_id = ?";
@@ -158,6 +157,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Vector<Course> getHottestCourse() {
         Vector<Course> vector = new Vector<Course>();
         xSql = "SELECT course.course_id, course.course_name, course.course_img, course.course_price,\n"
@@ -193,6 +193,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Vector<Course> searchByName(String search_name) {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select * from Course where course_name like ?";
@@ -220,6 +221,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Course searchById(int search_id) {
         Course course = null;
         xSql = "select*from Course where course_id = ?";
@@ -247,6 +249,7 @@ public class CourseDAO extends MyDAO {
         return course;
     }
 
+    // Linh
     public Vector<Course> searchNameSortByHottest(String search_name) {
         Vector<Course> vector = new Vector<Course>();
 
@@ -283,6 +286,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Vector<Course> searchSubIdSortByHottest(int search_sub_id) {
         Vector<Course> vector = new Vector<Course>();
 
@@ -319,6 +323,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Son
     public Map<String, Integer> getDashBoardDataPar(String sortType) {
         Map<String, Integer> map = new LinkedHashMap<>();
         xSql = "select distinct top 5 c.course_name, count(mc.user_id) as participants\n"
@@ -347,6 +352,7 @@ public class CourseDAO extends MyDAO {
 
     }
 
+    // Linh
     public Vector<Course> getByNameAndSubId(String search_name, int filter_sub_id) {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select * from Course where course_name like ? and sub_id =?";
@@ -375,6 +381,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Vector<Course> searchByNameAndSubIdSortByHottest(String search_name, int search_sub_id) {
         Vector<Course> vector = new Vector<Course>();
         xSql = "SELECT c.*, COALESCE(u.user_count, 0) AS user_count\n"
@@ -411,6 +418,27 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    //Manh
+    public Boolean addCourseToUser(int course_id, int user_id, Date course_start, Date course_end) {
+        xSql = "INSERT INTO Manage_Course (course_id, user_id, course_Start, course_end) VALUES (?, ?, ?, ?)";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, course_id);
+            ps.setInt(2, user_id);
+            ps.setDate(3, course_start);
+            ps.setDate(4, course_end);
+            int row = ps.executeUpdate();
+            if (row > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("checkCourse: " + ex.getMessage());
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
 //        System.out.println("Test getHottestCourse");
@@ -443,6 +471,14 @@ public class CourseDAO extends MyDAO {
         Vector<Course> cv5 = pd.searchByNameAndSubIdSortByHottest("N", 2);
         for (Course c : cv5) {
             System.out.println(c);
+        }
+        
+        System.out.println("Test addCourseToUser");
+        if(pd.addCourseToUser(1, 3, Date.valueOf("2023-05-26"), Date.valueOf("2023-06-25"))){
+            System.out.println("Success");
+        }
+        else{
+            System.out.println("Fail");
         }
     }
 }

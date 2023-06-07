@@ -54,11 +54,6 @@ public class courseDetails extends HttpServlet {
         Course course = courseDAO.searchById(course_id);
         request.setAttribute("course", course);
         
-        PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        Vector<Price_Package> pricePackageList = pricePackageDAO.getAll();
-        
-        request.setAttribute("pricePackageList", pricePackageList);
-        
         RequestDispatcher rd = request.getRequestDispatcher("CourseDetails.jsp");
         rd.forward(request, response);
     }

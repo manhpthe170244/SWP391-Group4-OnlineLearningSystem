@@ -4,12 +4,16 @@
  */
 package controller;
 
+import dao.CourseDAO;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Date;
+import java.util.Calendar;
 
 /**
  *
@@ -34,7 +38,7 @@ public class CourseRegister extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CourseRegister</title>");            
+            out.println("<title>Servlet CourseRegister</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CourseRegister at " + request.getContextPath() + "</h1>");
@@ -55,7 +59,25 @@ public class CourseRegister extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        User u = (User) request.getSession().getAttribute("currUser");
+        String courseIdString = request.getParameter("course_id");
+        int course_id = Integer.parseInt(courseIdString);
+
+        // Get current date
+        Calendar calendar = Calendar.getInstance();
+        java.util.Date currentDate = calendar.getTime();
+        // Convert java.util.Date to java.sql.Date
+        Date sqlCurrentDate = new Date(currentDate.getTime());
+        // Get end date
+        calendar.add(Calendar.DATE, 10);
+        java.util.Date endDate = calendar.getTime();
+        // Convert java.util.Date to java.sql.Date
+        Date sqlEndDate = new Date(endDate.getTime());
+        
+        CourseDAO courseDAO = new CourseDAO();
+        if(courseDAO.addCourseToUser(course_id, u.getUserId(), sqlCurrentDate, sqlEndDate)){
+            response.sendRedirect("MyCourseListServlet");
+        }
     }
 
     /**
