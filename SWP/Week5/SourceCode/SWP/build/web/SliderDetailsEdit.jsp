@@ -117,7 +117,7 @@
             <div class="container">
                 <div class="row">
 
-                    <form>
+                    <form method="post" action="#">
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
@@ -125,23 +125,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="slider-title">Title:</label>
-                                <input type="text" id="slider-title" name="slider-title" placeholder="Title" value="${slider.getSlider_title()}" required>
+                                <input type="text" id="slider-title" name="slider_title" placeholder="Title" value="${slider.getSlider_title()}" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="slider-backlink">Backlink:</label>
-                                <input type="text" id="slider-backlink" name="slider-backlink" placeholder="Black link" value="${slider.getSlider_link()}" required>
+                                <input type="text" id="slider-link" name="slider_link" placeholder="Black link" value="${slider.getSlider_link()}" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="slider-note">Note:</label>
-                                <textarea id="slider-note" name="slider-note" placeholder="Enter note" value="${slider.getSlider_link()}"></textarea>
+                                <textarea id="slider-note" name="slider_note" placeholder="Enter note" value="${slider.getSlider_link()}"></textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
                                 <label for="slider-image" style="margin-right: 10px; color: white">Slider Image:</label>
                                 <div class="input-wrapper">
-                                    <input type="file" id="slider-image" name="slider-image">
+                                    <input type="file" id="slider-image" name="slider_image">
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 760px;">
