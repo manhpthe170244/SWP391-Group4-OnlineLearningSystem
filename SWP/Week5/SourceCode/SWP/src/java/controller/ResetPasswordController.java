@@ -15,6 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Random;
 
 /**
  *
@@ -36,6 +37,30 @@ public class ResetPasswordController extends HttpServlet {
 
     }
 
+    public String getRandomPassword() {
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(8);
+
+        for (int i = 0; i < 8; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int) (AlphaNumericString.length()
+                    * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+
+        return sb.toString();
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -44,34 +69,27 @@ public class ResetPasswordController extends HttpServlet {
         PrintWriter out = response.getWriter();
         final String secretKey = "a/f/gr'fw=q-=d-";
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
 
         UserDAO ud = new UserDAO();
 
         User checkEmail = ud.getUserByEmail(email);
-
-        User checkEmailPassword = ud.login(email, AES.encrypt(password, secretKey));
 
         if (checkEmail == null) {
             request.setAttribute("err", "Email does not exist!");
             request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
             return;
         }
+        MailSender ms = new MailSender();
+        String randPassword = getRandomPassword();
 
-        if (checkEmailPassword == null) {
-            request.setAttribute("err", "Wrong old password!");
-            request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
-            return;
-        }
-
-        boolean f = ud.changePass(checkEmail.getUserEmail(),AES.encrypt("defaultpassword123@", secretKey));
+        boolean f = ud.changePass(checkEmail.getUserEmail(), AES.encrypt(randPassword, secretKey));
 
         if (!f) {
             request.setAttribute("err", "Wrong when Reset password!");
             request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
             return;
         }
-
+        ms.sendEmail(email, "Your password has been successfully reseted", "Your new password is "+randPassword+", login to your account with this password and change your password at edit profile");
         request.setAttribute("success", "Sucess");
         request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
 
