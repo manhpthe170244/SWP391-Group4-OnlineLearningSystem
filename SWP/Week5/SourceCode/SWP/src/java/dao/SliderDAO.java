@@ -98,7 +98,7 @@ public class SliderDAO extends MyDAO {
         System.out.println("Test addSlider");
         Boolean inserted = pc.addSlider("Nơi mưa không cần trú, nơi nắng không cần che", 
                 "img/tempAvatar.jpg", 
-                "courselist?subject=4", 
+                "courseList?subject=4", 
                 true, 
                 "Trong một khoảnh khắc ta không nhớ mình là ai");
         System.out.println(inserted);
@@ -106,7 +106,7 @@ public class SliderDAO extends MyDAO {
         System.out.println("Test updateSlider");
         Boolean updated = pc.updateSlider(6, "Mình cùng chia nhau mảnh không gian này", 
                 "img/tempAvatar.jpg", 
-                "courselist?subject=4", 
+                "courseList?subject=4", 
                 true, 
                 "Anh là thằng nhóc chân anh không mang giày");
         System.out.println(updated);
