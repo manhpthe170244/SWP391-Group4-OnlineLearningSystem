@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -59,7 +60,8 @@ public class CourseRegister extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User u = (User) request.getSession().getAttribute("currUser");
+        HttpSession session = request.getSession(false);
+        User u = (User) session.getAttribute("currUser");
         String courseIdString = request.getParameter("course_id");
         int course_id = Integer.parseInt(courseIdString);
 
@@ -75,8 +77,16 @@ public class CourseRegister extends HttpServlet {
         Date sqlEndDate = new Date(endDate.getTime());
         
         CourseDAO courseDAO = new CourseDAO();
-        if(courseDAO.addCourseToUser(course_id, u.getUserId(), sqlCurrentDate, sqlEndDate)){
-            response.sendRedirect("MyCourseListServlet");
+        if(u != null){
+            if(courseDAO.addCourseToUser(course_id, u.getUserId(), sqlCurrentDate, sqlEndDate)) {
+                response.sendRedirect("mycourselistservlet");
+            }
+            else{
+                
+            }
+        }
+        else{
+            response.sendRedirect("login.jsp");
         }
     }
 
