@@ -123,7 +123,7 @@ public class courseList extends HttpServlet {
 
         // Get courseList by search and sub_id
         if (search == null) {
-            courseList = courseDAO.getAll().stream().filter(s -> s.getSub_id() == sub_id).collect(Collectors.toList());
+            courseList = courseDAO.getCourseBySubId(sub_id);
         } else {
             courseList = courseDAO.searchByName(search).stream().filter(s -> s.getSub_id() == sub_id).collect(Collectors.toList());
         }

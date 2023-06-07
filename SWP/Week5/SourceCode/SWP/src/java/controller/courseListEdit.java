@@ -10,13 +10,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 /**
  *
  * @author ACER
  */
-public class postDetailsEdit extends HttpServlet {
+public class courseListEdit extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +34,10 @@ public class postDetailsEdit extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet postDetailsEdit</title>");            
+            out.println("<title>Servlet courseListEdit</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet postDetailsEdit at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet courseListEdit at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,15 +55,9 @@ public class postDetailsEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String post_title = request.getParameter("post_title");
-        String post_des = request.getParameter("post_title");
-        String blog_id = request.getParameter("blog_id");
-        Date date = new Date();
-        Date post_date = date;
-        try ( PrintWriter out = response.getWriter()) {
-            out.println("<p>" + post_date + "</p>");
-        }
+        String course_name = request.getParameter("course_name");
+        String course_price = request.getParameter("course_price");
+        String course_des = request.getParameter("course_des");
     }
 
     /**
