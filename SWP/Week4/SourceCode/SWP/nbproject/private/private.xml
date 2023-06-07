@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/D:/SWP391project/SWP391_Project/SWP/Week4/SourceCode/SWP/web/header.jsp</file>
             <file>file:/D:/SWP391project/SWP391_Project/SWP/Week4/SourceCode/SWP/web/index.html</file>
@@ -13,5 +14,8 @@
             <file>file:/D:/SWP391project/SWP391_Project/SWP/Week4/SourceCode/SWP/src/java/controller/postList.java</file>
             <file>file:/D:/SWP391project/SWP391_Project/SWP/Week4/SourceCode/SWP/web/QuizReview.jsp</file>
         </group>
+=======
+        <group/>
+>>>>>>> bce27beaa0b2273c9d102fe50111d97a1a2f9dd1
     </open-files>
 </project-private>

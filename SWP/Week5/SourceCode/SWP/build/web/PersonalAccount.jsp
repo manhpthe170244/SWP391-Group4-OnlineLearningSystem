@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css?version=12">
         <link rel="stylesheet" href="assets/css/owl.css?version=10">
         <link rel="stylesheet" href="assets/css/lightbox.css?version=10">
-        <link rel="stylesheet" href="assets/css/styling.css?version=12">
+        <link rel="stylesheet" href="assets/css/styling.css?version=10">
         <!--
         
         TemplateMo 569 Edu Meeting
@@ -42,58 +42,7 @@
 
 
 
-        <!-- Sub Header -->
-        <div class="sub-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-sm-8">
-                        <div class="left-content">
-                            <!--                            <p>Đây là một website giúp các bạn tìm kiếm khóa học online phù hợp</p>-->
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-4">
-                        <div class="right-icons">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ***** Header Area Start ***** -->
-        <header class="header-area header-sticky">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <nav class="main-nav">
-                            <!-- *** Logo Start *** -->
-                            <a href="index.html" class="logo">
-                                Edu Meeting
-                            </a>
-                            <!-- *** Logo End *** -->
-                            <!-- *** Menu Start *** -->
-                            <ul class="nav">
-                                <li class="scroll-to-section"><a href="#top" class="active">TRANG CHỦ</a></li>
-                                <li><a href="meetings.html">KHÓA HỌC CỦA TÔI</a></li>
-                                <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
-                                <li class="has-sub">
-                                    <a href="javascript:void(0)">Pages</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                        <li><a href="meeting-details.html">Meeting Details</a></li>
-                                    </ul>
-                                </li>
-                                <li class="scroll-to-section"><a href="#courses">TRANG CÁ NHÂN</a></li> 
-                            </ul>        
-                            <a class='menu-trigger'>
-                                <span>Menu</span>
-                            </a>
-                            <!-- *** Menu End *** -->
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <jsp:include page="header.jsp"/>
         <!-- ***** Header Area End ***** -->
 
         <section class="heading-page header-text">

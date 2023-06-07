@@ -17,6 +17,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Date;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,9 +73,21 @@ public class homepage extends HttpServlet {
 
         PostDAO postDAO = new PostDAO();
         List<Post> postList = postDAO.getAll();
-        postList.sort(Comparator.comparing(Post::getPost_date).reversed());
+        postList.sort((p1, p2) -> {
+            Date d1 = p1.getPost_date();
+            Date d2 = p2.getPost_date();
+            if (d1 == null && d2 == null) {
+                return 0;
+            } else if (d1 == null) {
+                return 1;
+            } else if (d2 == null) {
+                return -1;
+            } else {
+                return d2.compareTo(d1);
+            }
+        });
         request.setAttribute("postList", postList);
-        
+
         SliderDAO sliderDAO = new SliderDAO();
         List<Slider> sliderList = sliderDAO.getAll();
         request.setAttribute("sliderList", sliderList);
