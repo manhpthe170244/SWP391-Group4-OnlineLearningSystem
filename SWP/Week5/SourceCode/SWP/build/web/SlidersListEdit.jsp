@@ -152,7 +152,7 @@
                                 <td>${slider.getSlider_img()}</td>
                                 <td>${slider.getSlider_link()}</td>
                                 <td>${(slider.isSlider_status()) ? "Active" : "Inactive"}</td>
-                                <td><button>Hide</button><button>Detail</button></td>
+                                <td><button>Delete</button><button>Edit</button></td>
                             </tr>             
                         </c:forEach>
                     </table>

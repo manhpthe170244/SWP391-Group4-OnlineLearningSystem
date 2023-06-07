@@ -157,6 +157,44 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Manh
+    public Vector<Course> Get4HottestBySubId(int search_sub_id) {
+        Vector<Course> vector = new Vector<Course>();
+
+        xSql = "SELECT top 4 c.*, COALESCE(u.user_count, 0) AS user_count\n"
+                + "                FROM course c\n"
+                + "                LEFT JOIN (\n"
+                + "                  SELECT course_id, COUNT(user_id) AS user_count\n"
+                + "                  FROM manage_course\n"
+                + "                  GROUP BY course_id\n"
+                + "                ) u ON c.course_id = u.course_id\n"
+                + "                WHERE c.sub_id = ?\n"
+                + "                ORDER BY user_count DESC";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, search_sub_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int course_id = rs.getInt("course_id");
+                String course_name = rs.getString("course_name");
+                String course_img = rs.getString("course_img");
+                float course_price = rs.getFloat("course_price");
+                String course_desc = rs.getString("course_desc");
+                Date last_update = rs.getDate("last_update");
+                int sub_id = rs.getInt("sub_id");
+                int level_id = rs.getInt("level_id");
+                Boolean course_status = rs.getBoolean("course_status");
+                int duration = rs.getInt("durationDAY");
+                String courseTitle = rs.getString("course_Title");
+                Course c = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
+                vector.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println("checkCourse: " + e.getMessage());
+        }
+        return vector;
+    }
+    
     // Linh
     public Vector<Course> getHottestCourse() {
         Vector<Course> vector = new Vector<Course>();
@@ -279,6 +317,7 @@ public class CourseDAO extends MyDAO {
                 int duration = rs.getInt("durationDAY");
                 String courseTitle = rs.getString("course_Title");
                 Course c = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
+                vector.add(c);
             }
         } catch (Exception e) {
             System.out.println("checkCourse: " + e.getMessage());
@@ -297,11 +336,11 @@ public class CourseDAO extends MyDAO {
                 + "                  FROM manage_course\n"
                 + "                  GROUP BY course_id\n"
                 + "                ) u ON c.course_id = u.course_id\n"
-                + "                WHERE c.sub_id = 3\n"
+                + "                WHERE c.sub_id = ?\n"
                 + "                ORDER BY user_count DESC";
         try {
             ps = con.prepareStatement(xSql);
-//            ps.setInt(1, search_sub_id);
+            ps.setInt(1, search_sub_id);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int course_id = rs.getInt("course_id");
@@ -316,6 +355,7 @@ public class CourseDAO extends MyDAO {
                 int duration = rs.getInt("durationDAY");
                 String courseTitle = rs.getString("course_Title");
                 Course c = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
+                vector.add(c);
             }
         } catch (Exception e) {
             System.out.println("checkCourse: " + e.getMessage());
@@ -473,12 +513,18 @@ public class CourseDAO extends MyDAO {
             System.out.println(c);
         }
         
-        System.out.println("Test addCourseToUser");
-        if(pd.addCourseToUser(1, 3, Date.valueOf("2023-05-26"), Date.valueOf("2023-06-25"))){
-            System.out.println("Success");
+        System.out.println("Test Get4HottestBySubId");
+        Vector<Course> cv6 = pd.Get4HottestBySubId(2);
+        for (Course c : cv6) {
+            System.out.println(c);
         }
-        else{
-            System.out.println("Fail");
-        }
+        
+//        System.out.println("Test addCourseToUser");
+//        if(pd.addCourseToUser(1, 3, Date.valueOf("2023-05-26"), Date.valueOf("2023-06-25"))){
+//            System.out.println("Success");
+//        }
+//        else{
+//            System.out.println("Fail");
+//        }
     }
 }
