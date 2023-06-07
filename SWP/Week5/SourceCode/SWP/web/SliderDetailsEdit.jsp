@@ -26,83 +26,83 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
-           
-.slider-detail {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
 
-.slider-detail-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
+            .slider-detail {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
 
-.slider-detail-content {
-  border: 1px solid #ccc;
-  padding: 20px;
-}
+            .slider-detail-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-.form-group {
-  margin-bottom: 10px;
-}
+            .slider-detail-content {
+                border: 1px solid #ccc;
+                padding: 20px;
+            }
 
-.form-group label {
-  display: block;
-  font-weight: bold;
-}
+            .form-group {
+                margin-bottom: 10px;
+            }
 
-.form-group input[type="text"],
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  padding: 5px;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-}
+            .form-group label {
+                display: block;
+                font-weight: bold;
+            }
 
-.form-group select {
-  height: 30px;
-}
+            .form-group input[type="text"],
+            .form-group select,
+            .form-group textarea {
+                width: 100%;
+                padding: 5px;
+                border-radius: 3px;
+                border: 1px solid #ccc;
+            }
 
-.form-group textarea {
-  height: 100px;
-}
+            .form-group select {
+                height: 30px;
+            }
 
-.form-group button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 3px;
-  cursor: pointer;
-}
+            .form-group textarea {
+                height: 100px;
+            }
 
-.form-group button:hover {
-  background-color: #0069d9;
-}
-.form-group input-wrapper {
-  display: flex;
-  align-items: center;
-}
+            .form-group button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 3px;
+                cursor: pointer;
+            }
 
-.form-group img {
-  width: 760px;
-  margin-left: 10px;
-  border: 1px solid #ddd;
-  padding: 300px;
-  box-sizing: border-box;
-  border-radius: 3px;
-}
-.form-group preview-image {
-  max-width: 100%;
-  width: 300px;
-  margin-left: 10px;
-  border: 1px solid #ddd;
-  padding: 300px;
-  box-sizing: border-box;
-  border-radius: 3px;
-}
+            .form-group button:hover {
+                background-color: #0069d9;
+            }
+            .form-group input-wrapper {
+                display: flex;
+                align-items: center;
+            }
+
+            .form-group img {
+                width: 760px;
+                margin-left: 10px;
+                border: 1px solid #ddd;
+                padding: 300px;
+                box-sizing: border-box;
+                border-radius: 3px;
+            }
+            .form-group preview-image {
+                max-width: 100%;
+                width: 300px;
+                margin-left: 10px;
+                border: 1px solid #ddd;
+                padding: 300px;
+                box-sizing: border-box;
+                border-radius: 3px;
+            }
         </style>
     </head>
     <body>
@@ -116,57 +116,57 @@
 
             <div class="container">
                 <div class="row">
-                  <div class="slider-detail">
-  <div class="slider-detail-header">
-    <h2>Slider Detail</h2>
-  </div>
-                      <div class="form-group">
-  <label for="slider-id">ID:</label>
-  <input type="text" id="slider-id" name="slider-id" placeholder="Enter ID" required>
-</div>
- <div class="form-group">
-  <label for="slider-title">Title:</label>
-  <input type="text" id="slider-title" name="slider-title" placeholder="Enter title" required>
-</div>
+                    <div class="slider-detail">
+                        <div class="slider-detail-header">
+                            <h2>Slider Detail</h2>
+                        </div>
+                        <div class="form-group">
+                            <label for="slider-id">ID:</label>
+                            <input type="text" id="slider-id" name="slider-id" placeholder="Enter ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="slider-title">Title:</label>
+                            <input type="text" id="slider-title" name="slider-title" placeholder="Enter title" required>
+                        </div>
 
-<div class="form-group">
-  <label for="slider-backlink">Backlink:</label>
-  <input type="text" id="slider-backlink" name="slider-backlink" placeholder="Enter backlink" required>
-</div>
+                        <div class="form-group">
+                            <label for="slider-backlink">Backlink:</label>
+                            <input type="text" id="slider-backlink" name="slider-backlink" placeholder="Enter backlink" required>
+                        </div>
 
-                      <div class="form-group" style="display: flex;align-items: center;">
-  <label for="slider-status" style="margin-right: 10px; color: white">Display Status:</label>
-  <select id="slider-status" name="slider-status" style="width: 80px">
-    <option value="1">Yes</option>
-    <option value="0">No</option>
-  </select>
-</div>
+                        <div class="form-group" style="display: flex;align-items: center;">
+                            <label for="slider-status" style="margin-right: 10px; color: white">Display Status:</label>
+                            <select id="slider-status" name="slider-status" style="width: 80px">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
 
-<div class="form-group">
-  <label for="slider-note">Note:</label>
-  <textarea id="slider-note" name="slider-note" placeholder="Enter note"></textarea>
-</div>
+                        <div class="form-group">
+                            <label for="slider-note">Note:</label>
+                            <textarea id="slider-note" name="slider-note" placeholder="Enter note"></textarea>
+                        </div>
 
-<div class="form-group" style="display: flex;align-items: center;">
-    <label for="slider-image" style="margin-right: 10px; color: white">Slider Image:</label>
-  <div class="input-wrapper">
-    <input type="file" id="slider-image" name="slider-image">
-  </div>
-</div>
-                      <div class="form-group" style=" width: 760px;">
-                          <label for="preview-image" style="display: none; width: 760px;
-">Preview:</label>
-  <img id="preview-image" src="#" alt="Preview image" style="max-width: 100%">
-</div>
-</div>      
-<form>
-  <!-- Các trường nhập liệu -->
-  <div >
-    <button style="padding: 0 20px" type="submit">Save</button>
-  </div>
-</form>
+                        <div class="form-group" style="display: flex;align-items: center;">
+                            <label for="slider-image" style="margin-right: 10px; color: white">Slider Image:</label>
+                            <div class="input-wrapper">
+                                <input type="file" id="slider-image" name="slider-image">
+                            </div>
+                        </div>
+                        <div class="form-group" style=" width: 760px;">
+                            <label for="preview-image" style="display: none; width: 760px;
+                                   ">Preview:</label>
+                            <img id="preview-image" src="#" alt="Preview image" style="max-width: 100%">
+                        </div>
+                    </div>      
+                    <form>
+                        <!-- Các trường nhập liệu -->
+                        <div >
+                            <button style="padding: 0 20px" type="submit">Save</button>
+                        </div>
+                    </form>
                 </div>
-                </div>
+            </div>
 
         </section>
 
