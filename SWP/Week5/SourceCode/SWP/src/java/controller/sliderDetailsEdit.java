@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dao.SliderDAO;
+import entity.Slider;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -55,6 +57,11 @@ public class sliderDetailsEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String sliderIdString = request.getParameter("slider_id");
+        int slider_id = Integer.parseInt(sliderIdString);
+        SliderDAO sliderDAO = new SliderDAO();
+        Slider slider = sliderDAO.getSliderById(slider_id);
+        request.setAttribute("slider", slider);
         request.getRequestDispatcher("SliderDetailsEdit.jsp").forward(request, response);
     }
 

@@ -124,30 +124,18 @@
                                 <h2>Slider Detail</h2>
                             </div>
                             <div class="form-group">
-                                <label for="slider-id">ID:</label>
-                                <input type="text" id="slider-id" name="slider-id" placeholder="Enter ID" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="slider-title">Title:</label>
-                                <input type="text" id="slider-title" name="slider-title" placeholder="Enter title" required>
+                                <input type="text" id="slider-title" name="slider-title" placeholder="Title" value="${slider.getSlider_title()}" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="slider-backlink">Backlink:</label>
-                                <input type="text" id="slider-backlink" name="slider-backlink" placeholder="Enter backlink" required>
-                            </div>
-
-                            <div class="form-group" style="display: flex;align-items: center;">
-                                <label for="slider-status" style="margin-right: 10px; color: white">Display Status:</label>
-                                <select id="slider-status" name="slider-status" style="width: 80px">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
+                                <input type="text" id="slider-backlink" name="slider-backlink" placeholder="Black link" value="${slider.getSlider_link()}" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="slider-note">Note:</label>
-                                <textarea id="slider-note" name="slider-note" placeholder="Enter note"></textarea>
+                                <textarea id="slider-note" name="slider-note" placeholder="Enter note" value="${slider.getSlider_link()}"></textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
@@ -159,7 +147,7 @@
                             <div class="form-group" style=" width: 760px;">
                                 <label for="preview-image" style="display: none; width: 760px;
                                        ">Preview:</label>
-                                <img id="preview-image" src="#" alt="Preview image" style="max-width: 100%">
+                                <img id="preview-image" src="${slider.getSlider_img()}" alt="Preview image" style="max-width: 100%">
                             </div>
                         </div>  
                         <div >
