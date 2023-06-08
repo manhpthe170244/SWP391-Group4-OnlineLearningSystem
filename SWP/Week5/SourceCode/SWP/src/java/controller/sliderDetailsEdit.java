@@ -12,6 +12,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  *
@@ -36,7 +40,7 @@ public class sliderDetailsEdit extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sliderDetailsEdit</title>");            
+            out.println("<title>Servlet sliderDetailsEdit</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet sliderDetailsEdit at " + request.getContextPath() + "</h1>");
@@ -62,6 +66,7 @@ public class sliderDetailsEdit extends HttpServlet {
         SliderDAO sliderDAO = new SliderDAO();
         Slider slider = sliderDAO.getSliderById(slider_id);
         request.setAttribute("slider", slider);
+
         request.getRequestDispatcher("SliderDetailsEdit.jsp").forward(request, response);
     }
 
@@ -79,7 +84,23 @@ public class sliderDetailsEdit extends HttpServlet {
         String title = request.getParameter("slider_title");
         String link = request.getParameter("slider_link");
         String note = request.getParameter("slider_note");
-        
+
+        Part filePart = null;
+        filePart = request.getPart("slider_image");
+        String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
+        String fileName;
+        if (filePart != null && filePart.getSize() > 0) {
+            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        } else {
+            fileName = "tempAvatar.jpg";
+        }
+        String filePath = saveDirectory + fileName;
+
+        String sqlFilePath = "img/" + fileName;
+        if (filePart != null && filePart.getSize() > 0) {
+            InputStream fileContent = filePart.getInputStream();
+            Files.copy(fileContent, Paths.get(filePath));
+        }
     }
 
     /**
