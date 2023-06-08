@@ -5,6 +5,7 @@
 package dao;
 
 import entity.Choice;
+import entity.Question;
 import entity.Quiz;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -60,12 +61,27 @@ public class QuizDAO extends MyDAO {
         }
         return vector;
     }
-    public static void main(String[] args) {
-       QuizDAO qd = new QuizDAO();
-        System.out.println("Test getChoicebyQuestionId");
-        Vector<Choice> cv1 = qd.getChoicebyQuestionId(2);
-        for (Choice c : cv1) {
-            System.out.println(c);
+
+    public Vector<Question> getQuestionByQuizId(int search_ques_id) {
+        Vector<Question> vector = new Vector<Question>();
+
+        xSql = "select*from Question where quiz_id= ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, search_ques_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int ques_id = rs.getInt("ques_id");
+                String ques_content = rs.getString("ques_content");
+                String ques_note = rs.getString("ques_note");
+                int quiz_id = rs.getInt("quiz_id");
+                Question ques = new Question(ques_id, ques_content, ques_note, quiz_id);
+                vector.add(ques);
+            }
+        } catch (Exception e) {
+            System.out.println("checkCourse: " + e.getMessage());
         }
+        return vector;
     }
+
 }
