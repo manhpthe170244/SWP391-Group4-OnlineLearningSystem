@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="entity.Question" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -176,7 +179,6 @@
             </div>
             <div class="container" style="margin-top: 30px;">
                 <div class="row">
-
                     <div class="col-sm-9">
                         <table>
                             <tr>
@@ -203,31 +205,22 @@
                             <tr>
                                 <th>Grade</th>
                                 <td>John Doe</td>
-                            </tr>
-
-
+                            </tr>     
                         </table>
+                        <% Vector<Question> quesList = (Vector<Question>)request.getAttribute("quesList"); %>
                         <table class="Table 2" style="margin: 50px 0">
-                            <tr>
-                                <th class="vertical-header top-header" rowspan="2">Question 1<br><span class="small-text">(Complate)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
-                                        <a href="#"   onclick="toggleFlag(this)">    <i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
-                                    </div></th>
-                                <td><i class="fa-sharp fa-light fa-flag-pennant"></i>Câu hỏi 1</td>
-                            <i class="fa-sharp fa-light fa-flag-pennant"></i>
-                            </tr>
-                            <tr>
-                                <td>Câu trả lời  </td>
-
-                            </tr>
-                            <tr>
-                                <th class="vertical-header top-header" rowspan="2">Question 1<br><span class="small-text">(Complate)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
-                                        <a href="#"   onclick="toggleFlag(this)">    <i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
-                                    </div></th>
-                                <td>Câu hỏi 2</td>
-                            </tr>
-                            <tr>
-                                <td>Câu trả lời 2</td>
-                            </tr>
+                            <% for(int i = 1; i <= quesList.size(); i++){ %>
+                                <tr>
+                                    <th class="vertical-header top-header" rowspan="2">Question <%=i%><br><span class="small-text">(Complate)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
+                                            <a href="#"   onclick="toggleFlag(this)">    <i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
+                                        </div></th>
+                                    <td><i class="fa-sharp fa-light fa-flag-pennant"></i><%= quesList.get(i-1).getQues_content() %></td>
+                                    <i class="fa-sharp fa-light fa-flag-pennant"></i>
+                                </tr>
+                                <tr>
+                                    <td>Câu trả lời  </td>
+                                </tr>
+                            <% } %>
                         </table>
                     </div>
                     <div class="col-sm-3">
@@ -236,12 +229,12 @@
                                 <p>Quiz Navigation</p>
                                 <div class="quiz-all mb-9">
                                     <%
-                                    for(int i = 1; i <= 25; i++){
+                                    for(int i = 1; i <= quesList.size(); i++){
                                     if(i<10){%>
                                     <a href="#"><div class="quiz-square rounded">0<%=i%></div></a>
                                     <%}else{%>
                                     <a href="#"><div class="quiz-square rounded"><%=i%></div></a>
-                                    <%}}%>
+                                        <%}}%>
                                 </div>
                             </div>
                             <div style="font-size: 10px">

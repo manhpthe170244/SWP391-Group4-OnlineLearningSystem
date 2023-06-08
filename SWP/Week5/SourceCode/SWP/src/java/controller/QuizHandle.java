@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dao.QuizDAO;
+import entity.Question;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,8 +59,13 @@ public class QuizHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String quizIdString = request.getParameter("quiz_id");
+        int quiz_id = Integer.parseInt(quizIdString);
         // Truyen danh sach cau hoi
-
+        QuizDAO quizDAO = new QuizDAO();
+        Vector<Question> quesList = quizDAO.getQuestionByQuizId(quiz_id);
+        request.setAttribute("quesList", quesList);
+        
         RequestDispatcher rd = request.getRequestDispatcher("QuizHandle.jsp");
         rd.forward(request, response);
     }
