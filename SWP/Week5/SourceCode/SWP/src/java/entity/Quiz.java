@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.Vector;
+
 /**
  *
  * @author Uslaptop
@@ -15,16 +17,18 @@ public class Quiz {
     String quiz_desc;
     int section_id;
     boolean quiz_status;
+    Vector<Question> quesList;
 
     public Quiz() {
     }
 
-    public Quiz(int quiz_id, String quiz_name, String quiz_desc, int section_id, boolean quiz_status) {
+    public Quiz(int quiz_id, String quiz_name, String quiz_desc, int section_id, boolean quiz_status, Vector<Question> quesList) {
         this.quiz_id = quiz_id;
         this.quiz_name = quiz_name;
         this.quiz_desc = quiz_desc;
         this.section_id = section_id;
         this.quiz_status = quiz_status;
+        this.quesList = quesList; 
     }
 
     public int getQuiz_id() {

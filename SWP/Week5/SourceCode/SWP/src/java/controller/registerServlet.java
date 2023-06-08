@@ -68,7 +68,7 @@ public class registerServlet extends HttpServlet {
         String fullname = request.getParameter("fullname");
         Part filePart = null;
         filePart = request.getPart("userImg");
-        String saveDirectory = "E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/web/img/";
+        String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
         String fileName;
         if (filePart != null && filePart.getSize() > 0) {
             fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
