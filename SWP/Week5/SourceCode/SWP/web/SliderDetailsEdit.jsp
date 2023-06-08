@@ -147,7 +147,7 @@
                             <div class="form-group" style=" width: 760px;">
                                 <label for="preview-image" style="display: none; width: 760px;
                                        ">Preview:</label>
-                                <img id="preview-image" src="${slider.getSlider_img()}" alt="Preview image" style="max-width: 100%">
+                                <img id="preview-image" src="${slider.getSlider_img()}" alt="Preview image" style="width: 100%">
                             </div>
                         </div>  
                         <div >
