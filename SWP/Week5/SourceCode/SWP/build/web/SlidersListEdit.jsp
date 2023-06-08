@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -80,7 +83,7 @@
                 border-radius: 5px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
-  
+
             .widget-title {
                 color: black;
             }
@@ -94,23 +97,23 @@
                 float: left;
                 margin: 10px;
             }
- .search-box {
-  float: right;
-  left:  370px;
-  position: absolute;
-  margin: -40px 0;
-}
+            .search-box {
+                float: right;
+                left:  370px;
+                position: absolute;
+                margin: -40px 0;
+            }
 
-.search-box input[type="text"] {
-  width: 500px;
-  padding: 5px 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.search-box button[type="submit"] {
-  width: 100px;
-  height: 30px;
-}
+            .search-box input[type="text"] {
+                width: 500px;
+                padding: 5px 5px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+            .search-box button[type="submit"] {
+                width: 100px;
+                height: 30px;
+            }
         </style>
     </head>
     <body>
@@ -130,7 +133,7 @@
                             <button type="submit">Search</button>
                         </form>
                     </div>
-                    <li><button class="add-post-button">Add Post</button></li>
+                    <li><button class="add-post-button">Add Slider</button></li>
 
 
                     <table border="1">
@@ -142,23 +145,16 @@
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Sample Title</td>
-                            <td>Sample Image</td>
-                            <td> www.abc.com</td>
-                            <td> Active</td>
-                            <td><button>Hide</button><button>Detail</button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Sample Title</td>
-                            <td>Sample Image</td>
-                            <td> www.abc.com</td>
-                            <td> Active</td>
-                            <td><button>Hide</button><button>Detail</button></td>
-
-                        </tr>
+                        <c:forEach items="${requestScope.sliderList}" var="slider">
+                            <tr>
+                                <td>${slider.getSlider_id()}</td>
+                                <td>${slider.getSlider_title()}</td>
+                                <td>${slider.getSlider_img()}</td>
+                                <td>${slider.getSlider_link()}</td>
+                                <td>${(slider.isSlider_status()) ? "Active" : "Inactive"}</td>
+                                <td><button>Delete</button><button onclick="window.location.href='sliderDetailsEdit?slider_id=${slider.getSlider_id()}'">Edit</button></td>
+                            </tr>             
+                        </c:forEach>
                     </table>
 
 

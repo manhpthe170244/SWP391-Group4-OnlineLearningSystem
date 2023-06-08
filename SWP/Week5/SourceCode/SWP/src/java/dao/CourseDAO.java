@@ -5,19 +5,14 @@
 package dao;
 
 import entity.Course;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import dal.DBConnect;
 import entity.ManageCourse;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +21,7 @@ import java.util.Map;
  */
 public class CourseDAO extends MyDAO {
 
+    // Son
     public int addCourse(Course course) {
         int n = 0;
         xSql = "INSERT INTO [dbo].[Course]\n"
@@ -61,6 +57,7 @@ public class CourseDAO extends MyDAO {
         return n;
     }
 
+    // Son
     public Vector<ManageCourse> getmyCourseList(int user_Id, String sub_idRaw, String searchName, String sortType) {
         Vector<ManageCourse> vector = new Vector<ManageCourse>();
         xSql = "select c.*,mc.course_Start, mc.course_end from Course c, Manage_Course mc\n"
@@ -105,6 +102,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Vector<Course> getAll() {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select c.* from Course c";
@@ -131,6 +129,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Vector<Course> getCourseBySubId(int filter_sub_id) {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select c.* from Course c where sub_id = ?";
@@ -158,14 +157,53 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
-    public Vector<Course> get4HottestCourse() {
+    // Manh
+    public Vector<Course> Get4HottestBySubId(int search_sub_id) {
+        Vector<Course> vector = new Vector<Course>();
+
+        xSql = "SELECT top 4 c.*, COALESCE(u.user_count, 0) AS user_count\n"
+                + "                FROM course c\n"
+                + "                LEFT JOIN (\n"
+                + "                  SELECT course_id, COUNT(user_id) AS user_count\n"
+                + "                  FROM manage_course\n"
+                + "                  GROUP BY course_id\n"
+                + "                ) u ON c.course_id = u.course_id\n"
+                + "                WHERE c.sub_id = ?\n"
+                + "                ORDER BY user_count DESC";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, search_sub_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int course_id = rs.getInt("course_id");
+                String course_name = rs.getString("course_name");
+                String course_img = rs.getString("course_img");
+                float course_price = rs.getFloat("course_price");
+                String course_desc = rs.getString("course_desc");
+                Date last_update = rs.getDate("last_update");
+                int sub_id = rs.getInt("sub_id");
+                int level_id = rs.getInt("level_id");
+                Boolean course_status = rs.getBoolean("course_status");
+                int duration = rs.getInt("durationDAY");
+                String courseTitle = rs.getString("course_Title");
+                Course c = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
+                vector.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println("checkCourse: " + e.getMessage());
+        }
+        return vector;
+    }
+    
+    // Linh
+    public Vector<Course> getHottestCourse() {
         Vector<Course> vector = new Vector<Course>();
         xSql = "SELECT course.course_id, course.course_name, course.course_img, course.course_price,\n"
                 + "       course.course_desc, course.last_update, course.sub_id, course.level_id,\n"
                 + "       course.course_status, course.durationDAY, course.course_Title\n"
                 + "FROM course\n"
                 + "INNER JOIN (\n"
-                + "    SELECT top 4 course_id, COUNT(*) as enroll_count\n"
+                + "    SELECT top 1000 course_id, COUNT(*) as enroll_count\n"
                 + "    FROM Manage_Course\n"
                 + "    GROUP BY course_id\n"
                 + "    ORDER BY enroll_count DESC\n"
@@ -193,6 +231,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Vector<Course> searchByName(String search_name) {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select * from Course where course_name like ?";
@@ -220,6 +259,7 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
     public Course searchById(int search_id) {
         Course course = null;
         xSql = "select*from Course where course_id = ?";
@@ -247,21 +287,22 @@ public class CourseDAO extends MyDAO {
         return course;
     }
 
-    public Course searchNameSortByHottest() {
-        Course course = null;
-        xSql = "SELECT course.course_id, course.course_name, course.course_img, course.course_price,\n"
-                + "       course.course_desc, course.last_update, course.sub_id, course.level_id,\n"
-                + "       course.course_status, course.durationDAY, course.course_Title\n"
-                + "FROM course\n"
-                + "INNER JOIN (\n"
-                + "    SELECT top 4 course_id, COUNT(*) as enroll_count\n"
-                + "    FROM Manage_Course\n"
-                + "    GROUP BY course_id\n"
-                + "    ORDER BY enroll_count DESC\n"
-                + ") AS popular_courses ON course.course_id = popular_courses.course_id;";
+    // Linh
+    public Vector<Course> searchNameSortByHottest(String search_name) {
+        Vector<Course> vector = new Vector<Course>();
+
+        xSql = "SELECT c.*, COALESCE(u.user_count, 0) AS user_count\n"
+                + "                FROM course c\n"
+                + "                LEFT JOIN (\n"
+                + "                  SELECT course_id, COUNT(user_id) AS user_count\n"
+                + "                  FROM manage_course\n"
+                + "                  GROUP BY course_id\n"
+                + "                ) u ON c.course_id = u.course_id\n"
+                + "                WHERE c.course_name like ?\n"
+                + "                ORDER BY user_count DESC";
         try {
             ps = con.prepareStatement(xSql);
-
+            ps.setString(1, "%" + search_name + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 int course_id = rs.getInt("course_id");
@@ -275,14 +316,54 @@ public class CourseDAO extends MyDAO {
                 Boolean course_status = rs.getBoolean("course_status");
                 int duration = rs.getInt("durationDAY");
                 String courseTitle = rs.getString("course_Title");
-                course = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
+                Course c = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
+                vector.add(c);
             }
         } catch (Exception e) {
             System.out.println("checkCourse: " + e.getMessage());
         }
-        return course;
+        return vector;
     }
 
+    // Linh
+    public Vector<Course> searchSubIdSortByHottest(int search_sub_id) {
+        Vector<Course> vector = new Vector<Course>();
+
+        xSql = "SELECT c.*, COALESCE(u.user_count, 0) AS user_count\n"
+                + "                FROM course c\n"
+                + "                LEFT JOIN (\n"
+                + "                  SELECT course_id, COUNT(user_id) AS user_count\n"
+                + "                  FROM manage_course\n"
+                + "                  GROUP BY course_id\n"
+                + "                ) u ON c.course_id = u.course_id\n"
+                + "                WHERE c.sub_id = ?\n"
+                + "                ORDER BY user_count DESC";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, search_sub_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int course_id = rs.getInt("course_id");
+                String course_name = rs.getString("course_name");
+                String course_img = rs.getString("course_img");
+                float course_price = rs.getFloat("course_price");
+                String course_desc = rs.getString("course_desc");
+                Date last_update = rs.getDate("last_update");
+                int sub_id = rs.getInt("sub_id");
+                int level_id = rs.getInt("level_id");
+                Boolean course_status = rs.getBoolean("course_status");
+                int duration = rs.getInt("durationDAY");
+                String courseTitle = rs.getString("course_Title");
+                Course c = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
+                vector.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println("checkCourse: " + e.getMessage());
+        }
+        return vector;
+    }
+
+    // Son
     public Map<String, Integer> getDashBoardDataPar(String sortType) {
         Map<String, Integer> map = new LinkedHashMap<>();
         xSql = "select distinct top 5 c.course_name, count(mc.user_id) as participants\n"
@@ -311,6 +392,7 @@ public class CourseDAO extends MyDAO {
 
     }
 
+    // Linh
     public Vector<Course> getByNameAndSubId(String search_name, int filter_sub_id) {
         Vector<Course> vector = new Vector<Course>();
         xSql = "select * from Course where course_name like ? and sub_id =?";
@@ -339,23 +421,110 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    // Linh
+    public Vector<Course> searchByNameAndSubIdSortByHottest(String search_name, int search_sub_id) {
+        Vector<Course> vector = new Vector<Course>();
+        xSql = "SELECT c.*, COALESCE(u.user_count, 0) AS user_count\n"
+                + "FROM course c\n"
+                + "LEFT JOIN (\n"
+                + "  SELECT course_id, COUNT(user_id) AS user_count\n"
+                + "  FROM manage_course\n"
+                + "  GROUP BY course_id\n"
+                + ") u ON c.course_id = u.course_id\n"
+                + "WHERE c.sub_id = ? and c.course_name like ?\n"
+                + "ORDER BY user_count DESC;";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(2, "%" + search_name + "%");
+            ps.setInt(1, search_sub_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int course_id = rs.getInt("course_id");
+                String course_name = rs.getString("course_name");
+                String course_img = rs.getString("course_img");
+                float course_price = rs.getFloat("course_price");
+                String course_desc = rs.getString("course_desc");
+                Date last_update = rs.getDate("last_update");
+                int sub_id = rs.getInt("sub_id");
+                int level_id = rs.getInt("level_id");
+                Boolean course_status = rs.getBoolean("course_status");
+                int duration = rs.getInt("durationDAY");
+                String courseTitle = rs.getString("course_Title");
+                vector.add(new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
+            }
+        } catch (Exception e) {
+            System.out.println("checkCourse: " + e.getMessage());
+        }
+        return vector;
+    }
+
+    //Manh
+    public Boolean addCourseToUser(int course_id, int user_id, Date course_start, Date course_end) {
+        xSql = "INSERT INTO Manage_Course (course_id, user_id, course_Start, course_end) VALUES (?, ?, ?, ?)";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, course_id);
+            ps.setInt(2, user_id);
+            ps.setDate(3, course_start);
+            ps.setDate(4, course_end);
+            int row = ps.executeUpdate();
+            if (row > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("checkCourse: " + ex.getMessage());
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
-        System.out.println("Test get4LastCourse");
-        Vector<Course> cv = pd.get4HottestCourse();
-        for (Course c : cv) {
+//        System.out.println("Test getHottestCourse");
+//        Vector<Course> cv = pd.getHottestCourse();
+//        for (Course c : cv) {
+//            System.out.println(c);
+//
+//        }
+//        System.out.println("Test getByNameAndSubId(G, 1)");
+//        Vector<Course> cv1 = pd.getByNameAndSubId("G", 1);
+//        for (Course c : cv1) {
+//            System.out.println(c);
+//        }
+//        System.out.println("Test getCourseBySubId");
+//        Vector<Course> cv2 = pd.getCourseBySubId(2);
+//        for (Course c : cv2) {
+//            System.out.println(c);
+//        }
+        System.out.println("Test searchNameSortByHottest");
+        Vector<Course> cv3 = pd.searchNameSortByHottest("G");
+        for (Course c : cv3) {
             System.out.println(c);
-
         }
-        System.out.println("Test getByNameAndSubId(G, 1)");
-        Vector<Course> cv1 = pd.getByNameAndSubId("G", 1);
-        for (Course c : cv1) {
+        System.out.println("Test searchSubIdSortByHottest");
+        Vector<Course> cv4 = pd.searchSubIdSortByHottest(1);
+        for (Course c : cv4) {
             System.out.println(c);
         }
-        System.out.println("Test searchByHottestCourse");
-        Course cv2 = pd.searchNameSortByHottest();
-        for (Course c : cv1) {
+        System.out.println("Test searchByNameAndSubIdSortByHottest");
+        Vector<Course> cv5 = pd.searchByNameAndSubIdSortByHottest("N", 2);
+        for (Course c : cv5) {
             System.out.println(c);
         }
+        
+        System.out.println("Test Get4HottestBySubId");
+        Vector<Course> cv6 = pd.Get4HottestBySubId(2);
+        for (Course c : cv6) {
+            System.out.println(c);
+        }
+        
+//        System.out.println("Test addCourseToUser");
+//        if(pd.addCourseToUser(1, 3, Date.valueOf("2023-05-26"), Date.valueOf("2023-06-25"))){
+//            System.out.println("Success");
+//        }
+//        else{
+//            System.out.println("Fail");
+//        }
     }
 }

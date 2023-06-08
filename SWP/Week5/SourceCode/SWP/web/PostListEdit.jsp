@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -133,7 +135,7 @@
                             <button type="submit">Search</button>
                         </form>
                     </div>
-                    <li><button class="add-post-button">Add Slider</button></li>
+                    <li><button class="add-post-button">Add Post</button></li>
 
 
                     <table border="1">
@@ -141,18 +143,18 @@
                             <th>ID</th>
                             <th>Title</th>
                             <th>Image</th>
-                            <th>Blacklink</th>
+                             <th>Date</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th>Blog_id</th>
                         </tr>
-                        <c:forEach items="${requestScope.sliderList}" var="slider">
+                        <c:forEach items="${requestScope.postList}" var="post">
                             <tr>
-                                <td>${slider.getSlider_id()}</td>
-                                <td>${slider.getSlider_title()}</td>
-                                <td>${slider.getSlider_img()}</td>
-                                <td>${slider.getSlider_link()}</td>
-                                <td>${(slider.isSlider_status()) ? "Active" : "Inactive"}</td>
-                                <td><button>Delete</button><button onclick="window.location.href='sliderDetailsEdit?slider_id=${slider.getSlider_id()}'">Edit</button></td>
+                                <td>${post.getPost_id()}</td>
+                                <td>${post.getPost_title()}</td>
+                                <td>${post.getPost_img()}</td>
+                                <td>${post.getPost_date()}</td>
+                                <td>${(post.getPost_status()) ? "Active" : "Inactive"}</td>
+                                <td>${post.getBlog_id()}</td>
                             </tr>             
                         </c:forEach>
                     </table>

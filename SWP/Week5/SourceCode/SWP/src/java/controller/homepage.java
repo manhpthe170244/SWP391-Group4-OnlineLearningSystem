@@ -64,7 +64,8 @@ public class homepage extends HttpServlet {
 
         CourseDAO courseDAO = new CourseDAO();
         // Select course with sub_id
-        List<Course> courseList = courseDAO.getAll().stream().filter(s -> s.getSub_id() == sub_id).collect(Collectors.toList());
+        //List<Course> courseList = courseDAO.getAll().stream().filter(s -> s.getSub_id() == sub_id).collect(Collectors.toList());
+        List<Course> courseList = courseDAO.Get4HottestBySubId(sub_id);
         request.setAttribute("courseList", courseList);
 
         SubjectDAO subjectDAO = new SubjectDAO();

@@ -39,6 +39,28 @@ public class SliderDAO extends MyDAO {
 
     }
     
+    public Slider getSliderById(int id){
+        Slider slider = null;
+        xSql = "select * from slider where slider_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int slider_id = rs.getInt("slider_id");
+                String slider_title = rs.getString("slider_title");
+                String slider_img = rs.getString("slider_img");
+                String slider_link = rs.getString("slider_link");
+                boolean slider_status = rs.getBoolean("slider_status");
+                String slider_note = rs.getString("slider_note");
+                slider = new Slider(slider_id, slider_title, slider_img, slider_link, slider_status, slider_note);
+            }
+        } catch (Exception e) {
+            System.out.println("checkPost: " + e.getMessage());
+        }
+        return slider;
+    }
+    
     public Boolean addSlider(String slider_title, String slider_img, String slider_link, boolean slider_status, String slider_note){
         xSql = "INSERT INTO slider (slider_title, slider_img, slider_link, slider_status, slider_note) VALUES (?, ?, ?, ?, ?)";
         try{

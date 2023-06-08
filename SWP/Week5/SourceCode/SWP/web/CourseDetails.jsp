@@ -115,14 +115,6 @@
                                             ${requestScope.course.getCourse_desc()}
                                         </p>
                                         <div class="row">
-                                            <c:forEach items="${requestScope.pricePackageList}" var="pricePakage">  
-                                                <div class="col-lg-4">
-                                                    <div class="hours">
-                                                        <h5>${pricePakage.getPackage_name()}</h5>
-                                                        <p>${requestScope.course.getCourse_price() * pricePakage.getMultiple()} VNĐ</p>
-                                                    </div>
-                                                </div>
-                                            </c:forEach>
                                             <div class="col-lg-12">
                                                 <div class="share">
                                                     <a href="/SWP/courseList">Back to course list</a>
@@ -134,7 +126,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="main-button-red">
-                                    <a href="meetings.html"> ÐANG KÍ NGAY </a>
+                                    <a href="CourseRegister?course_id=${requestScope.course.getCourse_id()}"> ÐANG KÍ NGAY </a>
                                 </div>
                             </div>
                         </div>

@@ -32,6 +32,30 @@
         <servlet-name>courseListEdit</servlet-name>
         <servlet-class>controller.courseListEdit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>slidersListEdit</servlet-name>
+        <servlet-class>controller.slidersListEdit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sliderDetailsEdit</servlet-name>
+        <servlet-class>controller.sliderDetailsEdit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourseRegister</servlet-name>
+        <servlet-class>controller.CourseRegister</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuizHandle</servlet-name>
+        <servlet-class>controller.QuizHandle</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuizReview</servlet-name>
+        <servlet-class>controller.QuizReview</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuizLesson</servlet-name>
+        <servlet-class>controller.QuizLesson</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PersonalAccountServlet</servlet-name>
         <url-pattern>/PersonalAccountServlet</url-pattern>
@@ -71,6 +95,30 @@
     <servlet-mapping>
         <servlet-name>courseListEdit</servlet-name>
         <url-pattern>/courseListEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>slidersListEdit</servlet-name>
+        <url-pattern>/slidersListEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sliderDetailsEdit</servlet-name>
+        <url-pattern>/sliderDetailsEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseRegister</servlet-name>
+        <url-pattern>/CourseRegister</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizHandle</servlet-name>
+        <url-pattern>/QuizHandle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizReview</servlet-name>
+        <url-pattern>/QuizReview</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizLesson</servlet-name>
+        <url-pattern>/QuizLesson</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homepage</welcome-file>

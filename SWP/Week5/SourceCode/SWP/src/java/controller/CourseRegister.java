@@ -5,22 +5,22 @@
 package controller;
 
 import dao.CourseDAO;
-import dao.PricePackageDAO;
-import entity.Course;
-import entity.Price_Package;
-import jakarta.servlet.RequestDispatcher;
+import entity.User;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Vector;
+import jakarta.servlet.http.HttpSession;
+import java.sql.Date;
+import java.util.Calendar;
 
 /**
  *
  * @author ACER
  */
-public class courseDetails extends HttpServlet {
+public class CourseRegister extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,7 +33,19 @@ public class courseDetails extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CourseRegister</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CourseRegister at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,14 +60,34 @@ public class courseDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        User u = (User) session.getAttribute("currUser");
         String courseIdString = request.getParameter("course_id");
         int course_id = Integer.parseInt(courseIdString);
-        CourseDAO courseDAO = new CourseDAO();
-        Course course = courseDAO.searchById(course_id);
-        request.setAttribute("course", course);
+
+        // Get current date
+        Calendar calendar = Calendar.getInstance();
+        java.util.Date currentDate = calendar.getTime();
+        // Convert java.util.Date to java.sql.Date
+        Date sqlCurrentDate = new Date(currentDate.getTime());
+        // Get end date
+        calendar.add(Calendar.DATE, 10);
+        java.util.Date endDate = calendar.getTime();
+        // Convert java.util.Date to java.sql.Date
+        Date sqlEndDate = new Date(endDate.getTime());
         
-        RequestDispatcher rd = request.getRequestDispatcher("CourseDetails.jsp");
-        rd.forward(request, response);
+        CourseDAO courseDAO = new CourseDAO();
+        if(u != null){
+            if(courseDAO.addCourseToUser(course_id, u.getUserId(), sqlCurrentDate, sqlEndDate)) {
+                response.sendRedirect("mycourselistservlet");
+            }
+            else{
+                
+            }
+        }
+        else{
+            response.sendRedirect("login.jsp");
+        }
     }
 
     /**
@@ -72,6 +104,11 @@ public class courseDetails extends HttpServlet {
         processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

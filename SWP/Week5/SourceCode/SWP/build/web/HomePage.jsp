@@ -33,6 +33,14 @@
         https://templatemo.com/tm-569-edu-meeting
         
         -->
+          <style>
+
+            .main-button-red {
+               
+            }
+
+           
+        </style>
     </head>
 
     <body>
@@ -218,9 +226,14 @@
                                         </div>
                                     </div>
                                 </div>
+                            
                             </c:forEach>
-                        </div>
+                               <div class="main-button-red">
+                                <a href="courseList?sub_id=1">Xem Tất Cả </a>
+                            </div>
+                       
                     </div>
+                       
                 </div>
             </div>
         </section>

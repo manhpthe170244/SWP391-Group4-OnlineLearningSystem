@@ -45,6 +45,7 @@
 
             .form-group {
                 margin-bottom: 10px;
+             
             }
 
             .form-group label {
@@ -117,37 +118,43 @@
             <div class="container">
                 <div class="row">
 
-                    <form method="post" action="#">
+                    <form>
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
-                                <h2>Slider Detail</h2>
+                                <h2>Post Detail Edit</h2>
                             </div>
+                           
                             <div class="form-group">
                                 <label for="slider-title">Title:</label>
-                                <input type="text" id="slider-title" name="slider_title" placeholder="Title" value="${slider.getSlider_title()}" required>
+                                <input type="text" id="slider-title" name="slider-title" placeholder="Enter title" required>
                             </div>
 
-                            <div class="form-group">
-                                <label for="slider-backlink">Backlink:</label>
-                                <input type="text" id="slider-link" name="slider_link" placeholder="Black link" value="${slider.getSlider_link()}" required>
+                           
+
+                            <div class="form-group" style="display: flex;align-items: center;">
+                                <label for="slider-status" style="margin-right: 10px; color: white">Post Category:</label>
+                                <select id="slider-status" name="slider-status" style="width: 80px">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="slider-note">Note:</label>
-                                <textarea id="slider-note" name="slider_note" placeholder="Enter note" value="${slider.getSlider_link()}"></textarea>
+                                <textarea id="slider-note" name="slider-note" placeholder="Enter note"></textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
-                                <label for="slider-image" style="margin-right: 10px; color: white">Slider Image:</label>
+                                <label for="slider-image" style="margin-right: 10px; color: white"> Image:</label>
                                 <div class="input-wrapper">
-                                    <input type="file" id="slider-image" name="slider_image">
+                                    <input type="file" id="slider-image" name="slider-image">
                                 </div>
                             </div>
-                            <div class="form-group" style=" width: 760px;">
+                            <div class="form-group" style=" width: 740px;">
                                 <label for="preview-image" style="display: none; width: 760px;
                                        ">Preview:</label>
-                                <img id="preview-image" src="${slider.getSlider_img()}" alt="Preview image" style="max-width: 100%">
+                                <img id="preview-image" src="#" alt="Preview image" style="max-width: 100%">
                             </div>
                         </div>  
                         <div >
