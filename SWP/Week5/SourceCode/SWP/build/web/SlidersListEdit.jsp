@@ -152,7 +152,7 @@
                                 <td>${slider.getSlider_img()}</td>
                                 <td>${slider.getSlider_link()}</td>
                                 <td>${(slider.isSlider_status()) ? "Active" : "Inactive"}</td>
-                                <td><button>Delete</button><button>Edit</button></td>
+                                <td><button>Delete</button><button onclick="window.location.href='sliderDetailsEdit?slider_id=${slider.getSlider_id()}'">Edit</button></td>
                             </tr>             
                         </c:forEach>
                     </table>

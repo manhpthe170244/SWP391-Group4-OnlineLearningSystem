@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -141,21 +143,18 @@
                             <th>ID</th>
                             <th>Title</th>
                             <th>Image</th>
-                            <th>Des</th>
                              <th>Date</th>
                             <th>Status</th>
                             <th>Blog_id</th>
                         </tr>
-                        <c:forEach items="${requestScope.PostList}" var="post">
+                        <c:forEach items="${requestScope.postList}" var="post">
                             <tr>
-                                <td>${post.getPostList()}</td>
-                                <td>${post.getPostList()}</td>
-                                <td>${post.getPostList()}</td>
-                                <td>${post.getPostList()}</td>
-                                <td>${post.getPostList()}</td>
-                                <td>${(post.isPostList()) ? "Active" : "Inactive"}</td>
-                                <td>${post.getPostList()}</td>
-                                
+                                <td>${post.getPost_id()}</td>
+                                <td>${post.getPost_title()}</td>
+                                <td>${post.getPost_img()}</td>
+                                <td>${post.getPost_date()}</td>
+                                <td>${(post.getPost_status()) ? "Active" : "Inactive"}</td>
+                                <td>${post.getBlog_id()}</td>
                             </tr>             
                         </c:forEach>
                     </table>
