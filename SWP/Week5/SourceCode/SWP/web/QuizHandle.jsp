@@ -243,8 +243,6 @@
                                     <a href="#"><div class="quiz-square rounded"><%=i%></div></a>
                                     <%}}%>
                                 </div>
-
-
                             </div>
                             <div style="font-size: 10px">
                                 <p><a href="">show one page that time</a></p>
