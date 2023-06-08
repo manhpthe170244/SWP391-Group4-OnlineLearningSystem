@@ -28,8 +28,9 @@ public class QuizDAO extends MyDAO {
                 String quiz_desc = rs.getString("quiz_desc");
                 int section_id = rs.getInt("section_id");
                 boolean quiz_status = rs.getBoolean("quiz_status");
-                Quiz quiz = new Quiz(quiz_id, quiz_name, quiz_desc, section_id, quiz_status);
-                vector.add(quiz);
+                // Them question list
+                //Quiz quiz = new Quiz(quiz_id, quiz_name, quiz_desc, section_id, quiz_status);
+                //vector.add(quiz);
             }
         } catch (SQLException ex) {
             Logger.getLogger(QuizDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -25,12 +25,12 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
         <style>
-           
-            
-           
+
+
+
             th, td {
                 text-align: left;
                 padding: 8px;
@@ -38,15 +38,15 @@
                 color: Black;
                 background-color: white;
             }
-           
+
             .table-container {
                 text-align: center;
             }
 
             table {
-                 display: block;
+                display: block;
                 margin: 0 auto;
-               width: 1000px;
+                width: 1000px;
             }
             td{
                 width: 850px;
@@ -56,9 +56,9 @@
                 padding: 8px;
                 border: 3px solid #ddd;
             }
-             .sidebar {
+            .sidebar {
                 width: 100%;
-                
+
                 padding: 20px;
                 background-color: #f2f2f2;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -80,75 +80,78 @@
                 color: black;
             }
             .widgetre ul a {
-   border: 1px solid black; border-radius: 5px; padding: 5px; margin-right: 5px;
-}
-.add-post-button {
-  float: left;
-  margin: 10px;
-}
-.navbar2 { 
-    left: -10px;
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #e5e5e5;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 5px;
+                margin-right: 5px;
+            }
+            .add-post-button {
+                float: left;
+                margin: 10px;
+            }
+            .navbar2 {
+                left: -10px;
+                background-color: #f9f9f9;
+                border-bottom: 1px solid #e5e5e5;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
 
-.navbar2-brand {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-right: 10px;
-    margin-left: 10px;
-}
+            .navbar2-brand {
+                font-size: 20px;
+                font-weight: bold;
+                color: #333;
+                margin-right: 10px;
+                margin-left: 10px;
+            }
 
-.navbar2-divider {
-    font-size: 20px;
-    color: #333;
-    margin-right: 10px;
-    margin-left: 10px;
-}
-    .quiz-all {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content:  flex-start;
-    
-    }
+            .navbar2-divider {
+                font-size: 20px;
+                color: #333;
+                margin-right: 10px;
+                margin-left: 10px;
+            }
+            .quiz-all {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content:  flex-start;
 
-    .quiz-square {
-        width: 30px;
-        height: 30px;
-        margin: 3px;
-        background-color: #ccc;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 15px;
-    }
-    .table2 {
-        border-collapse: collapse;
-        width: 80%;
-        margin: 0 auto;
-    }
+            }
 
-    .vertical-header {
-        padding: 40px 20px;
-    }
-    .small-text{
-         font-family: Arial, sans-serif;
+            .quiz-square {
+                width: 30px;
+                height: 30px;
+                margin: 3px;
+                background-color: #ccc;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 15px;
+            }
+            .table2 {
+                border-collapse: collapse;
+                width: 80%;
+                margin: 0 auto;
+            }
 
-        font-size: 12px;
-                        text-align: start;
+            .vertical-header {
+                padding: 40px 20px;
+            }
+            .small-text{
+                font-family: Arial, sans-serif;
 
-    }
-   
-    .flag-icon.active {
-        color: red;
-    }
-    
-    .flag-icon {
-        color: black;
-    }
+                font-size: 12px;
+                text-align: start;
+
+            }
+
+            .flag-icon.active {
+                color: red;
+            }
+
+            .flag-icon {
+                color: black;
+            }
         </style>
     </head>
     <body>
@@ -159,116 +162,111 @@
 
 
         <section class="heading-page header-text" style="padding-top: 100px;">
- <div class="navbar2">
-     <div class="container2" style="text-align: left;">
-                <span class="navbar2-brand"><a href="">Home</a></span>
-                <span class="navbar2-brand-divider ">/</span>
-                <span class="navbar2-brand"><a href="">My Course</a></span>
-                <span class="navbar2-brand-divider ">/</span>
-                <span class="navbar2-brand"><a href="">MAE101</a></span>
-              <span class="navbar2-brand-divider ">/</span>
-              <span class="navbar2-brand"><a href="">Review Progress Test</a></span>
+            <div class="navbar2">
+                <div class="container2" style="text-align: left;">
+                    <span class="navbar2-brand"><a href="">Home</a></span>
+                    <span class="navbar2-brand-divider ">/</span>
+                    <span class="navbar2-brand"><a href="">My Course</a></span>
+                    <span class="navbar2-brand-divider ">/</span>
+                    <span class="navbar2-brand"><a href="">MAE101</a></span>
+                    <span class="navbar2-brand-divider ">/</span>
+                    <span class="navbar2-brand"><a href="">Review Progress Test</a></span>
 
-            </div>
+                </div>
             </div>
             <div class="container" style="margin-top: 30px;">
                 <div class="row">
 
                     <div class="col-sm-9">
-                         <table>
-    <tr>
-        
-        <th>Start on:</th>
-        <td>1</td>
-    </tr>
-    <tr>
-        <th>State</th>
-        <td>finish</td>
-    </tr>
-    <tr>
-        <th>complate on</th>
-        <td>Sample Category</td>
-    </tr>
-    <tr>
-        <th>Time taken</th>
-        <td>Sample Feature</td>
-    </tr>
-    <tr>
-        <th>Mark</th>
-        <td>Active</td>
-    </tr>
-    <tr>
-        <th>Grade</th>
-        <td>John Doe</td>
-    </tr>
-    
-   
-</table>
+                        <table>
+                            <tr>
+
+                                <th>Start on:</th>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <th>State</th>
+                                <td>finish</td>
+                            </tr>
+                            <tr>
+                                <th>complate on</th>
+                                <td>Sample Category</td>
+                            </tr>
+                            <tr>
+                                <th>Time taken</th>
+                                <td>Sample Feature</td>
+                            </tr>
+                            <tr>
+                                <th>Mark</th>
+                                <td>Active</td>
+                            </tr>
+                            <tr>
+                                <th>Grade</th>
+                                <td>John Doe</td>
+                            </tr>
+
+
+                        </table>
                         <table class="Table 2" style="margin: 50px 0">
-     <tr>
-         <th class="vertical-header top-header" rowspan="2">Question 1<br><span class="small-text">(Complate)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
-                 <a href="#"   onclick="toggleFlag(this)">    <i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
-    </div></th>
-        <td><i class="fa-sharp fa-light fa-flag-pennant"></i>Câu hỏi 1</td>
-        <i class="fa-sharp fa-light fa-flag-pennant"></i>
-    </tr>
-    <tr>
-        <td>Câu trả lời  </td>
-        
-    </tr>
-    <tr>
-         <th class="vertical-header top-header" rowspan="2">Question 1<br><span class="small-text">(Complate)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
-                 <a href="#"   onclick="toggleFlag(this)">    <i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
-    </div></th>
-        <td>Câu hỏi 2</td>
-    </tr>
-    <tr>
-        <td>Câu trả lời 2</td>
-    </tr>
-</table>
-                </div>
+                            <tr>
+                                <th class="vertical-header top-header" rowspan="2">Question 1<br><span class="small-text">(Complate)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
+                                        <a href="#"   onclick="toggleFlag(this)">    <i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
+                                    </div></th>
+                                <td><i class="fa-sharp fa-light fa-flag-pennant"></i>Câu hỏi 1</td>
+                            <i class="fa-sharp fa-light fa-flag-pennant"></i>
+                            </tr>
+                            <tr>
+                                <td>Câu trả lời  </td>
+
+                            </tr>
+                            <tr>
+                                <th class="vertical-header top-header" rowspan="2">Question 1<br><span class="small-text">(Complate)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
+                                        <a href="#"   onclick="toggleFlag(this)">    <i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
+                                    </div></th>
+                                <td>Câu hỏi 2</td>
+                            </tr>
+                            <tr>
+                                <td>Câu trả lời 2</td>
+                            </tr>
+                        </table>
+                    </div>
                     <div class="col-sm-3">
-                       <div class="card bg-light mb-3">
-                        <div class="sidebar">
-                            <p>Quiz Navigation</p>
-                            <div class="quiz-all mb-9">
-                <%for(int i = 1; i < 25; i++){
-                    if(i<5){%>
-                <div class="quiz-square rounded">0<%=i%></div>
-                <%}else{%>
-                <div class="quiz-square rounded"><%=i%></div>
-                <%}}%>
+                        <div class="card bg-light mb-3">
+                            <div class="sidebar">
+                                <p>Quiz Navigation</p>
+                                <div class="quiz-all mb-9">
+                                    <%
+                                    for(int i = 1; i < 25; i++){
+                                    if(i<10){%>
+                                    <div class="quiz-square rounded">0<%=i%></div>
+                                    <%}else{%>
+                                    <div class="quiz-square rounded"><%=i%></div>
+                                    <%}}%>
+                                </div>
+
+
+                            </div>
+                            <div style="font-size: 10px">
+                                <p><a href="">show one page that time</a></p>
+                                <p><a href="">Finish Review</a></p>
+                            </div>          
+
+
+                        </div>
+                    </div>    
+                </div>
             </div>
-                                
+        </div>
 
-                            </div>
-            <div style="font-size: 10px">
-                 <p><a href="">show one page that time</a></p>
-            <p><a href="">Finish Review</a></p>
-            </div>          
-           
-                               
-                            </div>
+    </section>
 
 
 
+    <jsp:include page="footer.jsp"/>
 
-
-                        </div>    
-
-                    </div>
-                    </div>
-                    </div>
- 
-        </section>
-      
-
-
-        <jsp:include page="footer.jsp"/>
-
-    </body>
-    <script>
-   function toggleFlag(element) {
+</body>
+<script>
+    function toggleFlag(element) {
         element.querySelector("i").classList.toggle("active");
     }
 </script>
