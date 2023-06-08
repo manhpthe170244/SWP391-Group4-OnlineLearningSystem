@@ -236,11 +236,11 @@
                                 <p>Quiz Navigation</p>
                                 <div class="quiz-all mb-9">
                                     <%
-                                    for(int i = 1; i < 25; i++){
+                                    for(int i = 1; i <= 25; i++){
                                     if(i<10){%>
-                                    <div class="quiz-square rounded">0<%=i%></div>
+                                    <a href="#"><div class="quiz-square rounded">0<%=i%></div></a>
                                     <%}else{%>
-                                    <div class="quiz-square rounded"><%=i%></div>
+                                    <a href="#"><div class="quiz-square rounded"><%=i%></div></a>
                                     <%}}%>
                                 </div>
 

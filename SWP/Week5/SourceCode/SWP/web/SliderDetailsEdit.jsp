@@ -116,8 +116,7 @@
 
             <div class="container">
                 <div class="row">
-
-                    <form method="post" action="#">
+                    <form method="post" enctype="multipart/form-data">
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
@@ -141,7 +140,7 @@
                             <div class="form-group" style="display: flex;align-items: center;">
                                 <label for="slider-image" style="margin-right: 10px; color: white">Slider Image:</label>
                                 <div class="input-wrapper">
-                                    <input type="file" id="slider-image" name="slider_image">
+                                    <input type="file" id="slider-image" name="slider_image" accept="image/*" style="color: white">
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 760px;">
