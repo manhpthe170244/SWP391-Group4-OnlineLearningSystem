@@ -37,6 +37,13 @@ public class SubjectDAO extends MyDAO {
             Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
-
+    }
+    
+    public static void main(String[] args) {
+        SubjectDAO pc = new SubjectDAO();
+        Vector<Subject> list = pc.getAll();
+        for (Subject c : list) {
+            System.out.println(c);
+        }
     }
 }
