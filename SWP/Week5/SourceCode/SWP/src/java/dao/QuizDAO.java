@@ -4,6 +4,7 @@
  */
 package dao;
 
+import entity.Choice;
 import entity.Quiz;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -36,5 +37,35 @@ public class QuizDAO extends MyDAO {
             Logger.getLogger(QuizDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
+    }
+
+    public Vector<Choice> getChoicebyQuestionId(int search_ques_id) {
+        Vector<Choice> vector = new Vector<Choice>();
+
+        xSql = "select*from choices where ques_id= ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, search_ques_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int choice_id = rs.getInt("choice_id");
+                String choice_content = rs.getString("choice_content");
+                boolean is_true = rs.getBoolean("is_true");
+                int ques_id = rs.getInt("ques_id");
+                Choice ch = new Choice(choice_id, choice_content, is_true, ques_id);
+                vector.add(ch);
+            }
+        } catch (Exception e) {
+            System.out.println("checkCourse: " + e.getMessage());
+        }
+        return vector;
+    }
+    public static void main(String[] args) {
+       QuizDAO qd = new QuizDAO();
+        System.out.println("Test getChoicebyQuestionId");
+        Vector<Choice> cv1 = qd.getChoicebyQuestionId(2);
+        for (Choice c : cv1) {
+            System.out.println(c);
+        }
     }
 }
