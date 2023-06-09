@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.*;
 
 /**
  *
@@ -34,7 +35,7 @@ public class SubmitQuiz extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SubmitQuiz</title>");            
+            out.println("<title>Servlet SubmitQuiz</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet SubmitQuiz at " + request.getContextPath() + "</h1>");
@@ -69,7 +70,18 @@ public class SubmitQuiz extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String flagStatesString = request.getParameter("flagStates");
+            JSONArray flagStatesJsonArray = new JSONArray(flagStatesString);
+            boolean[] flagStates = new boolean[flagStatesJsonArray.length()];
+            for (int i = 0; i < flagStatesJsonArray.length(); i++) {
+                flagStates[i] = flagStatesJsonArray.getBoolean(i);
+            }
+            
+            
+        } catch (JSONException e) {
+            // Handle the exception here
+        }
     }
 
     /**
