@@ -116,8 +116,7 @@
 
             <div class="container">
                 <div class="row">
-                    <form method="post" enctype="multipart/form-data" action="updateSlider">
-                        <input type="hidden" name="slider_id" value="${slider.getSlider_id()}">
+                    <form method="post" enctype="multipart/form-data" action="addSlider">
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
@@ -125,16 +124,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="slider-title">Title:</label>
-                                <input type="text" name="slider_title" placeholder="Title" value="${slider.getSlider_title()}" required>
+                                <input type="text" id="slider-title" name="slider_title" placeholder="Title" required>
                             </div>
+
                             <div class="form-group">
                                 <label for="slider-backlink">Backlink:</label>
-                                <input type="text" name="slider_link" placeholder="Black link" value="${slider.getSlider_link()}" required>
+                                <input type="text" id="slider-link" name="slider_link" placeholder="Black link" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="slider-note">Note:</label>
-                                <textarea name="slider_note" placeholder="Enter note" value="${slider.getSlider_link()}"></textarea>
+                                <textarea id="slider-note" name="slider_note" placeholder="Enter note""></textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
@@ -157,6 +157,9 @@
             </div>
 
         </section>
+
+
+
         <jsp:include page="footer.jsp"/>
 
     </body>
