@@ -146,13 +146,16 @@
                             <th>Action</th>
                         </tr>
                         <c:forEach items="${requestScope.sliderList}" var="slider">
-                            <tr>
+                            <tr id="slider_${slider.getSlider_id()}">
                                 <td>${slider.getSlider_id()}</td>
                                 <td>${slider.getSlider_title()}</td>
                                 <td>${slider.getSlider_img()}</td>
                                 <td>${slider.getSlider_link()}</td>
                                 <td>${(slider.isSlider_status()) ? "Active" : "Inactive"}</td>
-                                <td><button>Delete</button><button onclick="window.location.href='sliderDetailsEdit?slider_id=${slider.getSlider_id()}'">Edit</button></td>
+                                <td>
+                                    <button onclick="deleteSlider(${slider.getSlider_id()})">Delete</button>
+                                    <button onclick="window.location.href = 'sliderDetailsEdit?slider_id=${slider.getSlider_id()}'">Edit</button>
+                                </td>
                             </tr>             
                         </c:forEach>
                     </table>
@@ -165,6 +168,20 @@
 
 
         <jsp:include page="footer.jsp"/>
-
     </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function deleteSlider(sliderId) {
+            //Send an AJAX request to your server-side script
+            $.ajax({
+                url: "deleteSlider",
+                type: "POST",
+                data: {slider_id: sliderId},
+                success: function (response) {
+                    // Remove the row from the table
+                    $("#slider_" + sliderId).remove();
+                }
+            });
+        }
+    </script>
 </html>
