@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="entity.Question" %>
+<%@ page import="entity.Choice" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -177,6 +178,8 @@
 
                 </div>
             </div>
+            <!-- Form start -->
+            <form method="post" action="#">
             <div class="container" style="margin-top: 30px;">
                 <div class="row">
                     <div class="col-sm-9">
@@ -208,20 +211,25 @@
                             </tr>     
                         </table>
                         <% Vector<Question> quesList = (Vector<Question>)request.getAttribute("quesList"); %>
-                        <table class="Table 2" style="margin: 50px 0">
-                            <% for(int i = 1; i <= quesList.size(); i++){ %>
+                            <table class="Table 2" style="margin: 50px 0">
+                                <% for(int i = 1; i <= quesList.size(); i++){ %>
                                 <tr>
-                                    <th class="vertical-header top-header" rowspan="2">Question <%=i%><br><span class="small-text">(Complate)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
-                                            <a href="#"   onclick="toggleFlag(this)">    <i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
+                                    <th class="vertical-header top-header" rowspan="2">Question <%=i%><br><span class="small-text">(Complete)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
+                                            <a onclick="toggleFlag(this)"><i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
                                         </div></th>
                                     <td><i class="fa-sharp fa-light fa-flag-pennant"></i><%= quesList.get(i-1).getQues_content() %></td>
-                                    <i class="fa-sharp fa-light fa-flag-pennant"></i>
+                                <i class="fa-sharp fa-light fa-flag-pennant"></i>
                                 </tr>
                                 <tr>
-                                    <td>Câu trả lời  </td>
+                                    <td>
+                                        <% for(Choice c : quesList.get(i-1).getChoices()){ %>
+                                        <input type="radio" name="answer<%=i%>" value="<%=c.getChoice_content()%>"> <%=c.getChoice_content()%><br>
+                                        <% } %>
+                                    </td>
+
                                 </tr>
-                            <% } %>
-                        </table>
+                                <% } %>
+                            </table>
                     </div>
                     <div class="col-sm-3">
                         <div class="card bg-light mb-3">
@@ -234,18 +242,17 @@
                                     <a href="#"><div class="quiz-square rounded">0<%=i%></div></a>
                                     <%}else{%>
                                     <a href="#"><div class="quiz-square rounded"><%=i%></div></a>
-                                        <%}}%>
+                                    <%}}%>
                                 </div>
                             </div>
                             <div style="font-size: 10px">
                                 <p><a href="">show one page that time</a></p>
-                                <p><a href="">Finish Review</a></p>
+                                <input type="submit" value="Submit" >
                             </div>          
-
-
                         </div>
-                    </div>    
+                    </div> 
                 </div>
+            </form>
             </div>
         </div>
 

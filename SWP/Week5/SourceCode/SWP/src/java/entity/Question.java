@@ -4,6 +4,7 @@
  */
 package entity;
 
+import dao.QuizDAO;
 import java.util.Vector;
 
 /**
@@ -16,6 +17,7 @@ public class Question {
     String ques_content;
     String ques_note;
     int quiz_id;
+    Vector<Choice> choices;
 
     public Question() {
     }
@@ -25,6 +27,8 @@ public class Question {
         this.ques_content = ques_content;
         this.ques_note = ques_note;
         this.quiz_id = quiz_id;
+        QuizDAO quizDAO = new QuizDAO();
+        choices = quizDAO.getChoicebyQuestionId(ques_id);
 
     }
 
@@ -58,5 +62,13 @@ public class Question {
 
     public void setQuiz_id(int quiz_id) {
         this.quiz_id = quiz_id;
+    }
+
+    public Vector<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(Vector<Choice> choices) {
+        this.choices = choices;
     }
 }
