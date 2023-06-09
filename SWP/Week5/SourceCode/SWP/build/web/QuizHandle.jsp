@@ -180,42 +180,46 @@
             </div>
             <!-- Form start -->
             <form method="post" action="#">
-            <div class="container" style="margin-top: 30px;">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <table>
-                            <tr>
+                <div class="container" style="margin-top: 30px;">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <table>
+                                <tr>
 
-                                <th>Start on:</th>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <th>State</th>
-                                <td>finish</td>
-                            </tr>
-                            <tr>
-                                <th>complate on</th>
-                                <td>Sample Category</td>
-                            </tr>
-                            <tr>
-                                <th>Time taken</th>
-                                <td>Sample Feature</td>
-                            </tr>
-                            <tr>
-                                <th>Mark</th>
-                                <td>Active</td>
-                            </tr>
-                            <tr>
-                                <th>Grade</th>
-                                <td>John Doe</td>
-                            </tr>     
-                        </table>
-                        <% Vector<Question> quesList = (Vector<Question>)request.getAttribute("quesList"); %>
+                                    <th>Start on:</th>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <th>State</th>
+                                    <td>finish</td>
+                                </tr>
+                                <tr>
+                                    <th>complate on</th>
+                                    <td>Sample Category</td>
+                                </tr>
+                                <tr>
+                                    <th>Time taken</th>
+                                    <td>Sample Feature</td>
+                                </tr>
+                                <tr>
+                                    <th>Mark</th>
+                                    <td>Active</td>
+                                </tr>
+                                <tr>
+                                    <th>Grade</th>
+                                    <td>John Doe</td>
+                                </tr>     
+                            </table>
+                            <% Vector<Question> quesList = (Vector<Question>)request.getAttribute("quesList"); %>
                             <table class="Table 2" style="margin: 50px 0">
                                 <% for(int i = 1; i <= quesList.size(); i++){ %>
                                 <tr>
                                     <th class="vertical-header top-header" rowspan="2">Question <%=i%><br><span class="small-text">(Complete)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
-                                            <a onclick="toggleFlag(this)"><i class="far fa-flag  flag-icon" ><br><span class="small-text"> Flag question</span></i></a>
+                                            <a onclick="toggleFlag(this)">
+                                                <i class="far fa-flag  flag-icon" ><br>
+                                                    <span class="small-text"> Flag question</span>
+                                                </i>
+                                            </a>
                                         </div></th>
                                     <td><i class="fa-sharp fa-light fa-flag-pennant"></i><%= quesList.get(i-1).getQues_content() %></td>
                                 <i class="fa-sharp fa-light fa-flag-pennant"></i>
@@ -230,42 +234,58 @@
                                 </tr>
                                 <% } %>
                             </table>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card bg-light mb-3">
-                            <div class="sidebar">
-                                <p>Quiz Navigation</p>
-                                <div class="quiz-all mb-9">
-                                    <%
-                                    for(int i = 1; i <= quesList.size(); i++){
-                                    if(i<10){%>
-                                    <a href="#"><div class="quiz-square rounded">0<%=i%></div></a>
-                                    <%}else{%>
-                                    <a href="#"><div class="quiz-square rounded"><%=i%></div></a>
-                                    <%}}%>
-                                </div>
-                            </div>
-                            <div style="font-size: 10px">
-                                <p><a href="">show one page that time</a></p>
-                                <input type="submit" value="Submit" >
-                            </div>          
                         </div>
-                    </div> 
-                </div>
+                        <div class="col-sm-3">
+                            <div class="card bg-light mb-3">
+                                <div class="sidebar">
+                                    <p>Quiz Navigation</p>
+                                    <div class="quiz-all mb-9">
+                                        <%
+                                        for(int i = 1; i <= quesList.size(); i++){
+                                        if(i<10){%>
+                                        <a href="#"><div class="quiz-square rounded">0<%=i%></div></a>
+                                        <%}else{%>
+                                        <a href="#"><div class="quiz-square rounded"><%=i%></div></a>
+                                            <%}}%>
+                                    </div>
+                                </div>
+                                <div style="font-size: 10px">
+                                    <p><a href="">show one page that time</a></p>
+                                    <input type="submit" value="Submit" >
+                                </div>          
+                            </div>
+                        </div> 
+                    </div>
             </form>
-            </div>
         </div>
+    </div>
 
-    </section>
+</section>
 
 
 
-    <jsp:include page="footer.jsp"/>
+<jsp:include page="footer.jsp"/>
 
 </body>
 <script>
     function toggleFlag(element) {
         element.querySelector("i").classList.toggle("active");
+        // Toggle the flag state
+        var flagState = !element.classList.contains('flagged');
+        element.classList.toggle('flagged', flagState);
+
+        // Get all flag elements and their current states
+        var flagElements = document.querySelectorAll('.flag-icon');
+        var flagStates = [];
+        for (var i = 0; i < flagElements.length; i++) {
+            flagStates.push(flagElements[i].parentNode.classList.contains('flagged'));
+        }
+
+        // Send the flag states to the server
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "SubmitQuiz", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("flagStates=" + JSON.stringify(flagStates));
     }
 </script>
 </html>
