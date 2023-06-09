@@ -33,13 +33,37 @@
         https://templatemo.com/tm-569-edu-meeting
         
         -->
-          <style>
+        <style>
+
+
 
             .main-button-red {
-               
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
             }
 
-           
+            .owl-courses-item {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                grid-gap: 20px;
+            }
+
+            .item {
+                height: 100%;
+            }
+
+            .item h4 {
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* Số dòng tối đa */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+
+
         </style>
     </head>
 
@@ -82,13 +106,13 @@
                             <c:forEach items="${requestScope.sliderList}" var="slider">
                                 <div class="item">
                                     <a href="${slider.getSlider_link()}">
-                                    <div class="icon">
-                                        <img src="${slider.getSlider_img()}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>${slider.getSlider_title()}</h4>
-                                        <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
-                                    </div>
+                                        <div class="icon">
+                                            <img src="${slider.getSlider_img()}" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>${slider.getSlider_title()}</h4>
+                                            <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                                        </div>
                                     </a>
                                 </div>
                             </c:forEach>
@@ -112,7 +136,7 @@
                             <ul>
                                 <c:forEach items="${requestScope.subjectList}" var="subject">
                                     <li><a href="homepage?sub_id=${subject.getSub_id()}">${subject.getSub_name()}</a></li><br>
-                                </c:forEach>
+                                    </c:forEach>
                             </ul>
                             <div class="main-button-red">
                                 <a href="courseList?sub_id=1">Xem Tất Cả Các Khóa Học</a>
@@ -204,7 +228,9 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-heading">
-                            <h2>Bài Viết Mới</h2>
+
+                            <h2>Bài Viết Mới</h2> 
+
                         </div>
                     </div>   
                     <div class="col-lg-12">
@@ -226,16 +252,18 @@
                                         </div>
                                     </div>
                                 </div>
-                            
+
                             </c:forEach>
-                               <div class="main-button-red">
-                                <a href="courseList?sub_id=1">Xem Tất Cả </a>
-                            </div>
-                       
+
+
+                        </div>
+                        <div class="main-button-red">
+                            <a href="courseList?sub_id=1">Xem Tất Cả Các Khóa Học</a>
+                        </div>
+
+
                     </div>
-                       
                 </div>
-            </div>
         </section>
         <section class="contact-us" id="contact">
             <div class="footer">
