@@ -5,7 +5,6 @@
 package controller.MarketingFeature;
 
 import dao.SliderDAO;
-import entity.Slider;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,7 +20,7 @@ import java.nio.file.Paths;
  *
  * @author ACER
  */
-public class sliderDetailsEdit extends HttpServlet {
+public class addSlider extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class sliderDetailsEdit extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sliderDetailsEdit</title>");
+            out.println("<title>Servlet addSlider</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet sliderDetailsEdit at " + request.getContextPath() + "</h1>");
+            out.println("<h1> Add slider </h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,18 +60,7 @@ public class sliderDetailsEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String sliderIdString = request.getParameter("slider_id");
-        String pageType = request.getParameter("type");
-        if (pageType.equals("edit")) {
-            int slider_id = Integer.parseInt(sliderIdString);
-            SliderDAO sliderDAO = new SliderDAO();
-            Slider slider = sliderDAO.getSliderById(slider_id);
-            request.setAttribute("slider", slider);
-            request.getRequestDispatcher("SliderDetailsEdit.jsp").forward(request, response);
-        }
-        else if(pageType.equals("add")){
-            response.sendRedirect("AddSlider.jsp");
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -86,7 +74,31 @@ public class sliderDetailsEdit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String title = request.getParameter("slider_title");
+        String link = request.getParameter("slider_link");
+        String note = request.getParameter("slider_note");
+
+        Part filePart = null;
+        filePart = request.getPart("slider_image");
+        String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
+        String fileName;
+        if (filePart != null && filePart.getSize() > 0) {
+            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        } else {
+            fileName = "tempAvatar.jpg";
+        }
+        String filePath = saveDirectory + fileName;
+
+        String sqlFilePath = "img/" + fileName;
+        if (filePart != null && filePart.getSize() > 0) {
+            InputStream fileContent = filePart.getInputStream();
+            Files.copy(fileContent, Paths.get(filePath));
+        }
         
+        SliderDAO sliderDAO = new SliderDAO();
+        sliderDAO.addSlider(title, sqlFilePath, link, true, note);
+        
+        response.sendRedirect("slidersListEdit");
     }
 
     /**

@@ -133,7 +133,7 @@
                             <button type="submit">Search</button>
                         </form>
                     </div>
-                    <li><button class="add-post-button">Add Slider</button></li>
+                    <li><button class="add-post-button" onclick="window.location.href = 'sliderDetailsEdit?type=add'">Add Slider</button></li>
 
 
                     <table border="1">
@@ -154,7 +154,7 @@
                                 <td>${(slider.isSlider_status()) ? "Active" : "Inactive"}</td>
                                 <td>
                                     <button onclick="deleteSlider(${slider.getSlider_id()})">Delete</button>
-                                    <button onclick="window.location.href = 'sliderDetailsEdit?slider_id=${slider.getSlider_id()}'">Edit</button>
+                                    <button onclick="window.location.href = 'sliderDetailsEdit?slider_id=${slider.getSlider_id()}&type=edit'">Edit</button>
                                 </td>
                             </tr>             
                         </c:forEach>
