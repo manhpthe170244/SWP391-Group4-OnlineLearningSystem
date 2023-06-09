@@ -38,9 +38,14 @@
             .main-button-red {
                
             }
-
+.owl-courses-item .item img {
+  width: 100%; /* Thiết lập chiều rộng ảnh đầy đủ */
+  height: 200px; /* Điều chỉnh chiều cao của ảnh */
+  object-fit: cover; /* Điều chỉnh tỷ lệ khung hình */
+}
            
         </style>
+        
     </head>
 
     <body>
