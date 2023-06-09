@@ -38,8 +38,8 @@ public class SliderDAO extends MyDAO {
         return vector;
 
     }
-    
-    public Slider getSliderById(int id){
+
+    public Slider getSliderById(int id) {
         Slider slider = null;
         xSql = "select * from slider where slider_id = ?";
         try {
@@ -60,10 +60,10 @@ public class SliderDAO extends MyDAO {
         }
         return slider;
     }
-    
-    public Boolean addSlider(String slider_title, String slider_img, String slider_link, boolean slider_status, String slider_note){
+
+    public Boolean addSlider(String slider_title, String slider_img, String slider_link, boolean slider_status, String slider_note) {
         xSql = "INSERT INTO slider (slider_title, slider_img, slider_link, slider_status, slider_note) VALUES (?, ?, ?, ?, ?)";
-        try{
+        try {
             ps = con.prepareStatement(xSql);
             ps.setString(1, slider_title);
             ps.setString(2, slider_img);
@@ -71,22 +71,21 @@ public class SliderDAO extends MyDAO {
             ps.setBoolean(4, slider_status);
             ps.setString(5, slider_note);
             int row = ps.executeUpdate();
-            if(row > 0){
+            if (row > 0) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             return false;
         }
     }
-    
-        public Boolean updateSlider(int slider_id, String slider_title, String slider_img, String slider_link, boolean slider_status, String slider_note){
-        xSql = "UPDATE Slider\n" +
-               "SET slider_title = ?, slider_img = ?, slider_link = ?, slider_status = ?, slider_note = ?\n" +
-               "WHERE slider_id = ?;";
-        try{
+
+    public Boolean updateSlider(int slider_id, String slider_title, String slider_img, String slider_link, boolean slider_status, String slider_note) {
+        xSql = "UPDATE Slider\n"
+                + "SET slider_title = ?, slider_img = ?, slider_link = ?, slider_status = ?, slider_note = ?\n"
+                + "WHERE slider_id = ?;";
+        try {
             ps = con.prepareStatement(xSql);
             ps.setString(1, slider_title);
             ps.setString(2, slider_img);
@@ -95,43 +94,60 @@ public class SliderDAO extends MyDAO {
             ps.setString(5, slider_note);
             ps.setInt(6, slider_id);
             int row = ps.executeUpdate();
-            if(row > 0){
+            if (row > 0) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             return false;
         }
     }
     
-    
+    public Boolean deleteSliderById(int slider_id){
+        xSql = "DELETE FROM slider WHERE slider_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, slider_id);
+            int row = ps.executeUpdate();
+            if (row > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 
     public static void main(String[] args) {
         SliderDAO pc = new SliderDAO();
-        
-        System.out.println("Test getAll");
-        Vector<Slider> list = pc.getAll();
-        for (Slider c : list) {
-            System.out.println(c.getSlider_link());
-        }
-        
+
+//        System.out.println("Test getAll");
+//        Vector<Slider> list = pc.getAll();
+//        for (Slider c : list) {
+//            System.out.println(c.getSlider_link());
+//        }
+
         System.out.println("Test addSlider");
-        Boolean inserted = pc.addSlider("Nơi mưa không cần trú, nơi nắng không cần che", 
-                "img/tempAvatar.jpg", 
-                "courseList?subject=4", 
-                true, 
+        Boolean inserted = pc.addSlider("Nơi mưa không cần trú, nơi nắng không cần che",
+                "img/tempAvatar.jpg",
+                "courseList?subject=4",
+                true,
                 "Trong một khoảnh khắc ta không nhớ mình là ai");
         System.out.println(inserted);
-        
-        System.out.println("Test updateSlider");
-        Boolean updated = pc.updateSlider(6, "Mình cùng chia nhau mảnh không gian này", 
-                "img/tempAvatar.jpg", 
-                "courseList?subject=4", 
-                true, 
-                "Anh là thằng nhóc chân anh không mang giày");
-        System.out.println(updated);
+
+//        System.out.println("Test updateSlider");
+//        Boolean updated = pc.updateSlider(6, "Mình cùng chia nhau mảnh không gian này",
+//                "img/tempAvatar.jpg",
+//                "courseList?subject=4",
+//                true,
+//                "Anh là thằng nhóc chân anh không mang giày");
+//        System.out.println(updated);
+
+//        System.out.println("Test deleteSliderById");
+//        Boolean deleted = pc.deleteSliderById(6);
+//        System.out.println(deleted);
     }
-    
+
 }

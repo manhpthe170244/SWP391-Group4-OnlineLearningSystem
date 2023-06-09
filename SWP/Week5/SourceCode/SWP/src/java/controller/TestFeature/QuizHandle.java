@@ -65,7 +65,6 @@ public class QuizHandle extends HttpServlet {
         QuizDAO quizDAO = new QuizDAO();
         Vector<Question> quesList = quizDAO.getQuestionByQuizId(quiz_id);
         request.setAttribute("quesList", quesList);
-        
         RequestDispatcher rd = request.getRequestDispatcher("QuizHandle.jsp");
         rd.forward(request, response);
     }

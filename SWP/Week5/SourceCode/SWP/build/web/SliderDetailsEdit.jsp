@@ -116,7 +116,8 @@
 
             <div class="container">
                 <div class="row">
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" action="updateSlider">
+                        <input type="hidden" name="slider_id" value="${slider.getSlider_id()}">
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
@@ -124,17 +125,16 @@
                             </div>
                             <div class="form-group">
                                 <label for="slider-title">Title:</label>
-                                <input type="text" id="slider-title" name="slider_title" placeholder="Title" value="${slider.getSlider_title()}" required>
+                                <input type="text" name="slider_title" placeholder="Title" value="${slider.getSlider_title()}" required>
                             </div>
-
                             <div class="form-group">
                                 <label for="slider-backlink">Backlink:</label>
-                                <input type="text" id="slider-link" name="slider_link" placeholder="Black link" value="${slider.getSlider_link()}" required>
+                                <input type="text" name="slider_link" placeholder="Black link" value="${slider.getSlider_link()}" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="slider-note">Note:</label>
-                                <textarea id="slider-note" name="slider_note" placeholder="Enter note" value="${slider.getSlider_link()}"></textarea>
+                                <textarea name="slider_note" placeholder="Enter note" value="${slider.getSlider_link()}"></textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
@@ -146,7 +146,7 @@
                             <div class="form-group" style=" width: 760px;">
                                 <label for="preview-image" style="display: none; width: 760px;
                                        ">Preview:</label>
-                                <img id="preview-image" src="${slider.getSlider_img()}" alt="Preview image" style="max-width: 100%">
+                                <img id="preview-image" src="${slider.getSlider_img()}" alt="Preview image" style="width: 100%">
                             </div>
                         </div>  
                         <div >
@@ -157,9 +157,6 @@
             </div>
 
         </section>
-
-
-
         <jsp:include page="footer.jsp"/>
 
     </body>

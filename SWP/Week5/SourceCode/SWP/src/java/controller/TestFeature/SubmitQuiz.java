@@ -10,7 +10,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.json.*;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  *
@@ -70,17 +71,37 @@ public class SubmitQuiz extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String flagStatesString = request.getParameter("flagStates");
-            JSONArray flagStatesJsonArray = new JSONArray(flagStatesString);
-            boolean[] flagStates = new boolean[flagStatesJsonArray.length()];
-            for (int i = 0; i < flagStatesJsonArray.length(); i++) {
-                flagStates[i] = flagStatesJsonArray.getBoolean(i);
+        Enumeration<String> paramNames = request.getParameterNames();
+        Vector<String> answers = new Vector<>();
+        Vector<Boolean> flags = new Vector<>();
+
+        while (paramNames.hasMoreElements()) {
+            String paramName = paramNames.nextElement();
+            if (paramName.startsWith("answer")) {
+                String answer = request.getParameter(paramName);
+                answers.add(answer);
+                // Do something with the answer
             }
-            
-            
-        } catch (JSONException e) {
-            // Handle the exception here
+            if (paramName.startsWith("flag")){
+                Boolean flag = Boolean.parseBoolean(request.getParameter(paramName));
+                flags.add(flag);
+            }
+        }
+        
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SubmitQuiz</title>");
+            out.println("</head>");
+            out.println("<body>");
+            for(int i = 0; i < answers.size(); i++){
+                out.println("<h1>Answer: " + answers.get(i) + " " + flags.get(i) + "</h1>");
+            }  
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
