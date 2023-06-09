@@ -153,11 +153,6 @@
                                                 </div>
                                             </div>
                                         </c:if>
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <input name="email" type="text" id="email" placeholder="YOUR EMAIL..." required="">
-                                            </fieldset>
-                                        </div>
                                         <c:if test="${emailerr != null}">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-warning">
@@ -165,6 +160,12 @@
                                                 </div>
                                             </div>
                                         </c:if>
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                                <input name="email" type="text" id="email" placeholder="YOUR EMAIL..." required="">
+                                            </fieldset>
+                                        </div>
+
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <input name="password1" type="password" id="password" placeholder="YOUR PASSWORD..." required="">
@@ -207,12 +208,12 @@
                                         </div>
                                         <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
                                             <p style="opacity: 0.7">ADDRESS: </p>                                            
-                                                <select name="address" id="province">
-                                                    <c:forEach items="${provinceList}" var="p">
-                                                        <option value="${p.getName()}">${p.getName()}</option>
-                                                    </c:forEach>
-                                                </select>                                         
-<!--                                                <input type="text" id="temp" name="temp">-->
+                                            <select name="address" id="province">
+                                                <c:forEach items="${provinceList}" var="p">
+                                                    <option value="${p.getName()}">${p.getName()}</option>
+                                                </c:forEach>
+                                            </select>                                         
+                                            <!--                                                <input type="text" id="temp" name="temp">-->
                                         </div>
                                         <c:if test="${phoneErr != null}">
                                             <div class="col-lg-12">
@@ -306,7 +307,7 @@
                 document.getElementById("temp").value = this.value;
             });
 
-           
+
             $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
                 e.preventDefault();
                 showSection($(this).attr('href'), true);

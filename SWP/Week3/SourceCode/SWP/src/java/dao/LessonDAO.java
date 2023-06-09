@@ -38,4 +38,27 @@ public class LessonDAO extends MyDAO {
         }
         return vector;
     }
+    
+    public Vector<Lesson> getAllOrbSecId() {
+        Vector<Lesson> vector = new Vector<Lesson>();
+        xSql = "SELECT * FROM Lesson WHERE section_id IS NOT NULL ORDER BY section_id";
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int lesson_id = rs.getInt("lesson_id");
+                String lesson_name = rs.getString("lesson_name");
+                String lesson_video = rs.getString("lesson_video");
+                int section_id = rs.getInt("section_id");
+                String lesson_desc = rs.getString("lesson_desc");
+                boolean lesson_status = rs.getBoolean("lesson_status");
+                Lesson les = new Lesson(lesson_id, lesson_name, lesson_video, section_id, lesson_desc, lesson_status);
+                vector.add(les);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+    
 }

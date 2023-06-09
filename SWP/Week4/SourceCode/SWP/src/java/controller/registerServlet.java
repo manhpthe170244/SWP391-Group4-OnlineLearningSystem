@@ -43,7 +43,6 @@ public class registerServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -67,16 +66,17 @@ public class registerServlet extends HttpServlet {
         }
         String encryptedPassword = AES.encrypt(password2, secretKey);
         String fullname = request.getParameter("fullname");
-        Part filePart = request.getPart("userImg");
+        Part filePart = null;
+        filePart = request.getPart("userImg");
         String saveDirectory = "E:/swp391/SWP391_Project/SWP/Week3/SourceCode/SWP/web/img/";
         String fileName;
-        if (filePart == null) {
-            fileName = "tempAvatar.jpg";
-        } else {
+        if (filePart != null && filePart.getSize() > 0) {
             fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        } else {
+            fileName = "tempAvatar.jpg";
         }
         String filePath = saveDirectory + fileName;
-        InputStream fileContent = filePart.getInputStream();
+
         String sqlFilePath = "img/" + fileName;
         String gender = request.getParameter("gender");
         String dobRaw = request.getParameter("dob");
@@ -99,7 +99,10 @@ public class registerServlet extends HttpServlet {
             request.setAttribute("duplicateEmailErr", "Register failed, Duplicated email!");
             request.getRequestDispatcher("Register.jsp").forward(request, response);
         } else {
-            Files.copy(fileContent, Paths.get(filePath));
+            if (filePart != null && filePart.getSize() > 0) {
+                InputStream fileContent = filePart.getInputStream();
+                Files.copy(fileContent, Paths.get(filePath));
+            }
             User newUser = new User(0, email, encryptedPassword, fullname, sqlFilePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime, true, 0);
             ud.addNewUser(newUser);
             response.sendRedirect("homepage");

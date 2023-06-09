@@ -62,6 +62,7 @@ public class courseDetails extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("CourseDetails.jsp");
         rd.forward(request, response);
     }
+     
 
     /**
      * Handles the HTTP <code>POST</code> method.

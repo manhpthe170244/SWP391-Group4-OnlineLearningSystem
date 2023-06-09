@@ -6,9 +6,11 @@ package controller;
  */
 import dao.CourseDAO;
 import dao.PostDAO;
+import dao.SliderDAO;
 import dao.SubjectDAO;
 import entity.Course;
 import entity.Post;
+import entity.Slider;
 import entity.Subject;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -70,11 +72,15 @@ public class homepage extends HttpServlet {
 
         PostDAO postDAO = new PostDAO();
         List<Post> postList = postDAO.getAll();
-        postList.sort(Comparator.comparing(Post::getPost_date).reversed());
+        //postList.sort(Comparator.comparing(Post::getPost_date).reversed());
         request.setAttribute("postList", postList);
+        SliderDAO sliderDAO = new SliderDAO();
+        List<Slider> sliderList = sliderDAO.getAll();
+        request.setAttribute("sliderList", sliderList);
 
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.

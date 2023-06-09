@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css?version=12">
         <link rel="stylesheet" href="assets/css/owl.css?version=10">
         <link rel="stylesheet" href="assets/css/lightbox.css?version=10">
-        <link rel="stylesheet" href="assets/css/styling.css?version=10">
+        <link rel="stylesheet" href="assets/css/styling.css?version=12">
         <!--
         
         TemplateMo 569 Edu Meeting
@@ -104,9 +104,9 @@
                         <p style="color: white; margin-top: 15px">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
                     </div>
                     <div class="col-lg-8 Per">
-                        <h2 style="font-size: 150%; display: inline-block">Personal Info</h2> 
+                        <h2 style="font-size: 150%; display: inline-block; position: relative; left: -85px">Personal Info</h2> 
                         <div class="EditProfileButton">
-                            <a href="#">Edit Profile</a>
+                            <a href="EditProfile.jsp">Edit Profile</a>
                         </div>
                         <div class="PersonalInfo">
                             <div style="color: white;" class="PersonalInfo-left">                 

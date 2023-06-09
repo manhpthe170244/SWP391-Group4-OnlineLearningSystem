@@ -12,6 +12,14 @@
         <servlet-name>MyCourseListServlet</servlet-name>
         <servlet-class>controller.MyCourseListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DashBoard</servlet-name>
+        <servlet-class>controller.DashBoard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfile</servlet-name>
+        <servlet-class>controller.EditProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PersonalAccountServlet</servlet-name>
         <url-pattern>/PersonalAccountServlet</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>MyCourseListServlet</servlet-name>
         <url-pattern>/mycourselistservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashBoard</servlet-name>
+        <url-pattern>/DashBoard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfile</servlet-name>
+        <url-pattern>/editprofile</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homepage</welcome-file>
