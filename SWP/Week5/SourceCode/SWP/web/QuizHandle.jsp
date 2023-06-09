@@ -179,7 +179,7 @@
                 </div>
             </div>
             <!-- Form start -->
-            <form method="post" action="#">
+            <form method="post" action="SubmitQuiz">
                 <div class="container" style="margin-top: 30px;">
                     <div class="row">
                         <div class="col-sm-9">
@@ -215,7 +215,8 @@
                                 <% for(int i = 1; i <= quesList.size(); i++){ %>
                                 <tr>
                                     <th class="vertical-header top-header" rowspan="2">Question <%=i%><br><span class="small-text">(Complete)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
-                                            <a onclick="toggleFlag(this)">
+                                            <input type="hidden" name="flag<%=i%>" value="false">
+                                            <a onclick="toggleFlag(this, <%=i%>)">
                                                 <i class="far fa-flag  flag-icon" ><br>
                                                     <span class="small-text"> Flag question</span>
                                                 </i>
@@ -226,9 +227,18 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <% for(Choice c : quesList.get(i-1).getChoices()){ %>
-                                        <input type="radio" name="answer<%=i%>" value="<%=c.getChoice_content()%>"> <%=c.getChoice_content()%><br>
+                                        <%
+                                            boolean hasSelectedOption = false;
+                                            for(Choice c : quesList.get(i-1).getChoices()){
+                                        %>
+                                            <input type="radio" name="answer<%=i%>" value="<%=c.getChoice_content()%>"
+                                               <% if(!hasSelectedOption){ %>
+                                               checked
+                                               <% hasSelectedOption = true; %>
+                                               <% } %>
+                                               ><%=c.getChoice_content()%><br> 
                                         <% } %>
+                                        <input type="radio" name="answer<%=i%>" value="not answered" checked hidden>
                                     </td>
 
                                 </tr>
@@ -268,24 +278,10 @@
 
 </body>
 <script>
-    function toggleFlag(element) {
+    function toggleFlag(element, index) {
         element.querySelector("i").classList.toggle("active");
-        // Toggle the flag state
-        var flagState = !element.classList.contains('flagged');
-        element.classList.toggle('flagged', flagState);
-
-        // Get all flag elements and their current states
-        var flagElements = document.querySelectorAll('.flag-icon');
-        var flagStates = [];
-        for (var i = 0; i < flagElements.length; i++) {
-            flagStates.push(flagElements[i].parentNode.classList.contains('flagged'));
-        }
-
-        // Send the flag states to the server
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "SubmitQuiz", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("flagStates=" + JSON.stringify(flagStates));
+        var flaggedInput = document.getElementsByName("flag" + index)[0];
+        flaggedInput.value = flaggedInput.value === "true" ? "false" : "true";
     }
 </script>
 </html>
