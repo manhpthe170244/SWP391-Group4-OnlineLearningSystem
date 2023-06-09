@@ -4,8 +4,10 @@
  */
 package dao;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalTime;
 import javax.xml.transform.Source;
 
 /**
@@ -14,35 +16,37 @@ import javax.xml.transform.Source;
  */
 public class QuizResultDAO extends MyDAO {
 
-    public void insertQuizResult(int quiz_result_id, int quiz_id, int user_id, boolean quiz_status,
-            float quiz_grade, Date quiz_start, Date quiz_end,
+    public Boolean insertQuizResult(int quiz_id, int user_id, boolean quiz_status,
+            float quiz_grade, Timestamp quiz_start, Timestamp quiz_end,
             int attempt) {
 
-        xSql = "INSERT INTO Quiz_Result(quiz_result_id, quiz_id, user_id,\n"
+        xSql = "INSERT INTO Quiz_Result(quiz_id, user_id,\n"
                 + "quiz_status, quiz_grade, quiz_start, quiz_end, attempt)\n"
-                + "VALUES (?, ?, ?, ?,?,?,?,?)";
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setInt(1, quiz_result_id);
-            ps.setInt(2, quiz_id);
-            ps.setInt(3, user_id);
-            ps.setBoolean(4, quiz_status);
-            ps.setFloat(5, quiz_grade);
-            ps.setDate(6, quiz_start);
-            ps.setDate(7, quiz_end);
-            ps.setInt(8, attempt);
-
+            ps.setInt(1, quiz_id);
+            ps.setInt(2, user_id);
+            ps.setBoolean(3, quiz_status);
+            ps.setFloat(4, quiz_grade);
+            ps.setTimestamp(5, quiz_start);
+            ps.setTimestamp(6, quiz_end);
+            ps.setInt(7, attempt);
+            int row = ps.executeUpdate();
+            if (row > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException ex) {
-            System.out.println("checkQuiz: " + ex.getMessage());
-
+            return false;
         }
-
     }
 
     public static void main(String[] args) {
         QuizResultDAO pd = new QuizResultDAO();
         System.out.println("Test insertQuizResult");
-        pd.insertQuizResult(1, 2, 3, true, 5, Date.valueOf("06-05-2022"), Date.valueOf("06-06-2022"), 0);
-
+        Boolean inserted = pd.insertQuizResult(2, 3, true, 5, Timestamp.valueOf("2023-06-09 09:32:53"), Timestamp.valueOf("2023-06-09 09:37:53"), 1);
+        System.out.println(inserted);
     }
 }
