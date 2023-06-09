@@ -8,6 +8,7 @@ import dao.SliderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,8 +19,12 @@ import java.nio.file.Paths;
 
 /**
  *
- * @author ACER
+ * @author FPT
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 5)
+
 public class updateSlider extends HttpServlet {
 
     /**
@@ -98,6 +103,8 @@ public class updateSlider extends HttpServlet {
         
         SliderDAO sliderDAO = new SliderDAO();
         sliderDAO.updateSlider(id, title, sqlFilePath, link, true, fileName);
+        
+        response.sendRedirect("slidersListEdit");
     }
 
     /**

@@ -127,7 +127,6 @@
                                 <label for="slider-title">Title:</label>
                                 <input type="text" name="slider_title" placeholder="Title" value="${slider.getSlider_title()}" required>
                             </div>
-
                             <div class="form-group">
                                 <label for="slider-backlink">Backlink:</label>
                                 <input type="text" name="slider_link" placeholder="Black link" value="${slider.getSlider_link()}" required>
