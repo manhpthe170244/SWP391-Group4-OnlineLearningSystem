@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="java.sql.Timestamp" %>
 <%@ page import="entity.Question" %>
 <%@ page import="entity.Choice" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -158,7 +159,8 @@
             }
         </style>
     </head>
-    <body>
+    <!--    chay dong ho khi trang load-->
+    <body onload="clock()"> 
         <jsp:include page="header.jsp"/>
 
         <!-- Cach su dung template: dung 2 the include de lay header va footer, sau do pass section o be duoi vao 
@@ -180,6 +182,7 @@
             </div>
             <!-- Form start -->
             <form method="post" action="SubmitQuiz">
+                <input type="hidden" name="quiz_id" value="${requestScope.quiz_id}"><!-- send quiz_id to SubmitQuiz -->
                 <div class="container" style="margin-top: 30px;">
                     <div class="row">
                         <div class="col-sm-9">
@@ -194,12 +197,13 @@
                                     <td>finish</td>
                                 </tr>
                                 <tr>
-                                    <th>complate on</th>
+                                    <th>complete on</th>
                                     <td>Sample Category</td>
                                 </tr>
                                 <tr>
                                     <th>Time taken</th>
-                                    <td>Sample Feature</td>
+                                    <td><span id="clock"></span></td>
+                                <input type="hidden" name="start_time"><!-- truyen parameter start_time sang servlet -->
                                 </tr>
                                 <tr>
                                     <th>Mark</th>
@@ -231,7 +235,7 @@
                                             boolean hasSelectedOption = false;
                                             for(Choice c : quesList.get(i-1).getChoices()){
                                         %>
-                                            <input type="radio" name="answer<%=i%>" value="<%=c.getChoice_content()%>"
+                                        <input type="radio" name="answer<%=i%>" value="<%=c.getChoice_content()%>"
                                                <% if(!hasSelectedOption){ %>
                                                checked
                                                <% hasSelectedOption = true; %>
@@ -261,7 +265,7 @@
                                 </div>
                                 <div style="font-size: 10px">
                                     <p><a href="">show one page that time</a></p>
-                                    <input type="submit" value="Submit" >
+                                    <input type="submit" value="Submit">
                                 </div>          
                             </div>
                         </div> 
@@ -282,6 +286,38 @@
         element.querySelector("i").classList.toggle("active");
         var flaggedInput = document.getElementsByName("flag" + index)[0];
         flaggedInput.value = flaggedInput.value === "true" ? "false" : "true";
+    }
+
+    var referenceTime = new Date(); // start with the current time
+    var year = referenceTime.getFullYear().toString();
+    var month = ('0' + (referenceTime.getMonth() + 1)).slice(-2);
+    var day = ('0' + referenceTime.getDate()).slice(-2);
+    var hours = ('0' + referenceTime.getHours()).slice(-2);
+    var minutes = ('0' + referenceTime.getMinutes()).slice(-2);
+    var seconds = ('0' + referenceTime.getSeconds()).slice(-2);
+    var milliseconds = ('00' + referenceTime.getMilliseconds()).slice(-3);
+    var formattedTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds + '.' + milliseconds;
+    document.getElementsByName("start_time")[0].value = formattedTime;
+
+    function clock() {
+        var now = new Date();
+        var timeDiff = Math.floor((now.getTime() - referenceTime.getTime()) / 1000); // get the difference in seconds
+        var hoursPassed = Math.floor(timeDiff / (60 * 60)); // convert to hours
+        var minutesPassed = Math.floor((timeDiff / 60) % 60); // convert to minutes
+        var secondsPassed = timeDiff % 60; // get the remaining seconds
+
+        // add leading zeros to hours, minutes, and seconds if needed
+        hoursPassed = (hoursPassed < 10 ? "0" : "") + hoursPassed;
+        minutesPassed = (minutesPassed < 10 ? "0" : "") + minutesPassed;
+        secondsPassed = (secondsPassed < 10 ? "0" : "") + secondsPassed;
+
+        // display the formatted time
+        document.getElementById("clock").innerHTML = hoursPassed + ":" + minutesPassed + ":" + secondsPassed;
+
+        // update the clock every second
+        setTimeout(function () {
+            clock();
+        }, 1000);
     }
 </script>
 </html>

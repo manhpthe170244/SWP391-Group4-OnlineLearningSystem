@@ -5,14 +5,13 @@
 package controller.CommonFeature;
 
 import dao.CourseDAO;
-import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -60,8 +59,18 @@ public class CourseRegister extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        User u = (User) session.getAttribute("currUser");
+
+        int user_id = 0;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                }
+            }
+        }
+
         String courseIdString = request.getParameter("course_id");
         int course_id = Integer.parseInt(courseIdString);
 
@@ -75,17 +84,15 @@ public class CourseRegister extends HttpServlet {
         java.util.Date endDate = calendar.getTime();
         // Convert java.util.Date to java.sql.Date
         Date sqlEndDate = new Date(endDate.getTime());
-        
+
         CourseDAO courseDAO = new CourseDAO();
-        if(u != null){
-            if(courseDAO.addCourseToUser(course_id, u.getUserId(), sqlCurrentDate, sqlEndDate)) {
+        if (user_id != 0) {
+            if (courseDAO.addCourseToUser(course_id, user_id, sqlCurrentDate, sqlEndDate)) {
                 response.sendRedirect("mycourselistservlet");
-            }
-            else{
+            } else {
                 
             }
-        }
-        else{
+        } else {
             response.sendRedirect("login.jsp");
         }
     }

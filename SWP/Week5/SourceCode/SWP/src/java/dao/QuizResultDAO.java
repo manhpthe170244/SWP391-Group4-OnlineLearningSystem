@@ -45,6 +45,51 @@ public class QuizResultDAO extends MyDAO {
         }
     }
 
+    public int getMaxAttempByUserIdAndQuizId(int user_id, int quiz_id) {
+        int maxAttempt = 0;
+        xSql = "SELECT COALESCE(MAX(attempt), 0) AS max_attempt\n"
+                + "FROM quiz_result\n"
+                + "WHERE user_id = ? AND quiz_id = ?;";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, quiz_id);
+            ps.setInt(2, user_id);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                maxAttempt = rs.getInt("max_attempt");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return maxAttempt;
+    }
+
+    public Vector<QuizResult> getQuizResultByUserIdAndQuizId(int filter_user_id, int filter_quiz_id) {
+        Vector<QuizResult> vector = new Vector<QuizResult>();
+        xSql = "select* from Quiz_Result where user_id=? and quiz_id=?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, filter_user_id);
+            ps.setInt(2, filter_quiz_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int quiz_result_id = rs.getInt("quiz_result_id");
+                int quiz_id = rs.getInt("quiz_id");
+                int user_id = rs.getInt("user_id");
+                boolean quiz_status = rs.getBoolean("quiz_status");
+                float quiz_grade = rs.getFloat("quiz_grade");
+                Date quiz_start = rs.getDate("quiz_start");
+                Date quiz_end = rs.getDate("quiz_end");
+                int attempt = rs.getInt("attempt");
+
+                vector.add(new QuizResult(quiz_result_id, quiz_id, user_id, quiz_status, quiz_grade, quiz_start, quiz_end, attempt));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
     public Vector<QuizResult> getQuizResultByUserId(int filter_user_id) {
         Vector<QuizResult> vector = new Vector<QuizResult>();
         xSql = "select* from Quiz_Result where user_id=?";
@@ -72,15 +117,19 @@ public class QuizResultDAO extends MyDAO {
 
     public static void main(String[] args) {
         QuizResultDAO pd = new QuizResultDAO();
-        System.out.println("Test insertQuizResult");
-        Boolean inserted = pd.insertQuizResult(2, 3, true, 5, Timestamp.valueOf("2023-06-09 09:32:53"), Timestamp.valueOf("2023-06-09 09:37:53"), 1);
-        System.out.println(inserted);
+//        System.out.println("Test insertQuizResult");
+//        Boolean inserted = pd.insertQuizResult(2, 3, true, 5, Timestamp.valueOf("2023-06-09 09:32:53"), Timestamp.valueOf("2023-06-09 09:37:53"), 1);
+//        System.out.println(inserted);
 
         System.out.println("Test getQuizResultByUserId");
-        Vector<QuizResult> cv = pd.getQuizResultByUserId(1);
+        Vector<QuizResult> cv = pd.getQuizResultByUserIdAndQuizId(1, 1);
         for (QuizResult c : cv) {
             System.out.println(c);
 
         }
+
+        System.out.println("Test getMaxAttempByUserIdAndQuizId");
+        int maxAttempt = pd.getMaxAttempByUserIdAndQuizId(1, 1);
+        System.out.println(maxAttempt);
     }
 }
