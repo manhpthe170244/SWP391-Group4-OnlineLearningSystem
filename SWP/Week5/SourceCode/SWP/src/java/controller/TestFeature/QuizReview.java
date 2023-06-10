@@ -55,7 +55,9 @@ public class QuizReview extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int quiz_id = (int)request.getAttribute("quiz_id");
+        int user_id = (int)request.getAttribute("user_id");
+        int attempt = (int)request.getAttribute("attempt");
     }
 
     /**

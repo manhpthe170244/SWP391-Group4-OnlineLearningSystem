@@ -188,7 +188,6 @@
                         <div class="col-sm-9">
                             <table>
                                 <tr>
-
                                     <th>Start on:</th>
                                     <td>1</td>
                                 </tr>
@@ -214,12 +213,16 @@
                                     <td>John Doe</td>
                                 </tr>     
                             </table>
-                            <% Vector<Question> quesList = (Vector<Question>)request.getAttribute("quesList"); %>
+                            
+                            <%
+                                Vector<Question> quesList = (Vector<Question>)request.getAttribute("quesList"); 
+                            %>
                             <table class="Table 2" style="margin: 50px 0">
                                 <% for(int i = 1; i <= quesList.size(); i++){ %>
                                 <tr>
                                     <th class="vertical-header top-header" rowspan="2">Question <%=i%><br><span class="small-text">(Complete)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
                                             <input type="hidden" name="flag<%=i%>" value="false">
+                                            <input type="hidden" name="ques<%=i%>" value="<%= quesList.get(i-1).getQues_id() %>"><!-- send question id to servlet -->
                                             <a onclick="toggleFlag(this, <%=i%>)">
                                                 <i class="far fa-flag  flag-icon" ><br>
                                                     <span class="small-text"> Flag question</span>
@@ -230,7 +233,7 @@
                                 <i class="fa-sharp fa-light fa-flag-pennant"></i>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td id="ques-section<%=i%>">
                                         <%
                                             boolean hasSelectedOption = false;
                                             for(Choice c : quesList.get(i-1).getChoices()){
@@ -249,17 +252,18 @@
                                 <% } %>
                             </table>
                         </div>
+<!--                        chuyen trang-->
                         <div class="col-sm-3">
-                            <div class="card bg-light mb-3">
+                            <div class="card bg-light mb-3" style="position: fixed; width: 25%">
                                 <div class="sidebar">
                                     <p>Quiz Navigation</p>
                                     <div class="quiz-all mb-9">
                                         <%
                                         for(int i = 1; i <= quesList.size(); i++){
                                         if(i<10){%>
-                                        <a href="#"><div class="quiz-square rounded">0<%=i%></div></a>
+                                        <a href="#ques-section<%=i-1%>"><div class="quiz-square rounded">0<%=i%></div></a>
                                         <%}else{%>
-                                        <a href="#"><div class="quiz-square rounded"><%=i%></div></a>
+                                        <a href="#ques-section<%=i-1%>"><div class="quiz-square rounded"><%=i%></div></a>
                                             <%}}%>
                                     </div>
                                 </div>
@@ -318,6 +322,10 @@
         setTimeout(function () {
             clock();
         }, 1000);
+    }
+    
+    function moveToElement(element){
+        document.getElementByName(element).scrollIntoView();
     }
 </script>
 </html>

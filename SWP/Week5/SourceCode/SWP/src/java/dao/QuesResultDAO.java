@@ -13,20 +13,19 @@ import java.sql.Timestamp;
  */
 public class QuesResultDAO extends MyDAO {
 
-    public Boolean insertQuesResult(int ques_result_id, int ques_id, int user_id,
-            boolean ques_status, boolean ques_flag, int ques_answer) {
+    public Boolean insertQuesResult(int ques_id, int user_id,
+            boolean ques_status, boolean ques_flag, String ques_answer) {
 
-        xSql = "INSERT INTO Ques_Result(ques_result_id, ques_id, user_id,\n"
+        xSql = "INSERT INTO Ques_Result(ques_id, user_id,\n"
                 + "ques_status, ques_flag, ques_answer)\n"
-                + "VALUES ( ?, ?, ?, ?, ?, ?)";
+                + "VALUES ( ?, ?, ?, ?, ?)";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setInt(1, ques_result_id);
-            ps.setInt(2, ques_id);
-            ps.setInt(3, user_id);
-            ps.setBoolean(4, ques_status);
-            ps.setBoolean(5, ques_flag);
-            ps.setInt(6, ques_answer);
+            ps.setInt(1, ques_id);
+            ps.setInt(2, user_id);
+            ps.setBoolean(3, ques_status);
+            ps.setBoolean(4, ques_flag);
+            ps.setString(5, ques_answer);
             
             int row = ps.executeUpdate();
             if (row > 0) {
@@ -43,7 +42,7 @@ public class QuesResultDAO extends MyDAO {
     public static void main(String[] args) {
         QuesResultDAO pd = new QuesResultDAO();
         System.out.println("Test insertQuesResult");
-        Boolean inserted = pd.insertQuesResult(2, 3, 5, true,false, 4);
+        Boolean inserted = pd.insertQuesResult(1, 1, true,false, "123");
         System.out.println(inserted);
     }
 }

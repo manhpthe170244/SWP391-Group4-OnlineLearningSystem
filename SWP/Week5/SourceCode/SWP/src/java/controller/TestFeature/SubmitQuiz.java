@@ -7,6 +7,7 @@ package controller.TestFeature;
 import dao.QuesResultDAO;
 import dao.QuizDAO;
 import dao.QuizResultDAO;
+import entity.Question;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -80,6 +81,9 @@ public class SubmitQuiz extends HttpServlet {
         QuizResultDAO quizResultDAO = new QuizResultDAO();
         QuizDAO quizDAO = new QuizDAO();
         
+        // Get list of question id
+        Vector<Integer> quesList = new Vector<>();
+        
         Enumeration<String> paramNames = request.getParameterNames();
         // Get list of answers
         Vector<String> answers = new Vector<>();
@@ -91,11 +95,14 @@ public class SubmitQuiz extends HttpServlet {
             if (paramName.startsWith("answer")) {
                 String answer = request.getParameter(paramName);
                 answers.add(answer);
-                // Do something with the answer
             }
             if (paramName.startsWith("flag")){
                 Boolean flag = Boolean.parseBoolean(request.getParameter(paramName));
                 flags.add(flag);
+            }
+            if(paramName.startsWith("ques")){
+                int ques_id = Integer.parseInt(request.getParameter(paramName));
+                quesList.add(ques_id);
             }
         }
         
@@ -121,26 +128,30 @@ public class SubmitQuiz extends HttpServlet {
         
         // Get attempt number
         int maxAttempt = quizResultDAO.getMaxAttempByUserIdAndQuizId(user_id, quiz_id);
-        // Caculate mark
-        
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SubmitQuiz</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1> Start time:" + start_time + "</h1>");
-            out.println("<h1> End time:" + end_time + "</h1>");
-            out.println("<h1> Attempt:" + maxAttempt + "</h1>");
-            for(int i = 0; i < answers.size(); i++){
-                out.println("<h1>Answer: " + answers.get(i) + " " + flags.get(i) + "</h1>");
-            }  
-            out.println("</body>");
-            out.println("</html>");
+        // Caculate grade
+        // Get all question correct answer
+        Vector<String> correctAnswers = quizDAO.getAllCorrectAnswer(quiz_id);
+        int totalQues = correctAnswers.size();
+        int correctQues = 0;
+        for(int i = 0; i < answers.size(); i++){
+            // Caculate grade
+            if(answers.get(i).equals(correctAnswers.get(i))){
+                correctQues += 1;
+            }
         }
+        double num = correctQues / totalQues * 10;
+        double grade = (double) Math.round(num * 100) / 100.0;
+        
+        // Save quiz result to database
+        quizResultDAO.insertQuizResult(quiz_id, user_id, grade > 5, (float)grade, start_time, end_time, maxAttempt+1);
+        // Save ques result to database
+        for(int i = 0; i < answers.size(); i++){
+            quesResultDAO.insertQuesResult(quesList.get(i), user_id, answers.get(i).equals(correctAnswers.get(i)), flags.get(i), answers.get(i));
+        }
+        
+        request.setAttribute("quiz_id", quiz_id);
+        request.setAttribute("user_id", user_id);
+        request.getRequestDispatcher("QuizReview").forward(request, response);
     }
 
     /**
