@@ -121,7 +121,18 @@ public class SubmitQuiz extends HttpServlet {
         
         // Get attempt number
         int maxAttempt = quizResultDAO.getMaxAttempByUserIdAndQuizId(user_id, quiz_id);
-        // Caculate mark
+        // Caculate grade
+        // Get all question correct answer
+        Vector<String> correctAnswers = quizDAO.getAllCorrectAnswer(quiz_id);
+        int totalQues = correctAnswers.size();
+        int correctQues = 0;
+        for(int i = 0; i < answers.size(); i++){
+            if(answers.get(i).equals(correctAnswers.get(i))){
+                correctQues++;
+            }
+        }
+        double num = correctQues / totalQues * 10;
+        double grade = (double) Math.round(num * 100) / 100.0;
         
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
@@ -137,7 +148,9 @@ public class SubmitQuiz extends HttpServlet {
             out.println("<h1> Attempt:" + maxAttempt + "</h1>");
             for(int i = 0; i < answers.size(); i++){
                 out.println("<h1>Answer: " + answers.get(i) + " " + flags.get(i) + "</h1>");
+                out.println("<h1>Correct: " + correctAnswers.get(i) + "</h1>");
             }  
+            out.println("<h1> Grade:" + num + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
