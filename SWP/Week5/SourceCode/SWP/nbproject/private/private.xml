@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/web/SlidersListEdit.jsp</file>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/dao/SliderDAO.java</file>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/dal/DBConnect.java</file>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/controller/MarketingFeature/slidersListEdit.java</file>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/controller/MarketingFeature/deleteSlider.java</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week5/SourceCode/SWP/src/java/dao/CourseDAO.java</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week5/SourceCode/SWP/web/CourseList.jsp</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week5/SourceCode/SWP/src/java/controller/PublicFeature/courseList.java</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week5/SourceCode/SWP/src/java/controller/PublicFeature/homepage.java</file>
         </group>
     </open-files>
 </project-private>

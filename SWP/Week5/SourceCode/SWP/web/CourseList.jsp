@@ -19,7 +19,7 @@
         <meta name="description" content="">
         <meta name="author" content="Template Mo">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <title> CourseList </title>
 
         <!-- Bootstrap core CSS -->
@@ -106,9 +106,10 @@
                             <div class="col-lg-12">
                                 <div class="filters">
                                     <ul>
-                                        <c:forEach items="${requestScope.subjectList}" var="subject">
-                                            <a href="?sub_id=${subject.getSub_id()}"><li>${subject.getSub_name()}</li></a>
-                                        </c:forEach>
+                                        <a href="?sub_id=0"><li>All</li></a>
+                                                <c:forEach items="${requestScope.subjectList}" var="subject">
+                                            <a href="#" class="filter-link" onclick="filterList('${subject.getSub_id()}')"><li>${subject.getSub_name()}</li></a>
+                                                </c:forEach>
                                     </ul>
                                 </div>
                             </div>
@@ -117,6 +118,7 @@
                                     <option value="recent">Recent days</option>
                                     <option value="name">Name</option>
                                     <option value="price">Price</option>
+                                    <option value="Mostparticipant">Most participant</option>
                                 </select>
                             </div>
 
@@ -138,7 +140,7 @@
                                                     <br>
                                                     <div>
                                                         <a href="/SWP/courseDetails?course_id=${course.getCourse_id()}"><h4 style="font-size: 100%">${course.getCourse_name()}</h4></a><br>
-                                                    <p>${course.getCourseTilte()}</p>
+                                                        <p>${course.getCourseTilte()}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -208,70 +210,94 @@
         <script src="assets/js/slick-slider.js"></script>
         <script src="assets/js/custom.js"></script>
         <script>
-            //according to loftblog tut
-            $('.nav li:first').addClass('active');
+                                                //according to loftblog tut
+                                                $('.nav li:first').addClass('active');
 
-            // set sort_type
-            const sortType = document.getElementById("sortType");
-            sortType.addEventListener("change", function () {
-                if (sortType.value === "recent") {
-                    window.location.href = "?sort_type=recent";
-                } else if (sortType.value === "name") {
-                    window.location.href = "?sort_type=name";
-                }
-            });
+                                                // set sort_type
+                                                const sortType = document.getElementById("sortType");
+                                                sortType.addEventListener("change", function () {
+                                                    if (sortType.value === "recent") {
+                                                        window.location.href = "?sort_type=recent";
+                                                    } else if (sortType.value === "name") {
+                                                        window.location.href = "?sort_type=name";
+                                                    } else if (sortType.value === "Mostparticipant") {
+                                                        window.location.href = "?sort_type=Mostparticipant";
+                                                    }
+                                                });
 
-            var paramValue = "${sessionScope.sort_type}";
-            for (var i = 0; i < sortType.options.length; i++) {
-                if (sortType.options[i].value === paramValue) {
-                    sortType.options[i].selected = true;
-                    break;
-                }
-            }
+                                                var paramValue = "${sessionScope.sort_type}";
+                                                for (var i = 0; i < sortType.options.length; i++) {
+                                                    if (sortType.options[i].value === paramValue) {
+                                                        sortType.options[i].selected = true;
+                                                        break;
+                                                    }
+                                                }
+                                                function filterList(filterValue) {
+                                                    var search = "your_search_value";
+                                                    var sortType = "your_sort_type_value";
+                                                    var subId = "your_sub_id_value";
+                                                    $.ajax({
+                                                        url: 'courseList',
+                                                        type: 'GET',
+                                                        data: {filter: filterValue},
+                                                        success: function (response) {
+                                                            // Update the course list on the page
+                                                            var courseList = response.courseToDisplay;
+                                                            // Manipulate the courseList variable to update the displayed content
+                                                            // For example, you can iterate over the courses and build HTML elements dynamically
 
+                                                            // Update the filtered course list on the page without refreshing
+                                                            $("#courseListContainer").html(courseList);
+                                                        },
+                                                        error: function (xhr, status, error) {
+                                                            // Handle the error case
+                                                            console.log("An error occurred: " + error);
+                                                        }
+                                                    });
+                                                }
 
+                                                var showSection = function showSection(section, isAnimate) {
+                                                    var
+                                                            direction = section.replace(/#/, ''),
+                                                            reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                                                            reqSectionPos = reqSection.offset().top - 0;
 
-            var showSection = function showSection(section, isAnimate) {
-                var
-                        direction = section.replace(/#/, ''),
-                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-                        reqSectionPos = reqSection.offset().top - 0;
+                                                    if (isAnimate) {
+                                                        $('body, html').animate({
+                                                            scrollTop: reqSectionPos},
+                                                                800);
+                                                    } else {
+                                                        $('body, html').scrollTop(reqSectionPos);
+                                                    }
 
-                if (isAnimate) {
-                    $('body, html').animate({
-                        scrollTop: reqSectionPos},
-                            800);
-                } else {
-                    $('body, html').scrollTop(reqSectionPos);
-                }
+                                                };
 
-            };
+                                                var checkSection = function checkSection() {
+                                                    $('.section').each(function () {
+                                                        var
+                                                                $this = $(this),
+                                                                topEdge = $this.offset().top - 80,
+                                                                bottomEdge = topEdge + $this.height(),
+                                                                wScroll = $(window).scrollTop();
+                                                        if (topEdge < wScroll && bottomEdge > wScroll) {
+                                                            var
+                                                                    currentId = $this.data('section'),
+                                                                    reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                                                            reqLink.closest('li').addClass('active').
+                                                                    siblings().removeClass('active');
+                                                        }
+                                                    });
+                                                };
 
-            var checkSection = function checkSection() {
-                $('.section').each(function () {
-                    var
-                            $this = $(this),
-                            topEdge = $this.offset().top - 80,
-                            bottomEdge = topEdge + $this.height(),
-                            wScroll = $(window).scrollTop();
-                    if (topEdge < wScroll && bottomEdge > wScroll) {
-                        var
-                                currentId = $this.data('section'),
-                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-                        reqLink.closest('li').addClass('active').
-                                siblings().removeClass('active');
-                    }
-                });
-            };
+                                                $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                                                    e.preventDefault();
+                                                    showSection($(this).attr('href'), true);
+                                                });
 
-            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-                e.preventDefault();
-                showSection($(this).attr('href'), true);
-            });
+                                                $(window).scroll(function () {
+                                                    checkSection();
+                                                });
 
-            $(window).scroll(function () {
-                checkSection();
-            });
         </script>
     </body>
 

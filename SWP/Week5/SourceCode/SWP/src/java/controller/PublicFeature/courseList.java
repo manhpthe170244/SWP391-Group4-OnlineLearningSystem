@@ -16,11 +16,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
+import com.google.gson.Gson;
 
 /**
  *
@@ -28,41 +30,7 @@ import java.util.stream.Collectors;
  */
 public class courseList extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet courseList</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet courseList at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -93,7 +61,7 @@ public class courseList extends HttpServlet {
             if (session.getAttribute("sub_id") != null) {
                 sub_id = (int) session.getAttribute("sub_id");
             } else {
-                sub_id = 1;
+                sub_id = 0;
             }
         }
 
@@ -111,7 +79,7 @@ public class courseList extends HttpServlet {
         int recordsPerPage = 9;
 
         CourseDAO courseDAO = new CourseDAO();
-        Vector<Course> courseToDisplay = new Vector<>();
+        List courseToDisplay = new ArrayList<>();
 
         SubjectDAO subjectDAO = new SubjectDAO();
         List<Subject> subjectList = subjectDAO.getAll();
@@ -121,40 +89,27 @@ public class courseList extends HttpServlet {
 
         List<Course> courseList;
 
+        int totalRecords = 0;
+        int totalPages;
         // Get courseList by search and sub_id
         if (search == null) {
-            courseList = courseDAO.getCourseBySubId(sub_id);
+            if ((int) session.getAttribute("sub_id") == 0) {
+                courseToDisplay = courseDAO.getAllCoursewithPagination((currentPage - 1)*9, 9, sort_type);
+                totalRecords = courseDAO.getTotalNumber(0, search);
+            } else {
+                courseToDisplay = courseDAO.getCourseBySubId(sub_id, (currentPage - 1)*9, 9, sort_type);
+                totalRecords = courseDAO.getTotalNumber(sub_id, search);
+            }
+
         } else {
-            courseList = courseDAO.searchByName(search).stream().filter(s -> s.getSub_id() == sub_id).collect(Collectors.toList());
+            courseToDisplay = courseDAO.searchByName(search, sort_type, (currentPage - 1)*9);
+            totalRecords = courseDAO.getTotalNumber(0, search);
         }
-
-        // Sort courseList by name
-        if (sort_type.compareTo("name") == 0) {
-            Collections.sort(courseList, new Comparator<Course>() {
-                @Override
-                public int compare(Course c1, Course c2) {
-                    return c1.getCourse_name().compareTo(c2.getCourse_name());
-                }
-            });
+        if(sort_type.equalsIgnoreCase("mostparticipant")){
+            courseToDisplay = courseDAO.SortCoursesByParRate((currentPage-1)*9, 9, (int)session.getAttribute("sub_id"), search);
+            totalRecords = courseToDisplay.size();
         }
-        // Sort courseList by recent
-        else if(sort_type.compareTo("recent") == 0){
-            Collections.sort(courseList, new Comparator<Course>() {
-                @Override
-                public int compare(Course c1, Course c2) {
-                    return c1.getLast_update().compareTo(c2.getLast_update());
-                }
-            });
-            Collections.reverse(courseList);
-        }
-
-        for (int i = recordsPerPage * (currentPage - 1); i < recordsPerPage * currentPage && i < courseList.size(); i++) {
-            courseToDisplay.add(courseList.get(i));
-        }
-
-        int totalRecords = courseList.size();
-        int totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
-
+        totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
         request.setAttribute("courseToDisplay", courseToDisplay);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", currentPage);
@@ -174,7 +129,6 @@ public class courseList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
