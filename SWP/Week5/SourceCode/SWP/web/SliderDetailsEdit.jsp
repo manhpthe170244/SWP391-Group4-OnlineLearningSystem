@@ -134,7 +134,7 @@
 
                             <div class="form-group">
                                 <label for="slider-note">Note:</label>
-                                <textarea name="slider_note" placeholder="Enter note" value="${slider.getSlider_link()}"></textarea>
+                                <input type="text" name="slider_note" placeholder="Enter note" value="${slider.getSlider_note()}">
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
@@ -143,7 +143,7 @@
                                     <input type="file" id="slider-image" name="slider_image" accept="image/*" style="color: white">
                                 </div>
                             </div>
-                            <div class="form-group" style=" width: 500px;">
+                            <div class="form-group" style=" width: 760px;">
                                 <label for="preview-image" style="display: none; width: 760px;
                                        ">Preview:</label>
                                 <img id="preview-image" src="${slider.getSlider_img()}" alt="Preview image" style="width: 100%">
@@ -158,6 +158,20 @@
 
         </section>
         <jsp:include page="footer.jsp"/>
+        <script>
+            const sliderImageInput = document.getElementById('slider-image');
+            const previewImage = document.getElementById('preview-image');
 
+            sliderImageInput.addEventListener('change', () => {
+                const file = sliderImageInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = (event) => {
+                    previewImage.src = event.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            });
+        </script>
     </body>
 </html>
