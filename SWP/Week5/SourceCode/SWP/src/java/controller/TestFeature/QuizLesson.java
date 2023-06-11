@@ -4,12 +4,16 @@
  */
 package controller.TestFeature;
 
+import dao.QuizResultDAO;
+import entity.QuizResult;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Vector;
 
 /**
  *
@@ -55,7 +59,23 @@ public class QuizLesson extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
         
+        int user_id = 0;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                }
+            }
+        }
+        
+        QuizResultDAO quizResultDAO = new QuizResultDAO();
+        Vector<QuizResult> quizResultList = quizResultDAO.getQuizResultByUserIdAndQuizId(user_id, quiz_id);
+        request.setAttribute("quizResultList", quizResultList);
+        request.getRequestDispatcher("quizLesson.jsp").forward(request, response);
     }
 
     /**
