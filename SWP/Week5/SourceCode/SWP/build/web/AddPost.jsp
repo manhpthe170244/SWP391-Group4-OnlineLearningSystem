@@ -46,7 +46,7 @@
 
             .form-group {
                 margin-bottom: 10px;
-
+             
             }
 
             .form-group label {
@@ -119,13 +119,13 @@
             <div class="container">
                 <div class="row">
 
-                    <form method="post" action="updatePost" enctype="multipart/form-data">
+                    <form method="post" action="addPost" enctype="multipart/form-data">
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
                                 <h2>Post Detail Edit</h2>
                             </div>
-
+                           
                             <div class="form-group">
                                 <label for="post-title">Title:</label>
                                 <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.post.getPost_title()}" required>
@@ -141,7 +141,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note" value="${requestScope.post.getPost_desc()}">
+                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note">
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
@@ -150,8 +150,10 @@
                                     <input type="file" id="post-image" name="post_image" style="color: white">
                                 </div>
                             </div>
-                            <div class="form-group" style=" width: 740px;">
-                                <img id="preview-image" src="${requestScope.post.getPost_img()}" alt="Preview image" style="max-width: 100%">
+                            <div class="form-group" style=" width: 760px;">
+                                <label for="preview-image" style="display: none; width: 760px;
+                                       ">Preview:</label>
+                                <img id="preview-image" src="${slider.getSlider_img()}" alt="Preview image" style="width: 100%">
                             </div>
                         </div>  
                         <div >
@@ -163,20 +165,20 @@
 
         </section>
         <jsp:include page="footer.jsp"/>
-        <script>
-            const postImageInput = document.getElementById('post-image');
-            const previewImage = document.getElementById('preview-image');
+<script>
+  const postImageInput = document.getElementById('post-image');
+  const previewImage = document.getElementById('preview-image');
 
-            postImageInput.addEventListener('change', () => {
-                const file = postImageInput.files[0];
-                const reader = new FileReader();
+  postImageInput.addEventListener('change', () => {
+    const file = postImageInput.files[0];
+    const reader = new FileReader();
 
-                reader.onload = (event) => {
-                    previewImage.src = event.target.result;
-                };
+    reader.onload = (event) => {
+      previewImage.src = event.target.result;
+    };
 
-                reader.readAsDataURL(file);
-            });
-        </script>
+    reader.readAsDataURL(file);
+  });
+</script>
     </body>
 </html>

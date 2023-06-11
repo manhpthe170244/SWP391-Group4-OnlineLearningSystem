@@ -72,6 +72,18 @@
         <servlet-name>addSlider</servlet-name>
         <servlet-class>controller.MarketingFeature.addSlider</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addPost</servlet-name>
+        <servlet-class>controller.MarketingFeature.addPost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deletePost</servlet-name>
+        <servlet-class>controller.MarketingFeature.deletePost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updatePost</servlet-name>
+        <servlet-class>controller.MarketingFeature.updatePost</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PersonalAccountServlet</servlet-name>
         <url-pattern>/PersonalAccountServlet</url-pattern>
@@ -151,6 +163,18 @@
     <servlet-mapping>
         <servlet-name>addSlider</servlet-name>
         <url-pattern>/addSlider</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addPost</servlet-name>
+        <url-pattern>/addPost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deletePost</servlet-name>
+        <url-pattern>/deletePost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updatePost</servlet-name>
+        <url-pattern>/updatePost</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homepage</welcome-file>

@@ -141,28 +141,45 @@ public class PostDAO extends MyDAO {
             return false;
         }
     }
+    
+    public Boolean deleteById(int id) {
+        xSql = "delete from Post where post_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, id);
+            int row = ps.executeUpdate();
+            if(row > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }catch (SQLException ex) {
+            return false;
+        }
+    }
 
     public static void main(String[] args) {
         PostDAO pd = new PostDAO();
         
-        System.out.println("Test searchById");
-        Post post = pd.searchById(1);
-        System.out.println(post);
-        
-        System.out.println("Test searchByName");
-        Vector<Post> postSearchByName = pd.searchByName("a");
-        for(Post p : postSearchByName){
-            System.out.println(p);
-        }
-        
-        System.out.println("Test addPost");
-        Boolean inserted = pd.addPost("tempAvatar.jpg", "Người đầu tiên ở Việt Nam đạt 9.0 cả bốn kỹ năng IELTS", 
-                "test", Date.valueOf("2022-06-30"), true, 1);
-        System.out.println(inserted);
-        
-        System.out.println("Test updatePost");
-        Boolean updated = pd.updatePost(1001, "tempAvatar.jpg", "test", 
-                "test", Date.valueOf("2022-06-07"), true, 1);
-        System.out.println(inserted);
+//        System.out.println("Test searchById");
+//        Post post = pd.searchById(1);
+//        System.out.println(post);
+//        
+//        System.out.println("Test searchByName");
+//        Vector<Post> postSearchByName = pd.searchByName("a");
+//        for(Post p : postSearchByName){
+//            System.out.println(p);
+//        }
+//        
+//        System.out.println("Test addPost");
+//        Boolean inserted = pd.addPost("tempAvatar.jpg", "Người đầu tiên ở Việt Nam đạt 9.0 cả bốn kỹ năng IELTS", 
+//                "test", Date.valueOf("2022-06-30"), true, 1);
+//        System.out.println(inserted);
+//        
+//        System.out.println("Test updatePost");
+//        Boolean updated = pd.updatePost(1001, "tempAvatar.jpg", "test", 
+//                "test", Date.valueOf("2022-06-07"), true, 1);
+//        System.out.println(inserted);
     }
 }

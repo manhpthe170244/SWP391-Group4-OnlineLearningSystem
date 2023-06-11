@@ -4,23 +4,30 @@
  */
 package controller.MarketingFeature;
 
-import dao.PostCategoryDAO;
 import dao.PostDAO;
-import entity.Post;
-import entity.PostCategory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Vector;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Date;
+import java.util.Calendar;
+
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 5)
 
 /**
  *
  * @author ACER
  */
-public class postDetailsEdit extends HttpServlet {
+public class updatePost extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +46,10 @@ public class postDetailsEdit extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet postDetailsEdit</title>");            
+            out.println("<title>Servlet updatePost</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet postDetailsEdit at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet updatePost at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,21 +67,38 @@ public class postDetailsEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String postIdString = request.getParameter("post_id");
-        String pageType = request.getParameter("type");
-        PostCategoryDAO postCategoryDAO = new PostCategoryDAO();
-        Vector<PostCategory> categoryList = postCategoryDAO.getAll();
-        request.setAttribute("categoryList", categoryList);
-        if (pageType.equals("edit")) {
-            int post_id = Integer.parseInt(postIdString);
-            PostDAO postDAO = new PostDAO();
-            Post post = postDAO.searchById(post_id);
-            request.setAttribute("post", post);
-            request.getRequestDispatcher("PostDetailEdit.jsp").forward(request, response);
+        int id = Integer.parseInt(request.getParameter("post_id"));
+        String title = request.getParameter("post_title");
+        String description = request.getParameter("post_des");
+        int blog_id = Integer.parseInt(request.getParameter("blog_id"));
+
+        // Get post image
+        Part filePart = null;
+        filePart = request.getPart("post_image");
+        String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
+        String fileName;
+        if (filePart != null && filePart.getSize() > 0) {
+            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        } else {
+            fileName = "tempAvatar.jpg";
         }
-        else if(pageType.equals("add")){
-            request.getRequestDispatcher("AddPost.jsp").forward(request, response);
+        String filePath = saveDirectory + fileName;
+
+        String sqlFilePath = "img/" + fileName;
+        if (filePart != null && filePart.getSize() > 0) {
+            InputStream fileContent = filePart.getInputStream();
+            Files.copy(fileContent, Paths.get(filePath));
         }
+
+        // Get current date
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = new Date(calendar.getTime().getTime());
+
+        // addPost
+        PostDAO postDAO = new PostDAO();
+        postDAO.updatePost(id, sqlFilePath, title, description, currentDate, true, blog_id);
+
+        response.sendRedirect("postListEdit");
     }
 
     /**

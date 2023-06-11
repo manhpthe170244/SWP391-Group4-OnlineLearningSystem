@@ -160,31 +160,49 @@ background-color: #f2f2f2;
                             <button type="submit">Search</button>
                         </form>
                     </div>
-                    <li><button class="add-post-button">Add Post</button></li>
+                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add Post</button></li>
 
 
                     <table border="1">
                         <tr>
-                            <th>ID</th>
                             <th>Title</th>
                             <th>Image</th>
                             <th>Date</th>
                             <th>Status</th>
                             <th>Blog_id</th>
+                            <th>Action</th>
                         </tr>
                         <c:forEach items="${requestScope.postList}" var="post">
-                            <tr>
-                                <td>${post.getPost_id()}</td>
+                            <tr id="post_${post.getPost_id()}">
                                 <td>${post.getPost_title()}</td>
                                 <td>${post.getPost_img()}</td>
                                 <td>${post.getPost_date()}</td>
                                 <td>${(post.getPost_status()) ? "Active" : "Inactive"}</td>
                                 <td>${post.getBlog_id()}</td>
+                                <td>
+                                    <button onclick="deletePost(${post.getPost_id()})">Delete</button>
+                                    <button onclick="window.location.href = 'postDetailsEdit?post_id=${post.getPost_id()}&type=edit'">Edit</button>
+                                </td>
                             </tr>             
                         </c:forEach>
                     </table>
                 </div>
         </section>
         <jsp:include page="footer.jsp"/>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function deletePost(postId) {
+            //Send an AJAX request to your server-side script
+            $.ajax({
+                url: "deletePost",
+                type: "POST",
+                data: {post_id: postId},
+                success: function (response) {
+                    // Remove the row from the table
+                    $("#post_" + postId).remove();
+                }
+            });
+        }
+    </script>
     </body>
 </html>
