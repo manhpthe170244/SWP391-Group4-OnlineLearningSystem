@@ -10,6 +10,7 @@ import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,7 +39,7 @@ public class QuizHandle extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet QuizHandle</title>");            
+            out.println("<title>Servlet QuizHandle</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet QuizHandle at " + request.getContextPath() + "</h1>");
@@ -59,14 +60,31 @@ public class QuizHandle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String quizIdString = request.getParameter("quiz_id");
-        int quiz_id = Integer.parseInt(quizIdString);
-        // Truyen danh sach cau hoi
-        QuizDAO quizDAO = new QuizDAO();
-        Vector<Question> quesList = quizDAO.getQuestionByQuizId(quiz_id);
-        request.setAttribute("quesList", quesList);
-        RequestDispatcher rd = request.getRequestDispatcher("QuizHandle.jsp");
-        rd.forward(request, response);
+        int user_id = 0;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                }
+            }
+        }
+
+        if (user_id != 0) {
+            String quizIdString = request.getParameter("quiz_id");
+            int quiz_id = Integer.parseInt(quizIdString);
+            // Truyen danh sach cau hoi
+            QuizDAO quizDAO = new QuizDAO();
+            Vector<Question> quesList = quizDAO.getQuestionByQuizId(quiz_id);
+            request.setAttribute("quesList", quesList);
+            request.setAttribute("quiz_id", quiz_id);
+            RequestDispatcher rd = request.getRequestDispatcher("QuizHandle.jsp");
+            rd.forward(request, response);
+        }
+        else{
+            response.sendRedirect("login.jsp");
+        }
     }
 
     /**

@@ -84,4 +84,35 @@ public class QuizDAO extends MyDAO {
         return vector;
     }
 
+    public Vector<String> getAllCorrectAnswer(int quiz_id) {
+        Vector<String> correctAnswers = new Vector<>();
+        xSql = "SELECT c.choice_content\n"
+                + "FROM quiz q\n"
+                + "JOIN question qu ON qu.quiz_id = q.quiz_id\n"
+                + "JOIN choices c ON c.ques_id = qu.ques_id\n"
+                + "WHERE q.quiz_id = ? AND c.is_true = 'TRUE'";
+        
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, quiz_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String correct_choice = rs.getString("choice_content");
+                correctAnswers.add(correct_choice);
+            }
+        } catch (Exception e) {
+            System.out.println("checkCourse: " + e.getMessage());
+        }
+        
+        return correctAnswers;
+    }
+    
+    public static void main(String[] args) {
+        QuizDAO pd = new QuizDAO();
+        System.out.println("Test getAllQuestionCorrectAnswer");
+        Vector<String> correctAnswers = pd.getAllCorrectAnswer(1);
+        for(String a : correctAnswers){
+            System.out.println(a);
+        }
+    }
 }

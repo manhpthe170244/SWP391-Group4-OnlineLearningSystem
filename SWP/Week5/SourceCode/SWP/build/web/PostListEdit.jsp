@@ -183,15 +183,8 @@ background-color: #f2f2f2;
                             </tr>             
                         </c:forEach>
                     </table>
-
-
                 </div>
-
         </section>
-
-
-
         <jsp:include page="footer.jsp"/>
-
     </body>
 </html>

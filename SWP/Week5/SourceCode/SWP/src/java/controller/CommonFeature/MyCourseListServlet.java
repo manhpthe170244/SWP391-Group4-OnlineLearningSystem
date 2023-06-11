@@ -13,6 +13,7 @@ import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,8 +33,18 @@ public class MyCourseListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User currUser = (User) request.getSession().getAttribute("currUser");
-        if (currUser == null) {
+        int user_id = 0;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                }
+            }
+        }
+        
+        if (user_id == 0) {
             response.sendRedirect("login.jsp");
             return;
         }
@@ -62,7 +73,7 @@ public class MyCourseListServlet extends HttpServlet {
         List<Subject> subjectList = sd.getAll();
         request.setAttribute("subjectList", subjectList);
 
-        Vector<ManageCourse> myCourses = cd.getmyCourseList(currUser.getUserId(), subIdRaw, search, sort_type);
+        Vector<ManageCourse> myCourses = cd.getmyCourseList(user_id, subIdRaw, search, sort_type);
         request.setAttribute("myCourses", myCourses);
 
         

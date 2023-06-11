@@ -55,6 +55,37 @@ public class UserDAO extends MyDAO {
         }
     }
 
+    public User getUserById(int id) {
+        xSql = "select * from [dbo].[User] WHERE [user_id] = ?";
+        User u = null;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                u = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_email"),
+                        rs.getString("password"),
+                        rs.getString("full_name"),
+                        rs.getString("user_img"),
+                        rs.getInt("gender_id"),
+                        rs.getDate("user_dob"),
+                        rs.getString("user_phone"),
+                        rs.getString("user_address"),
+                        rs.getString("user_wallet"),
+                        rs.getInt("role_id"),
+                        rs.getDate("user_time"),
+                        rs.getBoolean("user_status"),
+                        rs.getInt("Score")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return u;
+    }
+    
     public User getUserByEmail(String email) {
         xSql = "select * from [dbo].[User] WHERE [user_email] = ?";
         User uByEmail = null;

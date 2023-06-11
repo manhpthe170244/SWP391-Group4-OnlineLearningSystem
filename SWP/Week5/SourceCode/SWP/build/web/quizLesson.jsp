@@ -103,7 +103,6 @@
             <div class="container pb-5 text-center" style="color: white;">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h6>TimeLine: 60 minutes</h6>
                         <h6>Grading method: Highest Score</h6>
                     </div>
                 </div>
@@ -123,23 +122,23 @@
                                 <tr>
                                     <th scope="col">Attempt</th>
                                     <th scope="col">State</th>
-                                    <th scope="col">Marks/16.00</th>
+                                    <th scope="col">Start</th>
                                     <th scope="col">Grade/10.00</th>
                                     <th scope="col">Review</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach begin="1" end="10">
+                                <c:forEach items="${requestScope.quizResultList}" var="quizResult">
                                     <tr>
-                                        <th scope="row">1</th>
+                                        <th scope="row">${quizResult.getAttempt()}</th>
                                         <td>
-                                            <p style="color: white;">Finished</p>
-                                            <p style="color: white;">Submitted Saturday, 28 May 2022, 7:10 PM</p>
+                                            <p style="color: white;">${quizResult.isQuiz_status() ? "Pass" : "Not Pass"}</p>
+                                            <p style="color: white;">Submitted ${quizResult.getQuiz_end()}</p>
                                         </td>
-                                        <td>14.00</td>
-                                        <td>8.75</td>
+                                        <td>${quizResult.getQuiz_start()}</td>
+                                        <td>${quizResult.getQuiz_grade()}</td>
                                         <td>
-                                            <a href="">Review</a>
+                                            <a href="QuizReview?quiz_result_id=${quizResult.getQuiz_result_id()}">Review</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

@@ -4,14 +4,21 @@
  */
 package controller.TestFeature;
 
+import dao.QuesResultDAO;
+import dao.QuizDAO;
+import dao.QuizResultDAO;
+import entity.Question;
+import entity.QuizResult;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.Vector;
+import java.sql.Timestamp;
 
 /**
  *
@@ -71,8 +78,17 @@ public class SubmitQuiz extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        QuesResultDAO quesResultDAO = new QuesResultDAO();
+        QuizResultDAO quizResultDAO = new QuizResultDAO();
+        QuizDAO quizDAO = new QuizDAO();
+        
+        // Get list of question id
+        Vector<Integer> quesList = new Vector<>();
+        
         Enumeration<String> paramNames = request.getParameterNames();
+        // Get list of answers
         Vector<String> answers = new Vector<>();
+        // Get list of flags
         Vector<Boolean> flags = new Vector<>();
 
         while (paramNames.hasMoreElements()) {
@@ -80,29 +96,63 @@ public class SubmitQuiz extends HttpServlet {
             if (paramName.startsWith("answer")) {
                 String answer = request.getParameter(paramName);
                 answers.add(answer);
-                // Do something with the answer
             }
             if (paramName.startsWith("flag")){
                 Boolean flag = Boolean.parseBoolean(request.getParameter(paramName));
                 flags.add(flag);
             }
+            if(paramName.startsWith("ques")){
+                int ques_id = Integer.parseInt(request.getParameter(paramName));
+                quesList.add(ques_id);
+            }
         }
         
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SubmitQuiz</title>");
-            out.println("</head>");
-            out.println("<body>");
-            for(int i = 0; i < answers.size(); i++){
-                out.println("<h1>Answer: " + answers.get(i) + " " + flags.get(i) + "</h1>");
-            }  
-            out.println("</body>");
-            out.println("</html>");
+        // Get user_id
+        int user_id = 0;
+        Cookie[] cookies = request.getCookies();
+        
+        // Get quiz_id
+        int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                }
+            }
         }
+        
+        // Get start and finish time
+        String start_time_string = request.getParameter("start_time");
+        Timestamp start_time = Timestamp.valueOf(start_time_string);
+        Timestamp end_time = new Timestamp(System.currentTimeMillis());
+        
+        // Get attempt number
+        int maxAttempt = quizResultDAO.getMaxAttempByUserIdAndQuizId(user_id, quiz_id);
+        // Caculate grade
+        // Get all question correct answer
+        Vector<String> correctAnswers = quizDAO.getAllCorrectAnswer(quiz_id);
+        int totalQues = correctAnswers.size();
+        int correctQues = 0;
+        for(int i = 0; i < answers.size(); i++){
+            // Caculate grade
+            if(answers.get(i).equals(correctAnswers.get(i))){
+                correctQues += 1;
+            }
+        }
+        double num = correctQues / totalQues * 10;
+        double grade = (double) Math.round(num * 100) / 100.0;
+        
+        // Save quiz result to database
+        quizResultDAO.insertQuizResult(quiz_id, user_id, grade > 5, (float)grade, start_time, end_time, maxAttempt+1);
+        // Save ques result to database
+        int maxQuizResultId = quizResultDAO.getMaxQuizResultIdByUserIdAndQuizId(user_id, quiz_id);
+        for(int i = 0; i < answers.size(); i++){
+            quesResultDAO.insertQuesResult(quesList.get(i), user_id, answers.get(i).equals(correctAnswers.get(i)), flags.get(i), answers.get(i), maxQuizResultId);
+        }
+        
+        request.setAttribute("quiz_result_id", maxQuizResultId);
+        request.getRequestDispatcher("QuizReview").forward(request, response);
     }
 
     /**

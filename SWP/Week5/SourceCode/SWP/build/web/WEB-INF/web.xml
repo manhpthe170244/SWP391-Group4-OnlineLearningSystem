@@ -177,7 +177,7 @@
     </servlet>
     <servlet>
         <servlet-name>PersonalAccountServlet</servlet-name>
-        <servlet-class>controller.PersonalAccountServlet</servlet-class>
+        <servlet-class>controller.CommonFeature.PersonalAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>courseList</servlet-name>
