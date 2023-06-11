@@ -74,9 +74,10 @@
     </servlet>
     <servlet>
 
+
         <servlet-name>CourseListFilter</servlet-name>
         <servlet-class>controller.PublicFeature.CourseListFilter</servlet-class>
-=======
+
         <servlet-name>addPost</servlet-name>
         <servlet-class>controller.MarketingFeature.addPost</servlet-class>
     </servlet>
@@ -173,7 +174,7 @@
 
         <servlet-name>CourseListFilter</servlet-name>
         <url-pattern>/CourseListFilter</url-pattern>
-=======
+
         <servlet-name>addPost</servlet-name>
         <url-pattern>/addPost</url-pattern>
     </servlet-mapping>
