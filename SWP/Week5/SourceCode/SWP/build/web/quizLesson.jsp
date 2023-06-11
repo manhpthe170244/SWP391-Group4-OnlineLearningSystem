@@ -138,7 +138,7 @@
                                         <td>${quizResult.getQuiz_start()}</td>
                                         <td>${quizResult.getQuiz_grade()}</td>
                                         <td>
-                                            <a href="QuizReview?quiz_result_id=${quizResult.getQuiz_id()}">Review</a>
+                                            <a href="QuizReview?quiz_result_id=${quizResult.getQuiz_result_id()}">Review</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

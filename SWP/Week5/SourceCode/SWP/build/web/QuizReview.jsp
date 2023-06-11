@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="entity.QuesResult" %>
+<%@ page import="entity.QuizResult" %>
 <%@ page import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -155,6 +156,8 @@
 
         <% 
             Vector<QuesResult> quesResultList = (Vector<QuesResult>) request.getAttribute("quesResultList"); 
+            Vector<String> correctAnswers = (Vector<String>) request.getAttribute("correctAnswers");
+            QuizResult quizResult = (QuizResult) request.getAttribute("quizResult");
         %>
         <section class="heading-page header-text" style="padding-top: 100px;">
 
@@ -165,7 +168,7 @@
                         <table>
                             <tr>
                                 <th>Start on:</th>
-                                <td><%= quesResultList.size() %></td>
+                                <td>0</td>
                             </tr>
                             <tr>
                                 <th>State</th>
@@ -193,11 +196,16 @@
                         <table class="Table 2" style="margin: 50px 0">
                             <% for(int i = 0; i < quesResultList.size(); i++){ %>
                             <tr>
-                                <th class="vertical-header top-header" rowspan="2">Question 1<br><span class="small-text">(Complete)</span><br><span class="small-text">Mark:1.0</span></th>
-                                <td>Câu hỏi 1</td>
+                                <th class="vertical-header top-header" rowspan="2">Question <%=i+1%><br>
+                                    <span class="small-text">(Complete)</span><br>
+                                    <span class="small-text">Flag: <%= quesResultList.get(i).isQues_flag() %></span>
+                                </th>
+                            <td>Câu hỏi <%=i+1%></td>
+                            <td><%=quesResultList.get(i).isQues_status() ? "Đúng" : "Sai"%></td>
                             </tr>
                             <tr>
-                                <td>Câu trả lời </td>
+                                <td>Câu trả lời của bạn: <%=quesResultList.get(i).getQues_answer()%></td>
+                                <td>Câu trả lời đúng: <%=correctAnswers.get(i) %></td>
                             </tr>
                             <% } %>
                         </table>
@@ -213,11 +221,7 @@
                                     <%}else{%>
                                     <div class="quiz-square rounded"><%=i%></div>
                                     <%}}%>
-
-
                                 </div>
-
-
                             </div>
                             <div style="font-size: 10px">
                                 <p><a href="">show one page that time</a></p>
@@ -234,6 +238,5 @@
 
 
     <jsp:include page="footer.jsp"/>
-
 </body>
 </html>
