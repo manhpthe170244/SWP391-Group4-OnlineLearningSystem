@@ -139,7 +139,7 @@
                                     </c:forEach>
                             </ul>
                             <div class="main-button-red">
-                                <a href="courseList?sub_id=1">Xem Tất Cả Các Khóa Học</a>
+                                <a href="courseList?sub_id=0">Xem Tất Cả Các Khóa Học</a>
                             </div>
                         </div>
                     </div>
