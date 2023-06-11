@@ -31,26 +31,49 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
+           td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+    vertical-align: top;
+    color: white; /* Add this line to change the text color to white */
+}
+th{
+     color: white; 
+}
+
             table{
                 width:100%;
 
             }
             .anh{
-                background-color: gray;
+                background-color: white
+                    ;
             }
+            /*            table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin-bottom: 1em;
+                            border: 2px solid #ddd;
+                        }*/
             table {
-                border-collapse: collapse;
                 width: 100%;
                 margin-bottom: 1em;
                 border: 2px solid #ddd;
+                table-layout: fixed;
             }
-            th, td {
+/*            th, td {
                 text-align: left;
                 padding: 8px;
                 border: 1px solid #ddd;
                 color: white;
-            }
-
+            }*/
+            th, td {
+              padding: 8px;
+        border: 1px solid #ddd;
+        word-wrap: break-word;
+        vertical-align: top;
+    }
             .table-container {
                 text-align: center;
             }
@@ -60,16 +83,17 @@
                 margin: 0 auto;
             }
 
-            th, td {
+/*            th, td {
                 text-align: left;
                 padding: 8px;
                 border: 1px solid #ddd;
-            }
+background-color: #f2f2f2;
+            }*/
             .sidebar {
                 width: 100%;
 
                 padding: 20px;
-                background-color: #f2f2f2;
+                background-color: white;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
             .sidebar h3 {
@@ -87,7 +111,7 @@
             }
 
             .widget-title {
-                color: black;
+                color: white;
             }
             .widgetre ul a {
                 border: 1px solid black;
@@ -116,6 +140,7 @@
                 width: 100px;
                 height: 30px;
             }
+
         </style>
     </head>
     <body>
@@ -143,7 +168,7 @@
                             <th>ID</th>
                             <th>Title</th>
                             <th>Image</th>
-                             <th>Date</th>
+                            <th>Date</th>
                             <th>Status</th>
                             <th>Blog_id</th>
                         </tr>

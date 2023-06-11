@@ -143,7 +143,7 @@
                                     <input type="file" id="slider-image" name="slider_image" accept="image/*" style="color: white">
                                 </div>
                             </div>
-                            <div class="form-group" style=" width: 760px;">
+                            <div class="form-group" style=" width: 500px;">
                                 <label for="preview-image" style="display: none; width: 760px;
                                        ">Preview:</label>
                                 <img id="preview-image" src="${slider.getSlider_img()}" alt="Preview image" style="width: 100%">

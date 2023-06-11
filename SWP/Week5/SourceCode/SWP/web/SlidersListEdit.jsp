@@ -29,6 +29,11 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
+            .table-container {
+  text-align: center;
+  overflow-x: auto;
+}
+            
             table{
                 width:100%;
 
@@ -49,9 +54,9 @@
                 color: white;
             }
 
-            .table-container {
+/*            .table-container {
                 text-align: center;
-            }
+            }*/
 
             table {
                 width: auto;
