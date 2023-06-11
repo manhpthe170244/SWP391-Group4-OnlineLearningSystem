@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -45,7 +46,7 @@
 
             .form-group {
                 margin-bottom: 10px;
-             
+
             }
 
             .form-group label {
@@ -118,43 +119,39 @@
             <div class="container">
                 <div class="row">
 
-                    <form>
+                    <form method="post" action="updatePost" enctype="multipart/form-data">
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
                                 <h2>Post Detail Edit</h2>
                             </div>
-                           
+
                             <div class="form-group">
-                                <label for="slider-title">Title:</label>
-                                <input type="text" id="slider-title" name="slider-title" placeholder="Enter title" required>
+                                <label for="post-title">Title:</label>
+                                <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.post.getPost_title()}" required>
                             </div>
 
-                           
-
                             <div class="form-group" style="display: flex;align-items: center;">
-                                <label for="slider-status" style="margin-right: 10px; color: white">Post Category:</label>
-                                <select id="slider-status" name="slider-status" style="width: 80px">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                <label for="post-category" style="margin-right: 10px; color: white">Post Category:</label>
+                                <select id="post-category" name="blog_id" style="width: 80px">
+                                    <c:forEach items="${requestScope.categoryList}" var="category">
+                                        <option value="${category.getBlog_id()}">${category.getBlog_name()}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="slider-note">Note:</label>
-                                <textarea id="slider-note" name="slider-note" placeholder="Enter note"></textarea>
+                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note" value="${requestScope.post.getPost_desc()}">
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
-                                <label for="slider-image" style="margin-right: 10px; color: white"> Image:</label>
+                                <label for="post-image" style="margin-right: 10px; color: white"> Image:</label>
                                 <div class="input-wrapper">
-                                    <input type="file" id="slider-image" name="slider-image">
+                                    <input type="file" id="post-image" name="post_image" style="color: white">
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 740px;">
-                                <label for="preview-image" style="display: none; width: 760px;
-                                       ">Preview:</label>
-                                <img id="preview-image" src="#" alt="Preview image" style="max-width: 100%">
+                                <img id="preview-image" src="${requestScope.post.getPost_img()}" alt="Preview image" style="max-width: 100%">
                             </div>
                         </div>  
                         <div >
@@ -165,10 +162,21 @@
             </div>
 
         </section>
-
-
-
         <jsp:include page="footer.jsp"/>
+        <script>
+            const postImageInput = document.getElementById('post-image');
+            const previewImage = document.getElementById('preview-image');
 
+            postImageInput.addEventListener('change', () => {
+                const file = postImageInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = (event) => {
+                    previewImage.src = event.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            });
+        </script>
     </body>
 </html>

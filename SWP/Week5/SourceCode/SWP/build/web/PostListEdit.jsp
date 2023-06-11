@@ -31,26 +31,49 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
+           td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+    vertical-align: top;
+    color: white; /* Add this line to change the text color to white */
+}
+th{
+     color: white; 
+}
+
             table{
                 width:100%;
 
             }
             .anh{
-                background-color: gray;
+                background-color: white
+                    ;
             }
+            /*            table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin-bottom: 1em;
+                            border: 2px solid #ddd;
+                        }*/
             table {
-                border-collapse: collapse;
                 width: 100%;
                 margin-bottom: 1em;
                 border: 2px solid #ddd;
+                table-layout: fixed;
             }
-            th, td {
+/*            th, td {
                 text-align: left;
                 padding: 8px;
                 border: 1px solid #ddd;
                 color: white;
-            }
-
+            }*/
+            th, td {
+              padding: 8px;
+        border: 1px solid #ddd;
+        word-wrap: break-word;
+        vertical-align: top;
+    }
             .table-container {
                 text-align: center;
             }
@@ -60,16 +83,17 @@
                 margin: 0 auto;
             }
 
-            th, td {
+/*            th, td {
                 text-align: left;
                 padding: 8px;
                 border: 1px solid #ddd;
-            }
+background-color: #f2f2f2;
+            }*/
             .sidebar {
                 width: 100%;
 
                 padding: 20px;
-                background-color: #f2f2f2;
+                background-color: white;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
             .sidebar h3 {
@@ -87,7 +111,7 @@
             }
 
             .widget-title {
-                color: black;
+                color: white;
             }
             .widgetre ul a {
                 border: 1px solid black;
@@ -116,6 +140,7 @@
                 width: 100px;
                 height: 30px;
             }
+
         </style>
     </head>
     <body>
@@ -135,31 +160,49 @@
                             <button type="submit">Search</button>
                         </form>
                     </div>
-                    <li><button class="add-post-button">Add Post</button></li>
+                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add Post</button></li>
 
 
                     <table border="1">
                         <tr>
-                            <th>ID</th>
                             <th>Title</th>
                             <th>Image</th>
-                             <th>Date</th>
+                            <th>Date</th>
                             <th>Status</th>
                             <th>Blog_id</th>
+                            <th>Action</th>
                         </tr>
                         <c:forEach items="${requestScope.postList}" var="post">
-                            <tr>
-                                <td>${post.getPost_id()}</td>
+                            <tr id="post_${post.getPost_id()}">
                                 <td>${post.getPost_title()}</td>
                                 <td>${post.getPost_img()}</td>
                                 <td>${post.getPost_date()}</td>
                                 <td>${(post.getPost_status()) ? "Active" : "Inactive"}</td>
                                 <td>${post.getBlog_id()}</td>
+                                <td>
+                                    <button onclick="deletePost(${post.getPost_id()})">Delete</button>
+                                    <button onclick="window.location.href = 'postDetailsEdit?post_id=${post.getPost_id()}&type=edit'">Edit</button>
+                                </td>
                             </tr>             
                         </c:forEach>
                     </table>
                 </div>
         </section>
         <jsp:include page="footer.jsp"/>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function deletePost(postId) {
+            //Send an AJAX request to your server-side script
+            $.ajax({
+                url: "deletePost",
+                type: "POST",
+                data: {post_id: postId},
+                success: function (response) {
+                    // Remove the row from the table
+                    $("#post_" + postId).remove();
+                }
+            });
+        }
+    </script>
     </body>
 </html>

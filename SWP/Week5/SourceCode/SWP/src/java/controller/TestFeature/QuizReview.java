@@ -4,12 +4,18 @@
  */
 package controller.TestFeature;
 
+import dao.QuesResultDAO;
+import dao.QuizDAO;
+import dao.QuizResultDAO;
+import entity.QuesResult;
+import entity.QuizResult;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Vector;
 
 /**
  *
@@ -28,19 +34,29 @@ public class QuizReview extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet QuizReview</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet QuizReview at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String quiz_result_id_string = request.getParameter("quiz_result_id");
+        int quiz_result_id;
+        if(quiz_result_id_string == null){
+            quiz_result_id = (int)request.getAttribute("quiz_result_id");
         }
+        else{
+            quiz_result_id = Integer.parseInt(quiz_result_id_string);
+        }
+
+        QuesResultDAO quesResultDAO = new QuesResultDAO();
+        QuizResultDAO quizResultDAO = new QuizResultDAO();
+        QuizDAO quizDAO = new QuizDAO();
+        // Get question result list
+        Vector<QuesResult> quesResultList = quesResultDAO.getQuesResultBy(quiz_result_id);
+        // Get quiz result list
+        QuizResult quizResult = quizResultDAO.getQuizResultByQuizResultId(quiz_result_id);
+        // Get correct answers
+        Vector<String> correctAnswers = quizDAO.getAllCorrectAnswer(quizResult.getQuiz_id());
+        
+        request.setAttribute("quizResult", quizResult);
+        request.setAttribute("quesResultList", quesResultList);
+        request.setAttribute("correctAnswers", correctAnswers);
+        request.getRequestDispatcher("QuizReview.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,9 +71,7 @@ public class QuizReview extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int quiz_id = (int)request.getAttribute("quiz_id");
-        int user_id = (int)request.getAttribute("user_id");
-        int attempt = (int)request.getAttribute("attempt");
+        processRequest(request, response);
     }
 
     /**

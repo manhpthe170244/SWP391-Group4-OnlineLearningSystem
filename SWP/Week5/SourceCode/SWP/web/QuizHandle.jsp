@@ -261,9 +261,9 @@
                                         <%
                                         for(int i = 1; i <= quesList.size(); i++){
                                         if(i<10){%>
-                                        <a href="#ques-section<%=i-1%>"><div class="quiz-square rounded">0<%=i%></div></a>
+                                        <a href="#ques-section<%=i%>"><div class="quiz-square rounded">0<%=i%></div></a>
                                         <%}else{%>
-                                        <a href="#ques-section<%=i-1%>"><div class="quiz-square rounded"><%=i%></div></a>
+                                        <a href="#ques-section<%=i%>"><div class="quiz-square rounded"><%=i%></div></a>
                                             <%}}%>
                                     </div>
                                 </div>

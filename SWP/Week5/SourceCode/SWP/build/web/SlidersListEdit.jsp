@@ -6,7 +6,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,6 +28,11 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
+            .table-container {
+  text-align: center;
+  overflow-x: auto;
+}
+            
             table{
                 width:100%;
 
@@ -49,9 +53,9 @@
                 color: white;
             }
 
-            .table-container {
+/*            .table-container {
                 text-align: center;
-            }
+            }*/
 
             table {
                 width: auto;

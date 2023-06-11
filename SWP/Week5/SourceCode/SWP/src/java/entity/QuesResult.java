@@ -10,13 +10,14 @@ package entity;
  */
 public class QuesResult {
 
-    int ques_result_id, ques_id, user_id, ques_answer, quiz_result_id;
+    int ques_result_id, ques_id, user_id, quiz_result_id;
+    String ques_answer;
     boolean ques_status, ques_flag;
 
     public QuesResult() {
     }
 
-    public QuesResult(int ques_result_id, int ques_id, int user_id, int ques_answer, int quiz_result_id, boolean ques_status, boolean ques_flag) {
+    public QuesResult(int ques_result_id, int ques_id, int user_id, String ques_answer, int quiz_result_id, boolean ques_status, boolean ques_flag) {
         this.ques_result_id = ques_result_id;
         this.ques_id = ques_id;
         this.user_id = user_id;
@@ -50,11 +51,11 @@ public class QuesResult {
         this.user_id = user_id;
     }
 
-    public int getQues_answer() {
+    public String getQues_answer() {
         return ques_answer;
     }
 
-    public void setQues_answer(int ques_answer) {
+    public void setQues_answer(String ques_answer) {
         this.ques_answer = ques_answer;
     }
 

@@ -4,13 +4,17 @@
  */
 package controller.MarketingFeature;
 
+import dao.PostCategoryDAO;
+import dao.PostDAO;
+import entity.Post;
+import entity.PostCategory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Date;
+import java.util.Vector;
 
 /**
  *
@@ -56,14 +60,20 @@ public class postDetailsEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String post_title = request.getParameter("post_title");
-        String post_des = request.getParameter("post_title");
-        String blog_id = request.getParameter("blog_id");
-        Date date = new Date();
-        Date post_date = date;
-        try ( PrintWriter out = response.getWriter()) {
-            out.println("<p>" + post_date + "</p>");
+        String postIdString = request.getParameter("post_id");
+        String pageType = request.getParameter("type");
+        PostCategoryDAO postCategoryDAO = new PostCategoryDAO();
+        Vector<PostCategory> categoryList = postCategoryDAO.getAll();
+        request.setAttribute("categoryList", categoryList);
+        if (pageType.equals("edit")) {
+            int post_id = Integer.parseInt(postIdString);
+            PostDAO postDAO = new PostDAO();
+            Post post = postDAO.searchById(post_id);
+            request.setAttribute("post", post);
+            request.getRequestDispatcher("PostDetailEdit.jsp").forward(request, response);
+        }
+        else if(pageType.equals("add")){
+            request.getRequestDispatcher("AddPost.jsp").forward(request, response);
         }
     }
 
