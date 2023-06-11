@@ -22,15 +22,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
-
+import com.google.gson.Gson;
+import controller.CourseListResponse;
 
 /**
  *
  * @author ACER
  */
-public class courseList extends HttpServlet {
+public class CourseListFilter extends HttpServlet {
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -94,51 +94,40 @@ public class courseList extends HttpServlet {
         // Get courseList by search and sub_id
         if (search == null) {
             if ((int) session.getAttribute("sub_id") == 0) {
-                courseToDisplay = courseDAO.getAllCoursewithPagination((currentPage - 1)*9, 9, sort_type);
+                courseToDisplay = courseDAO.getAllCoursewithPagination((currentPage - 1) * 9, 9, sort_type);
                 totalRecords = courseDAO.getTotalNumber(0, search);
             } else {
-                courseToDisplay = courseDAO.getCourseBySubId(sub_id, (currentPage - 1)*9, 9, sort_type);
+                courseToDisplay = courseDAO.getCourseBySubId(sub_id, (currentPage - 1) * 9, 9, sort_type);
                 totalRecords = courseDAO.getTotalNumber(sub_id, search);
             }
 
         } else {
-            courseToDisplay = courseDAO.searchByName(search, sort_type, (currentPage - 1)*9);
+            courseToDisplay = courseDAO.searchByName(search, sort_type, (currentPage - 1) * 9);
             totalRecords = courseDAO.getTotalNumber(0, search);
         }
-        if(sort_type.equalsIgnoreCase("mostparticipant")){
-            courseToDisplay = courseDAO.SortCoursesByParRate((currentPage-1)*9, 9, (int)session.getAttribute("sub_id"), search);
+        if (sort_type.equalsIgnoreCase("mostparticipant")) {
+            courseToDisplay = courseDAO.SortCoursesByParRate((currentPage - 1) * 9, 9, (int) session.getAttribute("sub_id"), search);
             totalRecords = courseToDisplay.size();
         }
         totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
-        request.setAttribute("courseToDisplay", courseToDisplay);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("currentPage", currentPage);
+//        request.setAttribute("courseToDisplay", courseToDisplay);
+//        request.setAttribute("totalPages", totalPages);
+//        request.setAttribute("currentPage", currentPage);
+//
+//        RequestDispatcher rd = request.getRequestDispatcher("CourseList.jsp");
+//        rd.forward(request, response);
+        String jsonDatacourseToDisplay = new Gson().toJson(courseToDisplay);
+        String jsonCurrentPage = new Gson().toJson(currentPage);
+        String jsonTotalPage = new Gson().toJson(totalPages);
 
-        RequestDispatcher rd = request.getRequestDispatcher("CourseList.jsp");
-        rd.forward(request, response);
+        // Set the response content type
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        // Send the JSON response
+        response.getWriter().write(jsonCurrentPage);
+        response.getWriter().write(jsonTotalPage);
+        response.getWriter().write(jsonDatacourseToDisplay);
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+ 
 }

@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <%-- 
     Document   : CourseList
     Created on : May 16, 2023, 10:21:25 AM
@@ -19,7 +18,6 @@
         <meta name="description" content="">
         <meta name="author" content="Template Mo">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <title> CourseList </title>
 
         <!-- Bootstrap core CSS -->
@@ -73,7 +71,7 @@
         
         -->
     </head>
-
+    <p id="result"></p>
     <body>
         <!-- ***** Header Area Start ***** -->
         <jsp:include page="header.jsp"/>
@@ -105,12 +103,16 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="filters">
-                                    <ul>
-                                        <a href="?sub_id=0"><li>All</li></a>
-                                                <c:forEach items="${requestScope.subjectList}" var="subject">
-                                            <a href="#" class="filter-link" onclick="filterList('${subject.getSub_id()}')"><li>${subject.getSub_name()}</li></a>
-                                                </c:forEach>
-                                    </ul>
+                                    <form>
+                                        <ul>
+                                            <a href="?sub_id=0"><li>All</li></a>
+                                                    <c:forEach items="${requestScope.subjectList}" var="subject">
+<!--                                                <input type="button" onclick="filterBySubject(${subject.getSub_id()})" value="${subject.getSub_name()}"/>-->
+                                                <a href="courseList?sub_id=${subject.getSub_id()}" class="filter-link"><li>${subject.getSub_name()}</li></a>
+                                                <!--                                            <a href="#" ><li></li></a>-->
+                                            </c:forEach>
+                                        </ul>
+                                    </form>
                                 </div>
                             </div>
                             <div style="color: white;margin-bottom: 50px" class="col-lg-12">
@@ -209,94 +211,98 @@
         <script src="assets/js/video.js"></script>
         <script src="assets/js/slick-slider.js"></script>
         <script src="assets/js/custom.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                                //according to loftblog tut
-                                                $('.nav li:first').addClass('active');
+                                                     //according to loftblog tut
+                                                     $('.nav li:first').addClass('active');
 
-                                                // set sort_type
-                                                const sortType = document.getElementById("sortType");
-                                                sortType.addEventListener("change", function () {
-                                                    if (sortType.value === "recent") {
-                                                        window.location.href = "?sort_type=recent";
-                                                    } else if (sortType.value === "name") {
-                                                        window.location.href = "?sort_type=name";
-                                                    } else if (sortType.value === "Mostparticipant") {
-                                                        window.location.href = "?sort_type=Mostparticipant";
-                                                    }
-                                                });
+                                                     // set sort_type
+                                                     const sortType = document.getElementById("sortType");
+                                                     sortType.addEventListener("change", function () {
+                                                         if (sortType.value === "recent") {
+                                                             window.location.href = "?sort_type=recent";
+                                                         } else if (sortType.value === "name") {
+                                                             window.location.href = "?sort_type=name";
+                                                         } else if (sortType.value === "Mostparticipant") {
+                                                             window.location.href = "?sort_type=Mostparticipant";
+                                                         }
+                                                     });
 
-                                                var paramValue = "${sessionScope.sort_type}";
-                                                for (var i = 0; i < sortType.options.length; i++) {
-                                                    if (sortType.options[i].value === paramValue) {
-                                                        sortType.options[i].selected = true;
-                                                        break;
-                                                    }
-                                                }
-                                                function filterList(filterValue) {
-                                                    var search = "your_search_value";
-                                                    var sortType = "your_sort_type_value";
-                                                    var subId = "your_sub_id_value";
-                                                    $.ajax({
-                                                        url: 'courseList',
-                                                        type: 'GET',
-                                                        data: {filter: filterValue},
-                                                        success: function (response) {
-                                                            // Update the course list on the page
-                                                            var courseList = response.courseToDisplay;
-                                                            // Manipulate the courseList variable to update the displayed content
-                                                            // For example, you can iterate over the courses and build HTML elements dynamically
+                                                     var paramValue = "${sessionScope.sort_type}";
+                                                     for (var i = 0; i < sortType.options.length; i++) {
+                                                         if (sortType.options[i].value === paramValue) {
+                                                             sortType.options[i].selected = true;
+                                                             break;
+                                                         }
+                                                     }
 
-                                                            // Update the filtered course list on the page without refreshing
-                                                            $("#courseListContainer").html(courseList);
-                                                        },
-                                                        error: function (xhr, status, error) {
-                                                            // Handle the error case
-                                                            console.log("An error occurred: " + error);
-                                                        }
-                                                    });
-                                                }
+                                                     function filterBySubject(sub_id) {
+                                                         console.log(sub_id);
+                                                         var url = "CourseListFilter?sub_id=" + encodeURIComponent(sub_id);
+                                                         var xmlHttp = new XMLHttpRequest();
+                                                         xmlHttp.open("GET", url, true);
 
-                                                var showSection = function showSection(section, isAnimate) {
-                                                    var
-                                                            direction = section.replace(/#/, ''),
-                                                            reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-                                                            reqSectionPos = reqSection.offset().top - 0;
+                                                         xmlHttp.onreadystatechange = function () {
+                                                             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                                                 var result = document.getElementById("result");
+                                                                 result.innerHTML = xmlHttp.responseText;
+//                                                                var responseObj = JSON.parse(xmlHttp.responseText);
+//                                                                var courseToDisplay = responseObj.jsonDatacourseToDisplay;
+//                                                                var totalPage = responseObj.jsonTotalPage;
+//                                                                var currentPage = responseObj.jsonCurrentPage;
+//                                                                console.log("courseToDisplay: " + jsonDatacourseToDisplay);
+//                                                                console.log("totalPage: " + jsonTotalPage);
+//                                                                console.log("currentPage: " + jsonCurrentPage);
+                                                             }
+                                                         };
 
-                                                    if (isAnimate) {
-                                                        $('body, html').animate({
-                                                            scrollTop: reqSectionPos},
-                                                                800);
-                                                    } else {
-                                                        $('body, html').scrollTop(reqSectionPos);
-                                                    }
+                                                         xmlHttp.send();
+                                                     }
 
-                                                };
 
-                                                var checkSection = function checkSection() {
-                                                    $('.section').each(function () {
-                                                        var
-                                                                $this = $(this),
-                                                                topEdge = $this.offset().top - 80,
-                                                                bottomEdge = topEdge + $this.height(),
-                                                                wScroll = $(window).scrollTop();
-                                                        if (topEdge < wScroll && bottomEdge > wScroll) {
-                                                            var
-                                                                    currentId = $this.data('section'),
-                                                                    reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-                                                            reqLink.closest('li').addClass('active').
-                                                                    siblings().removeClass('active');
-                                                        }
-                                                    });
-                                                };
 
-                                                $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-                                                    e.preventDefault();
-                                                    showSection($(this).attr('href'), true);
-                                                });
 
-                                                $(window).scroll(function () {
-                                                    checkSection();
-                                                });
+                                                     var showSection = function showSection(section, isAnimate) {
+                                                         var
+                                                                 direction = section.replace(/#/, ''),
+                                                                 reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                                                                 reqSectionPos = reqSection.offset().top - 0;
+
+                                                         if (isAnimate) {
+                                                             $('body, html').animate({
+                                                                 scrollTop: reqSectionPos},
+                                                                     800);
+                                                         } else {
+                                                             $('body, html').scrollTop(reqSectionPos);
+                                                         }
+
+                                                     };
+
+                                                     var checkSection = function checkSection() {
+                                                         $('.section').each(function () {
+                                                             var
+                                                                     $this = $(this),
+                                                                     topEdge = $this.offset().top - 80,
+                                                                     bottomEdge = topEdge + $this.height(),
+                                                                     wScroll = $(window).scrollTop();
+                                                             if (topEdge < wScroll && bottomEdge > wScroll) {
+                                                                 var
+                                                                         currentId = $this.data('section'),
+                                                                         reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                                                                 reqLink.closest('li').addClass('active').
+                                                                         siblings().removeClass('active');
+                                                             }
+                                                         });
+                                                     };
+
+                                                     $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                                                         e.preventDefault();
+                                                         showSection($(this).attr('href'), true);
+                                                     });
+
+                                                     $(window).scroll(function () {
+                                                         checkSection();
+                                                     });
 
         </script>
     </body>
