@@ -157,6 +157,10 @@
             .flag-icon {
                 color: black;
             }
+            
+            .col-sm-9 table {
+                     width: 100%;
+            }
         </style>
     </head>
     <!--    chay dong ho khi trang load-->
@@ -213,7 +217,7 @@
                                     <td>John Doe</td>
                                 </tr>     
                             </table>
-                            
+
                             <%
                                 Vector<Question> quesList = (Vector<Question>)request.getAttribute("quesList"); 
                             %>
@@ -252,7 +256,7 @@
                                 <% } %>
                             </table>
                         </div>
-<!--                        chuyen trang-->
+                        <!--                        chuyen trang-->
                         <div class="col-sm-3">
                             <div class="card bg-light mb-3" style="position: fixed; width: 25%">
                                 <div class="sidebar">
@@ -261,9 +265,9 @@
                                         <%
                                         for(int i = 1; i <= quesList.size(); i++){
                                         if(i<10){%>
-                                        <a href="#ques-section<%=i%>"><div class="quiz-square rounded">0<%=i%></div></a>
+                                        <a href="#ques-section<%=i%>"><div class="quiz-square rounded question-square-<%=i%>">0<%=i%></div></a>
                                         <%}else{%>
-                                        <a href="#ques-section<%=i%>"><div class="quiz-square rounded"><%=i%></div></a>
+                                        <a href="#ques-section<%=i%>"><div class="quiz-square rounded question-square-<%=i%>"><%=i%></div></a>
                                             <%}}%>
                                     </div>
                                 </div>
@@ -290,7 +294,42 @@
         element.querySelector("i").classList.toggle("active");
         var flaggedInput = document.getElementsByName("flag" + index)[0];
         flaggedInput.value = flaggedInput.value === "true" ? "false" : "true";
+        var square = document.querySelector('.question-square-' + index);
+        if (square.style.backgroundColor === 'red') {
+            var radioAnswers = document.getElementsByName('answer' + index);
+            var checkedNumber = 4;
+            for (var i = 0; i < radioAnswers.length; i++) {
+                if (radioAnswers[i].checked) {
+                    checkedNumber = i;
+                    break;
+                }
+            }
+
+            if (checkedNumber !== 4) {
+                // At least one radio button is selected
+                square.style.backgroundColor = '#00ff00';
+            } else {
+                // No radio button is selected
+                square.style.backgroundColor = '';
+            }
+        } else {
+            square.style.backgroundColor = 'red'; // Thay đổi màu sắc hình vuông thành màu đỏ
+        }
     }
+
+    var radioButtons = document.querySelectorAll('input[type=radio]');
+    radioButtons.forEach(function (radio) {
+        // Thêm một trình lắng nghe sự kiện cho mỗi nút radio
+        radio.addEventListener('change', function () {
+            // Lấy số thứ tự câu hỏi từ tên nút radio (vd: 'answer1' => 1)
+            var questionNumber = this.name.replace('answer', '');
+            // Chọn hình vuông tương ứng và thay đổi màu sắc
+            var square = document.querySelector('.question-square-' + questionNumber);
+            if (square.style.backgroundColor !== 'red') {
+                square.style.backgroundColor = '#00ff00'; // Thay đổi màu sắc thành màu xanh lá cây
+            }
+        });
+    });
 
     var referenceTime = new Date(); // start with the current time
     var year = referenceTime.getFullYear().toString();
@@ -323,8 +362,8 @@
             clock();
         }, 1000);
     }
-    
-    function moveToElement(element){
+
+    function moveToElement(element) {
         document.getElementByName(element).scrollIntoView();
     }
 </script>
