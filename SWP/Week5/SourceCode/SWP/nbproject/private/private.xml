@@ -3,19 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/E:/swp391/SWP391_Project/SWP/Week5/SourceCode/SWP/web/CourseList.jsp</file>
-            <file>file:/E:/swp391/SWP391_Project/SWP/Week5/SourceCode/SWP/src/java/controller/PublicFeature/CourseListFilter.java</file>
-=======
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/entity/Post.java</file>
             <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/web/AddSlider.jsp</file>
             <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/web/PostDetailEdit.jsp</file>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/entity/PostCategory.java</file>
+            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/controller/PublicFeature/CourseListFilter.java</file>
+            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/web/CourseList.jsp</file>
             <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/controller/MarketingFeature/postDetailsEdit.java</file>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/controller/MarketingFeature/updatePost.java</file>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/web/AddPost.jsp</file>
+            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/dao/PostDAO.java</file>
+            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/dal/DBConnect.java</file>
             <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/web/SliderDetailsEdit.jsp</file>
->>>>>>> 78e93947afcce58e429405f4fd8548aff5c4b1fd
+            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/web/AddPost.jsp</file>
+            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/web/QuizHandle.jsp</file>
+            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week5/SourceCode/SWP/src/java/controller/TestFeature/SubmitQuiz.java</file>
         </group>
     </open-files>
 </project-private>
