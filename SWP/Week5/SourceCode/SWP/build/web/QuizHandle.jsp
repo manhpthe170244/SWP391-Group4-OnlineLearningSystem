@@ -33,6 +33,21 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
         <style>
+            
+            .submit1{
+  background-color: #E05A7D; /* Màu nền của nút */
+  border: none; /* Không có viền */
+  color: white; /* Màu chữ */
+  padding: 10px 20px; /* Kích thước lề trong nút */
+  text-align: center; /* Căn giữa chữ trong nút */
+  text-decoration: none; /* Không gạch chân chữ */
+  display: inline-block; /* Hiển thị nút như một khối */
+  font-size: 16px; /* Kích thước chữ */
+  cursor: pointer; /* Con trỏ chuột trở thành bàn tay khi di chuột vào nút */
+  border-radius: 4px; /* Đường cong viền của nút */
+}
+
+
 
 
 
@@ -161,6 +176,13 @@
             .col-sm-9 table {
                      width: 100%;
             }
+            .quiz-all mb-9{
+                background-color: #E05A7D;
+                
+            }
+            .quiz-square{
+                background-color:#E1ADFF;
+            }
         </style>
     </head>
     <!--    chay dong ho khi trang load-->
@@ -271,8 +293,7 @@
                                             <%}}%>
                                     </div>
                                 </div>
-                                <div style="font-size: 10px">
-                                    <p><a href="">show one page that time</a></p>
+                                <div class = "submit1">
                                     <input type="submit" value="Submit">
                                 </div>          
                             </div>
@@ -295,7 +316,7 @@
         var flaggedInput = document.getElementsByName("flag" + index)[0];
         flaggedInput.value = flaggedInput.value === "true" ? "false" : "true";
         var square = document.querySelector('.question-square-' + index);
-        if (square.style.backgroundColor === 'red') {
+        if (square.style.backgroundColor === 'rgb(224, 90, 125)') {
             var radioAnswers = document.getElementsByName('answer' + index);
             var checkedNumber = 4;
             for (var i = 0; i < radioAnswers.length; i++) {
@@ -313,7 +334,7 @@
                 square.style.backgroundColor = '';
             }
         } else {
-            square.style.backgroundColor = 'red'; // Thay đổi màu sắc hình vuông thành màu đỏ
+            square.style.backgroundColor = '#E05A7D'; // Thay đổi màu sắc hình vuông thành màu đỏ
         }
     }
 
@@ -325,7 +346,7 @@
             var questionNumber = this.name.replace('answer', '');
             // Chọn hình vuông tương ứng và thay đổi màu sắc
             var square = document.querySelector('.question-square-' + questionNumber);
-            if (square.style.backgroundColor !== 'red') {
+            if (square.style.backgroundColor !== '#E05A7D') {
                 square.style.backgroundColor = '#00ff00'; // Thay đổi màu sắc thành màu xanh lá cây
             }
         });
