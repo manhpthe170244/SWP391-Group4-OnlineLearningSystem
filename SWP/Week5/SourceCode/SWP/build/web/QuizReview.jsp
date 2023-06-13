@@ -195,7 +195,7 @@
                         </table>
                         <table class="Table 2" style="margin: 50px 0">
                             <% for(int i = 0; i < quesResultList.size(); i++){ %>
-                            <tr>
+                            <tr id="ques-section<%=i+1%>">
                                 <th class="vertical-header top-header" rowspan="2">Question <%=i+1%><br>
                                     <span class="small-text">(Complete)</span><br>
                                     <span class="small-text">Flag: <%= quesResultList.get(i).isQues_flag() %></span>
@@ -217,9 +217,9 @@
                                 <div class="quiz-all mb-9">
                                     <%for(int i = 1; i <= quesResultList.size(); i++){
                                     if(i<10){%>
-                                    <div class="quiz-square rounded">0<%=i%></div>
+                                    <a href="#ques-section<%=i%>"><div class="quiz-square rounded">0<%=i%></div></a>
                                     <%}else{%>
-                                    <div class="quiz-square rounded"><%=i%></div>
+                                    <a href="#ques-section<%=i%>"><div class="quiz-square rounded"><%=i%></div></a>
                                     <%}}%>
                                 </div>
                             </div>
