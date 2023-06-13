@@ -167,10 +167,7 @@
                                     <td>
                                         <p style="color: white;">${l.lesson_name}</p>
                                     </td>
-                                    <td>
-                                        <p style="color: white;">${l.lesson_video}</p>
-                                    </td>
-                                    <td><a href="">Hoc Thu</a></td>
+                                    <td><a href="${pageContext.request.contextPath}/lessonDetail?lId=${l.lesson_id}">Hoc Thu</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -182,88 +179,87 @@
             <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
                 <br>Design: <a href="https://templatemo.com/page/1" target="_parent" title="website templates">TemplateMo</a></p>
         </div>
-    </section>
 
 
-    <!-- Scripts -->
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Scripts -->
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="assets/js/isotope.min.js"></script>
-    <script src="assets/js/owl-carousel.js"></script>
-    <script src="assets/js/lightbox.js"></script>
-    <script src="assets/js/tabs.js"></script>
-    <script src="assets/js/isotope.js"></script>
-    <script src="assets/js/video.js"></script>
-    <script src="assets/js/slick-slider.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <script>
-        //according to loftblog tut
-        $('.nav li:first').addClass('active');
+        <script src="assets/js/isotope.min.js"></script>
+        <script src="assets/js/owl-carousel.js"></script>
+        <script src="assets/js/lightbox.js"></script>
+        <script src="assets/js/tabs.js"></script>
+        <script src="assets/js/isotope.js"></script>
+        <script src="assets/js/video.js"></script>
+        <script src="assets/js/slick-slider.js"></script>
+        <script src="assets/js/custom.js"></script>
+        <script>
+            //according to loftblog tut
+            $('.nav li:first').addClass('active');
 
-        // set sort_type
-        const sortType = document.getElementById("sortType");
-        sortType.addEventListener("change", function () {
-            if (sortType.value === "recent") {
-                window.location.href = "?sort_type=recent";
-            } else if (sortType.value === "name") {
-                window.location.href = "?sort_type=name";
-            }
-        });
-
-        var paramValue = "${sessionScope.sort_type}";
-        for (var i = 0; i < sortType.options.length; i++) {
-            if (sortType.options[i].value === paramValue) {
-                sortType.options[i].selected = true;
-                break;
-            }
-        }
-
-
-
-        var showSection = function showSection(section, isAnimate) {
-            var
-                    direction = section.replace(/#/, ''),
-                    reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-                    reqSectionPos = reqSection.offset().top - 0;
-
-            if (isAnimate) {
-                $('body, html').animate({
-                    scrollTop: reqSectionPos},
-                        800);
-            } else {
-                $('body, html').scrollTop(reqSectionPos);
-            }
-
-        };
-
-        var checkSection = function checkSection() {
-            $('.section').each(function () {
-                var
-                        $this = $(this),
-                        topEdge = $this.offset().top - 80,
-                        bottomEdge = topEdge + $this.height(),
-                        wScroll = $(window).scrollTop();
-                if (topEdge < wScroll && bottomEdge > wScroll) {
-                    var
-                            currentId = $this.data('section'),
-                            reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-                    reqLink.closest('li').addClass('active').
-                            siblings().removeClass('active');
+            // set sort_type
+            const sortType = document.getElementById("sortType");
+            sortType.addEventListener("change", function () {
+                if (sortType.value === "recent") {
+                    window.location.href = "?sort_type=recent";
+                } else if (sortType.value === "name") {
+                    window.location.href = "?sort_type=name";
                 }
             });
-        };
 
-        $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-            e.preventDefault();
-            showSection($(this).attr('href'), true);
-        });
+            var paramValue = "${sessionScope.sort_type}";
+            for (var i = 0; i < sortType.options.length; i++) {
+                if (sortType.options[i].value === paramValue) {
+                    sortType.options[i].selected = true;
+                    break;
+                }
+            }
 
-        $(window).scroll(function () {
-            checkSection();
-        });
-    </script>
+
+
+            var showSection = function showSection(section, isAnimate) {
+                var
+                        direction = section.replace(/#/, ''),
+                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                        reqSectionPos = reqSection.offset().top - 0;
+
+                if (isAnimate) {
+                    $('body, html').animate({
+                        scrollTop: reqSectionPos},
+                            800);
+                } else {
+                    $('body, html').scrollTop(reqSectionPos);
+                }
+
+            };
+
+            var checkSection = function checkSection() {
+                $('.section').each(function () {
+                    var
+                            $this = $(this),
+                            topEdge = $this.offset().top - 80,
+                            bottomEdge = topEdge + $this.height(),
+                            wScroll = $(window).scrollTop();
+                    if (topEdge < wScroll && bottomEdge > wScroll) {
+                        var
+                                currentId = $this.data('section'),
+                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                        reqLink.closest('li').addClass('active').
+                                siblings().removeClass('active');
+                    }
+                });
+            };
+
+            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                e.preventDefault();
+                showSection($(this).attr('href'), true);
+            });
+
+            $(window).scroll(function () {
+                checkSection();
+            });
+        </script>
 </body>
 
 

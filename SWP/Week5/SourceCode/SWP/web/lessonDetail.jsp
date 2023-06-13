@@ -65,6 +65,26 @@
             .topnav .search-container button:hover {
                 background: #ccc;
             }
+
+            .badge-success {
+                display: inline-block;
+                padding: 5px 10px;
+                font-size: 14px;
+                font-weight: bold;
+                color: #ffffff;
+                background-color: #28a745;
+                border-radius: 4px;
+            }
+
+            .badge-danger {
+                display: inline-block;
+                padding: 5px 10px;
+                font-size: 14px;
+                font-weight: bold;
+                color: #ffffff;
+                background-color: #dc3545;
+                border-radius: 4px;
+            }
         </style>
         <!--
         
@@ -137,8 +157,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h6>Thông tin lesson</h6>
-                        <h2>Các lesson online</h2>
+                        <h6>Chi Tiet Lesson</h6>
+                        <h2>
+                            ${lesson.course.course_name}
+                            &#32;&#45;&#32;
+                            ${lesson.lesson_name}
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -146,8 +170,12 @@
         <section class="meetings-page" style="padding-top: 0px;" id="meetings" >
             <div class="container p-3" style="color: white;">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <h2>Noi Dung Khoa Hoc</h2>
+                    <div class="col-lg-8">
+                        <h2>${lesson.lesson_name}</h2>
+                    </div>
+                     <div class="col-lg-4">
+                         &lsaquo;<a href="${pageContext.request.contextPath}/lessonDetail?lId=${lesson.lesson_id-1}" >Truoc</a>&#32;
+                         <a href="${pageContext.request.contextPath}/lessonDetail?lId=${lesson.lesson_id+1}" >Tiep Theo</a>&rsaquo;
                     </div>
                 </div>
             </div>
@@ -157,19 +185,41 @@
                 <div class="col-lg-12">
                     <table class="table table-dark">
                         <tbody>
-                            <c:forEach var="l" items="${lessons}" varStatus="status" >
-                                <tr>
-                                    <td>
-                                        <c:if test="${status.first || l.section_id ne lessons[status.index - 1].section_id}">
-                                            <h4 class="text-bold"> ${l.section_id}:</h4>
+                            <tr>
+                                <td>
+                                    <iframe width="1300" height="600" src="${lesson.lesson_video}" frameborder="0" allowfullscreen></iframe>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h2>
+                                        Gioi Thieu Khoa Hoc
+                                        <c:if test="${lesson.lesson_status}">
+                                            <span class="badge-success">active</span>
                                         </c:if>
-                                    </td>
-                                    <td>
-                                        <p style="color: white;">${l.lesson_name}</p>
-                                    </td>
-                                    <td><a href="${pageContext.request.contextPath}/lessonDetail?lId=${l.lesson_id}">Hoc Thu</a></td>
-                                </tr>
-                            </c:forEach>
+                                        <c:if test="${!lesson.lesson_status}">
+                                            <span class="badge-success">not active</span>
+                                        </c:if>
+                                    </h2>
+                                    <strong style="color: white;" >Last Defined: </strong> <span id="formattedDate"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="color: white;" >
+                                        <strong style="color: white;" >Duration: </strong>
+                                        <c:if test="${lesson.course.duration > 1}">
+                                            ${lesson.course.duration} days
+                                        </c:if>
+                                        <c:if test="${lesson.course.duration == 1}">
+                                            ${lesson.course.duration} day
+                                        </c:if>
+                                    </p><br>
+                                    <p style="color: white;" >
+                                        ${lesson.lesson_desc}
+                                    </p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -195,6 +245,10 @@
         <script src="assets/js/slick-slider.js"></script>
         <script src="assets/js/custom.js"></script>
         <script>
+            var dateString = "${lesson.course.last_update}";
+            var date = new Date(dateString);
+            var formattedDate = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+            document.getElementById("formattedDate").innerHTML = formattedDate;
             //according to loftblog tut
             $('.nav li:first').addClass('active');
 
