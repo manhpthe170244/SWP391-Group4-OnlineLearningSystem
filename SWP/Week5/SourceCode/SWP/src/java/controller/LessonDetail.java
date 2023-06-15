@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author admin
  */
-public class LessonDetailController extends HttpServlet {
+public class LessonDetail extends HttpServlet {
 
    private static final long serialVersionUID = 1L;
     private LessonDAO lessonDAO = new LessonDAO();

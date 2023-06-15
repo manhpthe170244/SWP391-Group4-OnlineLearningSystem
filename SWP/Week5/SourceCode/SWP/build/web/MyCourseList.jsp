@@ -53,6 +53,7 @@
                 <div class="row pageT">
                     <div class="col-lg-10 offset-1">
                         <h2>My Courses</h2> 
+                        
                     </div>
                 </div>
                 <div class="row search-container" style="margin-bottom: 30px">
@@ -76,6 +77,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div style="color: white;margin-bottom: 30px; position: relative; left: -33%;" class="col-lg-12">
                         Sort By 
@@ -89,33 +91,30 @@
 
                 <div class="row userCourseList">
 
-
                     <c:if test="${myCourses.size() == 0}">
                         <div class="emptyCourse">
                             <img src="img/My project.png" alt="alt"/>
                             <h4 style="color: white">bạn chưa tham gia khoá học nào cả, nhấn vào <a href="courseList">đây</a> để tìm kiếm khoá học phù hợp nhé</h4>
+                           
                         </div>
                     </c:if>
 
                     <div class="myCourse">
 
                         <div class="cucourseList col-lg-10 offset-1">
-                            <ul class="dropdown">
-                                <c:forEach items="${myCourses}" var="cuc">
-                                    <li>
-                                        <a hrefs="#">
-                                            <div class="CourseCell">
-                                                <img src="${cuc.getUserCourse().getCourse_img()}" alt="alt"/>
-                                                <div class="CourseCell_Info">
-                                                    <h4>${cuc.getUserCourse().getCourse_name()}</h4>
-                                                    <p>${cuc.getUserCourse().getCourse_desc()}</p>
-                                                    <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDate()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDate()}</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </c:forEach>
-                            </ul>
+                            <c:forEach items="${myCourses}" var="cuc">
+                                <a href="LessonListController?Course_id=${cuc.getUserCourse().getCourse_id()}">
+                                    <div class="CourseCell">
+                                        <img src="${cuc.getUserCourse().getCourse_img()}" alt="alt"/>
+                                        <div class="CourseCell_Info">
+                                            <h4>${cuc.getUserCourse().getCourse_name()}</h4>
+                                            <p>${cuc.getUserCourse().getCourse_desc()}</p>
+                                            <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDate()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDate()}</p>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </c:forEach>
 
                         </div>
                     </div>

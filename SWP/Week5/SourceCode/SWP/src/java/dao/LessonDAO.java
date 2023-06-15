@@ -40,21 +40,28 @@ public class LessonDAO extends MyDAO {
         }
         return vector;
     }
-    
-    public Vector<Lesson> getAllOrbSecId() {
-        Vector<Lesson> vector = new Vector<Lesson>();
-        xSql = "SELECT * FROM Lesson WHERE section_id IS NOT NULL ORDER BY section_id";
+
+    public Vector<Lesson> getLessonBySectionId(int SectionId) {
+        xSql = "select l.* from Lesson l, Section s\n"
+                + "where l.section_id = s.section_id\n"
+                + "and s.section_id = ?";
+        Vector<Lesson> vector = new Vector<>();
+        int lessonId;
+        String lessonName;
+        String lessonVideo;
+        String lessonDesc;
+        boolean lesson_Status;
         try {
             ps = con.prepareStatement(xSql);
+            ps.setInt(1, SectionId);
             rs = ps.executeQuery();
             while (rs.next()) {
-                int lesson_id = rs.getInt("lesson_id");
-                String lesson_name = rs.getString("lesson_name");
-                String lesson_video = rs.getString("lesson_video");
-                int section_id = rs.getInt("section_id");
-                String lesson_desc = rs.getString("lesson_desc");
-                boolean lesson_status = rs.getBoolean("lesson_status");
-                Lesson les = new Lesson(lesson_id, lesson_name, lesson_video, section_id, lesson_desc, lesson_status);
+                lessonId = rs.getInt("lesson_id");
+                lessonName = rs.getString("lesson_name");
+                lessonVideo = rs.getString("lesson_video");
+                lessonDesc = rs.getString("lesson_desc");
+                lesson_Status = rs.getBoolean("lesson_status");
+                Lesson les = new Lesson(lessonId, lessonName, lessonVideo, SectionId, lessonDesc, lesson_Status);
                 vector.add(les);
             }
         } catch (SQLException ex) {
@@ -62,8 +69,8 @@ public class LessonDAO extends MyDAO {
         }
         return vector;
     }
-    
-     public LessonDto getLessonDetails(int lId) {
+
+    public LessonDto getLessonDetails(int lId) {
         LessonDto lesson = null;
         xSql = "select * from Lesson as l join Section as s on l.section_id = s.section_id join Course c  on s.course_id = c.course_id where l.lesson_id = ? and s.section_id is not null";
         try {
@@ -97,4 +104,16 @@ public class LessonDAO extends MyDAO {
         return lesson;
     }
     
+    public void SetLessonStatus(int UpdateStatus,int lessonId){
+        xSql = "update Lesson set lesson_status = ? where lesson_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, UpdateStatus);
+            ps.setInt(2, lessonId);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

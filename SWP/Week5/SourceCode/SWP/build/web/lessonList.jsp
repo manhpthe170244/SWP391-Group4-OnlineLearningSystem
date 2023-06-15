@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="entity.Course" %>
+<%@ page import="entity.Lesson" %>
+<%@ page import="entity.Section" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Vector" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -21,7 +23,7 @@
         <meta name="description" content="">
         <meta name="author" content="Template Mo">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <title> Lesson List </title>
 
         <!-- Bootstrap core CSS -->
@@ -33,39 +35,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <style>
-            .topnav {
-                width: 20%;
-                margin: 0 auto;
-                overflow: hidden;
-                margin-bottom: 50px;
-            }
-            .topnav .search-container {
-                float: right;
-            }
-
-            .topnav input[type=text] {
-                padding: 6px;
-                margin-top: 8px;
-                font-size: 17px;
-                border: none;
-            }
-
-            .topnav .search-container button {
-                float: right;
-                padding: 6px 10px;
-                margin-top: 8px;
-                margin-right: 16px;
-                background: #ddd;
-                font-size: 17px;
-                border: none;
-                cursor: pointer;
-            }
-
-            .topnav .search-container button:hover {
-                background: #ccc;
-            }
-        </style>
+        <link rel="stylesheet" href="assets/css/styling.css?version=28">
         <!--
         
         TemplateMo 569 Edu Meeting
@@ -76,109 +46,142 @@
     </head>
 
     <body>
+        <jsp:include page="header.jsp"/>
 
-
-
-        <!-- Sub Header -->
-        <div class="sub-header">
+        <section class="heading-page header-text">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 col-sm-8">
-                        <div class="left-content">
-                            <p>Đây là một website giúp các bạn tìm kiếm khóa học online phù hợp</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-4">
-                        <div class="right-icons">
-
-                        </div>
-                    </div>
+                    <h4 style="color: white; font-size: 250%; margin-bottom: 30px">Nội dung khoá học</h4>
                 </div>
-            </div>
-        </div>
 
-        <!-- ***** Header Area Start ***** -->
-        <header class="header-area header-sticky">
-            <div class="container">
+                <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                    <button class="CourseContentEditButton">
+                        <i class="fas fa-edit fa-2x" style="color:#31c8ff"></i><h4 style="font-size: 150%">Chỉnh sửa nội dung khoá học</h4>
+                    </button>
+                </c:if>
                 <div class="row">
-                    <div class="col-12">
-                        <nav class="main-nav">
-                            <!-- *** Logo Start *** -->
-                            <a href="homepage" class="logo">
-                                Edu Meeting
-                            </a>
-                            <!-- *** Logo End *** -->
-                            <!-- *** Menu Start *** -->
-                            <ul class="nav">
-                                <li class="scroll-to-section"><a href="homepage" class="active">TRANG CHỦ</a></li>
-                                <li><a href="meetings.html">KHÓA HỌC CỦA TÔI</a></li>
-                                <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
-                                <li class="has-sub">
-                                    <a href="javascript:void(0)">Pages</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                        <li><a href="meeting-details.html">Meeting Details</a></li>
-                                    </ul>
-                                </li>
-                                <li class="scroll-to-section"><a href="#courses">TRANG CÁ NHÂN</a></li> 
-                            </ul>        
-                            <a class='menu-trigger'>
-                                <span>Menu</span>
-                            </a>
-                            <!-- *** Menu End *** -->
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- ***** Header Area End ***** -->
+                    <div class="CourseContent">
+                        <c:forEach items="${SectionList}" var="s">
+                            <div class="sectionHeader container-fluid" style="color:white">
+                                <i class="fa fa-flag fa-2x"></i><h4>.   ${s.getSection_name()}</h4>
+                                <h4 style="display: block; margin: 20px 0 0 63px">Video Lessons</h4>
+                                <c:forEach items="${s.getLessonList()}" var="l">
+                                    <c:if test="${l.isLesson_status() == true}">
+                                        <div class="LessonDesc row">
+                                            <div class="left col-10 les${l.getLesson_id()}">
+                                                <a href="LessonDetail?lId=${l.getLesson_id()}" style="font-size: 150%">${l.getLesson_name()}</a>
+                                                <button class="btnDes" onclick="toggleDisplay('des${l.getLesson_id()}')">
+                                                    <i class="fa fa-caret-down fa-2x" style="color: white" aria-hidden="true"></i>
+                                                </button>
+                                                <p id="des${l.getLesson_id()}" style="color:white; display: none">${l.getLesson_desc()}</p>
+                                            </div>
+                                            <div class="lessonListEditright col-2">
+                                                <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                                                    <button class="DeactivateButton" style="display: block" onclick="SetLessonStatus(0, ${l.getLesson_id()}, ${requestScope.Course_id})">
+                                                        <i class="fa-solid fa-ban fa-2x" style="margin-right: 10px"></i><h4>Deactivate</h4>
+                                                    </button>
+                                                </c:if>
+                                            </div>
 
-        <section class="heading-page header-text tQuiz" id="top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h6>Thông tin lesson</h6>
-                        <h2>Các lesson online</h2>
+                                        </div>
+                                        <hr>
+                                    </c:if>
+
+
+                                </c:forEach>
+
+                                <h4 style="display: block; margin: 20px 0 0 63px">Practice Quizzes</h4>
+                                <c:forEach items="${s.getQuizList()}" var="q">
+                                    <div class="LessonDesc row">
+                                        <c:if test="${q.isQuiz_status() == true}">
+                                            <div class="left col-10">
+                                                <a href="QuizLesson?quiz_id=${q.getQuiz_id()}" style="font-size: 150%">${q.getQuiz_name()}</a>
+                                                <p id="quiz${q.getQuiz_id()}" style="color:white">${q.getQuiz_desc()}</p>
+                                            </div>
+                                            <div class="lessonListEditright col-2">
+                                                <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                                                    <button class="DeactivateButton" style="display: block" onclick="SetQuizStatus(0, ${q.getQuiz_id()}, ${requestScope.Course_id})">
+                                                        <i class="fa-solid fa-ban fa-2x" style="margin-right: 10px"></i><h4>Deactivate</h4>
+                                                    </button>
+                                                </c:if>
+                                            </div>
+                                            <hr>
+                                        </c:if>
+                                    </div>
+
+                                </c:forEach>
+
+
+
+                            </div>
+                            <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                                <div class="disabledLesson">
+                                    <div class="disabledLessonheader" style="color: white">
+                                        <i class="fa-solid fa-trash-can fa-shake fa-2x"></i></i><h4>Disabled lessons</h4>
+                                    </div>
+
+                                    <c:forEach items="${s.getLessonList()}" var="l">
+                                        <c:if test="${l.isLesson_status() == false}">
+                                            <div class="LessonDesc row">
+                                                <div class="left col-10 les${l.getLesson_id()}">
+                                                    <a href="LessonDetail?lId=${l.getLesson_id()}" style="font-size: 150%">${l.getLesson_name()}</a>
+                                                    <button class="btnDes" onclick="toggleDisplay('des${l.getLesson_id()}')">
+                                                        <i class="fa fa-caret-down fa-2x" style="color: white" aria-hidden="true"></i>
+                                                    </button>
+                                                    <p id="des${l.getLesson_id()}" style="color:white; display: none">${l.getLesson_desc()}</p>
+                                                </div>
+                                                <div class="lessonListEditright col-2">
+                                                    <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                                                        <button class="activateButton" style="display: block" onclick="SetLessonStatus(1, ${l.getLesson_id()}, ${requestScope.Course_id})">
+                                                            <i class="fa-solid fa-check fa-2x" style="margin-right: 10px"></i><h4>Activate</h4>
+                                                        </button>
+                                                    </c:if>
+                                                </div>
+
+                                            </div>
+                                            <hr>
+                                        </c:if>
+
+
+                                    </c:forEach>
+
+                                </div>
+                                <div class="disabledLesson">
+                                    <div class="disabledLessonheader" style="color: white">
+                                        <i class="fa-solid fa-trash-can fa-shake fa-2x"></i></i><h4>Disabled quizzes</h4>
+                                    </div>
+
+                                    <c:forEach items="${s.getQuizList()}" var="q">
+                                        <div class="LessonDesc row">
+                                            <c:if test="${q.isQuiz_status() == false}">
+                                                <div class="left col-10">
+                                                    <a href="QuizLesson?quiz_id=${q.getQuiz_id()}" style="font-size: 150%">${q.getQuiz_name()}</a>
+                                                    <p id="quiz${q.getQuiz_id()}" style="color:white">${q.getQuiz_desc()}</p>
+                                                </div>
+                                                <div class="lessonListEditright col-2">
+                                                    <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                                                        <button class="activateButton" style="display: block" onclick="SetQuizStatus(1, ${q.getQuiz_id()}, ${requestScope.Course_id})">
+                                                            <i class="fa-solid fa-check fa-2x" style="margin-right: 10px"></i><h4>Activate</h4>
+                                                        </button>
+                                                    </c:if>
+                                                </div>
+                                                <hr>
+                                            </c:if>
+                                        </div>
+
+                                    </c:forEach>
+
+                                </div>
+                            </c:if>
+
+
+                        </c:forEach>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="meetings-page" style="padding-top: 0px;" id="meetings" >
-            <div class="container p-3" style="color: white;">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2>Noi Dung Khoa Hoc</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container" >
-            <div class="row">
-                <div class="col-lg-12">
-                    <table class="table table-dark">
-                        <tbody>
-                            <c:forEach var="l" items="${lessons}" varStatus="status" >
-                                <tr>
-                                    <td>
-                                        <c:if test="${status.first || l.section_id ne lessons[status.index - 1].section_id}">
-                                            <h4 class="text-bold"> ${l.section_id}:</h4>
-                                        </c:if>
-                                    </td>
-                                    <td>
-                                        <p style="color: white;">${l.lesson_name}</p>
-                                    </td>
-                                    <td><a href="${pageContext.request.contextPath}/lessonDetail?lId=${l.lesson_id}">Hoc Thu</a></td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="footer">
-            <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
-                <br>Design: <a href="https://templatemo.com/page/1" target="_parent" title="website templates">TemplateMo</a></p>
-        </div>
+
+        <jsp:include page="footer.jsp"/>
 
 
         <!-- Scripts -->
@@ -195,72 +198,106 @@
         <script src="assets/js/slick-slider.js"></script>
         <script src="assets/js/custom.js"></script>
         <script>
-            //according to loftblog tut
-            $('.nav li:first').addClass('active');
+                                                            //according to loftblog tut
+                                                            $('.nav li:first').addClass('active');
 
-            // set sort_type
-            const sortType = document.getElementById("sortType");
-            sortType.addEventListener("change", function () {
-                if (sortType.value === "recent") {
-                    window.location.href = "?sort_type=recent";
-                } else if (sortType.value === "name") {
-                    window.location.href = "?sort_type=name";
-                }
-            });
+                                                            // set sort_type
+                                                            const sortType = document.getElementById("sortType");
+                                                            sortType.addEventListener("change", function () {
+                                                                if (sortType.value === "recent") {
+                                                                    window.location.href = "?sort_type=recent";
+                                                                } else if (sortType.value === "name") {
+                                                                    window.location.href = "?sort_type=name";
+                                                                }
+                                                            });
 
-            var paramValue = "${sessionScope.sort_type}";
-            for (var i = 0; i < sortType.options.length; i++) {
-                if (sortType.options[i].value === paramValue) {
-                    sortType.options[i].selected = true;
-                    break;
-                }
-            }
+                                                            var paramValue = "${sessionScope.sort_type}";
+                                                            for (var i = 0; i < sortType.options.length; i++) {
+                                                                if (sortType.options[i].value === paramValue) {
+                                                                    sortType.options[i].selected = true;
+                                                                    break;
+                                                                }
+                                                            }
 
+                                                            function SetLessonStatus(updateStatus, lessonId, courseId) {
+                                                                //Send an AJAX request to your server-side script
+                                                                $.ajax({
+                                                                    url: "UpdateLessonStatus",
+                                                                    type: "GET",
+                                                                    data: {lessonId: lessonId,
+                                                                        updateStatus: updateStatus
+                                                                    },
 
+                                                                    success: function (response) {
+                                                                        console.log("success");
+                                                                        window.location.href = "LessonListController?Course_id=" + courseId;
+                                                                    }
+                                                                });
+                                                            }
+                                                            function SetQuizStatus(updateStatus, QuizId, courseId) {
+                                                                //Send an AJAX request to your server-side script
+                                                                $.ajax({
+                                                                    url: "UpdateQuizStatus",
+                                                                    type: "POST",
+                                                                    data: {Quizid: QuizId,
+                                                                        updateStatus: updateStatus
+                                                                    },
 
-            var showSection = function showSection(section, isAnimate) {
-                var
-                        direction = section.replace(/#/, ''),
-                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-                        reqSectionPos = reqSection.offset().top - 0;
+                                                                    success: function (response) {
+                                                                        console.log("success");
+                                                                        window.location.href = "LessonListController?Course_id=" + courseId;
+                                                                    }
+                                                                });
+                                                            }
+                                                            function toggleDisplay(DesId) {
+                                                                var currentDisplay = document.getElementById(DesId);
+                                                                currentDisplay.style.display = currentDisplay.style.display != "none" ? "none" : "block";
+                                                                console.log(DesId);
+                                                            }
 
-                if (isAnimate) {
-                    $('body, html').animate({
-                        scrollTop: reqSectionPos},
-                            800);
-                } else {
-                    $('body, html').scrollTop(reqSectionPos);
-                }
+                                                            var showSection = function showSection(section, isAnimate) {
+                                                                var
+                                                                        direction = section.replace(/#/, ''),
+                                                                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                                                                        reqSectionPos = reqSection.offset().top - 0;
 
-            };
+                                                                if (isAnimate) {
+                                                                    $('body, html').animate({
+                                                                        scrollTop: reqSectionPos},
+                                                                            800);
+                                                                } else {
+                                                                    $('body, html').scrollTop(reqSectionPos);
+                                                                }
 
-            var checkSection = function checkSection() {
-                $('.section').each(function () {
-                    var
-                            $this = $(this),
-                            topEdge = $this.offset().top - 80,
-                            bottomEdge = topEdge + $this.height(),
-                            wScroll = $(window).scrollTop();
-                    if (topEdge < wScroll && bottomEdge > wScroll) {
-                        var
-                                currentId = $this.data('section'),
-                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-                        reqLink.closest('li').addClass('active').
-                                siblings().removeClass('active');
-                    }
-                });
-            };
+                                                            };
 
-            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-                e.preventDefault();
-                showSection($(this).attr('href'), true);
-            });
+                                                            var checkSection = function checkSection() {
+                                                                $('.section').each(function () {
+                                                                    var
+                                                                            $this = $(this),
+                                                                            topEdge = $this.offset().top - 80,
+                                                                            bottomEdge = topEdge + $this.height(),
+                                                                            wScroll = $(window).scrollTop();
+                                                                    if (topEdge < wScroll && bottomEdge > wScroll) {
+                                                                        var
+                                                                                currentId = $this.data('section'),
+                                                                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                                                                        reqLink.closest('li').addClass('active').
+                                                                                siblings().removeClass('active');
+                                                                    }
+                                                                });
+                                                            };
 
-            $(window).scroll(function () {
-                checkSection();
-            });
+                                                            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                                                                e.preventDefault();
+                                                                showSection($(this).attr('href'), true);
+                                                            });
+
+                                                            $(window).scroll(function () {
+                                                                checkSection();
+                                                            });
         </script>
-</body>
+    </body>
 
 
 </body>
