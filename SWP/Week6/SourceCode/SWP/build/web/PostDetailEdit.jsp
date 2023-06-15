@@ -120,6 +120,7 @@
                 <div class="row">
 
                     <form method="post" action="updatePost" enctype="multipart/form-data">
+                        <input type="hidden" name="post_id" value="${requestScope.post.getPost_id()}"
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">

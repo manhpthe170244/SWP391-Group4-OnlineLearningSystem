@@ -11,8 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import entity.ManageCourse;
 import java.sql.Date;
-import java.util.Calendar;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -568,10 +571,10 @@ public class CourseDAO extends MyDAO {
         Vector<Course> vector = new Vector<>();
         try {
             if (sub_id != 0) {
-                xSql += " and c.sub_id = '%"+sub_id+"%'";
+                xSql += " and c.sub_id = '%" + sub_id + "%'";
             }
             if (search != null) {
-                xSql += " and c.course_name like '%"+search+"%'";
+                xSql += " and c.course_name like '%" + search + "%'";
             }
             xSql += "group by mc.course_id, c.course_id, c.course_name, c.course_desc, c.course_img, c.course_price, c.course_status,\n"
                     + "c.course_Title, c.durationDAY, c.last_update, c.level_id, c.sub_id\n"
@@ -650,5 +653,4 @@ public class CourseDAO extends MyDAO {
 //        }
     }
 
-    
 }

@@ -1,6 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="entity.Course" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.text.NumberFormat" %>
 <%-- 
     Document   : CourseList
     Created on : May 16, 2023, 10:21:25 AM
@@ -106,7 +109,7 @@
                                     <form>
                                         <ul>
                                             <a href="?sub_id=0"><li>All</li></a>
-                                            <c:forEach items="${requestScope.subjectList}" var="subject">
+                                                    <c:forEach items="${requestScope.subjectList}" var="subject">
                                                 <input type="button" onclick="filterBySubject(${subject.getSub_id()})" value="${subject.getSub_name()}"/>
 <!--                                                <a href="courseList?sub_id=${subject.getSub_id()}" class="filter-link"><li>${subject.getSub_name()}</li></a>-->
                                             </c:forEach>
@@ -130,7 +133,9 @@
                                             <div class="meeting-item">
                                                 <div class="thumb">
                                                     <div class="price">
-                                                        <span>${course.getCourse_price()} VNĐ</span>
+                                                        <c:set var="price" value="${course.getCourse_price()}"/>
+                                                        <fmt:setLocale value="vi_VN"/>
+                                                        <span><fmt:formatNumber type="currency" value="${price}" currencySymbol="đ"/></span>
                                                     </div>
                                                     <a href="/SWP/courseDetails?course_id=${course.getCourse_id()}"><img src="${course.getCourse_img()}" alt=""></a>
                                                 </div>

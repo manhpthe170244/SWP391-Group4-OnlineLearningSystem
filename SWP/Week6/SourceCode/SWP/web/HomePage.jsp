@@ -3,6 +3,8 @@
 <%@ page import="java.util.List" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.text.NumberFormat" %>
 
 
 <html>
@@ -153,7 +155,14 @@
                                 <div class="meeting-item">
                                     <div class="thumb">
                                         <div class="price">
-                                            <span>$ <%=courseList.get(0).getCourse_price()%></span>
+                                            <%
+                                                float price = courseList.get(0).getCourse_price();
+                                                Locale locale = new Locale("vi", "VN");
+                                                NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+                                                String formattedPrice = format.format(price);
+                                            %>
+
+                                            <span><%=formattedPrice%></span>
                                         </div>
                                         <a href="/SWP/courseDetails?course_id=<%=courseList.get(0).getCourse_id()%>"><img src="<%=courseList.get(0).getCourse_img()%>" alt="New Lecturer Meeting"></a>
                                     </div>
