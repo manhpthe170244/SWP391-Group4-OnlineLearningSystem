@@ -245,7 +245,7 @@
                             %>
                             <table class="Table 2" style="margin: 50px 0">
                                 <% for(int i = 1; i <= quesList.size(); i++){ %>
-                                <tr>
+                                <tr id="ques-section<%=i%>">
                                     <th class="vertical-header top-header" rowspan="2">Question <%=i%><br><span class="small-text">(Complete)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
                                             <input type="hidden" name="flag<%=i%>" value="false">
                                             <input type="hidden" name="ques<%=i%>" value="<%= quesList.get(i-1).getQues_id() %>"><!-- send question id to servlet -->
@@ -259,7 +259,7 @@
                                 <i class="fa-sharp fa-light fa-flag-pennant"></i>
                                 </tr>
                                 <tr>
-                                    <td id="ques-section<%=i%>">
+                                    <td>
                                         <%
                                             boolean hasSelectedOption = false;
                                             for(Choice c : quesList.get(i-1).getChoices()){
