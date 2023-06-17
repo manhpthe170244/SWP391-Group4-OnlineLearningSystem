@@ -85,6 +85,28 @@
                 background-color: #dc3545;
                 border-radius: 4px;
             }
+            .lessonDesc h4{
+                text-align: left;
+                color: white;
+                margin: 10px 0;
+            }
+            .lessonDesc{
+                margin: 20px 0;
+                
+            }
+            .markAsDone{
+                width: 30%;
+                background-color: #336699;
+                padding: 20px 0;
+                margin: 0 auto;
+                margin-top: 30px;
+            }
+            .markAsDone h4{
+                color: white;
+            }
+            .markAsDone h4:hover{
+                color: #d8e379
+            }
         </style>
         <!--
         
@@ -103,9 +125,15 @@
         <section class="heading-page header-text">
             <div class="container">
                 <div class="row">
-                    
-                    <iframe width="560" height="700" src="${lesson.getLesson_video()}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    
+                    <h2 style="text-align: left;">${lesson.getLesson_name()}</h2>
+                    <iframe width="400" height="700" src="${lesson.getLesson_video()}" frameborder="0" allowfullscreen></iframe>                   
+                </div>
+                <div class="row lessonDesc">
+                    <h4>Nội dung bài học</h4>
+                    <h4>${lesson.getLesson_desc()}</h4>
+                </div>
+                <div class="row markAsDone">
+                    <h4>Mark as Done</h4>
                 </div>
             </div>
         </section>

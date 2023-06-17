@@ -85,7 +85,7 @@ public class LessonDAO extends MyDAO {
         }
         return lesson;
     }
-
+//son
     public Vector<Lesson> getLessonBySectionId(int SectionId) {
         xSql = "select l.* from Lesson l, Section s\n"
                 + "where l.section_id = s.section_id\n"
@@ -114,8 +114,8 @@ public class LessonDAO extends MyDAO {
         }
         return vector;
     }
-    
-    public void SetLessonStatus(int UpdateStatus,int lessonId){
+    //son
+    public void SetLessonStatus(int UpdateStatus, int lessonId) {
         xSql = "update Lesson set lesson_status = ? where lesson_id = ?";
         try {
             ps = con.prepareStatement(xSql);
@@ -125,5 +125,40 @@ public class LessonDAO extends MyDAO {
         } catch (Exception ex) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    //son
+    public void editLessonDetail(String lessonName, String lessonVideo, String lessonDesc, int lessonId) {
+        xSql = "update Lesson\n"
+                + "set lesson_name = ?, \n"
+                + "lesson_video = ?,\n"
+                + "lesson_desc = ?\n"
+                + "where lesson_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, lessonName);
+            ps.setString(2, lessonVideo);
+            ps.setString(3, lessonDesc);
+            ps.setInt(4, lessonId);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    //son
+    public void AddnewLessonToSection(int Section_id, String lesson_Name, String lesson_video, String lesson_desc) {
+        xSql = "insert into Lesson (lesson_name, lesson_video, section_id, lesson_desc, lesson_status) values (?, ?, ?, ?, ?)";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, lesson_Name);
+            ps.setString(2, lesson_video);
+            ps.setInt(3, Section_id);
+            ps.setString(4, lesson_desc);
+            ps.setInt(5, 1);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+                
     }
 }
