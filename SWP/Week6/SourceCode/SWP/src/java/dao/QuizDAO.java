@@ -92,7 +92,7 @@ public class QuizDAO extends MyDAO {
                 + "JOIN question qu ON qu.quiz_id = q.quiz_id\n"
                 + "JOIN choices c ON c.ques_id = qu.ques_id\n"
                 + "WHERE q.quiz_id = ? AND c.is_true = 'TRUE'";
-        
+
         try {
             ps = con.prepareStatement(xSql);
             ps.setInt(1, quiz_id);
@@ -104,9 +104,10 @@ public class QuizDAO extends MyDAO {
         } catch (Exception e) {
             System.out.println("checkCourse: " + e.getMessage());
         }
-        
+
         return correctAnswers;
     }
+
     //Son
     public Vector<Quiz> getQuizListBySectionId(int SectionId) {
         Vector<Quiz> vector = new Vector<Quiz>();
@@ -122,7 +123,7 @@ public class QuizDAO extends MyDAO {
                 String quiz_name = rs.getString("quiz_name");
                 String quiz_desc = rs.getString("quiz_desc");
                 boolean quiz_status = rs.getBoolean("quiz_status");
-                 //Them question list
+                //Them question list
                 Quiz quiz = new Quiz(quiz_id, quiz_name, quiz_desc, SectionId, quiz_status);
                 vector.add(quiz);
             }
@@ -132,7 +133,8 @@ public class QuizDAO extends MyDAO {
         return vector;
     }
     //son
-    public void SetQuizStatus(int UpdateStatus,int quizId){
+
+    public void SetQuizStatus(int UpdateStatus, int quizId) {
         xSql = "update Quiz set quiz_status = ? where quiz_id = ?";
         try {
             ps = con.prepareStatement(xSql);
@@ -143,11 +145,43 @@ public class QuizDAO extends MyDAO {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    //son 
+    public void UpdateChoices(int chocieId, String ChoiceContent, boolean UpdatedIsTrue) {
+        xSql = "update choices \n"
+                + "set choice_content = ?,\n"
+                + "is_true = ?\n"
+                + "where choice_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, ChoiceContent);
+            ps.setBoolean(2, UpdatedIsTrue);
+            ps.setInt(3, chocieId);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    //remove Choices by id
+    public void RemoveChoices(int chocieId) {
+        xSql = "delete from choices where choice_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, chocieId);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
     public static void main(String[] args) {
         QuizDAO pd = new QuizDAO();
         System.out.println("Test getAllQuestionCorrectAnswer");
         Vector<String> correctAnswers = pd.getAllCorrectAnswer(1);
-        for(String a : correctAnswers){
+        for (String a : correctAnswers) {
             System.out.println(a);
         }
     }

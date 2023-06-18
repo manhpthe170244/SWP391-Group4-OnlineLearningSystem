@@ -89,12 +89,14 @@
 
 
                                 </c:forEach>
-                                <div class="addnewToSection">
-                                    <a href="addnewLessonTosection?section_id=${s.getSection_id()}&course_Id=${requestScope.Course_id}">
-                                        <h4> <i class="fa-solid fa-plus"></i> Add new lesson to this section</h4>
-                                        <hr>
-                                    </a>
-                                </div>
+                                <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                                    <div class="addnewToSection">
+                                        <a href="addnewLessonTosection?section_id=${s.getSection_id()}&course_Id=${requestScope.Course_id}">
+                                            <h4> <i class="fa-solid fa-plus"></i> Add new lesson to this section</h4>
+                                            <hr>
+                                        </a>
+                                    </div>
+                                </c:if>
                                 <h4 style="display: block; margin: 20px 0 0 63px">Practice Quizzes</h4>
                                 <c:forEach items="${s.getQuizList()}" var="q">
                                     <div class="LessonDesc row">
@@ -109,7 +111,9 @@
                                                         <i class="fa-solid fa-ban fa-2x" style="margin-right: 10px"></i>
                                                     </button>
                                                     <p style="color: white; display: inline-block">/&emsp;</p>
-                                                    <i class="fas fa-edit fa-2x" style="color:#31c8ff"></i>
+                                                    <a href="EditQuizContent?quiz_id=${q.getQuiz_id()}&quiz_name=${q.getQuiz_name()}">
+                                                        <i class="fas fa-edit fa-2x" style="color:#31c8ff"></i>
+                                                    </a>
                                                 </c:if>
                                             </div>
                                             <hr>
@@ -117,13 +121,14 @@
                                     </div>
 
                                 </c:forEach>
-                                <div class="addnewToSection">
-                                    <a href="addnewQuizTosection?section_id=${s.getSection_id()}">
-                                        <h4> <i class="fa-solid fa-plus"></i> Add new quizzes to this section</h4>
-                                        <hr>
-                                    </a>
-                                </div>
-
+                                <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                                    <div class="addnewToSection">
+                                        <a href="addnewQuizTosection?section_id=${s.getSection_id()}">
+                                            <h4> <i class="fa-solid fa-plus"></i> Add new quizzes to this section</h4>
+                                            <hr>
+                                        </a>
+                                    </div>
+                                </c:if>
                             </div>
                             <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
                                 <div class="disabledLesson">
@@ -147,7 +152,9 @@
                                                             <i class="fa-solid fa-check fa-2x" style="margin-right: 10px"></i>
                                                         </button>
                                                         <p style="color: white; display: inline-block">/&emsp;</p>
-                                                        <i class="fas fa-edit fa-2x" style="color:#31c8ff"></i>
+                                                        <a href="EditLessonContent?lesson_id=${l.getLesson_id()}&lesson_Name=${l.getLesson_name()}&lesson_Video=${l.getLesson_video()}&Lesson_desc=${l.getLesson_desc()}">
+                                                            <i class="fas fa-edit fa-2x" style="color:#31c8ff"></i>
+                                                        </a>
                                                     </c:if>
                                                 </div>
 
