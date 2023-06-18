@@ -69,32 +69,16 @@
         <servlet-class>controller.MarketingFeature.updateSlider</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>updatePost</servlet-name>
-        <servlet-class>controller.MarketingFeature.updatePost</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>addSlider</servlet-name>
         <servlet-class>controller.MarketingFeature.addSlider</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>addPost</servlet-name>
-        <servlet-class>controller.MarketingFeature.addPost</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LessonListController</servlet-name>
         <servlet-class>controller.LessonListController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LessonDetail</servlet-name>
-        <servlet-class>controller.LessonDetail</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UpdateLessonStatus</servlet-name>
-        <servlet-class>controller.CourseContent.UpdateLessonStatus</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UpdateQuizStatus</servlet-name>
-        <servlet-class>controller.CourseContent.UpdateQuizStatus</servlet-class>
+        <servlet-name>LessonDetailController</servlet-name>
+        <servlet-class>controller.LessonDetailController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PersonalAccountServlet</servlet-name>
@@ -177,28 +161,12 @@
         <url-pattern>/addSlider</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>addPost</servlet-name>
-        <url-pattern>/addPost</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>updatePost</servlet-name>
-        <url-pattern>/updatePost</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>LessonListController</servlet-name>
         <url-pattern>/LessonListController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LessonDetail</servlet-name>
-        <url-pattern>/LessonDetail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UpdateLessonStatus</servlet-name>
-        <url-pattern>/UpdateLessonStatus</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UpdateQuizStatus</servlet-name>
-        <url-pattern>/UpdateQuizStatus</url-pattern>
+        <servlet-name>LessonDetailController</servlet-name>
+        <url-pattern>/lessonDetail</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homepage</welcome-file>
