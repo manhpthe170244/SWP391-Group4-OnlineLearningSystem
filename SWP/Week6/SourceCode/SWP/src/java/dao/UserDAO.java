@@ -4,6 +4,7 @@
  */
 package dao;
 
+import dto.UserEditProfileDto;
 import entity.User;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -217,4 +218,38 @@ public class UserDAO extends MyDAO {
         return map;
 
     }
+    
+    public boolean editProfile(UserEditProfileDto user) {
+
+        xSql = "update [User] set full_name = ?,"
+                + " gender_id = ?, "
+                + "user_dob = ?, "
+                + "user_address = ?, "
+                + "user_phone = ? where user_id = ?";
+        
+        boolean f = false;
+        
+        try {
+
+            ps = con.prepareStatement(xSql);
+            
+            ps.setString(1, user.getFullName());
+            ps.setInt(2, user.getGenderId());
+            ps.setDate(3, user.getDob());
+            ps.setString(4, user.getUserAddress());
+            ps.setString(5, user.getUserPhone());
+            ps.setInt(6, user.getUserId());
+            
+            int rs = ps.executeUpdate();
+            
+            if(rs == 1) {
+                f = true;
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return f;
+    }
+    
 }
