@@ -147,7 +147,7 @@ hr{
 .myChart{
     border: 3px solid rgba(160, 159, 159, 0.5);
     border-radius: 1px;
-    
+
 }
 .dashBoardInput{
     width: 17%;
@@ -157,4 +157,61 @@ hr{
 }
 .noDirectEdit{
     margin: 0px 0px 20px 10px;
+}
+.CourseContent .sectionHeader{
+    text-align: left;
+}
+.sectionHeader h4,.disabledLesson h4{
+    display: inline-block;
+}
+.LessonDesc{
+    width: 90%;
+    margin: 30px auto;
+}
+.btnDes{
+    border: none;
+    background-color: inherit;
+}
+.CourseContentEditButton{
+    text-align: right; 
+    border: none;
+    background-color: inherit;
+    position: relative;
+    right: -500px
+}
+
+.CourseContentEditButton, .DeactivateButton h4, .activateButton h4{
+    font-size: 70%;
+    color: white
+}
+.DeactivateButton, .activateButton{
+    text-align: right; 
+    border: none;
+    background-color: inherit;
+}
+.DeactivateButton i{
+    color: #ff6464;
+}
+.activateButton i{
+    color: #4bffa0;
+}
+.disabledLesson{
+    text-align: left
+}
+.disabledLessonheader{
+    position: relative;
+    left: 85px
+}
+.disabledLesson .LessonDesc{
+    position: relative;
+    left: 17px
+}
+.addnewToSection{
+    padding-left: 70px;
+}
+.addnewToSection a{
+    color: white;
+}
+.addnewToSection a:hover{
+    color: yellow;
 }

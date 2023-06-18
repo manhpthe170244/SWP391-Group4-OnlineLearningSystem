@@ -6,6 +6,10 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="entity.Course" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.text.NumberFormat" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,7 +105,16 @@
                                 <div class="meeting-single-item">
                                     <div class="thumb">
                                         <div class="price">
-                                            <span>${requestScope.course.getCourse_price()} VNĐ</span>
+                                            <%
+                                                Course course = (Course)request.getAttribute("course");
+                                                float price = course.getCourse_price();
+                                                Locale locale = new Locale("vi", "VN");
+                                                NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+                                                String formattedPrice = format.format(price);
+                                            %>
+
+                                            <span><%=formattedPrice%></span>
+
                                         </div>
                                         <div class="date">
                                             <h6>Nov <span>12</span></h6>

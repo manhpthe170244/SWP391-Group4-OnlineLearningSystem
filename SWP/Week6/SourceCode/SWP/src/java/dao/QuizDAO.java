@@ -5,6 +5,7 @@
 package dao;
 
 import entity.Choice;
+import entity.Lesson;
 import entity.Question;
 import entity.Quiz;
 import java.sql.SQLException;
@@ -106,7 +107,42 @@ public class QuizDAO extends MyDAO {
         
         return correctAnswers;
     }
-    
+    //Son
+    public Vector<Quiz> getQuizListBySectionId(int SectionId) {
+        Vector<Quiz> vector = new Vector<Quiz>();
+        xSql = "select q.* from Quiz q, Section S\n"
+                + "where q.section_id = s.section_id\n"
+                + "and s.section_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, SectionId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int quiz_id = rs.getInt("quiz_id");
+                String quiz_name = rs.getString("quiz_name");
+                String quiz_desc = rs.getString("quiz_desc");
+                boolean quiz_status = rs.getBoolean("quiz_status");
+                 //Them question list
+                Quiz quiz = new Quiz(quiz_id, quiz_name, quiz_desc, SectionId, quiz_status);
+                vector.add(quiz);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuizDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+    //son
+    public void SetQuizStatus(int UpdateStatus,int quizId){
+        xSql = "update Quiz set quiz_status = ? where quiz_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, UpdateStatus);
+            ps.setInt(2, quizId);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public static void main(String[] args) {
         QuizDAO pd = new QuizDAO();
         System.out.println("Test getAllQuestionCorrectAnswer");

@@ -32,6 +32,14 @@ public class Question {
 
     }
 
+    public Question(int ques_id, String ques_content, String ques_note, int quiz_id, Vector<Choice> choices) {
+        this.ques_id = ques_id;
+        this.ques_content = ques_content;
+        this.ques_note = ques_note;
+        this.quiz_id = quiz_id;
+        this.choices = choices;
+    }
+    
     public int getQues_id() {
         return ques_id;
     }

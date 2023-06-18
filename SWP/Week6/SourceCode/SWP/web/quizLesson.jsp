@@ -99,14 +99,9 @@
                         <h2>Ten Bai Quiz</h2>
                     </div>
                 </div>
+                
             </div>
-            <div class="container pb-5 text-center" style="color: white;">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h6>Grading method: Highest Score</h6>
-                    </div>
-                </div>
-            </div>
+       
             <div class="container p-3" style="color: white;">
                 <div class="row">
                     <div class="col-lg-12">
@@ -114,6 +109,17 @@
                     </div>
                 </div>
             </div>
+             <div style="color: white;margin-bottom: 50px" class="col-lg-12">
+                                Sort By <select id="sortType">
+                                    <option value="recent">Recent</option>
+                                    <option value="name">Highest Scores</option>
+                                </select>
+                            </div>
+            
+                                    <div class="main-button-red">
+                            <a href="postList?blog_id=1"> Bat dau lam </a>
+                        </div>
+
             <div class="container" >
                 <div class="row">
                     <div class="col-lg-12">
