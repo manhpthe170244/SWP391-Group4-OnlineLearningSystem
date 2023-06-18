@@ -37,7 +37,7 @@ public class LessonDetailController extends HttpServlet {
 
                 int lId = Integer.parseInt(request.getParameter("lId"));
                 
-                LessonDto lesson = lessonDAO.getLessonDetails(lId);
+                Lesson lesson = lessonDAO.getLessonDetails(lId);
                 
                 request.setAttribute("lesson", lesson);
                 request.getRequestDispatcher("lessonDetail.jsp").forward(request, response);

@@ -5,6 +5,7 @@
 package controller.CommonFeature;
 
 import dao.CourseDAO;
+import entity.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -73,19 +74,20 @@ public class CourseRegister extends HttpServlet {
 
         String courseIdString = request.getParameter("course_id");
         int course_id = Integer.parseInt(courseIdString);
-
+        CourseDAO courseDAO = new CourseDAO();
+        Course c = courseDAO.getCourseById(course_id);
         // Get current date
         Calendar calendar = Calendar.getInstance();
         java.util.Date currentDate = calendar.getTime();
         // Convert java.util.Date to java.sql.Date
         Date sqlCurrentDate = new Date(currentDate.getTime());
         // Get end date
-        calendar.add(Calendar.DATE, 10);
+        calendar.add(Calendar.DATE, c.getDuration());
         java.util.Date endDate = calendar.getTime();
         // Convert java.util.Date to java.sql.Date
         Date sqlEndDate = new Date(endDate.getTime());
 
-        CourseDAO courseDAO = new CourseDAO();
+        
         if (user_id != 0) {
             if (courseDAO.addCourseToUser(course_id, user_id, sqlCurrentDate, sqlEndDate)) {
                 response.sendRedirect("mycourselistservlet");

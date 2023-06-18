@@ -21,7 +21,13 @@ public class Quiz {
 
     public Quiz() {
     }
-
+     public Quiz(int quiz_id, String quiz_name, String quiz_desc, int section_id, boolean quiz_status) {
+        this.quiz_id = quiz_id;
+        this.quiz_name = quiz_name;
+        this.quiz_desc = quiz_desc;
+        this.section_id = section_id;
+        this.quiz_status = quiz_status;
+    }
     public Quiz(int quiz_id, String quiz_name, String quiz_desc, int section_id, boolean quiz_status, Vector<Question> quesList) {
         this.quiz_id = quiz_id;
         this.quiz_name = quiz_name;

@@ -20,6 +20,10 @@ public class Course {
     Boolean course_status;
     int duration;
     String courseTilte;
+
+    public Course() {
+    }
+    
     public Course(int course_id, String course_name, String course_img, float course_price, String course_desc, String last_update, int sub_id, int level_id, Boolean course_status, int duration, String CourseTitle) {
         this.course_id = course_id;
         this.course_name = course_name;
