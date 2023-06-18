@@ -157,7 +157,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h6>Chi Tiet Lesson</h6>
+                       
                         <h2>
                             ${lesson.course.course_name}
                             &#32;&#45;&#32;
@@ -174,8 +174,8 @@
                         <h2>${lesson.lesson_name}</h2>
                     </div>
                      <div class="col-lg-4">
-                         &lsaquo;<a href="${pageContext.request.contextPath}/lessonDetail?lId=${lesson.lesson_id-1}" >Truoc</a>&#32;
-                         <a href="${pageContext.request.contextPath}/lessonDetail?lId=${lesson.lesson_id+1}" >Tiep Theo</a>&rsaquo;
+                         &lsaquo;<a href="${pageContext.request.contextPath}/lessonDetail?lId=${lesson.lesson_id-1}" >Trước</a>&#32;
+                         <a href="${pageContext.request.contextPath}/lessonDetail?lId=${lesson.lesson_id+1}" >Tiếp Theo</a>&rsaquo;
                     </div>
                 </div>
             </div>
@@ -193,7 +193,7 @@
                             <tr>
                                 <td>
                                     <h2>
-                                        Gioi Thieu Khoa Hoc
+                                        Giới thiệu bài học
                                         <c:if test="${lesson.lesson_status}">
                                             <span class="badge-success">active</span>
                                         </c:if>
