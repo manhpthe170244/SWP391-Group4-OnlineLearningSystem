@@ -46,13 +46,21 @@
                 <div class="row">
                     <div class="col-lg-12 align-self-center">
                         <div class="row align-content-center justify-content-center">
+                            <c:if test="${sessionScope.msgSuccess != null}">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-success">
+                                        <strong>${msgSuccess}</strong> 
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:remove var="msgSuccess" scope="session" />
                             <div class="col-lg-6">
-                                <form id="contact" action="editprofile" method="post" enctype="multipart/form-data">
+                                <form id="contact" action="${pageContext.request.contextPath}/editProfile" method="post" >
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <h2 class="text-center" >Edit Profile</h2>
                                         </div>
-
+                                        <input name="uid" type="text" value="${currUser.getUserId()}" hidden="">
                                         <div class="col-lg-12 noDirectEdit">
                                             <p>Email: ${currUser.getUserEmail()}</p>
                                         </div>
@@ -89,13 +97,14 @@
                                             </select>                                         
                                             <!--                                                <input type="text" id="temp" name="temp">-->
                                         </div>
-                                        <c:if test="${phoneErr != null}">
+                                        <c:if test="${sessionScope.phoneErr != null}">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-warning">
                                                     <strong>Warning!</strong> ${phoneErr}
                                                 </div>
                                             </div>
                                         </c:if>
+                                        <c:remove var="phoneErr" scope="session" />
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <input name="phone" type="text" id="phone" value="${currUser.getUserPhone()}" placeholder="YOUR PHONE NUMBER..." required="">
