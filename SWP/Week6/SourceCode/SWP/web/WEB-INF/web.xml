@@ -18,7 +18,7 @@
     </servlet>
     <servlet>
         <servlet-name>EditProfile</servlet-name>
-        <servlet-class>controller.CommonFeature.EditProfile</servlet-class>
+        <servlet-class>controller.CommonFeature.EditProfileController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>postDetailsEdit</servlet-name>
@@ -75,6 +75,10 @@
     <servlet>
         <servlet-name>LessonListController</servlet-name>
         <servlet-class>controller.LessonListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileController</servlet-name>
+        <servlet-class>controller.CommonFeature.EditProfileController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PersonalAccountServlet</servlet-name>
@@ -159,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>LessonListController</servlet-name>
         <url-pattern>/LessonListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileController</servlet-name>
+        <url-pattern>/editProfile</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homepage</welcome-file>
