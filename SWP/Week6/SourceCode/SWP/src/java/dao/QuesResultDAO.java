@@ -69,7 +69,7 @@ public class QuesResultDAO extends MyDAO {
     public static void main(String[] args) {
         QuesResultDAO pd = new QuesResultDAO();
         System.out.println("Test insertQuesResult");
-        Boolean inserted = pd.insertQuesResult(1, 1, true,false, "123", 32);
+        Boolean inserted = pd.insertQuesResult(1, 2, true,false, "123", 32);
         System.out.println(inserted);
         
         System.out.println("Test getQuesResultBy");

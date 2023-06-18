@@ -145,6 +145,9 @@
                 text-align: start;
 
             }
+             .col-sm-9 table {
+                     width: 100%;
+            }
 
         </style>
     </head>
@@ -211,7 +214,7 @@
                         </table>
                     </div>
                     <div class="col-sm-3">
-                        <div class="card bg-light mb-3">
+                        <div class="card bg-light mb-3" style="position: fixed; width: 25%">
                             <div class="sidebar">
                                 <p>Quiz Navigation</p>
                                 <div class="quiz-all mb-9">

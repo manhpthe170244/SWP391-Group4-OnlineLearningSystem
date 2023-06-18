@@ -147,7 +147,7 @@
             <div class="container p-3" style="color: white;">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>Noi Dung Khoa Hoc</h2>
+                        <h2>Nội dung khóa học</h2>
                     </div>
                 </div>
             </div>
@@ -167,7 +167,7 @@
                                     <td>
                                         <p style="color: white;">${l.lesson_name}</p>
                                     </td>
-                                    <td><a href="${pageContext.request.contextPath}/lessonDetail?lId=${l.lesson_id}">Hoc Thu</a></td>
+                                    <td><a href="${pageContext.request.contextPath}/lessonDetail?lId=${l.lesson_id}">Học</a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

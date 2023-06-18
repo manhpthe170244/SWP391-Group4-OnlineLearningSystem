@@ -4,12 +4,17 @@
  */
 package controller;
 
+import dao.CourseDAO;
+import dao.PostDAO;
+import entity.Course;
+import entity.Post;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Vector;
 
 /**
  *
@@ -58,6 +63,10 @@ public class courseListEdit extends HttpServlet {
         String course_name = request.getParameter("course_name");
         String course_price = request.getParameter("course_price");
         String course_des = request.getParameter("course_des");
+          CourseDAO courseDAO = new CourseDAO();
+        Vector<Course> courseList = courseDAO.getAll();
+        request.setAttribute("courseList", courseList);
+        request.getRequestDispatcher("CourseListEdit.jsp").forward(request, response);
     }
 
     /**

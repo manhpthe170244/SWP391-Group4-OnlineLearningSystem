@@ -84,6 +84,26 @@
         <servlet-name>LessonListController</servlet-name>
         <servlet-class>controller.LessonListController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateLessonStatus</servlet-name>
+        <servlet-class>controller.CourseContent.UpdateLessonStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateQuizStatus</servlet-name>
+        <servlet-class>controller.CourseContent.UpdateQuizStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LessonDetailController</servlet-name>
+        <servlet-class>controller.LessonDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditLessonContent</servlet-name>
+        <servlet-class>controller.CourseContent.EditLessonContent</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditQuizContent</servlet-name>
+        <servlet-class>controller.TestFeature.EditQuizContent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PersonalAccountServlet</servlet-name>
         <url-pattern>/PersonalAccountServlet</url-pattern>
@@ -175,6 +195,26 @@
     <servlet-mapping>
         <servlet-name>LessonListController</servlet-name>
         <url-pattern>/LessonListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateLessonStatus</servlet-name>
+        <url-pattern>/UpdateLessonStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateQuizStatus</servlet-name>
+        <url-pattern>/UpdateQuizStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LessonDetailController</servlet-name>
+        <url-pattern>/LessonDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditLessonContent</servlet-name>
+        <url-pattern>/EditLessonContent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditQuizContent</servlet-name>
+        <url-pattern>/EditQuizContent</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homepage</welcome-file>
