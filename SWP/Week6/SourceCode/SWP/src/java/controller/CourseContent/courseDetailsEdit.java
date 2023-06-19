@@ -2,25 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.CourseContent;
 
-import dao.CourseDAO;
-import dao.PostDAO;
-import entity.Course;
-import entity.Post;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Vector;
 
 /**
  *
  * @author ACER
  */
-public class courseListEdit extends HttpServlet {
+@WebServlet(name = "courseDetailsEdit", urlPatterns = {"/courseDetailsEdit"})
+public class courseDetailsEdit extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +36,10 @@ public class courseListEdit extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet courseListEdit</title>");            
+            out.println("<title>Servlet courseDetailsEdit</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet courseListEdit at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet courseDetailsEdit at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,13 +57,7 @@ public class courseListEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String course_name = request.getParameter("course_name");
-        String course_price = request.getParameter("course_price");
-        String course_des = request.getParameter("course_des");
-          CourseDAO courseDAO = new CourseDAO();
-        Vector<Course> courseList = courseDAO.getAll();
-        request.setAttribute("courseList", courseList);
-        request.getRequestDispatcher("CourseListEdit.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

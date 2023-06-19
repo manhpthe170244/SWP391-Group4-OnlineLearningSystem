@@ -203,8 +203,8 @@ th, td {
 
 
                         </tr>
-                        <c:forEach items="${requestScope.postList}" var="post">
-                            <tr id="post_${post.getPost_id()}">
+                        <c:forEach items="${requestScope.courseList}" var="course">
+                            <tr id="post_${course.getCourse_id()}">
                                 <td>${post.getPost_title()}</td>
                                 <td>${post.getPost_img()}</td>
                                 <td>${post.getPost_date()}</td>
