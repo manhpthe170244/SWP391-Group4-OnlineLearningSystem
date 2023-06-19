@@ -13,6 +13,7 @@ import entity.ManageCourse;
 import java.sql.Date;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.Currency;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -25,32 +26,30 @@ import java.util.Map;
 public class CourseDAO extends MyDAO {
 
     // Manh
-    public int addCourse(Course course) {
+    public int addCourse(String course_name, String course_img, float course_price, String course_desc, Date last_update, int sub_id, int level_id, Boolean course_status, int duration, String course_title) {
         int n = 0;
-        xSql = "INSERT INTO [dbo].[Course]\n"
-                + "           ,[course_name]\n"
-                + "           ,[course_title]\n"
-                + "           ,[course_img]\n"
-                + "           ,[course_price]\n"
-                + "           ,[course_desc]\n"
-                + "           ,[last_update]\n"
-                + "           ,[sub_id]\n"
-                + "           ,[level_id]\n"
-                + "           ,[course_status]\n"
-                + "           ,[durationDAY])"
-                + "     VALUES (?,?,?,?,?,?,?,?,?,?) ";
+        xSql = "INSERT INTO [dbo].[Course](course_name, \n"
+                + "course_img , \n"
+                + "course_price, \n"
+                + "course_desc, \n"
+                + "last_update, \n"
+                + "sub_id, \n"
+                + "level_id, \n"
+                + "course_status, \n"
+                + "durationDAY, \n"
+                + "course_Title) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setString(1, course.getCourse_name());
-            ps.setString(2, course.getCourseTilte());
-            ps.setString(3, course.getCourse_img());
-            ps.setFloat(4, course.getCourse_price());
-            ps.setString(5, course.getCourse_desc());
-            ps.setDate(6, Date.valueOf(course.getLast_update()));
-            ps.setInt(7, course.getSub_id());
-            ps.setInt(8, course.getLevel_id());
-            ps.setBoolean(9, course.getCourse_status());
-            ps.setInt(10, course.getDuration());
+            ps.setString(1, course_name);
+            ps.setString(2, course_img);
+            ps.setFloat(3, course_price);
+            ps.setString(4, course_desc);
+            ps.setDate(5, last_update);
+            ps.setInt(6, sub_id);
+            ps.setInt(7, level_id);
+            ps.setBoolean(8, course_status);
+            ps.setInt(9, duration);
+            ps.setString(10, course_title);
             n = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -601,19 +600,17 @@ public class CourseDAO extends MyDAO {
         }
         return vector;
     }
+
     // Manh
-    public Boolean deleteCourse(int course_id){
+    public Boolean deleteCourse(int course_id) {
         xSql = "delete from course where course_id = ?";
         try {
-            xSql += " offset ? row\n"
-                    + "fetch next ? rows only";
             ps = con.prepareStatement(xSql);
             ps.setInt(1, course_id);
             int row = ps.executeUpdate();
-            if(row > 0){
+            if (row > 0) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         } catch (SQLException ex) {
@@ -624,14 +621,15 @@ public class CourseDAO extends MyDAO {
 
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
+        
+//        System.out.println("Test addCourse");
+//        int n = pd.addCourse("Test", "Test", 75000, "Test", Date.valueOf("2022-03-04"), 2, 1, true, 30, "test");
+//        System.out.println(n);
+        
         System.out.println("Test deleteCourse");
-        Boolean deleted = pd.deleteCourse(119);
+        Boolean deleted = pd.deleteCourse(120);
         System.out.println(deleted);
-        
-        System.out.println("Test addCourse");
 
-
-        
 //        System.out.println("Test getHottestCourse");
 //        Vector<Course> cv = pd.getHottestCourse();
 //        for (Course c : cv) {
@@ -669,7 +667,6 @@ public class CourseDAO extends MyDAO {
 //        for (Course c : cv6) {
 //            System.out.println(c);
 //        }
-
 //        System.out.println("Test addCourseToUser");
 //        if(pd.addCourseToUser(1, 3, Date.valueOf("2023-05-26"), Date.valueOf("2023-06-25"))){
 //            System.out.println("Success");
