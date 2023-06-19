@@ -85,6 +85,28 @@
                 background-color: #dc3545;
                 border-radius: 4px;
             }
+            .lessonDesc h4{
+                text-align: left;
+                color: white;
+                margin: 10px 0;
+            }
+            .lessonDesc{
+                margin: 20px 0;
+                
+            }
+            .markAsDone{
+                width: 30%;
+                background-color: #336699;
+                padding: 20px 0;
+                margin: 0 auto;
+                margin-top: 30px;
+            }
+            .markAsDone h4{
+                color: white;
+            }
+            .markAsDone h4:hover{
+                color: #d8e379
+            }
         </style>
         <!--
         
@@ -96,140 +118,27 @@
     </head>
 
     <body>
+        <jsp:include page="header.jsp"/>
 
-
-
-        <!-- Sub Header -->
-        <div class="sub-header">
+        <!-- Cach su dung template: dung 2 the include de lay header va footer, sau do pass section o be duoi vao 
+        giua roi chen noi dug trang vao phan ben duoi -->
+        <section class="heading-page header-text">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 col-sm-8">
-                        <div class="left-content">
-                            <p>Đây là một website giúp các bạn tìm kiếm khóa học online phù hợp</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-4">
-                        <div class="right-icons">
-
-                        </div>
-                    </div>
+                    <h2 style="text-align: left;">${lesson.getLesson_name()}</h2>
+                    <iframe width="400" height="700" src="${lesson.getLesson_video()}" frameborder="0" allowfullscreen></iframe>                   
                 </div>
-            </div>
-        </div>
-
-        <!-- ***** Header Area Start ***** -->
-        <header class="header-area header-sticky">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <nav class="main-nav">
-                            <!-- *** Logo Start *** -->
-                            <a href="homepage" class="logo">
-                                Edu Meeting
-                            </a>
-                            <!-- *** Logo End *** -->
-                            <!-- *** Menu Start *** -->
-                            <ul class="nav">
-                                <li class="scroll-to-section"><a href="homepage" class="active">TRANG CHỦ</a></li>
-                                <li><a href="meetings.html">KHÓA HỌC CỦA TÔI</a></li>
-                                <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
-                                <li class="has-sub">
-                                    <a href="javascript:void(0)">Pages</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                        <li><a href="meeting-details.html">Meeting Details</a></li>
-                                    </ul>
-                                </li>
-                                <li class="scroll-to-section"><a href="#courses">TRANG CÁ NHÂN</a></li> 
-                            </ul>        
-                            <a class='menu-trigger'>
-                                <span>Menu</span>
-                            </a>
-                            <!-- *** Menu End *** -->
-                        </nav>
-                    </div>
+                <div class="row lessonDesc">
+                    <h4>Nội dung bài học</h4>
+                    <h4>${lesson.getLesson_desc()}</h4>
                 </div>
-            </div>
-        </header>
-        <!-- ***** Header Area End ***** -->
-
-        <section class="heading-page header-text tQuiz" id="top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h6>Chi Tiet Lesson</h6>
-                        <h2>
-                            ${lesson.course.course_name}
-                            &#32;&#45;&#32;
-                            ${lesson.lesson_name}
-                        </h2>
-                    </div>
+                <div class="row markAsDone">
+                    <h4>Mark as Done</h4>
                 </div>
             </div>
         </section>
-        <section class="meetings-page" style="padding-top: 0px;" id="meetings" >
-            <div class="container p-3" style="color: white;">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <h2>${lesson.lesson_name}</h2>
-                    </div>
-                     <div class="col-lg-4">
-                         &lsaquo;<a href="${pageContext.request.contextPath}/lessonDetail?lId=${lesson.lesson_id-1}" >Truoc</a>&#32;
-                         <a href="${pageContext.request.contextPath}/lessonDetail?lId=${lesson.lesson_id+1}" >Tiep Theo</a>&rsaquo;
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container" >
-            <div class="row">
-                <div class="col-lg-12">
-                    <table class="table table-dark">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <iframe width="1300" height="600" src="${lesson.lesson_video}" frameborder="0" allowfullscreen></iframe>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2>
-                                        Gioi Thieu Khoa Hoc
-                                        <c:if test="${lesson.lesson_status}">
-                                            <span class="badge-success">active</span>
-                                        </c:if>
-                                        <c:if test="${!lesson.lesson_status}">
-                                            <span class="badge-success">not active</span>
-                                        </c:if>
-                                    </h2>
-                                    <strong style="color: white;" >Last Defined: </strong> <span id="formattedDate"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p style="color: white;" >
-                                        <strong style="color: white;" >Duration: </strong>
-                                        <c:if test="${lesson.course.duration > 1}">
-                                            ${lesson.course.duration} days
-                                        </c:if>
-                                        <c:if test="${lesson.course.duration == 1}">
-                                            ${lesson.course.duration} day
-                                        </c:if>
-                                    </p><br>
-                                    <p style="color: white;" >
-                                        ${lesson.lesson_desc}
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="footer">
-            <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
-                <br>Design: <a href="https://templatemo.com/page/1" target="_parent" title="website templates">TemplateMo</a></p>
-        </div>
 
+        <jsp:include page="footer.jsp"/>
 
         <!-- Scripts -->
         <!-- Bootstrap core JavaScript -->
@@ -245,13 +154,7 @@
         <script src="assets/js/slick-slider.js"></script>
         <script src="assets/js/custom.js"></script>
         <script>
-            var dateString = "${lesson.course.last_update}";
-            var date = new Date(dateString);
-            var formattedDate = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
-            document.getElementById("formattedDate").innerHTML = formattedDate;
-            //according to loftblog tut
-            $('.nav li:first').addClass('active');
-
+//           
             // set sort_type
             const sortType = document.getElementById("sortType");
             sortType.addEventListener("change", function () {
@@ -314,7 +217,7 @@
                 checkSection();
             });
         </script>
-</body>
+    </body>
 
 
 </body>

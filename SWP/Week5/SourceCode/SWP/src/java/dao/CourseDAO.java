@@ -129,6 +129,33 @@ public class CourseDAO extends MyDAO {
         return vector;
     }
 
+    public Course getCourseById(int id) {
+        Course found = new Course();
+        xSql = "select c.* from Course c where course_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int course_id = rs.getInt("course_id");
+                String course_name = rs.getString("course_name");
+                String course_img = rs.getString("course_img");
+                float course_price = rs.getFloat("course_price");
+                String course_desc = rs.getString("course_desc");
+                Date last_update = rs.getDate("last_update");
+                int sub_id = rs.getInt("sub_id");
+                int level_id = rs.getInt("level_id");
+                Boolean course_status = rs.getBoolean("course_status");
+                int duration = rs.getInt("durationDAY");
+                String courseTitle = rs.getString("course_Title");
+                found = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return found;
+    }
+
     // Linh
     public Vector<Course> getCourseBySubId(int filter_sub_id, int offset, int fetch, String sorttype) {
         Vector<Course> vector = new Vector<Course>();
@@ -568,10 +595,10 @@ public class CourseDAO extends MyDAO {
         Vector<Course> vector = new Vector<>();
         try {
             if (sub_id != 0) {
-                xSql += " and c.sub_id = '%"+sub_id+"%'";
+                xSql += " and c.sub_id = '%" + sub_id + "%'";
             }
             if (search != null) {
-                xSql += " and c.course_name like '%"+search+"%'";
+                xSql += " and c.course_name like '%" + search + "%'";
             }
             xSql += "group by mc.course_id, c.course_id, c.course_name, c.course_desc, c.course_img, c.course_price, c.course_status,\n"
                     + "c.course_Title, c.durationDAY, c.last_update, c.level_id, c.sub_id\n"
@@ -650,5 +677,4 @@ public class CourseDAO extends MyDAO {
 //        }
     }
 
-    
 }

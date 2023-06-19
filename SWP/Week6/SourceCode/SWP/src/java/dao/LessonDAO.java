@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -40,7 +41,7 @@ public class LessonDAO extends MyDAO {
         }
         return vector;
     }
-    
+
     public Vector<Lesson> getAllOrbSecId() {
         Vector<Lesson> vector = new Vector<Lesson>();
         xSql = "SELECT * FROM Lesson WHERE section_id IS NOT NULL ORDER BY section_id";
@@ -62,10 +63,10 @@ public class LessonDAO extends MyDAO {
         }
         return vector;
     }
-    
-     public LessonDto getLessonDetails(int lId) {
-        LessonDto lesson = null;
-        xSql = "select * from Lesson as l join Section as s on l.section_id = s.section_id join Course c  on s.course_id = c.course_id where l.lesson_id = ? and s.section_id is not null";
+
+    public Lesson getLessonDetails(int lId) {
+        Lesson lesson = null;
+        xSql = "select * from Lesson l where l.lesson_id = ?";
         try {
             ps = con.prepareStatement(xSql);
             ps.setInt(1, lId);
@@ -77,24 +78,87 @@ public class LessonDAO extends MyDAO {
                 int section_id = rs.getInt("section_id");
                 String lesson_desc = rs.getString("lesson_desc");
                 boolean lesson_status = rs.getBoolean("lesson_status");
-                int course_id = rs.getInt("course_id");
-                String course_name = rs.getString("course_name");
-                String course_img = rs.getString("course_img");
-                float course_price = rs.getFloat("course_price");
-                String course_desc = rs.getString("course_desc");
-                Date last_update = rs.getDate("last_update");
-                int sub_id = rs.getInt("sub_id");
-                int level_id = rs.getInt("level_id");
-                Boolean course_status = rs.getBoolean("course_status");
-                int duration = rs.getInt("durationDAY");
-                String courseTitle = rs.getString("course_Title");
-                Course course = new Course(course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle);
-                lesson = new LessonDto(lesson_id, lesson_name, lesson_video, section_id, lesson_desc, lesson_status, course);
+                lesson = new Lesson(lesson_id, lesson_name, lesson_video, section_id, lesson_desc, lesson_status);
             }
         } catch (SQLException ex) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lesson;
     }
-    
+//son
+    public Vector<Lesson> getLessonBySectionId(int SectionId) {
+        xSql = "select l.* from Lesson l, Section s\n"
+                + "where l.section_id = s.section_id\n"
+                + "and s.section_id = ?";
+        Vector<Lesson> vector = new Vector<>();
+        int lessonId;
+        String lessonName;
+        String lessonVideo;
+        String lessonDesc;
+        boolean lesson_Status;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, SectionId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lessonId = rs.getInt("lesson_id");
+                lessonName = rs.getString("lesson_name");
+                lessonVideo = rs.getString("lesson_video");
+                lessonDesc = rs.getString("lesson_desc");
+                lesson_Status = rs.getBoolean("lesson_status");
+                Lesson les = new Lesson(lessonId, lessonName, lessonVideo, SectionId, lessonDesc, lesson_Status);
+                vector.add(les);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+    //son
+    public void SetLessonStatus(int UpdateStatus, int lessonId) {
+        xSql = "update Lesson set lesson_status = ? where lesson_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, UpdateStatus);
+            ps.setInt(2, lessonId);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    //son
+    public void editLessonDetail(String lessonName, String lessonVideo, String lessonDesc, int lessonId) {
+        xSql = "update Lesson\n"
+                + "set lesson_name = ?, \n"
+                + "lesson_video = ?,\n"
+                + "lesson_desc = ?\n"
+                + "where lesson_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, lessonName);
+            ps.setString(2, lessonVideo);
+            ps.setString(3, lessonDesc);
+            ps.setInt(4, lessonId);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    //son
+    public void AddnewLessonToSection(int Section_id, String lesson_Name, String lesson_video, String lesson_desc) {
+        xSql = "insert into Lesson (lesson_name, lesson_video, section_id, lesson_desc, lesson_status) values (?, ?, ?, ?, ?)";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, lesson_Name);
+            ps.setString(2, lesson_video);
+            ps.setInt(3, Section_id);
+            ps.setString(4, lesson_desc);
+            ps.setInt(5, 1);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+                
+    }
 }
