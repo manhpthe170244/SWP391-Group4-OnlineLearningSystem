@@ -187,33 +187,23 @@ th, td {
 
                     <table border="1">
                         <tr>
-                           
                             <th>course_name</th>
                             <th>course_img</th>
                             <th>course_price</th>
-                            <th>course_desc</th>
                             <th>sub_id</th>
-                           
-                            <th>course_status</th>
-                            
                             <th>course_status</th>
                             <th>duration</th>
-                            <th>courseTilte</th>
-
-
-
+                            <th>action</th>
                         </tr>
                         <c:forEach items="${requestScope.courseList}" var="course">
-                            <tr id="post_${course.getCourse_id()}">
-                                <td>${post.getPost_title()}</td>
-                                <td>${post.getPost_img()}</td>
-                                <td>${post.getPost_date()}</td>
-                                <td>${(post.getPost_status()) ? "Active" : "Inactive"}</td>
-                                <td>${post.getBlog_id()}</td>
-                                <td>
-                                    <button onclick="deletePost(${post.getPost_id()})">Delete</button>
-                                    <button onclick="window.location.href = 'postDetailsEdit?post_id=${post.getPost_id()}&type=edit'">Edit</button>
-                                </td>
+                            <tr>
+                                <td>${course.getCourse_name()}</td>
+                                <td>${course.getCourse_img()}</td>
+                                <td>${course.getCourse_price()}</td>
+                                <td>${course.getSub_id()}</td>
+                                <td>${course.getCourse_status()}</td>               
+                                <td>${course.getDuration()}</td>                    
+                                <td></td>  
                             </tr>             
                         </c:forEach>
                     </table>
