@@ -196,7 +196,7 @@ th, td {
                             <th>action</th>
                         </tr>
                         <c:forEach items="${requestScope.courseList}" var="course">
-                            <tr>
+                            <tr id="course_${course.getCourse_id()}">
                                 <td>${course.getCourse_name()}</td>
                                 <td>${course.getCourse_img()}</td>
                                 <td>${course.getCourse_price()}</td>
@@ -212,15 +212,15 @@ th, td {
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                        function deletePost(postId) {
+                                        function deleteCourse(courseId) {
                                             //Send an AJAX request to your server-side script
                                             $.ajax({
-                                                url: "deletePost",
+                                                url: "deleteCourse",
                                                 type: "POST",
-                                                data: {post_id: postId},
+                                                data: {course_id: courseId},
                                                 success: function (response) {
                                                     // Remove the row from the table
-                                                    $("#post_" + postId).remove();
+                                                    $("#course_" + courseId).remove();
                                                 }
                                             });
                                         }
