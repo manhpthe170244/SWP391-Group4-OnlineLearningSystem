@@ -70,10 +70,12 @@ public class postDetailsEdit extends HttpServlet {
             PostDAO postDAO = new PostDAO();
             Post post = postDAO.searchById(post_id);
             request.setAttribute("post", post);
+            request.setAttribute("update", true);
             request.getRequestDispatcher("PostDetailEdit.jsp").forward(request, response);
         }
         else if(pageType.equals("add")){
-            request.getRequestDispatcher("AddPost.jsp").forward(request, response);
+            request.setAttribute("update", false);
+            request.getRequestDispatcher("PostDetailEdit.jsp").forward(request, response);
         }
     }
 

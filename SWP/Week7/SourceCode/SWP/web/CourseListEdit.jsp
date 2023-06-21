@@ -32,27 +32,27 @@
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
             th, td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    word-wrap: break-word;
-    vertical-align: top;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+                padding: 8px;
+                border: 1px solid #ddd;
+                word-wrap: break-word;
+                vertical-align: top;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
             table {
-    width: 100%;
-    margin-bottom: 1em;
-    border: 2px solid #ddd;
-    table-layout: fixed;
-}
+                width: 100%;
+                margin-bottom: 1em;
+                border: 2px solid #ddd;
+                table-layout: fixed;
+            }
 
-th, td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    word-wrap: break-word;
-    vertical-align: top;
-}
+            th, td {
+                padding: 8px;
+                border: 1px solid #ddd;
+                word-wrap: break-word;
+                vertical-align: top;
+            }
             td {
                 padding: 8px;
                 border: 1px solid #ddd;
@@ -182,7 +182,7 @@ th, td {
                             <button type="submit">Search</button>
                         </form>
                     </div>
-                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add Course</button></li>
+                    <li><button class="add-post-button" onclick="window.location.href = 'courseDetailsEdit?type=add'">Add Course</button></li>
 
 
                     <table border="1">
@@ -212,18 +212,18 @@ th, td {
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                        function deleteCourse(courseId) {
-                                            //Send an AJAX request to your server-side script
-                                            $.ajax({
-                                                url: "deleteCourse",
-                                                type: "POST",
-                                                data: {course_id: courseId},
-                                                success: function (response) {
-                                                    // Remove the row from the table
-                                                    $("#course_" + courseId).remove();
-                                                }
-                                            });
-                                        }
+                        function deleteCourse(courseId) {
+                            //Send an AJAX request to your server-side script
+                            $.ajax({
+                                url: "deleteCourse",
+                                type: "POST",
+                                data: {course_id: courseId},
+                                success: function (response) {
+                                    // Remove the row from the table
+                                    $("#course_" + courseId).remove();
+                                }
+                            });
+                        }
         </script>
     </body>
 </html>

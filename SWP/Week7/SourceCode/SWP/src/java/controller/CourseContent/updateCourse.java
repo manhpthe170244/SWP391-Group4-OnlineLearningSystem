@@ -4,19 +4,29 @@
  */
 package controller.CourseContent;
 
+import dao.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Date;
+import java.util.Calendar;
+
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 5)
 
 /**
  *
  * @author ACER
  */
-@WebServlet(name = "updateCourse", urlPatterns = {"/updateCourse"})
 public class updateCourse extends HttpServlet {
 
     /**
@@ -36,10 +46,10 @@ public class updateCourse extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet updateCourse</title>");            
+            out.println("<title>Servlet updatePost</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet updateCourse at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet updatePost at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,7 +67,7 @@ public class updateCourse extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**
@@ -71,7 +81,38 @@ public class updateCourse extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("course_id"));
+        String title = request.getParameter("course_title");
+        String description = request.getParameter("course_des");
+        int blog_id = Integer.parseInt(request.getParameter("sub_id"));
+
+        // Get post image
+        Part filePart = null;
+        filePart = request.getPart("course_image");
+        String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
+        String fileName;
+        if (filePart != null && filePart.getSize() > 0) {
+            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        } else {
+            fileName = "tempAvatar.jpg";
+        }
+        String filePath = saveDirectory + fileName;
+
+        String sqlFilePath = "img/" + fileName;
+        if (filePart != null && filePart.getSize() > 0) {
+            InputStream fileContent = filePart.getInputStream();
+            Files.copy(fileContent, Paths.get(filePath));
+        }
+
+        // Get current date
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = new Date(calendar.getTime().getTime());
+
+        // addCourse
+        CourseDAO courseDAO = new CourseDAO();
+        //courseDAO.update(id, sqlFilePath, title, description, currentDate, true, blog_id);
+
+        response.sendRedirect("courseListEdit");
     }
 
     /**

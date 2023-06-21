@@ -118,9 +118,8 @@
 
             <div class="container">
                 <div class="row">
-
-                    <form method="post" action="updatePost" enctype="multipart/form-data">
-                        <input type="hidden" name="post_id" value="${requestScope.post.getPost_id()}"
+                    <form method="post" action="${requestScope.update ? "updatePost" : "addPost"}" enctype="multipart/form-data">
+                        <input type="hidden" name="post_id" value="${post.getPost_id()}">
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
@@ -129,7 +128,7 @@
 
                             <div class="form-group">
                                 <label for="post-title">Title:</label>
-                                <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.post.getPost_title()}" required>
+                                <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.update ? requestScope.post.getPost_title() : null}" required>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
@@ -142,7 +141,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note" value="${requestScope.post.getPost_desc()}">
+                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note" value=${requestScope.update ? requestScope.post.getPost_desc(): ""}>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
@@ -152,7 +151,7 @@
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 740px;">
-                                <img id="preview-image" src="${requestScope.post.getPost_img()}" alt="Preview image" style="max-width: 100%">
+                                <img id="preview-image" src="${requestScope.update ? requestScope.post.getPost_img() : " "}" alt="Preview image" style="max-width: 100%">
                             </div>
                         </div>  
                         <div >

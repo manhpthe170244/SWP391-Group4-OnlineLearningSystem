@@ -69,10 +69,6 @@
         <servlet-class>controller.MarketingFeature.updateSlider</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>updatePost</servlet-name>
-        <servlet-class>controller.MarketingFeature.updatePost</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>addSlider</servlet-name>
         <servlet-class>controller.MarketingFeature.addSlider</servlet-class>
     </servlet>
@@ -187,10 +183,6 @@
     <servlet-mapping>
         <servlet-name>addPost</servlet-name>
         <url-pattern>/addPost</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>updatePost</servlet-name>
-        <url-pattern>/updatePost</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LessonListController</servlet-name>
