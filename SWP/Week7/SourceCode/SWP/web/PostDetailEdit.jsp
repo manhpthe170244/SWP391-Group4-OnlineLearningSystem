@@ -144,7 +144,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note" value=${requestScope.update ? requestScope.post.getPost_desc(): ""}>
+                                <textarea type="text" id="slider-note" name="post_des" placeholder="Enter note">${requestScope.update ? requestScope.post.getPost_desc(): null}</textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">

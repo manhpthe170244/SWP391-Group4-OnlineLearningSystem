@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -113,16 +114,26 @@ public class addOrUpdateCourse extends HttpServlet {
         Calendar calendar = Calendar.getInstance();
         Date currentDate = new Date(calendar.getTime().getTime());
 
-        
         CourseDAO courseDAO = new CourseDAO();
-        
-        if(update){
+
+        if (update) {
             int id = Integer.parseInt(request.getParameter("course_id"));
             // updateCourse
-        }
-        else{
+            courseDAO.updateCourse(id, name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
+        } else {
             // addCourse
-            courseDAO.addCourse(name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
+            int course_id = courseDAO.addCourse(name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
+            int user_id = 0;
+            Cookie[] cookies = request.getCookies();
+
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("currUserId")) {
+                        user_id = Integer.parseInt(cookie.getValue());
+                    }
+                }
+            }
+            courseDAO.addCourseToUser(course_id, user_id, currentDate, currentDate);
         }
 
         response.sendRedirect("courseListEdit");

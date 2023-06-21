@@ -154,7 +154,7 @@
                 <div class="row">
 
                     <form method="post" action="addOrUpdateCourse" enctype="multipart/form-data">
-                        <input type="hidden" name="udpate" value="${requestScope.update}"><!-- update hay add -->
+                        <input type="hidden" name="update" value="${requestScope.update}"><!-- update hay add -->
                         <c:if test="${requestScope.update == true}">
                             <input type="hidden" name="course_id" value="${requestScope.course.getCourse_id()}">
                         </c:if>
@@ -190,12 +190,12 @@
                             </div>
                             <div class="quantity">
                                 <label for="duration" style="color: white; ">Duration: </label>
-                                <input type="number" id="duration" name="duration" min="1" max="1000">
+                                <input type="number" id="duration" name="duration" min="1" max="1000" value="30">
                             </div>
 
                             <div class="quantity">
                                 <label for="price" style="color: white; ">Price: </label>
-                                <input type="number" id="price" name="price" min="0" max="1000000" step="1000">
+                                <input type="number" id="price" name="price" min="0" max="1000000" step="1000" value="60000">
                             </div>
 
                             <div class="form-group">
@@ -209,7 +209,7 @@
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 740px;">
-                                <img id="preview-image" src="${requestScope.post.getPost_img()}" alt="Preview image" style="max-width: 100%">
+                                <img id="preview-image" src="${requestScope.course.getCourse_img()}" alt="Preview image" style="max-width: 100%">
                             </div>
                         </div>  
                         <div >

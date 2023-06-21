@@ -5,8 +5,10 @@
 package controller.CourseContent;
 
 import dao.CourseDAO;
+import dao.LevelDAO;
 import dao.SubjectDAO;
 import entity.Course;
+import entity.Level;
 import entity.Subject;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -64,9 +66,17 @@ public class courseDetailsEdit extends HttpServlet {
             throws ServletException, IOException {
         String courseIdString = request.getParameter("course_id");
         String pageType = request.getParameter("type");
+        
+        // Get subject list
         SubjectDAO subjectDAO = new SubjectDAO();
         Vector<Subject> subList = subjectDAO.getAll();
         request.setAttribute("subList", subList);
+        
+        // Get level list
+        LevelDAO levelDAO = new LevelDAO();
+        Vector<Level> levelList = levelDAO.getAll();
+        request.setAttribute("levelList", levelList);
+        
         if (pageType.equals("edit")) {
             int course_id = Integer.parseInt(courseIdString);
             CourseDAO courseDAO = new CourseDAO();

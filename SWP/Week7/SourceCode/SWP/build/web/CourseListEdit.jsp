@@ -204,7 +204,6 @@
                                 <td>${course.getCourse_status()}</td>               
                                 <td>${course.getDuration()}</td>    
                                 <td>
-                                    <button onclick="deleteCourse(${course.getCourse_name()})">Delete</button>
                                     <button onclick="window.location.href = 'courseDetailsEdit?course_id=${course.getCourse_id()}&type=edit'">Edit</button>
                                 </td>
                                
@@ -216,18 +215,7 @@
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                        function deleteCourse(courseId) {
-                            //Send an AJAX request to your server-side script
-                            $.ajax({
-                                url: "deleteCourse",
-                                type: "POST",
-                                data: {course_id: courseId},
-                                success: function (response) {
-                                    // Remove the row from the table
-                                    $("#course_" + courseId).remove();
-                                }
-                            });
-                        }
+
         </script>
     </body>
 </html>
