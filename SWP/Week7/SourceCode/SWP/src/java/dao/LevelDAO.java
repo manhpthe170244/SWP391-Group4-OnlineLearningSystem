@@ -19,7 +19,8 @@ public class LevelDAO extends MyDAO {
         Vector<Level> levelList = new Vector<>();
         xSql = "select * from level";
         try {
-            rs = ps.executeQuery(xSql);
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
             while(rs.next()){
                 int level_id = rs.getInt(1);
                 String level_name = rs.getString(2);

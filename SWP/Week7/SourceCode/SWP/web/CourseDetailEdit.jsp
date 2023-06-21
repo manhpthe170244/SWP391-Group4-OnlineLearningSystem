@@ -108,36 +108,36 @@
             .quantity{
                 text-align: center;
                 margin-right: 608px;
-                
+
             }
             .quantity label {
-  color: white;
-  font-weight: bold;
-  margin-right: 10px;
-}
+                color: white;
+                font-weight: bold;
+                margin-right: 10px;
+            }
 
-.quantity input[type="number"] {
-  width: 60px;
-  padding: 5px;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-}
+            .quantity input[type="number"] {
+                width: 60px;
+                padding: 5px;
+                border-radius: 3px;
+                border: 1px solid #ccc;
+            }
 
-.form-group1{
-    margin-bottom: 20px;
-}
+            .form-group1{
+                margin-bottom: 20px;
+            }
 
 
-/*.quantity input[type="number"]::-webkit-inner-spin-button,
-.quantity input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}*/
+            /*.quantity input[type="number"]::-webkit-inner-spin-button,
+            .quantity input[type="number"]::-webkit-outer-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }*/
 
-/*.quantity input[type="number"]:focus {
-  outline: none;
-  box-shadow: 0 0 3px #007bff;
-}*/
+            /*.quantity input[type="number"]:focus {
+              outline: none;
+              box-shadow: 0 0 3px #007bff;
+            }*/
 
         </style>
     </head>
@@ -169,10 +169,8 @@
                                 <input type="text" id="post-title" name="course_name" placeholder="Enter course name" value="${requestScope.update ? requestScope.course.getCourse_name() : null}" required>
                                 <label for="post-title">Title:</label>
                                 <input type="text" id="post-title" name="course_title" placeholder="Enter title" value="${requestScope.update ? requestScope.course.getCourseTilte() : null}" required>
-                                
-                            </div>
-                            
 
+                            </div>
                             <div class="form-group" style="display: flex;align-items: center;">
                                 <label for="post-category" style="margin-right: 25px; color: white">Subject:</label>
                                 <select id="post-category" name="sub_id" style="width: 200px">
@@ -181,20 +179,25 @@
                                     </c:forEach>
                                 </select>
                             </div>
-                            
+
                             <div class="form-group" style="display: flex;align-items: center;">
                                 <label for="level" style="margin-right: 45px; color: white">Level: </label>
-                                <select id="level" name="sub_id" style="width: 160px">
-                                    <c:forEach items="${requestScope.subList}" var="subject">
-                                        <option value="${subject.getSub_id()}">${subject.getSub_name()}</option>
+                                <select id="level" name="level_id" style="width: 160px">
+                                    <c:forEach items="${requestScope.levelList}" var="level">
+                                        <option value="${level.getLevel_id()}">${level.getLevel_name()}</option>
                                     </c:forEach>
                                 </select>
                             </div>
-                                <div class="quantity">
-                                <label for="quantity" style="color: white; ">Duration: </label>
-                                <input type="number" id="quantity" name="quantity" min="1" max="1000">
-                                    </div>
-                                
+                            <div class="quantity">
+                                <label for="duration" style="color: white; ">Duration: </label>
+                                <input type="number" id="duration" name="duration" min="1" max="1000">
+                            </div>
+
+                            <div class="quantity">
+                                <label for="price" style="color: white; ">Price: </label>
+                                <input type="number" id="price" name="price" min="0" max="1000000" step="1000">
+                            </div>
+
                             <div class="form-group">
                                 <textarea name="course_des" placeholder="Enter description"  style="margin: 15px 0;">${requestScope.update ? requestScope.course.getCourse_desc() : null}</textarea>
                             </div>

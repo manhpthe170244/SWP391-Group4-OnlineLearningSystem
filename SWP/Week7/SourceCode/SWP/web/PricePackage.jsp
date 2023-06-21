@@ -165,22 +165,22 @@ background-color: #f2f2f2;
 
                     <table border="1">
                         <tr>
-                            <th>Package_id</th>
                             <th>Package_name</th>
                             <th>Duration</th>
                             <th>Pack_status</th>
-                            <th>Multiple</th>
+                            <th>Price</th>
                             <th>Description</th>
+                            <th>Action</th>
                         </tr>
                         <c:forEach items="${requestScope.pricePackage}" var="pricePackage">
-                            <tr id="post_${post.getPackage_id()}">
+                            <tr id="package_${pricePackage.getPackage_id()}">
                                 <td>${pricePackage.getPackage_name()}</td>
                                 <td>${pricePackage.getDuration()}</td>
                                 <td>${pricePackage.isPack_status()}</td>
-                                <td>${(pricePackage.getMultiple())}</td>
+                                <td>${(pricePackage.getPrice())}</td>
                                 <td>${pricePackage.getDescription()}</td>
                                 <td>
-                                    <button onclick="deletePricePackage(${pricePackage.getPost_id()})">Delete</button>                              
+                                    <button onclick="deletePricePackage(${pricePackage.getPackage_id()})">Delete</button>                              
                                 </td>
                             </tr>             
                         </c:forEach>
@@ -190,16 +190,15 @@ background-color: #f2f2f2;
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function deletePost(postId) {
+        function deletePricePackage(pricePackageId) {
             //Send an AJAX request to your server-side script
-            console.log("delete post");
             $.ajax({
-                url: "deletePost",
+                url: "deletePricePackage",
                 type: "POST",
-                data: {post_id: postId},
+                data: {package_id: packageId},
                 success: function (response) {
                     // Remove the row from the table
-                    $("#post_" + postId).remove();
+                    $("#package_" + pricePackageId).remove();
                 }
             });
         }

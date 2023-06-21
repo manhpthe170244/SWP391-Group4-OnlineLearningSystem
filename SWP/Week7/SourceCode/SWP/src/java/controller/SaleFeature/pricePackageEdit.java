@@ -63,8 +63,8 @@ public class pricePackageEdit extends HttpServlet {
         PricePackageDAO pricePackageDAO = new PricePackageDAO();
         Vector<Price_Package> pricePackage = pricePackageDAO.getAll();
         request.setAttribute("pricePackage", pricePackage);
+        
         request.getRequestDispatcher("PricePackage.jsp").forward(request, response);
-
     }
 
     /**

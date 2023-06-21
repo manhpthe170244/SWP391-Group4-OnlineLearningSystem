@@ -86,6 +86,9 @@ public class addOrUpdateCourse extends HttpServlet {
         String title = request.getParameter("course_title");
         String description = request.getParameter("course_des");
         int sub_id = Integer.parseInt(request.getParameter("sub_id"));
+        int level_id = Integer.parseInt(request.getParameter("level_id"));
+        int price = Integer.parseInt(request.getParameter("price"));
+        int duration = Integer.parseInt(request.getParameter("duration"));
         boolean update = Boolean.parseBoolean(request.getParameter("update"));
 
         // Get post image
@@ -119,7 +122,7 @@ public class addOrUpdateCourse extends HttpServlet {
         }
         else{
             // addCourse
-            //courseDAO.addCourse(name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
+            courseDAO.addCourse(name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
         }
 
         response.sendRedirect("courseListEdit");

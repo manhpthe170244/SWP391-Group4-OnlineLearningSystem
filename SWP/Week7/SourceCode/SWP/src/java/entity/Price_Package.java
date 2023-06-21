@@ -14,18 +14,18 @@ public class Price_Package {
     String package_name;
     int duration;
     boolean pack_status;
-    float multiple;
+    float price;
     String description;
 
     public Price_Package() {
     }
 
-    public Price_Package(int package_id, String package_name, int duration, boolean pack_status, float multiple, String description) {
+    public Price_Package(int package_id, String package_name, int duration, boolean pack_status, float price, String description) {
         this.package_id = package_id;
         this.package_name = package_name;
         this.duration = duration;
         this.pack_status = pack_status;
-        this.multiple = multiple;
+        this.price = price;
         this.description = description;
     }
 
@@ -61,12 +61,12 @@ public class Price_Package {
         this.pack_status = pack_status;
     }
 
-    public float getMultiple() {
-        return multiple;
+    public float getPrice() {
+        return price;
     }
 
-    public void setMultiple(float multiple) {
-        this.multiple = multiple;
+    public void setPrice(float multiple) {
+        this.price = multiple;
     }
 
     public String getDescription() {
