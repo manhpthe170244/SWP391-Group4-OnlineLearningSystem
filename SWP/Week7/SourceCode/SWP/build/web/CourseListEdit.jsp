@@ -202,8 +202,12 @@ th, td {
                                 <td>${course.getCourse_price()}</td>
                                 <td>${course.getSub_id()}</td>
                                 <td>${course.getCourse_status()}</td>               
-                                <td>${course.getDuration()}</td>                    
-                                <td></td>  
+                                <td>${course.getDuration()}</td>    
+                                <td>
+                                    <button onclick="deleteCourse(${course.getCourse_name()})">Delete</button>
+                                    <button onclick="window.location.href = 'sliderDetailsEdit?slider_id=${slider.getSlider_id()}&type=edit'">Edit</button>
+                                </td>
+                               
                             </tr>             
                         </c:forEach>
                     </table>
