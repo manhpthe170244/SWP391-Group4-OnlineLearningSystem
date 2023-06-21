@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,7 +45,7 @@
 
             .form-group {
                 margin-bottom: 10px;
-
+             
             }
 
             .form-group label {
@@ -119,39 +118,51 @@
             <div class="container">
                 <div class="row">
 
-                    <form method="post" action="updatePost" enctype="multipart/form-data">
+                    <form>
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
-                                <h2> COURSE DETAIL EDIT </h2>
+                                <h2>Price Pakage</h2>
                             </div>
+                           
+                            <div class="form-group">
+                                <label for="slider-title">Title:</label>
+                                <input type="text" id="slider-title" name="slider-title" placeholder="Enter name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="slider-title">Title:</label>
+                                <input type="text" id="slider-title" name="slider-title" placeholder="access duration (in months)" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="slider-title">Title:</label>
+                                <input type="text" id="slider-title" name="slider-title" placeholder="status (read-only)" required>
+                            </div>
+                             
+                            <div class="form-group">
+                                <label for="slider-title">Title:</label>
+                                <input type="text" id="slider-title" name="slider-title" placeholder=" list price." required>
+                            </div>
+                           
+
+                            
 
                             <div class="form-group">
-                                <label for="post-title">Title:</label>
-                                <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.post.getPost_title()}" required>
-                            </div>
-
-<!--                            <div class="form-group" style="display: flex;align-items: center;">
-                                <label for="post-category" style="margin-right: 10px; color: white">Post Category:</label>
-                                <select id="post-category" name="blog_id" style="width: 80px">
-                                    <c:forEach items="${requestScope.categoryList}" var="category">
-                                        <option value="${category.getBlog_id()}">${category.getBlog_name()}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>-->
-
-                            <div class="form-group">
-                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note" value="${requestScope.post.getPost_desc()}">
+                                <label for="slider-note">Note:</label>
+                                <textarea id="slider-note" name="slider-note" placeholder="Enter note"></textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
-                                <label for="post-image" style="margin-right: 10px; color: white"> Image:</label>
+                                <label for="slider-image" style="margin-right: 10px; color: white"> Image:</label>
                                 <div class="input-wrapper">
-                                    <input type="file" id="post-image" name="post_image" style="color: white">
+                                    <input type="file" id="slider-image" name="slider-image">
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 740px;">
-                                <img id="preview-image" src="${requestScope.post.getPost_img()}" alt="Preview image" style="max-width: 100%">
+                                <label for="preview-image" style="display: none; width: 760px;
+                                       ">Preview:</label>
+                                <img id="preview-image" src="#" alt="Preview image" style="max-width: 100%">
                             </div>
                         </div>  
                         <div >
@@ -162,21 +173,10 @@
             </div>
 
         </section>
+
+
+
         <jsp:include page="footer.jsp"/>
-        <script>
-            const postImageInput = document.getElementById('post-image');
-            const previewImage = document.getElementById('preview-image');
 
-            postImageInput.addEventListener('change', () => {
-                const file = postImageInput.files[0];
-                const reader = new FileReader();
-
-                reader.onload = (event) => {
-                    previewImage.src = event.target.result;
-                };
-
-                reader.readAsDataURL(file);
-            });
-        </script>
     </body>
 </html>

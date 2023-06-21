@@ -123,37 +123,35 @@
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
-                                <c:if test="${update==true}">
-                                    <h2> ${RequestScope.update ? "UPDATE COURSE" : "ADD COURSE"}</h2>
-                                </c:if>
+                                <h2> COURSE DETAIL EDIT </h2>
                             </div>
 
                             <div class="form-group">
                                 <label for="post-title">Title:</label>
-                                <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.course.getCourse_title()}" required>
+                                <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.post.getPost_title()}" required>
                             </div>
 
 <!--                            <div class="form-group" style="display: flex;align-items: center;">
                                 <label for="post-category" style="margin-right: 10px; color: white">Post Category:</label>
                                 <select id="post-category" name="blog_id" style="width: 80px">
-                                    <c:forEach items="${requestScope.subjectList}" var="subject">
-                                        <option value="${subject.getSub_id()}">${category.getSub_name()}</option>
+                                    <c:forEach items="${requestScope.categoryList}" var="category">
+                                        <option value="${category.getBlog_id()}">${category.getBlog_name()}</option>
                                     </c:forEach>
                                 </select>
                             </div>-->
 
                             <div class="form-group">
-                                <textarea type="text" name="course_des" placeholder="Enter description">
+                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note" value="${requestScope.post.getPost_desc()}">
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
-                                <label for="course-image" style="margin-right: 10px; color: white"> Image:</label>
+                                <label for="post-image" style="margin-right: 10px; color: white"> Image:</label>
                                 <div class="input-wrapper">
-                                    <input type="file" id="course-image" name="course_image" style="color: white">
+                                    <input type="file" id="post-image" name="post_image" style="color: white">
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 740px;">
-                                <img id="preview-image" src="${requestScope.course.getCourse_img()}" alt="Preview image" style="max-width: 100%">
+                                <img id="preview-image" src="${requestScope.post.getPost_img()}" alt="Preview image" style="max-width: 100%">
                             </div>
                         </div>  
                         <div >
@@ -166,11 +164,11 @@
         </section>
         <jsp:include page="footer.jsp"/>
         <script>
-            const courseImageInput = document.getElementById('course-image');
+            const postImageInput = document.getElementById('post-image');
             const previewImage = document.getElementById('preview-image');
 
-            courseImageInput.addEventListener('change', () => {
-                const file = courseImageInput.files[0];
+            postImageInput.addEventListener('change', () => {
+                const file = postImageInput.files[0];
                 const reader = new FileReader();
 
                 reader.onload = (event) => {
