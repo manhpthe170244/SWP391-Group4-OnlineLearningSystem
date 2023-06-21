@@ -65,18 +65,6 @@
         <servlet-class>controller.MarketingFeature.deleteSlider</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>updateSlider</servlet-name>
-        <servlet-class>controller.MarketingFeature.updateSlider</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>addSlider</servlet-name>
-        <servlet-class>controller.MarketingFeature.addSlider</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>addPost</servlet-name>
-        <servlet-class>controller.MarketingFeature.addPost</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>LessonListController</servlet-name>
         <servlet-class>controller.LessonListController</servlet-class>
     </servlet>
@@ -171,18 +159,6 @@
     <servlet-mapping>
         <servlet-name>deleteSlider</servlet-name>
         <url-pattern>/deleteSlider</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>updateSlider</servlet-name>
-        <url-pattern>/updateSlider</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>addSlider</servlet-name>
-        <url-pattern>/addSlider</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>addPost</servlet-name>
-        <url-pattern>/addPost</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LessonListController</servlet-name>

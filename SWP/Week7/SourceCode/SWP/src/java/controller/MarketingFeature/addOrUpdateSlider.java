@@ -4,31 +4,29 @@
  */
 package controller.MarketingFeature;
 
-import dao.PostDAO;
-import jakarta.servlet.http.Part;
+import dao.SliderDAO;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Date;
-import java.util.Calendar;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  *
  * @author ACER
  */
-@WebServlet(name = "updatePost", urlPatterns = {"/updatePost"})
+@WebServlet(name = "addOrUpdateSlider", urlPatterns = {"/addOrUpdateSlider"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5,
         maxRequestSize = 1024 * 1024 * 5 * 5)
-public class updatePost extends HttpServlet {
+public class addOrUpdateSlider extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +39,11 @@ public class updatePost extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,14 +72,13 @@ public class updatePost extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("post_id"));
-        String title = request.getParameter("post_title");
-        String description = request.getParameter("post_des");
-        int blog_id = Integer.parseInt(request.getParameter("blog_id"));
+        Boolean update = Boolean.parseBoolean(request.getParameter("update"));
+        String title = request.getParameter("slider_title");
+        String link = request.getParameter("slider_link");
+        String note = request.getParameter("slider_note");
 
-        // Get post image
         Part filePart = null;
-        filePart = request.getPart("post_image");
+        filePart = request.getPart("slider_image");
         String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
         String fileName;
         if (filePart != null && filePart.getSize() > 0) {
@@ -92,16 +93,18 @@ public class updatePost extends HttpServlet {
             InputStream fileContent = filePart.getInputStream();
             Files.copy(fileContent, Paths.get(filePath));
         }
+        
+        SliderDAO sliderDAO = new SliderDAO();
+        if (update) {
+            // update slider
+            int id = Integer.parseInt(request.getParameter("slider_id"));
+            sliderDAO.updateSlider(id, title, sqlFilePath, link, true, fileName);
+        } else {
+            // add slider
+            sliderDAO.addSlider(title, sqlFilePath, link, true, note);
+        }
 
-        // Get current date
-        Calendar calendar = Calendar.getInstance();
-        Date currentDate = new Date(calendar.getTime().getTime());
-
-        // addPost
-        PostDAO postDAO = new PostDAO();
-        postDAO.updatePost(id, sqlFilePath, title, description, currentDate, true, blog_id);
-
-        response.sendRedirect("postListEdit");
+        response.sendRedirect("slidersListEdit");
     }
 
     /**

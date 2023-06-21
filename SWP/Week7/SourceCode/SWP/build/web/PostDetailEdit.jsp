@@ -118,12 +118,15 @@
 
             <div class="container">
                 <div class="row">
-                    <form method="post" action="${requestScope.update ? "updatePost" : "addPost"}" enctype="multipart/form-data">
-                        <input type="hidden" name="post_id" value="${post.getPost_id()}">
+                    <form method="post" action="addOrUpdatePost" enctype="multipart/form-data">
+                        <c:if test="${requestScope.update}">
+                            <input type="hidden" name="post_id" value="${post.getPost_id()}">
+                        </c:if>
+                        <input type="hidden" name="update" value="${requestScope.update}"><!-- update or add -->
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
-                                <h2>Post Detail Edit</h2>
+                                <h2>${requestScope.update ? "Post Details Edit" : "Add Post"}</h2>
                             </div>
 
                             <div class="form-group">

@@ -114,6 +114,7 @@ public class addOrUpdateCourse extends HttpServlet {
         CourseDAO courseDAO = new CourseDAO();
         
         if(update){
+            int id = Integer.parseInt(request.getParameter("course_id"));
             // updateCourse
         }
         else{
