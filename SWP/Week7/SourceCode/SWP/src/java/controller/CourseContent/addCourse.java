@@ -4,7 +4,6 @@
  */
 package controller.CourseContent;
 
-import dao.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,8 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "deleteCourse", urlPatterns = {"/deleteCourse"})
-public class deleteCourse extends HttpServlet {
+@WebServlet(name = "addCourse", urlPatterns = {"/addCourse"})
+public class addCourse extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +36,10 @@ public class deleteCourse extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet deleteCourse</title>");            
+            out.println("<title>Servlet addCourse</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet deleteCourse at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet addCourse at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,9 +71,7 @@ public class deleteCourse extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int courseId = Integer.parseInt(request.getParameter("course_id"));
-        CourseDAO courseDAO = new CourseDAO();
-        courseDAO.deleteCourse(courseId);
+        processRequest(request, response);
     }
 
     /**
