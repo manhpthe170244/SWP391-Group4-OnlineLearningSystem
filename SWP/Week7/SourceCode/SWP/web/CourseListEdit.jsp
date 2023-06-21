@@ -205,7 +205,7 @@
                                 <td>${course.getDuration()}</td>    
                                 <td>
                                     <button onclick="deleteCourse(${course.getCourse_name()})">Delete</button>
-                                    <button onclick="window.location.href = 'sliderDetailsEdit?slider_id=${slider.getSlider_id()}&type=edit'">Edit</button>
+                                    <button onclick="window.location.href = 'courseDetailsEdit?course_id=${course.getCourse_id()}&type=edit'">Edit</button>
                                 </td>
                                
                             </tr>             

@@ -119,29 +119,35 @@
             <div class="container">
                 <div class="row">
 
-                    <form method="post" action="updatePost" enctype="multipart/form-data">
+                    <form method="post" action="addOrUpdateCourse" enctype="multipart/form-data">
+                        <input type="hidden" name="udpate" value="${requestScope.update}"><!-- update hay add -->
+                        <c:if test="${requestScope.update == true}">
+                            <input type="hidden" name="course_id" value="${requestScope.course.getCourse_id()}">
+                        </c:if>
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
-                                <h2> COURSE DETAIL EDIT </h2>
+                                <h2> ${requestScope.update ? "COURSE DETAIL EDIT" : "ADD COURSE"}</h2>
                             </div>
 
                             <div class="form-group">
+                                <label for="post-title">Name:</label>
+                                <input type="text" id="post-title" name="course_name" placeholder="Enter course name" value="${requestScope.update ? requestScope.course.getCourse_name() : null}" required>
                                 <label for="post-title">Title:</label>
-                                <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.post.getPost_title()}" required>
+                                <input type="text" id="post-title" name="course_title" placeholder="Enter title" value="${requestScope.update ? requestScope.course.getCourseTilte() : null}" required>
                             </div>
 
-<!--                            <div class="form-group" style="display: flex;align-items: center;">
+                            <div class="form-group" style="display: flex;align-items: center;">
                                 <label for="post-category" style="margin-right: 10px; color: white">Post Category:</label>
-                                <select id="post-category" name="blog_id" style="width: 80px">
-                                    <c:forEach items="${requestScope.categoryList}" var="category">
-                                        <option value="${category.getBlog_id()}">${category.getBlog_name()}</option>
+                                <select id="post-category" name="sub_id" style="width: 160px">
+                                    <c:forEach items="${requestScope.subList}" var="subject">
+                                        <option value="${subject.getSub_id()}">${subject.getSub_name()}</option>
                                     </c:forEach>
                                 </select>
-                            </div>-->
+                            </div>
 
                             <div class="form-group">
-                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note" value="${requestScope.post.getPost_desc()}">
+                                <textarea name="course_des" placeholder="Enter description">${requestScope.update ? requestScope.course.getCourse_desc() : null}</textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
