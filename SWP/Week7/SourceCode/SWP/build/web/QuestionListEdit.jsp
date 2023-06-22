@@ -102,6 +102,7 @@
                                         xmlHttp.send();
                                     }
                                     function addnewChoice(quesId) {
+                                        var b
 //                                        var a = document.getElementById('QuestionEdit' + quesId);
                                         var a = document.getElementById('QuestionEdit' + quesId);
                                         var url = "AddChoice?quesId=" + encodeURIComponent(quesId);
