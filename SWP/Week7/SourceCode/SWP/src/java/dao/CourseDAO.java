@@ -11,12 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import entity.ManageCourse;
 import java.sql.Date;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.util.Currency;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -37,7 +32,7 @@ public class CourseDAO extends MyDAO {
                 + "level_id, \n"
                 + "course_status, \n"
                 + "durationDAY, \n"
-                + "course_Title) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                + "course_Title) OUTPUT INSERTED.course_id VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
             ps = con.prepareStatement(xSql);
             ps.setString(1, course_name);
@@ -50,7 +45,10 @@ public class CourseDAO extends MyDAO {
             ps.setBoolean(8, course_status);
             ps.setInt(9, duration);
             ps.setString(10, course_title);
-            n = ps.executeUpdate();
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                n = rs.getInt("course_id");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -619,15 +617,50 @@ public class CourseDAO extends MyDAO {
         }
     }
 
+    // Manh
+    public int updateCourse(int course_id, String course_name, String course_img, float course_price, String course_desc, Date last_update, int sub_id, int level_id, Boolean course_status, int duration, String course_title) {
+        int n = 0;
+        xSql = "UPDATE [dbo].[Course]\n"
+                + "SET course_name = ?, \n"
+                + "    course_img = ?, \n"
+                + "    course_price = ?, \n"
+                + "    course_desc = ?, \n"
+                + "    last_update = ?, \n"
+                + "    sub_id = ?, \n"
+                + "    level_id = ?, \n"
+                + "    course_status = ?, \n"
+                + "    durationDAY = ?, \n"
+                + "    course_Title = ?\n"
+                + "WHERE course_id = ?;";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, course_name);
+            ps.setString(2, course_img);
+            ps.setFloat(3, course_price);
+            ps.setString(4, course_desc);
+            ps.setDate(5, last_update);
+            ps.setInt(6, sub_id);
+            ps.setInt(7, level_id);
+            ps.setBoolean(8, course_status);
+            ps.setInt(9, duration);
+            ps.setString(10, course_title);
+            ps.setInt(11, course_id);
+            n = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return n;
+    }
+
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
-        
+
 //        System.out.println("Test addCourse");
 //        int n = pd.addCourse("Test", "Test", 75000, "Test", Date.valueOf("2022-03-04"), 2, 1, true, 30, "test");
 //        System.out.println(n);
-        
+
         System.out.println("Test deleteCourse");
-        Boolean deleted = pd.deleteCourse(120);
+        Boolean deleted = pd.deleteCourse(136);
         System.out.println(deleted);
 
 //        System.out.println("Test getHottestCourse");

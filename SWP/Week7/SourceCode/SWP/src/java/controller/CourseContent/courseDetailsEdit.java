@@ -4,6 +4,12 @@
  */
 package controller.CourseContent;
 
+import dao.CourseDAO;
+import dao.LevelDAO;
+import dao.SubjectDAO;
+import entity.Course;
+import entity.Level;
+import entity.Subject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +17,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Vector;
 
 /**
  *
@@ -57,7 +64,31 @@ public class courseDetailsEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String courseIdString = request.getParameter("course_id");
+        String pageType = request.getParameter("type");
+        
+        // Get subject list
+        SubjectDAO subjectDAO = new SubjectDAO();
+        Vector<Subject> subList = subjectDAO.getAll();
+        request.setAttribute("subList", subList);
+        
+        // Get level list
+        LevelDAO levelDAO = new LevelDAO();
+        Vector<Level> levelList = levelDAO.getAll();
+        request.setAttribute("levelList", levelList);
+        
+        if (pageType.equals("edit")) {
+            int course_id = Integer.parseInt(courseIdString);
+            CourseDAO courseDAO = new CourseDAO();
+            Course course = courseDAO.searchById(course_id);
+            request.setAttribute("course", course);
+            request.setAttribute("update", true);
+            request.getRequestDispatcher("CourseDetailEdit.jsp").forward(request, response);
+        }
+        else if(pageType.equals("add")){
+            request.setAttribute("update", false);
+            request.getRequestDispatcher("CourseDetailEdit.jsp").forward(request, response);
+        }
     }
 
     /**

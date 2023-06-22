@@ -118,18 +118,20 @@
 
             <div class="container">
                 <div class="row">
-
-                    <form method="post" action="updatePost" enctype="multipart/form-data">
-                        <input type="hidden" name="post_id" value="${requestScope.post.getPost_id()}"
+                    <form method="post" action="addOrUpdatePost" enctype="multipart/form-data">
+                        <c:if test="${requestScope.update}">
+                            <input type="hidden" name="post_id" value="${post.getPost_id()}">
+                        </c:if>
+                        <input type="hidden" name="update" value="${requestScope.update}"><!-- update or add -->
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
-                                <h2>Post Detail Edit</h2>
+                                <h2>${requestScope.update ? "Post Details Edit" : "Add Post"}</h2>
                             </div>
 
                             <div class="form-group">
                                 <label for="post-title">Title:</label>
-                                <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.post.getPost_title()}" required>
+                                <input type="text" id="post-title" name="post_title" placeholder="Enter title" value="${requestScope.update ? requestScope.post.getPost_title() : null}" required>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
@@ -142,7 +144,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" id="slider-note" name="post_des" placeholder="Enter note" value="${requestScope.post.getPost_desc()}">
+                                <textarea type="text" id="slider-note" name="post_des" placeholder="Enter note">${requestScope.update ? requestScope.post.getPost_desc(): null}</textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">
@@ -152,7 +154,7 @@
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 740px;">
-                                <img id="preview-image" src="${requestScope.post.getPost_img()}" alt="Preview image" style="max-width: 100%">
+                                <img id="preview-image" src="${requestScope.update ? requestScope.post.getPost_img() : " "}" alt="Preview image" style="max-width: 100%">
                             </div>
                         </div>  
                         <div >

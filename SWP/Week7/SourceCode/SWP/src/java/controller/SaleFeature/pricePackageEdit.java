@@ -2,30 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.MarketingFeature;
+package controller.SaleFeature;
 
-import dao.SliderDAO;
+import dao.PricePackageDAO;
+import entity.Price_Package;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.Vector;
 
 /**
  *
- * @author FPT
+ * @author Phan Nguyen Tu Anh
  */
-@MultipartConfig(fileSizeThreshold = 1024 * 1024,
-        maxFileSize = 1024 * 1024 * 5,
-        maxRequestSize = 1024 * 1024 * 5 * 5)
-
-public class updateSlider extends HttpServlet {
+@WebServlet(name = "pricePackageEdit", urlPatterns = {"/pricePackageEdit"})
+public class pricePackageEdit extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +39,10 @@ public class updateSlider extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet updateSlider</title>");            
+            out.println("<title>Servlet pricePakageEdit</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> Update slider </h1>");
+            out.println("<h1>Servlet pricePakageEdit at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,7 +60,11 @@ public class updateSlider extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PricePackageDAO pricePackageDAO = new PricePackageDAO();
+        Vector<Price_Package> pricePackage = pricePackageDAO.getAll();
+        request.setAttribute("pricePackage", pricePackage);
+        
+        request.getRequestDispatcher("PricePackage.jsp").forward(request, response);
     }
 
     /**
@@ -79,32 +78,7 @@ public class updateSlider extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("slider_id"));
-        String title = request.getParameter("slider_title");
-        String link = request.getParameter("slider_link");
-        String note = request.getParameter("slider_note");
-
-        Part filePart = null;
-        filePart = request.getPart("slider_image");
-        String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
-        String fileName;
-        if (filePart != null && filePart.getSize() > 0) {
-            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        } else {
-            fileName = "tempAvatar.jpg";
-        }
-        String filePath = saveDirectory + fileName;
-
-        String sqlFilePath = "img/" + fileName;
-        if (filePart != null && filePart.getSize() > 0) {
-            InputStream fileContent = filePart.getInputStream();
-            Files.copy(fileContent, Paths.get(filePath));
-        }
-        
-        SliderDAO sliderDAO = new SliderDAO();
-        sliderDAO.updateSlider(id, title, sqlFilePath, link, true, fileName);
-        
-        response.sendRedirect("slidersListEdit");
+        processRequest(request, response);
     }
 
     /**

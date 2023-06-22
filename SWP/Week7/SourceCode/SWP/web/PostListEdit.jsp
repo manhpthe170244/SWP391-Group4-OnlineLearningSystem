@@ -193,6 +193,7 @@ background-color: #f2f2f2;
     <script>
         function deletePost(postId) {
             //Send an AJAX request to your server-side script
+            console.log("delete post");
             $.ajax({
                 url: "deletePost",
                 type: "POST",

@@ -32,27 +32,27 @@
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
             th, td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    word-wrap: break-word;
-    vertical-align: top;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+                padding: 8px;
+                border: 1px solid #ddd;
+                word-wrap: break-word;
+                vertical-align: top;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
             table {
-    width: 100%;
-    margin-bottom: 1em;
-    border: 2px solid #ddd;
-    table-layout: fixed;
-}
+                width: 100%;
+                margin-bottom: 1em;
+                border: 2px solid #ddd;
+                table-layout: fixed;
+            }
 
-th, td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    word-wrap: break-word;
-    vertical-align: top;
-}
+            th, td {
+                padding: 8px;
+                border: 1px solid #ddd;
+                word-wrap: break-word;
+                vertical-align: top;
+            }
             td {
                 padding: 8px;
                 border: 1px solid #ddd;
@@ -182,7 +182,7 @@ th, td {
                             <button type="submit">Search</button>
                         </form>
                     </div>
-                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add Course</button></li>
+                    <li><button class="add-post-button" onclick="window.location.href = 'courseDetailsEdit?type=add'">Add Course</button></li>
 
 
                     <table border="1">
@@ -196,14 +196,17 @@ th, td {
                             <th>action</th>
                         </tr>
                         <c:forEach items="${requestScope.courseList}" var="course">
-                            <tr>
+                            <tr id="course_${course.getCourse_id()}">
                                 <td>${course.getCourse_name()}</td>
                                 <td>${course.getCourse_img()}</td>
                                 <td>${course.getCourse_price()}</td>
                                 <td>${course.getSub_id()}</td>
                                 <td>${course.getCourse_status()}</td>               
-                                <td>${course.getDuration()}</td>                    
-                                <td></td>  
+                                <td>${course.getDuration()}</td>    
+                                <td>
+                                    <button onclick="window.location.href = 'courseDetailsEdit?course_id=${course.getCourse_id()}&type=edit'">Edit</button>
+                                </td>
+                               
                             </tr>             
                         </c:forEach>
                     </table>
@@ -212,18 +215,7 @@ th, td {
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                        function deletePost(postId) {
-                                            //Send an AJAX request to your server-side script
-                                            $.ajax({
-                                                url: "deletePost",
-                                                type: "POST",
-                                                data: {post_id: postId},
-                                                success: function (response) {
-                                                    // Remove the row from the table
-                                                    $("#post_" + postId).remove();
-                                                }
-                                            });
-                                        }
+
         </script>
     </body>
 </html>
