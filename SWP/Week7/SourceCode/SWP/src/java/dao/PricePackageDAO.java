@@ -28,9 +28,9 @@ public class PricePackageDAO extends MyDAO {
                 String package_name = rs.getString("package_name");
                 int duration = rs.getInt("duration");
                 boolean pack_status = rs.getBoolean("pack_status");
-                float multiple = rs.getFloat("multiple");
+                float price = rs.getFloat("price");
                 String description = rs.getString("description");
-                Price_Package pc = new Price_Package(package_id, package_name, duration, pack_status, multiple, description);
+                Price_Package pc = new Price_Package(package_id, package_name, duration, pack_status, price, description);
                 vector.add(pc);
             }
         } catch (SQLException ex) {

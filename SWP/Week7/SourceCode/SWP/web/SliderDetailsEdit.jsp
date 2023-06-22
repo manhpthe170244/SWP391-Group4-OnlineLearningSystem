@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -116,25 +117,28 @@
 
             <div class="container">
                 <div class="row">
-                    <form method="post" enctype="multipart/form-data" action="updateSlider">
-                        <input type="hidden" name="slider_id" value="${slider.getSlider_id()}">
+                    <form method="post" enctype="multipart/form-data" action="addOrUpdateSlider">
+                        <c:if test="${requestScope.update}">
+                            <input type="hidden" name="slider_id" value="${requestScope.slider.getSlider_id()}">
+                        </c:if>
+                        <input type="hidden" name="update" value="${requestScope.update}"><!-- update or add slider -->
                         <!-- Các trường nhập liệu -->
                         <div class="slider-detail">
                             <div class="slider-detail-header">
-                                <h2>Slider Detail</h2>
+                                <h2>${requestScope.update ? "Slider Details Edit" : "Add Slider"}</h2>
                             </div>
                             <div class="form-group">
                                 <label for="slider-title">Title:</label>
-                                <input type="text" name="slider_title" placeholder="Title" value="${slider.getSlider_title()}" required>
+                                <input type="text" name="slider_title" placeholder="Title" value="${requestScope.update ? slider.getSlider_title() : null}" required>
                             </div>
                             <div class="form-group">
                                 <label for="slider-backlink">Backlink:</label>
-                                <input type="text" name="slider_link" placeholder="Black link" value="${slider.getSlider_link()}" required>
+                                <input type="text" name="slider_link" placeholder="Black link" value="${requestScope.update ? slider.getSlider_link() : null}" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="slider-note">Note:</label>
-                                <input type="text" name="slider_note" placeholder="Enter note" value="${slider.getSlider_note()}">
+                                <textarea type="text" name="slider_note" placeholder="Enter note">${requestScope.update ? slider.getSlider_note() : null} </textarea>
                             </div>
 
                             <div class="form-group" style="display: flex;align-items: center;">

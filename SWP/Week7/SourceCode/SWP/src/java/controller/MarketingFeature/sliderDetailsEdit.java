@@ -68,10 +68,12 @@ public class sliderDetailsEdit extends HttpServlet {
             SliderDAO sliderDAO = new SliderDAO();
             Slider slider = sliderDAO.getSliderById(slider_id);
             request.setAttribute("slider", slider);
+            request.setAttribute("update", true);
             request.getRequestDispatcher("SliderDetailsEdit.jsp").forward(request, response);
         }
         else if(pageType.equals("add")){
-            response.sendRedirect("AddSlider.jsp");
+            request.setAttribute("update", false);
+            request.getRequestDispatcher("SliderDetailsEdit.jsp").forward(request, response);
         }
     }
 

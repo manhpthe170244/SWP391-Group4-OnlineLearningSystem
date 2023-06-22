@@ -31,38 +31,16 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
-            th, td {
-                padding: 8px;
-                border: 1px solid #ddd;
-                word-wrap: break-word;
-                vertical-align: top;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            table {
-                width: 100%;
-                margin-bottom: 1em;
-                border: 2px solid #ddd;
-                table-layout: fixed;
-            }
-
-            th, td {
-                padding: 8px;
-                border: 1px solid #ddd;
-                word-wrap: break-word;
-                vertical-align: top;
-            }
-            td {
-                padding: 8px;
-                border: 1px solid #ddd;
-                word-wrap: break-word;
-                vertical-align: top;
-                color: white; /* Add this line to change the text color to white */
-            }
-            th{
-                color: white;
-            }
+           td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+    vertical-align: top;
+    color: white; /* Add this line to change the text color to white */
+}
+th{
+     color: white; 
+}
 
             table{
                 width:100%;
@@ -84,18 +62,18 @@
                 border: 2px solid #ddd;
                 table-layout: fixed;
             }
-            /*            th, td {
-                            text-align: left;
-                            padding: 8px;
-                            border: 1px solid #ddd;
-                            color: white;
-                        }*/
-            th, td {
+/*            th, td {
+                text-align: left;
                 padding: 8px;
                 border: 1px solid #ddd;
-                word-wrap: break-word;
-                vertical-align: top;
-            }
+                color: white;
+            }*/
+            th, td {
+              padding: 8px;
+        border: 1px solid #ddd;
+        word-wrap: break-word;
+        vertical-align: top;
+    }
             .table-container {
                 text-align: center;
             }
@@ -105,12 +83,12 @@
                 margin: 0 auto;
             }
 
-            /*            th, td {
-                            text-align: left;
-                            padding: 8px;
-                            border: 1px solid #ddd;
-            background-color: #f2f2f2;
-                        }*/
+/*            th, td {
+                text-align: left;
+                padding: 8px;
+                border: 1px solid #ddd;
+background-color: #f2f2f2;
+            }*/
             .sidebar {
                 width: 100%;
 
@@ -182,31 +160,28 @@
                             <button type="submit">Search</button>
                         </form>
                     </div>
-                    <li><button class="add-post-button" onclick="window.location.href = 'courseDetailsEdit?type=add'">Add Course</button></li>
+                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add Post</button></li>
 
 
                     <table border="1">
                         <tr>
-                            <th>course_name</th>
-                            <th>course_img</th>
-                            <th>course_price</th>
-                            <th>sub_id</th>
-                            <th>course_status</th>
-                            <th>duration</th>
-                            <th>action</th>
+                            <th>Package_name</th>
+                            <th>Duration</th>
+                            <th>Pack_status</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Action</th>
                         </tr>
-                        <c:forEach items="${requestScope.courseList}" var="course">
-                            <tr id="course_${course.getCourse_id()}">
-                                <td>${course.getCourse_name()}</td>
-                                <td>${course.getCourse_img()}</td>
-                                <td>${course.getCourse_price()}</td>
-                                <td>${course.getSub_id()}</td>
-                                <td>${course.getCourse_status()}</td>               
-                                <td>${course.getDuration()}</td>    
+                        <c:forEach items="${requestScope.pricePackage}" var="pricePackage">
+                            <tr id="package_${pricePackage.getPackage_id()}">
+                                <td>${pricePackage.getPackage_name()}</td>
+                                <td>${pricePackage.getDuration()}</td>
+                                <td>${pricePackage.isPack_status()}</td>
+                                <td>${(pricePackage.getPrice())}</td>
+                                <td>${pricePackage.getDescription()}</td>
                                 <td>
-                                    <button onclick="window.location.href = 'courseDetailsEdit?course_id=${course.getCourse_id()}&type=edit'">Edit</button>
+                                    <button onclick="deletePricePackage(${pricePackage.getPackage_id()})">Delete</button>                              
                                 </td>
-                               
                             </tr>             
                         </c:forEach>
                     </table>
@@ -214,8 +189,19 @@
         </section>
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-
-        </script>
+    <script>
+        function deletePricePackage(pricePackageId) {
+            //Send an AJAX request to your server-side script
+            $.ajax({
+                url: "deletePricePackage",
+                type: "POST",
+                data: {package_id: packageId},
+                success: function (response) {
+                    // Remove the row from the table
+                    $("#package_" + pricePackageId).remove();
+                }
+            });
+        }
+    </script>
     </body>
 </html>

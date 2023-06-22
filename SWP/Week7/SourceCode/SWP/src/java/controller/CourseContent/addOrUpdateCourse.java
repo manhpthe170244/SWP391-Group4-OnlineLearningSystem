@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.MarketingFeature;
+package controller.CourseContent;
 
-import dao.PostDAO;
+import dao.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,15 +21,15 @@ import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.Calendar;
 
-@MultipartConfig(fileSizeThreshold = 1024 * 1024,
-        maxFileSize = 1024 * 1024 * 5,
-        maxRequestSize = 1024 * 1024 * 5 * 5)
-
 /**
  *
  * @author ACER
  */
-public class updatePost extends HttpServlet {
+@WebServlet(name = "addOrUpdateCourse", urlPatterns = {"/addOrUpdateCourse"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 5)
+public class addOrUpdateCourse extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +48,10 @@ public class updatePost extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet updatePost</title>");
+            out.println("<title>Servlet updateCourse</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet updatePost at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet updateCourse at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,7 +69,7 @@ public class updatePost extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**
@@ -81,14 +83,18 @@ public class updatePost extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("post_id"));
-        String title = request.getParameter("post_title");
-        String description = request.getParameter("post_des");
-        int blog_id = Integer.parseInt(request.getParameter("blog_id"));
+        String name = request.getParameter("course_name");
+        String title = request.getParameter("course_title");
+        String description = request.getParameter("course_des");
+        int sub_id = Integer.parseInt(request.getParameter("sub_id"));
+        int level_id = Integer.parseInt(request.getParameter("level_id"));
+        int price = Integer.parseInt(request.getParameter("price"));
+        int duration = Integer.parseInt(request.getParameter("duration"));
+        boolean update = Boolean.parseBoolean(request.getParameter("update"));
 
         // Get post image
         Part filePart = null;
-        filePart = request.getPart("post_image");
+        filePart = request.getPart("course_image");
         String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
         String fileName;
         if (filePart != null && filePart.getSize() > 0) {
@@ -108,11 +114,29 @@ public class updatePost extends HttpServlet {
         Calendar calendar = Calendar.getInstance();
         Date currentDate = new Date(calendar.getTime().getTime());
 
-        // addPost
-        PostDAO postDAO = new PostDAO();
-        postDAO.updatePost(id, sqlFilePath, title, description, currentDate, true, blog_id);
+        CourseDAO courseDAO = new CourseDAO();
 
-        response.sendRedirect("postListEdit");
+        if (update) {
+            int id = Integer.parseInt(request.getParameter("course_id"));
+            // updateCourse
+            courseDAO.updateCourse(id, name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
+        } else {
+            // addCourse
+            int course_id = courseDAO.addCourse(name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
+            int user_id = 0;
+            Cookie[] cookies = request.getCookies();
+
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("currUserId")) {
+                        user_id = Integer.parseInt(cookie.getValue());
+                    }
+                }
+            }
+            courseDAO.addCourseToUser(course_id, user_id, currentDate, currentDate);
+        }
+
+        response.sendRedirect("courseListEdit");
     }
 
     /**
