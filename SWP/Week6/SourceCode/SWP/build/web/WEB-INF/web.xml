@@ -30,7 +30,7 @@
     </servlet>
     <servlet>
         <servlet-name>courseListEdit</servlet-name>
-        <servlet-class>controller.courseListEdit</servlet-class>
+        <servlet-class>controller.CourseContent.courseListEdit</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>slidersListEdit</servlet-name>

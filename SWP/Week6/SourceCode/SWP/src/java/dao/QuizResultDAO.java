@@ -91,13 +91,13 @@ public class QuizResultDAO extends MyDAO {
 
     public int getMaxQuizResultIdByUserIdAndQuizId(int user_id, int quiz_id) {
         int maxQuizResultId = 0;
-        xSql = "SELECT COALESCE(MAX(quiz_result_id), 0) AS max_quiz_result_id\n"
+        xSql = "SELECT MAX(quiz_result_id) AS max_quiz_result_id\n"
                 + "FROM quiz_result\n"
                 + "WHERE user_id = ? AND quiz_id = ?;";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setInt(1, quiz_id);
-            ps.setInt(2, user_id);
+            ps.setInt(1, user_id);
+            ps.setInt(2, quiz_id);
             rs = ps.executeQuery();
             while(rs.next()){
                 maxQuizResultId = rs.getInt("max_quiz_result_id");
@@ -177,11 +177,11 @@ public class QuizResultDAO extends MyDAO {
 //        System.out.println(maxAttempt);
 
           System.out.println("Test getMaxQuizResultIdByUserIdAndQuizId");
-          int quiz_result_id = pd.getMaxQuizResultIdByUserIdAndQuizId(1, 1);
+          int quiz_result_id = pd.getMaxQuizResultIdByUserIdAndQuizId(11, 1);
           System.out.println(quiz_result_id);
           
-          System.out.println("Test getQuizResultByQuizResultId");
-          QuizResult quizResult = pd.getQuizResultByQuizResultId(35);
-          System.out.println(quizResult.getQuiz_id());
+//          System.out.println("Test getQuizResultByQuizResultId");
+//          QuizResult quizResult = pd.getQuizResultByQuizResultId(35);
+//          System.out.println(quizResult.getQuiz_id());
     }
 }

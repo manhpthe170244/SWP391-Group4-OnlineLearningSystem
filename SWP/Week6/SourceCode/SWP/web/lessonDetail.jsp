@@ -102,11 +102,12 @@
                 margin-top: 30px;
             }
             .markAsDone h4{
-                color: white;
+                color: black;
             }
             .markAsDone h4:hover{
                 color: #d8e379
             }
+            
         </style>
         <!--
         

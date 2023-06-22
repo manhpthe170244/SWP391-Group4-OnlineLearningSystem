@@ -24,11 +24,10 @@ import java.util.Map;
  */
 public class CourseDAO extends MyDAO {
 
-    // Son
+    // Manh
     public int addCourse(Course course) {
         int n = 0;
         xSql = "INSERT INTO [dbo].[Course]\n"
-                + "           ([course_id]\n"
                 + "           ,[course_name]\n"
                 + "           ,[course_title]\n"
                 + "           ,[course_img]\n"
@@ -39,20 +38,19 @@ public class CourseDAO extends MyDAO {
                 + "           ,[level_id]\n"
                 + "           ,[course_status]\n"
                 + "           ,[durationDAY])"
-                + "     VALUES (?,?,?,?,?,?,?,?,?,?,?) ";
+                + "     VALUES (?,?,?,?,?,?,?,?,?,?) ";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setInt(1, course.getCourse_id());
-            ps.setString(2, course.getCourse_name());
-            ps.setString(3, course.getCourseTilte());
-            ps.setString(4, course.getCourse_img());
-            ps.setFloat(5, course.getCourse_price());
-            ps.setString(6, course.getCourse_desc());
-            ps.setDate(7, Date.valueOf(course.getLast_update()));
-            ps.setInt(8, course.getSub_id());
-            ps.setInt(9, course.getLevel_id());
-            ps.setBoolean(10, course.getCourse_status());
-            ps.setInt(11, course.getDuration());
+            ps.setString(1, course.getCourse_name());
+            ps.setString(2, course.getCourseTilte());
+            ps.setString(3, course.getCourse_img());
+            ps.setFloat(4, course.getCourse_price());
+            ps.setString(5, course.getCourse_desc());
+            ps.setDate(6, Date.valueOf(course.getLast_update()));
+            ps.setInt(7, course.getSub_id());
+            ps.setInt(8, course.getLevel_id());
+            ps.setBoolean(9, course.getCourse_status());
+            ps.setInt(10, course.getDuration());
             n = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -603,9 +601,37 @@ public class CourseDAO extends MyDAO {
         }
         return vector;
     }
+    // Manh
+    public Boolean deleteCourse(int course_id){
+        xSql = "delete from course where course_id = ?";
+        try {
+            xSql += " offset ? row\n"
+                    + "fetch next ? rows only";
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, course_id);
+            int row = ps.executeUpdate();
+            if(row > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            return false;
+        }
+    }
 
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
+        System.out.println("Test deleteCourse");
+        Boolean deleted = pd.deleteCourse(119);
+        System.out.println(deleted);
+        
+        System.out.println("Test addCourse");
+
+
+        
 //        System.out.println("Test getHottestCourse");
 //        Vector<Course> cv = pd.getHottestCourse();
 //        for (Course c : cv) {
@@ -622,27 +648,27 @@ public class CourseDAO extends MyDAO {
 //        for (Course c : cv2) {
 //            System.out.println(c);
 //        }
-        System.out.println("Test searchNameSortByHottest");
-        Vector<Course> cv3 = pd.searchNameSortByHottest("G");
-        for (Course c : cv3) {
-            System.out.println(c);
-        }
-        System.out.println("Test searchSubIdSortByHottest");
-        Vector<Course> cv4 = pd.searchSubIdSortByHottest(1);
-        for (Course c : cv4) {
-            System.out.println(c);
-        }
-        System.out.println("Test searchByNameAndSubIdSortByHottest");
-        Vector<Course> cv5 = pd.searchByNameAndSubIdSortByHottest("N", 2);
-        for (Course c : cv5) {
-            System.out.println(c);
-        }
-
-        System.out.println("Test Get4HottestBySubId");
-        Vector<Course> cv6 = pd.Get4HottestBySubId(2);
-        for (Course c : cv6) {
-            System.out.println(c);
-        }
+//        System.out.println("Test searchNameSortByHottest");
+//        Vector<Course> cv3 = pd.searchNameSortByHottest("G");
+//        for (Course c : cv3) {
+//            System.out.println(c);
+//        }
+//        System.out.println("Test searchSubIdSortByHottest");
+//        Vector<Course> cv4 = pd.searchSubIdSortByHottest(1);
+//        for (Course c : cv4) {
+//            System.out.println(c);
+//        }
+//        System.out.println("Test searchByNameAndSubIdSortByHottest");
+//        Vector<Course> cv5 = pd.searchByNameAndSubIdSortByHottest("N", 2);
+//        for (Course c : cv5) {
+//            System.out.println(c);
+//        }
+//
+//        System.out.println("Test Get4HottestBySubId");
+//        Vector<Course> cv6 = pd.Get4HottestBySubId(2);
+//        for (Course c : cv6) {
+//            System.out.println(c);
+//        }
 
 //        System.out.println("Test addCourseToUser");
 //        if(pd.addCourseToUser(1, 3, Date.valueOf("2023-05-26"), Date.valueOf("2023-06-25"))){
