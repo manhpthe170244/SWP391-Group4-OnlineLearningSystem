@@ -52,7 +52,7 @@
                             </div>
                             <c:forEach items="${questionList}" var="q">
                                 <div class="col-12 QuestionEdit">
-                                    
+
                                     <input type="text" name="quesContent" value="${q.getQues_content()}"> 
                                     <div id="QuestionEdit${q.getQues_id()}">
                                         <c:forEach items="${q.getChoices()}" var="c">
@@ -102,9 +102,21 @@
                                         xmlHttp.send();
                                     }
                                     function addnewChoice(quesId) {
-                                        var a = document.getElementById('QuestionEdit'+quesId);
-                                        
-                                        a.innerHTML +="<div class='choiceEdit'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "'><input type='text' name='EditedChoiceContent' value=''><button type='button' onclick='storeDeletion(' ')'><i class='fa-solid fa-trash-can'></i></button></div>";
+//                                        var a = document.getElementById('QuestionEdit' + quesId);
+                                        var url = "AddChoice?quesId=" + encodeURIComponent(quesId);
+                                        var xmlHttp = new XMLHttpRequest();
+                                        xmlHttp.open("GET", url, true);
+                                        xmlHttp.onreadystatechange = function () {
+                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                                var response = JSON.parse(xmlHttp.responseText);
+                                                var a = document.getElementById('QuestionEdit' + quesId);
+                                                a.innerHTML += "<div class='choiceEdit' id='choiceEdit" + response.maxChoiceId + "'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "' value='"+ response.defaultChoiceContent +"'><input type='text' name='EditedChoiceContent' value='" + response.defaultChoiceContent +"'><button type='button' onclick='storeDeletion("+ response.maxChoiceId +")'><i class='fa-solid fa-trash-can'></i></button></div>";
+                                                console.log(xmlHttp.responseText);
+                                            }
+                                        };
+                                        xmlHttp.send();
+
+
                                     }
         </script>
     </body>
