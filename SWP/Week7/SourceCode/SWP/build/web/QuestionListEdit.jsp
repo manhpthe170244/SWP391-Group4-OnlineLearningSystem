@@ -110,7 +110,7 @@
                                             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                                                 var response = JSON.parse(xmlHttp.responseText);
                                                 var a = document.getElementById('QuestionEdit' + quesId);
-                                                a.innerHTML += "<div class='choiceEdit' id='choiceEdit" + response.maxChoiceId + "'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "' value='"+ response.defaultChoiceContent +"'><input type='text' name='EditedChoiceContent' value='" + response.defaultChoiceContent +"'><button type='button' onclick='storeDeletion("+ response.maxChoiceId +")'><i class='fa-solid fa-trash-can'></i></button></div>";
+                                                a.innerHTML += "<div class='choiceEdit' id='choiceEdit" + response.maxChoiceId + "'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "' value='"+ response.maxChoiceId +"'><input type='text' name='EditedChoiceContent' value='" + response.defaultChoiceContent +"'><button type='button' onclick='storeDeletion("+ response.maxChoiceId +")'><i class='fa-solid fa-trash-can'></i></button></div>";
                                                 console.log(xmlHttp.responseText);
                                             }
                                         };
