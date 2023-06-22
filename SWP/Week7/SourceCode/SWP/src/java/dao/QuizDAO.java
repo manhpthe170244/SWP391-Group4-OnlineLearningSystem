@@ -178,7 +178,7 @@ public class QuizDAO extends MyDAO {
     }
     //insert a new default choice 
     public void insertDefaultChoice(int quesId){
-        xSql = "insert into choices (choice_content, is_true, ques_id) values (N'Nhập nội dung tại đêi', 0, ?)";
+        xSql = "insert into choices (choice_content, is_true, ques_id) values (N'Nhập nội dung tại đây', 0, ?)";
         try {
             ps = con.prepareStatement(xSql);
             ps.setInt(1, quesId);
