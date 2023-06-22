@@ -206,7 +206,7 @@ public class QuizDAO extends MyDAO {
     public static void main(String[] args) {
         QuizDAO pd = new QuizDAO();
         System.out.println("Test getAllQuestionCorrectAnswer");
-        Vector<String> correctAnswers = pd.getAllCorrectAnswer(1);
+        Vector<String> correctAnswers = pd.getAllCorrectAnswer(2);
         for (String a : correctAnswers) {
             System.out.println(a);
         }
