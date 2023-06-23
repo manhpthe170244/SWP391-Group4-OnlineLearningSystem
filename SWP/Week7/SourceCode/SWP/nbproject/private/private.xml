@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week7/SourceCode/SWP/web/SliderDetailsEdit.jsp</file>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week7/SourceCode/SWP/web/PostDetailEdit.jsp</file>
-            <file>file:/D:/Document/hoc%20tren%20lop/Summer2023/SWP391-Group5/SWP/Week7/SourceCode/SWP/src/java/controller/MarketingFeature/addOrUpdatePost.java</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week7/SourceCode/SWP/src/java/dao/QuizDAO.java</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week7/SourceCode/SWP/src/java/controller/TestFeature/AddChoice.java</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week7/SourceCode/SWP/web/QuestionListEdit.jsp</file>
+            <file>file:/E:/swp391/SWP391_Project/SWP/Week7/SourceCode/SWP/src/java/controller/TestFeature/EditQuizContent.java</file>
         </group>
     </open-files>
 </project-private>

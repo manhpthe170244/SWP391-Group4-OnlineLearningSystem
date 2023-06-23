@@ -176,7 +176,33 @@ public class QuizDAO extends MyDAO {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-
+    //insert a new default choice 
+    public void insertDefaultChoice(int quesId){
+        xSql = "insert into choices (choice_content, is_true, ques_id) values (N'Nhập nội dung tại đây', 0, ?)";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, quesId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    //retrieve the max choice id(the choice that was added last to the database);
+    public int retrieveMaxChoiceId(){
+        xSql = "select MAX(choice_id) as maxid from choices";
+        int maxChoiceId = 0; 
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                maxChoiceId = rs.getInt("maxid");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return maxChoiceId;
+        
+    }
     public static void main(String[] args) {
         QuizDAO pd = new QuizDAO();
         System.out.println("Test getAllQuestionCorrectAnswer");
