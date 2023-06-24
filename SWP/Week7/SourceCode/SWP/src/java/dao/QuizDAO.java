@@ -260,7 +260,26 @@ public class QuizDAO extends MyDAO {
         }
         return maxId;
     }
-
+    public void deleteQuestion(int quesId){
+        xSql = "delete from Question where ques_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, quesId);
+            ps.executeQuery();
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+//    public void deleteAllChoicesOfOneQuestion(int quesId){
+//        xSql = "delete from choices where ques_id = ?";
+//        try {
+//            ps = con.prepareStatement(xSql);
+//            ps.setInt(1, quesId);
+//            ps.executeQuery();
+//        } catch (Exception e) {
+//            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+//        }
+//    }
     public static void main(String[] args) {
         QuizDAO pd = new QuizDAO();
         System.out.println("Test getAllQuestionCorrectAnswer");

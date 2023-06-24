@@ -42,19 +42,34 @@ public class EditQuizContent extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        QuizDAO qd = new QuizDAO();
         PrintWriter out = response.getWriter();
         String[] editedQuesContent = request.getParameterValues("quesContent");
         int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
-        String[] deletions = request.getParameter("deletion").trim().split(",");
+        String[] Choicedeletions = request.getParameter("deletionchoice").trim().split(",");
+        String[] Questiondeletions = request.getParameter("deletionquestion").trim().split(",");
         Vector<Integer> deletedChoicesId = new Vector<>();
-        for(int i = 0; i < deletions.length; i++){
-            if(deletions[i]==" "||deletions[i]==""){
+        Vector<Integer> deletedQuestionId = new Vector<>();
+        for (int i = 0; i < Choicedeletions.length; i++) {
+            if (Choicedeletions[i] == " " || Choicedeletions[i] == "") {
                 continue;
-            }else{
-                deletedChoicesId.add(Integer.parseInt(deletions[i]));
+            } else {
+                deletedChoicesId.add(Integer.parseInt(Choicedeletions[i]));
             }
         }
-        QuizDAO qd = new QuizDAO();
+        Vector<Choice> ChoicesIdByQuesIdforDelete = new Vector<>();
+        for (int i = 0; i < Choicedeletions.length; i++) {
+            if (Questiondeletions[i] == " " || Questiondeletions[i] == "") {
+                continue;
+            } else {
+                deletedQuestionId.add(Integer.parseInt(Questiondeletions[i]));
+                ChoicesIdByQuesIdforDelete = qd.getChoicebyQuestionId(Integer.parseInt(Questiondeletions[i]));
+                for (Choice choice : ChoicesIdByQuesIdforDelete) {
+                    deletedChoicesId.add(choice.getChoice_id());
+                }
+            }
+        }
+
         Vector<Question> questionList = qd.getQuestionByQuizId(quiz_id);
         Vector<Integer> rightChoicesId = new Vector<>();
         int choiceId = 0;
@@ -84,17 +99,23 @@ public class EditQuizContent extends HttpServlet {
                 } else {
                     qd.UpdateChoices(ChoicesIdByQuesId.get(i), editedChocies[i], false);
                 }
-                
+
             }
-            
-            for (Integer deletedId : deletedChoicesId) {
-                if(ChoicesIdByQuesId.get(i).equals(deletedId)){
+
+            for (Integer deletedChoiceId : deletedChoicesId) {
+                if (ChoicesIdByQuesId.get(i).equals(deletedChoiceId)) {
                     qd.RemoveChoices(ChoicesIdByQuesId.get(i));
                 }
             }
 
         }
-
+        for(Question question: questionList){
+            for(int i = 0; i < deletedQuestionId.size(); i++){
+                if(deletedQuestionId.get(i).equals(question.getQues_id())){
+                    qd.deleteQuestion(deletedQuestionId.get(i));
+                }
+            }
+        }
     }
 
 }

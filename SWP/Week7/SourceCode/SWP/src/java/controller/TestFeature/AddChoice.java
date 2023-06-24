@@ -37,7 +37,7 @@ public class AddChoice extends HttpServlet {
 // Write the JSON object as the response
         response.getWriter().write(responseJson.toString());
     }
-
+    
     
 
 }

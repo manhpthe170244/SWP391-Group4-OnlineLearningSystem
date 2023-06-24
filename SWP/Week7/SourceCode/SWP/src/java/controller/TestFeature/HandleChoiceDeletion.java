@@ -22,6 +22,9 @@ public class HandleChoiceDeletion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        String i = request.getParameter("question_id");
+        out.print(i);
 
     }
 
