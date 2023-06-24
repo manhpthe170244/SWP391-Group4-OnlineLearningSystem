@@ -38,10 +38,6 @@ public class AddChoice extends HttpServlet {
         response.getWriter().write(responseJson.toString());
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
+    
 
 }

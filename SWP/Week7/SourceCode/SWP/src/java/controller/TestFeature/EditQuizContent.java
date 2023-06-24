@@ -43,7 +43,7 @@ public class EditQuizContent extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String[] editedQuesNames = request.getParameterValues("quiz_name");
+        String[] editedQuesContent = request.getParameterValues("quesContent");
         int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
         String[] deletions = request.getParameter("deletion").trim().split(",");
         Vector<Integer> deletedChoicesId = new Vector<>();
@@ -64,8 +64,9 @@ public class EditQuizContent extends HttpServlet {
         }
         Vector<Integer> ChoicesIdByQuesId = new Vector<>();
         Vector<Choice> ChoicesByQuesId = new Vector<>();
-        for (Question question : questionList) {
-            ChoicesByQuesId = (qd.getChoicebyQuestionId(question.getQues_id()));
+        for (int i = 0; i < questionList.size(); i++) {
+            ChoicesByQuesId = (qd.getChoicebyQuestionId(questionList.get(i).getQues_id()));
+            qd.updateQuestionContent(questionList.get(i).getQues_id(), editedQuesContent[i]);
 //            out.print("//"+question.getQues_id());
             for (Choice choice : ChoicesByQuesId) {
                 ChoicesIdByQuesId.add(choice.getChoice_id());

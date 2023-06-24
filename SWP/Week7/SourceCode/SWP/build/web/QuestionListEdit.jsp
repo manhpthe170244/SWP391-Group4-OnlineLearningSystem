@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <link rel="stylesheet" href="assets/css/styling.css?version=52"/>
+        <link rel="stylesheet" href="assets/css/styling.css?version=39"/>
 
 
     </head>
@@ -41,7 +41,7 @@
             <div class="container">
                 <div class="row">
                     <div class="QuestionListEdit">
-                        <form action="EditQuizContent" method="Post">
+                        <form action="EditQuizContent" method="Post" id="EditQuizForm">
                             <div class="col-12">
                                 <h4>Tên bài quiz</h4>
                                 <input type="text" name="quiz_name" value="${requestScope.quiz_name}" placeholder="nhập tên bài học">
@@ -51,9 +51,11 @@
                                 <input type="text" name="quiz_id" value="${requestScope.quiz_id}" placeholder="nhập tên bài học">
                             </div>
                             <c:forEach items="${questionList}" var="q">
-                                <div class="col-12 QuestionEdit">
-
-                                    <input type="text" name="quesContent" value="${q.getQues_content()}"> 
+                                <div class="col-12 QuestionEdit" id="QuestionEdit">
+                                    <input type="text" name="quesContent" value="${q.getQues_content()}">
+                                    <button style=" margin-left: 33px" type="button" onclick="storeQuestionDeletion('${q.getQues_id()}')">
+                                        <i style="color: #c93460" class="fa-solid fa-trash-can"></i>
+                                    </button> 
                                     <div id="QuestionEdit${q.getQues_id()}">
                                         <c:forEach items="${q.getChoices()}" var="c">
                                             <div class="choiceEdit" id="choiceEdit${c.getChoice_id()}">
@@ -63,7 +65,7 @@
                                                        </c:if>
                                                        >
                                                 <input type="text" name="EditedChoiceContent" value="${c.getChoice_content()}">
-                                                <button type="button" onclick="storeDeletion('${c.getChoice_id()}')">
+                                                <button type="button" onclick="storeChoiceDeletion('${c.getChoice_id()}')">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </button>
 
@@ -71,14 +73,21 @@
                                         </c:forEach>
                                     </div>
 
-
                                 </div>
                                 <button class="addnewchoicebtn" type="button" onclick="addnewChoice('${q.getQues_id()}')">
                                     <h4 style="color: #142254; font-size: 100%; margin: 10px"> <i class="fa-solid fa-plus"></i> Add new choice to this question</h4>
                                 </button>
+
                             </c:forEach>
-                            <input id="result" type="text" name="deletion" style="display: none">
-                            <input id="Editsubmit" type="submit" name="name" value="Edit">
+                            <div id="addedQuestion">
+
+                            </div>
+                            <input id="result" type="text" name="deletion"/>
+                            <input id="result1" type="text" name="deletion1" value="1111,"/>
+                            <button class="addnewQuestionBtn" type="button" onclick="adnewQuestion('${requestScope.quiz_id}')">
+                                <i class="fa-solid fa-circle-plus fa-2x" style="color: #af4646;"></i> &nbsp; Add a question to this quizz lesson
+                            </button>  
+                            <input style="display: block" id="Editsubmit" type="submit" name="name" value="Edit"/>
                         </form>
                     </div>
                 </div>
@@ -87,40 +96,85 @@
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                    function storeDeletion(choice_id) {
-                                        var currentDisplay1 = document.getElementById("choiceEdit" + choice_id);
-                                        currentDisplay1.style.display = currentDisplay1.style.display != "none" ? "none" : "block";
-                                        var url = "HandleChoiceDeletion?choice_id=" + encodeURIComponent(choice_id);
-                                        var xmlHttp = new XMLHttpRequest();
-                                        xmlHttp.open("POST", url, true);
-                                        xmlHttp.onreadystatechange = function () {
-                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                                var result = document.getElementById("result");
-                                                result.value += xmlHttp.responseText + ",";
-                                            }
-                                        };
-                                        xmlHttp.send();
-                                    }
-                                    function addnewChoice(quesId) {
-                                        var b
+                                function updateChoiceContent(choice_id) {
+                                    var a = document.getElementById("EditedChoiceContent" + choice_id);
+                                    var url = "UpdateChoiceOnChange?choice_id=" + encodeURIComponent(choice_id) + "&currentVal=" + encodeURIComponent(a.value);
+                                    var xmlHttp = new XMLHttpRequest();
+                                    xmlHttp.open("GET", url, true);
+                                    xmlHttp.onreadystatechange = function () {
+                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                            var result = document.getElementById("result1");
+
+                                            result.value = xmlHttp.responseText;
+                                            a.value = result.value;
+                                            console.log(xmlHttp.responseText);
+                                        }
+                                    };
+                                    xmlHttp.send();
+                                }
+                                function storeChoiceDeletion(choice_id) {
+                                    var currentDisplay1 = document.getElementById("choiceEdit" + choice_id);
+                                    currentDisplay1.style.display = currentDisplay1.style.display != "none" ? "none" : "block";
+                                    var url = "HandleChoiceDeletion?choice_id=" + encodeURIComponent(choice_id);
+                                    var xmlHttp = new XMLHttpRequest();
+                                    xmlHttp.open("POST", url, true);
+                                    xmlHttp.onreadystatechange = function () {
+                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                            var result = document.getElementById("result");
+                                            result.value += xmlHttp.responseText + ",";
+                                        }
+                                    };
+                                    xmlHttp.send();
+                                }
+                                function storeQuestionDeletion(ques_id) {
+                                    var currentDisplay1 = document.getElementById("choiceEdit" + choice_id);
+                                    currentDisplay1.style.display = currentDisplay1.style.display != "none" ? "none" : "block";
+                                    var url = "HandleChoiceDeletion?choice_id=" + encodeURIComponent(choice_id);
+                                    var xmlHttp = new XMLHttpRequest();
+                                    xmlHttp.open("POST", url, true);
+                                    xmlHttp.onreadystatechange = function () {
+                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                            var result = document.getElementById("result");
+                                            result.value += xmlHttp.responseText + ",";
+                                        }
+                                    };
+                                    xmlHttp.send();
+                                }
+                                function addnewChoice(quesId) {
+
 //                                        var a = document.getElementById('QuestionEdit' + quesId);
-                                        var a = document.getElementById('QuestionEdit' + quesId);
-                                        var url = "AddChoice?quesId=" + encodeURIComponent(quesId);
-                                        var xmlHttp = new XMLHttpRequest();
-                                        xmlHttp.open("GET", url, true);
-                                        xmlHttp.onreadystatechange = function () {
-                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                                var response = JSON.parse(xmlHttp.responseText);
-                                                var a = document.getElementById('QuestionEdit' + quesId);
-                                                a.innerHTML += "<div class='choiceEdit' id='choiceEdit" + response.maxChoiceId + "'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "' value='" + response.maxChoiceId + "'><input type='text' name='EditedChoiceContent' value='" + response.defaultChoiceContent + "'><button type='button' onclick='storeDeletion(" + response.maxChoiceId + ")'><i class='fa-solid fa-trash-can'></i></button></div>";
-                                                console.log(xmlHttp.responseText);
-                                                console.log(xmlHttp.responseText);
-                                            }
-                                        };
-                                        xmlHttp.send();
+                                    var a = document.getElementById('QuestionEdit' + quesId);
+                                    var url = "AddChoice?quesId=" + encodeURIComponent(quesId);
+                                    var xmlHttp = new XMLHttpRequest();
+                                    xmlHttp.open("GET", url, true);
+                                    xmlHttp.onreadystatechange = function () {
+                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                            var response = JSON.parse(xmlHttp.responseText);
+                                            var a = document.getElementById('QuestionEdit' + quesId);
+                                            a.innerHTML += "<div class='choiceEdit' id='choiceEdit" + response.maxChoiceId + "'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "' value='" + response.maxChoiceId + "'><input type='text' id='EditedChoiceContent" + response.maxChoiceId + "' name='EditedChoiceContent' value='" + response.defaultChoiceContent + "' onChange='updateChoiceContent(" + response.maxChoiceId + ")'><button type='button' onclick='storeDeletion(" + response.maxChoiceId + ")'><i class='fa-solid fa-trash-can'></i></button></div>";
+                                            console.log(xmlHttp.responseText);
+                                            console.log(xmlHttp.responseText);
+                                        }
+                                    };
+                                    xmlHttp.send();
+                                }
+                                function adnewQuestion(quizId) {
+                                    var a = document.getElementById("addedQuestion");
+                                    var url = "AddQuestion?quizId=" + encodeURIComponent(quizId);
+                                    var xmlHttp = new XMLHttpRequest();
+                                    xmlHttp.open("GET", url, true);
+                                    xmlHttp.onreadystatechange = function () {
+                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                            a.innerHTML += "<input type='text' name='quesContent' value='Nhập nội dung cho câu hỏi'><button style='margin-left: 33px' type='button' onclick='storeQuestionDeletion("+xmlHttp.responseText+")'/><i style='color: #c93460' class='fa-solid fa-trash-can'></i></button><div id='QuestionEdit" + xmlHttp.responseText + "'></div>";
+                                            a.innerHTML += "<button class='addnewchoicebtn' type='button' onclick='addnewChoice(" + xmlHttp.responseText + ")'><h4 style='color: #142254; font-size: 100%; margin: 10px'> <i class='fa-solid fa-plus'></i> Add new choice to this question</h4></button>";
+                                            console.log("aaaaaa");
+                                        }
+                                    };
+                                    xmlHttp.send();
 
 
-                                    }
+
+                                }
         </script>
     </body>
 </html>

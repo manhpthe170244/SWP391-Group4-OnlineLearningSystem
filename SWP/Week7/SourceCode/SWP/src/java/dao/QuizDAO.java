@@ -147,16 +147,40 @@ public class QuizDAO extends MyDAO {
     }
 
     //son 
-    public void UpdateChoices(int chocieId, String ChoiceContent, boolean UpdatedIsTrue) {
-        xSql = "update choices \n"
-                + "set choice_content = ?,\n"
+    public void UpdateChoices(int chocieId, String ChoiceContent, Boolean UpdatedIsTrue) {
+        xSql = "update choices\n"
+                + "set choice_content = ?, \n"
                 + "is_true = ?\n"
                 + "where choice_id = ?";
         try {
             ps = con.prepareStatement(xSql);
             ps.setString(1, ChoiceContent);
+//            if (UpdatedIsTrue != null) {
+//                xSql += "is_true = ?\n"
+//                        + "where choice_id = ?";
+//                ps.setBoolean(2, UpdatedIsTrue);
+//                ps.setInt(3, chocieId);
+//            } else {
+//                xSql += " where choice_id = ?";
+//                ps.setInt(2, chocieId);
+//            }
             ps.setBoolean(2, UpdatedIsTrue);
             ps.setInt(3, chocieId);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void UpdateChoicesContentOnly(int chocieId, String ChoiceContent) {
+        xSql = "update choices\n"
+                + "set choice_content = ?\n"
+                + "where choice_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, ChoiceContent);
+            ps.setInt(2, chocieId);
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -176,8 +200,9 @@ public class QuizDAO extends MyDAO {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+
     //insert a new default choice 
-    public void insertDefaultChoice(int quesId){
+    public void insertDefaultChoice(int quesId) {
         xSql = "insert into choices (choice_content, is_true, ques_id) values (N'Nhập nội dung tại đây', 0, ?)";
         try {
             ps = con.prepareStatement(xSql);
@@ -187,22 +212,55 @@ public class QuizDAO extends MyDAO {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+
     //retrieve the max choice id(the choice that was added last to the database);
-    public int retrieveMaxChoiceId(){
+    public int retrieveMaxChoiceId() {
         xSql = "select MAX(choice_id) as maxid from choices";
-        int maxChoiceId = 0; 
+        int maxChoiceId = 0;
         try {
             ps = con.prepareStatement(xSql);
             rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 maxChoiceId = rs.getInt("maxid");
             }
         } catch (Exception e) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return maxChoiceId;
-        
+
     }
+
+    //update ten
+    public void updateQuestionContent(int quesId, String updatedQuizContent) {
+        xSql = "update Question \n"
+                + "set ques_content = ?\n"
+                + "where ques_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, updatedQuizContent);
+            ps.setInt(2, quesId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public int insertDefaultQuestion(int QuizId) {
+        xSql = "insert into Question (ques_content, ques_note, quiz_id) output inserted.ques_id values ('', '', ?)";
+        int maxId = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, QuizId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                maxId = rs.getInt("ques_id");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return maxId;
+    }
+
     public static void main(String[] args) {
         QuizDAO pd = new QuizDAO();
         System.out.println("Test getAllQuestionCorrectAnswer");
