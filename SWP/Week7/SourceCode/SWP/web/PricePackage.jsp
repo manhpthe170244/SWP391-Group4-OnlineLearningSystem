@@ -31,16 +31,16 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
-           td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    word-wrap: break-word;
-    vertical-align: top;
-    color: white; /* Add this line to change the text color to white */
-}
-th{
-     color: white; 
-}
+            td {
+                padding: 8px;
+                border: 1px solid #ddd;
+                word-wrap: break-word;
+                vertical-align: top;
+                color: white; /* Add this line to change the text color to white */
+            }
+            th{
+                color: white;
+            }
 
             table{
                 width:100%;
@@ -62,18 +62,18 @@ th{
                 border: 2px solid #ddd;
                 table-layout: fixed;
             }
-/*            th, td {
-                text-align: left;
+            /*            th, td {
+                            text-align: left;
+                            padding: 8px;
+                            border: 1px solid #ddd;
+                            color: white;
+                        }*/
+            th, td {
                 padding: 8px;
                 border: 1px solid #ddd;
-                color: white;
-            }*/
-            th, td {
-              padding: 8px;
-        border: 1px solid #ddd;
-        word-wrap: break-word;
-        vertical-align: top;
-    }
+                word-wrap: break-word;
+                vertical-align: top;
+            }
             .table-container {
                 text-align: center;
             }
@@ -83,12 +83,12 @@ th{
                 margin: 0 auto;
             }
 
-/*            th, td {
-                text-align: left;
-                padding: 8px;
-                border: 1px solid #ddd;
-background-color: #f2f2f2;
-            }*/
+            /*            th, td {
+                            text-align: left;
+                            padding: 8px;
+                            border: 1px solid #ddd;
+            background-color: #f2f2f2;
+                        }*/
             .sidebar {
                 width: 100%;
 
@@ -140,6 +140,65 @@ background-color: #f2f2f2;
                 width: 100px;
                 height: 30px;
             }
+            .add-post-button {
+                background-color: #FF6F61;/* Màu nền của nút */
+                border: none; /* Không có viền */
+                color: white; /* Màu chữ */
+                padding: 10px 20px; /* Kích thước padding */
+                text-align: center; /* Căn giữa nội dung trong nút */
+                text-decoration: none; /* Không gạch chân */
+                display: inline-block; /* Hiển thị là một block inline */
+                font-size: 16px; /* Cỡ chữ */
+                cursor: pointer; /* Hiệu ứng con trỏ khi di chuột */
+                border-radius: 8px; /* Bo tròn góc */
+                font-weight: bold;
+            }
+            .edit-post-button {
+                background-color: #FF6F61;/* Màu nền của nút */
+                border: none; /* Không có viền */
+                color: white; /* Màu chữ */
+                padding: 10px 20px; /* Kích thước padding */
+                text-align: center; /* Căn giữa nội dung trong nút */
+                text-decoration: none; /* Không gạch chân */
+                display: inline-block; /* Hiển thị là một block inline */
+                font-size: 16px; /* Cỡ chữ */
+                cursor: pointer; /* Hiệu ứng con trỏ khi di chuột */
+                border-radius: 8px; /* Bo tròn góc */
+                font-weight: bold;
+            }
+
+
+
+
+            .add-post-button:hover {
+                background-color: #E8483F; /* Màu nền khi di chuột vào */
+                
+                
+            }
+            .delete-post-button {
+                background-color: #FF6F61;
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: block;
+                margin: 0 auto; /* Căn giữa theo chiều ngang */
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 8px;
+                font-weight: bold;
+                margin-top: 10px; /* Khoảng cách từ nút Add đến nút Delete */
+            }
+            .add-post-button,
+.edit-post-button {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 1050px; /* Khoảng cách giữa nút Add và nút Edit */
+
+  
+}
+            
 
         </style>
     </head>
@@ -154,13 +213,9 @@ background-color: #f2f2f2;
 
             <div class="container">
                 <div class="row">
-                    <div class="search-box" >
-                        <form action="search" method="get">
-                            <input type="text" name="txt" placeholder="Search...">
-                            <button type="submit">Search</button>
-                        </form>
-                    </div>
-                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add Post</button></li>
+
+                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add </button></li>
+                    <li><button class="edit-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Edit </button></li>
 
 
                     <table border="1">
@@ -172,15 +227,16 @@ background-color: #f2f2f2;
                             <th>Description</th>
                             <th>Action</th>
                         </tr>
+
                         <c:forEach items="${requestScope.pricePackage}" var="pricePackage">
-                            <tr id="package_${pricePackage.getPackage_id()}">
-                                <td>${pricePackage.getPackage_name()}</td>
-                                <td>${pricePackage.getDuration()}</td>
-                                <td>${pricePackage.isPack_status()}</td>
-                                <td>${(pricePackage.getPrice())}</td>
-                                <td>${pricePackage.getDescription()}</td>
+                            <tr id="package_${pricePackage.getPackage_id()}" onclick="editPricePackage(${pricePackage.getPackage_id()})">
+                                <td contenteditable="true">${pricePackage.getPackage_name()}</td>
+                                <td contenteditable="true">${pricePackage.getDuration()}</td>
+                                <td contenteditable="true">${pricePackage.isPack_status()}</td>
+                                <td contenteditable="true">${(pricePackage.getPrice())}</td>
+                                <td contenteditable="true">${pricePackage.getDescription()}</td>
                                 <td>
-                                    <button onclick="deletePricePackage(${pricePackage.getPackage_id()})">Delete</button>                              
+                                    <button class="delete-post-button" onclick="deletePricePackage(${pricePackage.getPackage_id()})">Delete</button>                              
                                 </td>
                             </tr>             
                         </c:forEach>
@@ -189,19 +245,46 @@ background-color: #f2f2f2;
         </section>
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function deletePricePackage(pricePackageId) {
-            //Send an AJAX request to your server-side script
-            $.ajax({
-                url: "deletePricePackage",
-                type: "POST",
-                data: {package_id: packageId},
-                success: function (response) {
-                    // Remove the row from the table
-                    $("#package_" + pricePackageId).remove();
-                }
-            });
-        }
-    </script>
+        <script>
+                                        function deletePricePackage(pricePackageId) {
+                                            //Send an AJAX request to your server-side script
+                                            $.ajax({
+                                                url: "deletePricePackage",
+                                                type: "POST",
+                                                data: {package_id: packageId},
+                                                success: function (response) {
+                                                    // Remove the row from the table
+                                                    $("#package_" + pricePackageId).remove();
+                                                }
+                                            });
+                                        }
+                                        function editPricePackage(packageId) {
+                                            // Get the table row corresponding to the clicked package
+                                            var row = document.getElementById("package_" + packageId);
+
+                                            // Disable the click event to prevent multiple simultaneous edits
+                                            row.onclick = null;
+
+                                            // Add a CSS class to highlight the editable row
+                                            row.classList.add("edit-mode");
+
+                                            // Get the editable cells within the row
+                                            var cells = row.getElementsByTagName("td");
+
+                                            // Add an event listener to each editable cell for capturing the changes
+                                            for (var i = 0; i < cells.length; i++) {
+                                                cells[i].addEventListener("input", handleCellEdit);
+                                            }
+                                        }
+
+                                        function handleCellEdit(event) {
+                                            // Perform the necessary actions when a cell is edited
+                                            var editedCell = event.target;
+                                            var editedValue = editedCell.innerText;
+
+                                            // Perform further processing or send the updated value to the server for saving
+                                            // Example: You can make an AJAX request to update the data on the server
+                                        }
+        </script>
     </body>
 </html>
