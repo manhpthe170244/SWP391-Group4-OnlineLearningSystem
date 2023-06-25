@@ -172,8 +172,8 @@
 
             .add-post-button:hover {
                 background-color: #E8483F; /* Màu nền khi di chuột vào */
-                
-                
+
+
             }
             .delete-post-button {
                 background-color: #FF6F61;
@@ -191,14 +191,16 @@
                 margin-top: 10px; /* Khoảng cách từ nút Add đến nút Delete */
             }
             .add-post-button,
-.edit-post-button {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 1050px; /* Khoảng cách giữa nút Add và nút Edit */
+            .edit-post-button {
+                display: flex;
+                align-items: center;
+                text-align: center;
+            }
 
-  
-}
-            
+            .add-post-button {
+                margin-bottom: 10px;
+            }
+
 
         </style>
     </head>
@@ -213,10 +215,10 @@
 
             <div class="container">
                 <div class="row">
-
-                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add </button></li>
-                    <li><button class="edit-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Edit </button></li>
-
+                    <ul>
+                        <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add </button></li>
+                        <li><button class="edit-post-button" onclick="saveData()">Save </button></li>
+                    </ul>
 
                     <table border="1">
                         <tr>
@@ -246,45 +248,36 @@
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                        function deletePricePackage(pricePackageId) {
-                                            //Send an AJAX request to your server-side script
+                                        function saveData() {
+                                            var data = [];
+                                            $('#pricePackageTable tr').each(function (row, tr) {
+                                                if (row > 0) {
+                                                    var packageId = $(tr).find('td:eq(0)').text();
+                                                    var packageName = $(tr).find('td:eq(1)').text();
+                                                    var duration = $(tr).find('td:eq(2)').text();
+                                                    var packStatus = $(tr).find('td:eq(3)').text();
+                                                    var price = $(tr).find('td:eq(4)').text();
+                                                    var description = $(tr).find('td:eq(5)').text();
+                                                    data.push({'package_id': packageId, 'package_name': packageName, 'duration': duration, 'pack_status': packStatus, 'price': price, 'description': description});
+                                                }
+                                            });
+
                                             $.ajax({
-                                                url: "deletePricePackage",
                                                 type: "POST",
-                                                data: {package_id: packageId},
+                                                url: "savePricePackage", // Replace with your servlet URL
+                                                data: JSON.stringify(data),
+                                                contentType: "application/json; charset=utf-8",
                                                 success: function (response) {
-                                                    // Remove the row from the table
-                                                    $("#package_" + pricePackageId).remove();
+                                                    console.log(response);
+                                                    alert("Data saved successfully!");
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    console.error(xhr.responseText);
+                                                    alert("Error saving data.");
                                                 }
                                             });
                                         }
-                                        function editPricePackage(packageId) {
-                                            // Get the table row corresponding to the clicked package
-                                            var row = document.getElementById("package_" + packageId);
-
-                                            // Disable the click event to prevent multiple simultaneous edits
-                                            row.onclick = null;
-
-                                            // Add a CSS class to highlight the editable row
-                                            row.classList.add("edit-mode");
-
-                                            // Get the editable cells within the row
-                                            var cells = row.getElementsByTagName("td");
-
-                                            // Add an event listener to each editable cell for capturing the changes
-                                            for (var i = 0; i < cells.length; i++) {
-                                                cells[i].addEventListener("input", handleCellEdit);
-                                            }
-                                        }
-
-                                        function handleCellEdit(event) {
-                                            // Perform the necessary actions when a cell is edited
-                                            var editedCell = event.target;
-                                            var editedValue = editedCell.innerText;
-
-                                            // Perform further processing or send the updated value to the server for saving
-                                            // Example: You can make an AJAX request to update the data on the server
-                                        }
+                                        
         </script>
     </body>
 </html>
