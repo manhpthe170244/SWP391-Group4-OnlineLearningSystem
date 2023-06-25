@@ -27,7 +27,7 @@ public class AddChoice extends HttpServlet {
         PrintWriter out = response.getWriter();
         Integer quesId = Integer.parseInt(request.getParameter("quesId"));
         QuizDAO qd = new QuizDAO();
-        qd.insertDefaultChoice(quesId);
+        qd.insertChoice(quesId, "nhập nội dung câu trả lời", false);
         int maxChoiceId = qd.retrieveMaxChoiceId();
         JsonObject responseJson = new JsonObject();
         responseJson.addProperty("maxChoiceId", maxChoiceId);

@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <link rel="stylesheet" href="assets/css/styling.css?version=39"/>
+        <link rel="stylesheet" href="assets/css/styling.css?version=95"/>
 
 
     </head>
@@ -41,10 +41,22 @@
             <div class="container">
                 <div class="row">
                     <div class="QuestionListEdit">
+                        <form id="contact" action="ImportQuestion" method="Post" enctype="multipart/form-data">
+
+                            <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
+                                <p style="opacity: 0.7">Import question</p>
+                                <input name="quiz_name" type="text" value="${requestScope.quiz_name}" style="display: none"/>
+                                <input name="quiz_id" type="text" value="${requestScope.quiz_id}" style="display: none"/>
+                                <input name="QuizImport" type="file" accept=".txt, .docx" onchange="this.form.submit()" id="userImg" style="all:unset"/>
+                            </div>
+
+                           
+
+                        </form>
                         <form action="EditQuizContent" method="Post" id="EditQuizForm">
                             <div class="col-12">
-                                <h4>Tên bài quiz</h4>
-                                <input type="text" name="quiz_name" value="${requestScope.quiz_name}" placeholder="nhập tên bài học">
+
+                                <input style="font-size: 150%" type="text" name="quiz_name" value="${requestScope.quiz_name}" placeholder="nhập tên bài học">
                             </div>
                             <div class="col-12" style="display: none">
                                 <h4>Tên bài quiz</h4>
@@ -82,8 +94,8 @@
                             <div id="addedQuestion">
 
                             </div>
-                            <input id="result" type="text" name="deletionchoice"/>
-                            <input id="result1" type="text" name="deletionquestion"/>
+                            <input id="result" type="text" name="deletionchoice" style="display: none"/>
+                            <input id="result1" type="text" name="deletionquestion" style="display: none"/>
                             <button class="addnewQuestionBtn" type="button" onclick="adnewQuestion('${requestScope.quiz_id}')">
                                 <i class="fa-solid fa-circle-plus fa-2x" style="color: #af4646;"></i> &nbsp; Add a question to this quizz lesson
                             </button>  
@@ -149,9 +161,9 @@
                                         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
                                             var response = JSON.parse(xmlHttp.responseText);
                                             var a = document.getElementById('ChoiceList' + quesId);
-                                            a.innerHTML += "<div class='choiceEdit' id='choiceEdit" + response.maxChoiceId + "'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "' value='" + response.maxChoiceId + "'><input type='text' id='EditedChoiceContent" + response.maxChoiceId + "' name='EditedChoiceContent' value='" + response.defaultChoiceContent + "' onChange='updateChoiceContent(" + response.maxChoiceId + ")'><button type='button' onclick='storeDeletion(" + response.maxChoiceId + ")'><i class='fa-solid fa-trash-can'></i></button></div>";
+                                            a.innerHTML += "<div class='choiceEdit' id='choiceEdit" + response.maxChoiceId + "'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "' value='" + response.maxChoiceId + "'><input type='text' id='EditedChoiceContent" + response.maxChoiceId + "' name='EditedChoiceContent' value='" + response.defaultChoiceContent + "' onChange='updateChoiceContent(" + response.maxChoiceId + ")'><button type='button' onclick='storeChoiceDeletion(" + response.maxChoiceId + ")'><i class='fa-solid fa-trash-can'></i></button></div>";
                                             console.log(xmlHttp.responseText);
-                                       
+
                                         }
                                     };
                                     xmlHttp.send();
@@ -163,8 +175,8 @@
                                     xmlHttp.open("GET", url, true);
                                     xmlHttp.onreadystatechange = function () {
                                         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                            a.innerHTML += "<input type='text' name='quesContent' value='Nhập nội dung cho câu hỏi'><button style='margin-left: 33px' type='button' onclick='storeQuestionDeletion(" + xmlHttp.responseText + ")'/><i style='color: #c93460' class='fa-solid fa-trash-can'></i></button><div id='QuestionEdit" + xmlHttp.responseText + "'></div>";
-                                            a.innerHTML += "<button class='addnewchoicebtn' type='button' onclick='addnewChoice(" + xmlHttp.responseText + ")'><h4 style='color: #142254; font-size: 100%; margin: 10px'> <i class='fa-solid fa-plus'></i> Add new choice to this question</h4></button>";
+                                            a.innerHTML += "<div class='col-12 QuestionEdit' id='QuestionEdit" + xmlHttp.responseText + "'><input type='text' name='quesContent' value='Nhập nội dung cho câu hỏi'><button style='margin-left: 33px' type='button' onclick='storeQuestionDeletion(" + xmlHttp.responseText + ")'/><i style='color: #c93460' class='fa-solid fa-trash-can'></i></button><div id='ChoiceList" + xmlHttp.responseText + "'></div><button class='addnewchoicebtn' type='button' onclick='addnewChoice(" + xmlHttp.responseText + ")'><h4 style='color: #142254; font-size: 100%; margin: 10px'> <i class='fa-solid fa-plus'></i> Add new choice to this question</h4></button></div>";
+
                                             console.log("aaaaaa");
                                         }
                                     };

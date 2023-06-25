@@ -20,11 +20,7 @@ import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
-import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+
 
 /**
  *
@@ -108,6 +104,7 @@ public class registerServlet extends HttpServlet {
 
             User newUser = new User(0, email, encryptedPassword, fullname, sqlFilePath, Integer.parseInt(gender), dob, phone, address, "0", Integer.parseInt(role), userTime, true, 0);
             ud.addNewUser(newUser);
+            out.print(filePath);
             response.sendRedirect("homepage");
         }
     }

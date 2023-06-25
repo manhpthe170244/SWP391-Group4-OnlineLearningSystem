@@ -133,7 +133,7 @@
                                         </div>
                                         <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
                                             <p style="opacity: 0.7">YOUR PROFILE PICTURE</p>
-                                            <input name="userImg" type="file" accept="image/*" id="userImg" style="all:unset">
+                                            <input name="userImg" type="file" accept="image/*" id="userImg" style="all:unset"/>
                                         </div>
                                         <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
                                             <p style="opacity: 0.7">YOUR GENDER</p>

@@ -18,6 +18,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Vector;
 
@@ -63,7 +64,9 @@ public class LessonListController extends HttpServlet {
            v.setLessonList(lesDAO.getLessonBySectionId(v.getSection_id()));
            v.setQuizList(quizDao.getQuizListBySectionId(v.getSection_id()));
         }
-        request.setAttribute("Course_id", courseId);
+        HttpSession session = request.getSession();
+        
+        session.setAttribute("Course_id", courseId);
         request.setAttribute("currUser", currUser);
         request.setAttribute("SectionList", vs);
         request.getRequestDispatcher("lessonList.jsp").forward(request, response);

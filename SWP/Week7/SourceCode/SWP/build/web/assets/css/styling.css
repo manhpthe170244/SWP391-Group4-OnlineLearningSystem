@@ -249,6 +249,12 @@ hr{
     border: none;
     background-color: inherit;
 }
+.importQuestion{
+    text-align: right !important;
+}
+.importQuestion p{
+    margin-right: 135px;
+}
 .addnewQuestionBtn{
     display: flex;
     align-items: center;

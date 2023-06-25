@@ -202,11 +202,13 @@ public class QuizDAO extends MyDAO {
     }
 
     //insert a new default choice 
-    public void insertDefaultChoice(int quesId) {
-        xSql = "insert into choices (choice_content, is_true, ques_id) values (N'Nhập nội dung tại đây', 0, ?)";
+    public void insertChoice(int quesId, String choiceContent, boolean status) {
+        xSql = "insert into choices (choice_content, is_true, ques_id) values (?, ?, ?)";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setInt(1, quesId);
+            ps.setString(1, choiceContent);
+            ps.setBoolean(2, status);
+            ps.setInt(3, quesId);
             ps.executeUpdate();
         } catch (Exception e) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -245,12 +247,14 @@ public class QuizDAO extends MyDAO {
         }
     }
 
-    public int insertDefaultQuestion(int QuizId) {
-        xSql = "insert into Question (ques_content, ques_note, quiz_id) output inserted.ques_id values ('', '', ?)";
+    public int insertQuestion(int QuizId, String quesContent, String quesNote) {
+        xSql = "insert into Question (ques_content, ques_note, quiz_id) output inserted.ques_id values (?, ?, ?)";
         int maxId = 0;
         try {
             ps = con.prepareStatement(xSql);
-            ps.setInt(1, QuizId);
+            ps.setString(1, quesContent);
+            ps.setString(2, quesNote);
+            ps.setInt(3, QuizId);
             rs = ps.executeQuery();
             if (rs.next()) {
                 maxId = rs.getInt("ques_id");
@@ -260,7 +264,8 @@ public class QuizDAO extends MyDAO {
         }
         return maxId;
     }
-    public void deleteQuestion(int quesId){
+
+    public void deleteQuestion(int quesId) {
         xSql = "delete from Question where ques_id = ?";
         try {
             ps = con.prepareStatement(xSql);
@@ -280,6 +285,34 @@ public class QuizDAO extends MyDAO {
 //            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
 //        }
 //    }
+
+    public void QuizInitialization(int section_id) {
+        xSql = "insert into Quiz (quiz_name,quiz_desc, section_id, quiz_status) \n"
+                + "values \n"
+                + "(N'Bài quiz mới được tạo ra, hãy chỉnh sửa và enable', '', ?, 0)";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, section_id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void UpdateQuiz(int quizId, String quizName) {
+        xSql = "update Quiz \n"
+                + "set quiz_name = ?\n"
+                + "where quiz_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, quizName);
+            ps.setInt(2, quizId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
     public static void main(String[] args) {
         QuizDAO pd = new QuizDAO();
         System.out.println("Test getAllQuestionCorrectAnswer");

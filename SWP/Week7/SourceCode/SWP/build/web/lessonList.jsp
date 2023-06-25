@@ -73,7 +73,7 @@
                                             </div>
                                             <div class="lessonListEditright col-2">
                                                 <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
-                                                    <button class="DeactivateButton" style="display: inline-block" onclick="SetLessonStatus(0, ${l.getLesson_id()}, ${requestScope.Course_id})">
+                                                    <button class="DeactivateButton" style="display: inline-block" onclick="SetLessonStatus(0, ${l.getLesson_id()}, ${Course_id})">
                                                         <i class="fa-solid fa-ban fa-2x" style="margin-right: 10px"></i>
                                                     </button>
                                                     <p style="color: white; display: inline-block">/&emsp;</p>
@@ -91,7 +91,7 @@
                                 </c:forEach>
                                 <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
                                     <div class="addnewToSection">
-                                        <a href="addnewLessonTosection?section_id=${s.getSection_id()}&course_Id=${requestScope.Course_id}">
+                                        <a href="addnewLessonTosection?section_id=${s.getSection_id()}&course_Id=${Course_id}">
                                             <h4> <i class="fa-solid fa-plus"></i> Add new lesson to this section</h4>
                                             <hr>
                                         </a>
@@ -107,7 +107,7 @@
                                             </div>
                                             <div class="lessonListEditright col-2">
                                                 <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
-                                                    <button class="DeactivateButton" style="display: inline-block" onclick="SetQuizStatus(0, ${q.getQuiz_id()}, ${requestScope.Course_id})">
+                                                    <button class="DeactivateButton" style="display: inline-block" onclick="SetQuizStatus(0, ${q.getQuiz_id()}, ${Course_id})">
                                                         <i class="fa-solid fa-ban fa-2x" style="margin-right: 10px"></i>
                                                     </button>
                                                     <p style="color: white; display: inline-block">/&emsp;</p>
@@ -148,7 +148,7 @@
                                                 </div>
                                                 <div class="lessonListEditright col-2">
                                                     <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
-                                                        <button class="activateButton" style="display: inline-block" onclick="SetLessonStatus(1, ${l.getLesson_id()}, ${requestScope.Course_id})">
+                                                        <button class="activateButton" style="display: inline-block" onclick="SetLessonStatus(1, ${l.getLesson_id()}, ${Course_id})">
                                                             <i class="fa-solid fa-check fa-2x" style="margin-right: 10px"></i>
                                                         </button>
                                                         <p style="color: white; display: inline-block">/&emsp;</p>
@@ -180,11 +180,12 @@
                                                 </div>
                                                 <div class="lessonListEditright col-2">
                                                     <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
-                                                        <button class="activateButton" style="display: inline-block" onclick="SetQuizStatus(1, ${q.getQuiz_id()}, ${requestScope.Course_id})">
+                                                        <button class="activateButton" style="display: inline-block" onclick="SetQuizStatus(1, ${q.getQuiz_id()}, ${Course_id})">
                                                             <i class="fa-solid fa-check fa-2x" style="margin-right: 10px"></i>
                                                         </button>
                                                         <p style="color: white; display: inline-block">/&emsp;</p>
-                                                        <i class="fas fa-edit fa-2x" style="color:#31c8ff"></i>
+                                                        <a href="EditQuizContent?quiz_id=${q.getQuiz_id()}&quiz_name=${q.getQuiz_name()}"><i class="fas fa-edit fa-2x" style="color:#31c8ff"></i></a>
+                                                        
                                                     </c:if>
                                                 </div>
                                                 <hr>
