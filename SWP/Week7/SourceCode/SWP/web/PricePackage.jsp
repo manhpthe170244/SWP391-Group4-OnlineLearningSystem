@@ -31,16 +31,16 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
-           td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    word-wrap: break-word;
-    vertical-align: top;
-    color: white; /* Add this line to change the text color to white */
-}
-th{
-     color: white; 
-}
+            td {
+                padding: 8px;
+                border: 1px solid #ddd;
+                word-wrap: break-word;
+                vertical-align: top;
+                color: white; /* Add this line to change the text color to white */
+            }
+            th{
+                color: white;
+            }
 
             table{
                 width:100%;
@@ -62,18 +62,18 @@ th{
                 border: 2px solid #ddd;
                 table-layout: fixed;
             }
-/*            th, td {
-                text-align: left;
+            /*            th, td {
+                            text-align: left;
+                            padding: 8px;
+                            border: 1px solid #ddd;
+                            color: white;
+                        }*/
+            th, td {
                 padding: 8px;
                 border: 1px solid #ddd;
-                color: white;
-            }*/
-            th, td {
-              padding: 8px;
-        border: 1px solid #ddd;
-        word-wrap: break-word;
-        vertical-align: top;
-    }
+                word-wrap: break-word;
+                vertical-align: top;
+            }
             .table-container {
                 text-align: center;
             }
@@ -83,12 +83,12 @@ th{
                 margin: 0 auto;
             }
 
-/*            th, td {
-                text-align: left;
-                padding: 8px;
-                border: 1px solid #ddd;
-background-color: #f2f2f2;
-            }*/
+            /*            th, td {
+                            text-align: left;
+                            padding: 8px;
+                            border: 1px solid #ddd;
+            background-color: #f2f2f2;
+                        }*/
             .sidebar {
                 width: 100%;
 
@@ -140,6 +140,67 @@ background-color: #f2f2f2;
                 width: 100px;
                 height: 30px;
             }
+            .add-post-button {
+                background-color: #FF6F61;/* Màu nền của nút */
+                border: none; /* Không có viền */
+                color: white; /* Màu chữ */
+                padding: 10px 20px; /* Kích thước padding */
+                text-align: center; /* Căn giữa nội dung trong nút */
+                text-decoration: none; /* Không gạch chân */
+                display: inline-block; /* Hiển thị là một block inline */
+                font-size: 16px; /* Cỡ chữ */
+                cursor: pointer; /* Hiệu ứng con trỏ khi di chuột */
+                border-radius: 8px; /* Bo tròn góc */
+                font-weight: bold;
+            }
+            .edit-post-button {
+                background-color: #FF6F61;/* Màu nền của nút */
+                border: none; /* Không có viền */
+                color: white; /* Màu chữ */
+                padding: 10px 20px; /* Kích thước padding */
+                text-align: center; /* Căn giữa nội dung trong nút */
+                text-decoration: none; /* Không gạch chân */
+                display: inline-block; /* Hiển thị là một block inline */
+                font-size: 16px; /* Cỡ chữ */
+                cursor: pointer; /* Hiệu ứng con trỏ khi di chuột */
+                border-radius: 8px; /* Bo tròn góc */
+                font-weight: bold;
+            }
+
+
+
+
+            .add-post-button:hover {
+                background-color: #E8483F; /* Màu nền khi di chuột vào */
+
+
+            }
+            .delete-post-button {
+                background-color: #FF6F61;
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: block;
+                margin: 0 auto; /* Căn giữa theo chiều ngang */
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 8px;
+                font-weight: bold;
+                margin-top: 10px; /* Khoảng cách từ nút Add đến nút Delete */
+            }
+            .add-post-button,
+            .edit-post-button {
+                display: flex;
+                align-items: center;
+                text-align: center;
+            }
+
+            .add-post-button {
+                margin-bottom: 10px;
+            }
+
 
         </style>
     </head>
@@ -154,14 +215,10 @@ background-color: #f2f2f2;
 
             <div class="container">
                 <div class="row">
-                    <div class="search-box" >
-                        <form action="search" method="get">
-                            <input type="text" name="txt" placeholder="Search...">
-                            <button type="submit">Search</button>
-                        </form>
-                    </div>
-                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add Post</button></li>
-
+                    <ul>
+                        <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add </button></li>
+                        <li><button class="edit-post-button" onclick="saveData()">Save </button></li>
+                    </ul>
 
                     <table border="1">
                         <tr>
@@ -172,15 +229,16 @@ background-color: #f2f2f2;
                             <th>Description</th>
                             <th>Action</th>
                         </tr>
+
                         <c:forEach items="${requestScope.pricePackage}" var="pricePackage">
-                            <tr id="package_${pricePackage.getPackage_id()}">
-                                <td>${pricePackage.getPackage_name()}</td>
-                                <td>${pricePackage.getDuration()}</td>
-                                <td>${pricePackage.isPack_status()}</td>
-                                <td>${(pricePackage.getPrice())}</td>
-                                <td>${pricePackage.getDescription()}</td>
+                            <tr id="package_${pricePackage.getPackage_id()}" onclick="editPricePackage(${pricePackage.getPackage_id()})">
+                                <td contenteditable="true">${pricePackage.getPackage_name()}</td>
+                                <td contenteditable="true">${pricePackage.getDuration()}</td>
+                                <td contenteditable="true">${pricePackage.isPack_status()}</td>
+                                <td contenteditable="true">${(pricePackage.getPrice())}</td>
+                                <td contenteditable="true">${pricePackage.getDescription()}</td>
                                 <td>
-                                    <button onclick="deletePricePackage(${pricePackage.getPackage_id()})">Delete</button>                              
+                                    <button class="delete-post-button" onclick="deletePricePackage(${pricePackage.getPackage_id()})">Delete</button>                              
                                 </td>
                             </tr>             
                         </c:forEach>
@@ -189,19 +247,37 @@ background-color: #f2f2f2;
         </section>
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function deletePricePackage(pricePackageId) {
-            //Send an AJAX request to your server-side script
-            $.ajax({
-                url: "deletePricePackage",
-                type: "POST",
-                data: {package_id: packageId},
-                success: function (response) {
-                    // Remove the row from the table
-                    $("#package_" + pricePackageId).remove();
-                }
-            });
-        }
-    </script>
+        <script>
+                                        function saveData() {
+                                            var data = [];
+                                            $('#pricePackageTable tr').each(function (row, tr) {
+                                                if (row > 0) {
+                                                    var packageId = $(tr).find('td:eq(0)').text();
+                                                    var packageName = $(tr).find('td:eq(1)').text();
+                                                    var duration = $(tr).find('td:eq(2)').text();
+                                                    var packStatus = $(tr).find('td:eq(3)').text();
+                                                    var price = $(tr).find('td:eq(4)').text();
+                                                    var description = $(tr).find('td:eq(5)').text();
+                                                    data.push({'package_id': packageId, 'package_name': packageName, 'duration': duration, 'pack_status': packStatus, 'price': price, 'description': description});
+                                                }
+                                            });
+
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "savePricePackage", // Replace with your servlet URL
+                                                data: JSON.stringify(data),
+                                                contentType: "application/json; charset=utf-8",
+                                                success: function (response) {
+                                                    console.log(response);
+                                                    alert("Data saved successfully!");
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    console.error(xhr.responseText);
+                                                    alert("Error saving data.");
+                                                }
+                                            });
+                                        }
+                                        
+        </script>
     </body>
 </html>
