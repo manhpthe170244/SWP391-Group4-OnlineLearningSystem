@@ -117,7 +117,7 @@
                             </div>
             
                                     <div class="main-button-red">
-                            <a href="postList?blog_id=1"> Bat dau lam </a>
+                            <a href="QuizHandle?quiz_id=${requestScope.quiz_id}"> Bat dau lam </a>
                         </div>
 
             <div class="container" >

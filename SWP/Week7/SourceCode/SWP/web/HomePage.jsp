@@ -175,17 +175,11 @@
                                     </div>
                                 </div>
                             </div>
-                                    
                             <div class="col-lg-6">
                                 <div class="meeting-item">
                                     <div class="thumb">
                                         <div class="price">
-                                            <%
-                                                float price1 = courseList.get(1).getCourse_price();
-                                                String formattedPrice1 = format.format(price);
-                                            %>
-
-                                            <span><%=formattedPrice%></span>
+                                            <span>$ <%=courseList.get(1).getCourse_price()%></span>
                                         </div>
                                         <a href="/SWP/courseDetails?course_id=<%=courseList.get(1).getCourse_id()%>"><img src="<%=courseList.get(1).getCourse_img()%>" alt="Online Teaching"></a>
                                     </div>
@@ -202,12 +196,7 @@
                                 <div class="meeting-item">
                                     <div class="thumb">
                                         <div class="price">
-                                            <%
-                                                float price2 = courseList.get(2).getCourse_price();
-                                                String formattedPrice2 = format.format(price);
-                                            %>
-
-                                            <span><%=formattedPrice%></span>
+                                            <span>$ <%=courseList.get(2).getCourse_price()%></span>
                                         </div>
                                         <a href="/SWP/courseDetails?course_id=<%=courseList.get(2).getCourse_id()%>"><img src="<%=courseList.get(2).getCourse_img()%>" alt="Higher Education"></a>
                                     </div>
@@ -224,12 +213,7 @@
                                 <div class="meeting-item">
                                     <div class="thumb">
                                         <div class="price">
-                                            <%
-                                                float price3 = courseList.get(3).getCourse_price();
-                                                String formattedPrice3 = format.format(price);
-                                            %>
-
-                                            <span><%=formattedPrice%></span>
+                                            <span>$ <%=courseList.get(3).getCourse_price()%></span>
                                         </div>
                                         <a href="/SWP/courseDetails?course_id=<%=courseList.get(3).getCourse_id()%>"><img src="<%=courseList.get(3).getCourse_img()%>" alt="Student Training"></a>
                                     </div>

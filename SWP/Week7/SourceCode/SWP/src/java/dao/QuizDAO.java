@@ -201,6 +201,7 @@ public class QuizDAO extends MyDAO {
         }
     }
 
+<<<<<<< Updated upstream
     //insert a new default choice 
     public void insertChoice(int quesId, String choiceContent, boolean status) {
         xSql = "insert into choices (choice_content, is_true, ques_id) values (?, ?, ?)";
@@ -313,10 +314,12 @@ public class QuizDAO extends MyDAO {
         }
     }
 
+=======
+>>>>>>> Stashed changes
     public static void main(String[] args) {
         QuizDAO pd = new QuizDAO();
         System.out.println("Test getAllQuestionCorrectAnswer");
-        Vector<String> correctAnswers = pd.getAllCorrectAnswer(2);
+        Vector<String> correctAnswers = pd.getAllCorrectAnswer(1);
         for (String a : correctAnswers) {
             System.out.println(a);
         }

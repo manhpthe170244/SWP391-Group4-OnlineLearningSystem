@@ -155,8 +155,8 @@ background-color: #f2f2f2;
             <div class="container">
                 <div class="row">
                     <div class="search-box" >
-                        <form action="#" method="post">
-                            <input type="text" name="search_name" placeholder="Search...">
+                        <form action="search" method="get">
+                            <input type="text" name="txt" placeholder="Search...">
                             <button type="submit">Search</button>
                         </form>
                     </div>

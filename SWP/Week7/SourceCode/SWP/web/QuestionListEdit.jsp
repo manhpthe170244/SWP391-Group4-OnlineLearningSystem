@@ -63,12 +63,19 @@
                                 <input type="text" name="quiz_id" value="${requestScope.quiz_id}" placeholder="nhập tên bài học">
                             </div>
                             <c:forEach items="${questionList}" var="q">
+<<<<<<< Updated upstream
                                 <div class="col-12 QuestionEdit" id="QuestionEdit${q.getQues_id()}">
                                     <input type="text" name="quesContent" value="${q.getQues_content()}">
                                     <button style=" margin-left: 33px" type="button" onclick="storeQuestionDeletion('${q.getQues_id()}')">
                                         <i style="color: #c93460" class="fa-solid fa-trash-can"></i>
                                     </button> 
                                     <div id="ChoiceList${q.getQues_id()}">
+=======
+                                <div class="col-12 QuestionEdit">
+                                    
+                                    <input type="text" name="quesContent" value="${q.getQues_content()}"> 
+                                    <div id="QuestionEdit${q.getQues_id()}">
+>>>>>>> Stashed changes
                                         <c:forEach items="${q.getChoices()}" var="c">
                                             <div class="choiceEdit" id="choiceEdit${c.getChoice_id()}">
                                                 <input class="tick" type="radio" name="rightChoiceFor${q.getQues_id()}" value="${c.getChoice_id()}"
@@ -108,6 +115,7 @@
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
+<<<<<<< Updated upstream
                                 function updateChoiceContent(choice_id) {
                                     var a = document.getElementById("EditedChoiceContent" + choice_id);
                                     var url = "UpdateChoiceOnChange?choice_id=" + encodeURIComponent(choice_id) + "&currentVal=" + encodeURIComponent(a.value);
@@ -185,6 +193,27 @@
 
 
                                 }
+=======
+                                    function storeDeletion(choice_id) {
+                                        var currentDisplay1 = document.getElementById("choiceEdit" + choice_id);
+                                        currentDisplay1.style.display = currentDisplay1.style.display != "none" ? "none" : "block";
+                                        var url = "HandleChoiceDeletion?choice_id=" + encodeURIComponent(choice_id);
+                                        var xmlHttp = new XMLHttpRequest();
+                                        xmlHttp.open("POST", url, true);
+                                        xmlHttp.onreadystatechange = function () {
+                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                                var result = document.getElementById("result");
+                                                result.value += xmlHttp.responseText + ",";
+                                            }
+                                        };
+                                        xmlHttp.send();
+                                    }
+                                    function addnewChoice(quesId) {
+                                        var a = document.getElementById('QuestionEdit'+quesId);
+                                        
+                                        a.innerHTML +="<div class='choiceEdit'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "'><input type='text' name='EditedChoiceContent' value=''><button type='button' onclick='storeDeletion(' ')'><i class='fa-solid fa-trash-can'></i></button></div>";
+                                    }
+>>>>>>> Stashed changes
         </script>
     </body>
 </html>
