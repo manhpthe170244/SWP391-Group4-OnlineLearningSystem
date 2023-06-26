@@ -109,7 +109,7 @@
                     </div>
                 </div>
             </div>
-             <div style="color: white;margin-bottom: 50px" class="col-lg-12">
+             <div style="color: white;margin: 35px 115px" class="col-lg-12">
                                 Sort By <select id="sortType">
                                     <option value="recent">Recent</option>
                                     <option value="name">Highest Scores</option>
@@ -117,7 +117,7 @@
                             </div>
             
                                     <div class="main-button-red">
-                            <a href="postList?blog_id=1"> Bat dau lam </a>
+                            <a href="postList?blog_id=1"> BẮT ĐẦU LÀM </a>
                         </div>
 
             <div class="container" >

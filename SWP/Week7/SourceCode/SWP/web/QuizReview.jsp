@@ -227,7 +227,6 @@
                                 </div>
                             </div>
                             <div style="font-size: 10px">
-                                <p><a href="">show one page that time</a></p>
                                 <p><a href="QuizLesson?quiz_id=${requestScope.quizResult.getQuiz_id()}">Finish Review</a></p>
                             </div>                                       
                         </div>
