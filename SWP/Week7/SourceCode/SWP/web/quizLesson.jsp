@@ -109,7 +109,7 @@
                     </div>
                 </div>
             </div>
-             <div style="color: white;margin-bottom: 50px" class="col-lg-12">
+             <div style="color: white;margin: 35px 115px" class="col-lg-12">
                                 Sort By <select id="sortType">
                                     <option value="recent">Recent</option>
                                     <option value="name">Highest Scores</option>
@@ -117,7 +117,11 @@
                             </div>
             
                                     <div class="main-button-red">
+<<<<<<< HEAD
                             <a href="QuizHandle?quiz_id=${requestScope.quiz_id}"> Bat dau lam </a>
+=======
+                            <a href="postList?blog_id=1"> BẮT ĐẦU LÀM </a>
+>>>>>>> e2e73b50bee3c12c69086c5775b1fc4c7ac089ff
                         </div>
 
             <div class="container" >
