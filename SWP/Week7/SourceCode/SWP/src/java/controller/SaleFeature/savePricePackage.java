@@ -2,24 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.TestFeature;
+package controller.SaleFeature;
 
-import dao.QuizResultDAO;
-import entity.QuizResult;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import entity.Price_Package;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Vector;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
  * @author ACER
  */
-public class QuizLesson extends HttpServlet {
+@WebServlet(name = "savePricePackage", urlPatterns = {"/savePricePackage"})
+public class savePricePackage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,18 +35,7 @@ public class QuizLesson extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet QuizLesson</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet QuizLesson at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,23 +50,7 @@ public class QuizLesson extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
-        
-        int user_id = 0;
-        Cookie[] cookies = request.getCookies();
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("currUserId")) {
-                    user_id = Integer.parseInt(cookie.getValue());
-                }
-            }
-        }
-        
-        QuizResultDAO quizResultDAO = new QuizResultDAO();
-        Vector<QuizResult> quizResultList = quizResultDAO.getQuizResultByUserIdAndQuizId(user_id, quiz_id);
-        request.setAttribute("quizResultList", quizResultList);
-        request.getRequestDispatcher("quizLesson.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -89,7 +64,10 @@ public class QuizLesson extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Get the updated data from the request
+        String postData = request.getReader().lines().collect(Collectors.joining());
+        List<Price_Package> newData = new Gson().fromJson(postData, new TypeToken<List<Price_Package>>(){}.getType());
+        
     }
 
     /**

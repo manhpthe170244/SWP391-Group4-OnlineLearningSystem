@@ -318,7 +318,7 @@
         var square = document.querySelector('.question-square-' + index);
         if (square.style.backgroundColor === 'rgb(224, 90, 125)') {
             var radioAnswers = document.getElementsByName('answer' + index);
-            var checkedNumber = -1;
+            var checkedNumber = 4;
             for (var i = 0; i < radioAnswers.length; i++) {
                 if (radioAnswers[i].checked) {
                     checkedNumber = i;
@@ -326,12 +326,12 @@
                 }
             }
 
-            if (checkedNumber !== -1) {
+            if (checkedNumber !== 4) {
                 // At least one radio button is selected
-                square.style.backgroundColor = '#00ff00'; // xanh
+                square.style.backgroundColor = '#00ff00';
             } else {
                 // No radio button is selected
-                square.style.backgroundColor = ''; // không màu
+                square.style.backgroundColor = '';
             }
         } else {
             square.style.backgroundColor = '#E05A7D'; // Thay đổi màu sắc hình vuông thành màu đỏ

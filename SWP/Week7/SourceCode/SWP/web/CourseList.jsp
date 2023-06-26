@@ -110,8 +110,8 @@
                                         <ul>
                                             <a href="?sub_id=0"><li>All</li></a>
                                                     <c:forEach items="${requestScope.subjectList}" var="subject">
-                                                <input type="button" onclick="filterBySubject(${subject.getSub_id()})" value="${subject.getSub_name()}"/>
-<!--                                                <a href="courseList?sub_id=${subject.getSub_id()}" class="filter-link"><li>${subject.getSub_name()}</li></a>-->
+<!--                                                <input type="button" onclick="filterBySubject(${subject.getSub_id()})" value="${subject.getSub_name()}"/>-->
+                                                <a href="courseList?sub_id=${subject.getSub_id()}" class="filter-link"><li>${subject.getSub_name()}</li></a>
                                             </c:forEach>
                                         </ul>
                                     </form>

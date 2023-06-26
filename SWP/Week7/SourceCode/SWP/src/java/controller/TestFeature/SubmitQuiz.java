@@ -144,14 +144,12 @@ public class SubmitQuiz extends HttpServlet {
         double grade = (double) Math.round(num * 100) / 100.0;
         
         // Save quiz result to database
-        quizResultDAO.insertQuizResult(quiz_id, user_id, grade > 5, (float)grade, start_time, end_time, maxAttempt+1);
-        // Save ques result to database
-        int maxQuizResultId = quizResultDAO.getMaxQuizResultIdByUserIdAndQuizId(user_id, quiz_id);
+        int quizResultId = quizResultDAO.insertQuizResult(quiz_id, user_id, grade > 5, (float)grade, start_time, end_time, maxAttempt+1);
         for(int i = 0; i < answers.size(); i++){
-            quesResultDAO.insertQuesResult(quesList.get(i), user_id, answers.get(i).equals(correctAnswers.get(i)), flags.get(i), answers.get(i), maxQuizResultId);
+            quesResultDAO.insertQuesResult(quesList.get(i), user_id, answers.get(i).equals(correctAnswers.get(i)), flags.get(i), answers.get(i), quizResultId);
         }
         
-        request.setAttribute("quiz_result_id", maxQuizResultId);
+        request.setAttribute("quiz_result_id", quizResultId);
         request.getRequestDispatcher("QuizReview").forward(request, response);
     }
 
