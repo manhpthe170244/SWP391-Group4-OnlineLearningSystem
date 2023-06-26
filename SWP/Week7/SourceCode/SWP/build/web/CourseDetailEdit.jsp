@@ -126,6 +126,14 @@
             .form-group1{
                 margin-bottom: 20px;
             }
+            .quantity1{
+                 text-align: center;
+                margin-right: 592px;
+                margin-top: 10px;
+                
+
+            }
+            
 
 
             /*.quantity input[type="number"]::-webkit-inner-spin-button,
@@ -193,7 +201,7 @@
                                 <input type="number" id="duration" name="duration" min="1" max="1000" value="30">
                             </div>
 
-                            <div class="quantity">
+                            <div class="quantity1">
                                 <label for="price" style="color: white; ">Price: </label>
                                 <input type="number" id="price" name="price" min="0" max="1000000" step="1000" value="60000">
                             </div>

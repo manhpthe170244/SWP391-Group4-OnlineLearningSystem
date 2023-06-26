@@ -39,12 +39,94 @@ public class PricePackageDAO extends MyDAO {
         return vector;
     }
 
+    public boolean addPricePackage(Price_Package pricePackage) {
+        xSql = "INSERT INTO [dbo].[Price_Package](package_name, \n"
+                + "duration , \n"
+                + "pack_status, \n"
+                + "price, \n"
+                + "description) VALUES (?,?,?,?,?)";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, pricePackage.getPackage_name());
+            ps.setInt(2, pricePackage.getDuration());
+            ps.setBoolean(3, pricePackage.isPack_status());
+            ps.setFloat(4, pricePackage.getPrice());
+            ps.setString(5, pricePackage.getDescription());
+
+            int row = ps.executeUpdate();
+            if (row > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updatePricePackage(int id, String name, int duration, Boolean status, float price, String description) {
+        String xSql = "UPDATE [dbo].[Price_Package] "
+                + "SET package_name=?, "
+                + "duration=?, "
+                + "pack_status=?, "
+                + "price=?, "
+                + "description=? "
+                + "WHERE package_id=?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setString(1, name);
+            ps.setInt(2, duration);
+            ps.setBoolean(3, status);
+            ps.setFloat(4, price);
+            ps.setString(5, description);
+            ps.setInt(6, id); // specify which row to update based on ID
+
+            int row = ps.executeUpdate();
+            if (row > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteById(int id) {
+        xSql = "delete from Price_package where package_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, id);
+
+            int row = ps.executeUpdate();
+            if (row > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         PricePackageDAO pc = new PricePackageDAO();
-        Vector<Price_Package> list = pc.getAll();
-        for (Price_Package c : list) {
-            System.out.println(c.getDescription());
-        }
+
+//        System.out.println("Test updatePricePackage");
+//        boolean updated = pc.updatePricePackage(5, "Test2", 0, true, 0, "description");
+//        System.out.println(updated);
+        
+//        System.out.println("Test getAll");
+//        Vector<Price_Package> list = pc.getAll();
+//        for (Price_Package c : list) {
+//            System.out.println(c.getDescription());
+//        }
+
+//        System.out.println("Test addPricePackage");
+//        Price_Package pricePackage = new Price_Package(4, "Test", 90, true, 100, "Test");
+//        boolean added = pc.addPricePackage(pricePackage);
+//        System.out.println(added);
+
+        System.out.println("Test deleteById");
+        boolean deleted = pc.deleteById(4);
+        System.out.println(deleted);
     }
 
 }
