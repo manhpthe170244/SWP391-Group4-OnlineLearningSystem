@@ -217,7 +217,7 @@
                 <div class="row">
                     <ul>
                         <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add </button></li>
-                        <li><button class="edit-post-button" onclick="saveData()">Save </button></li>
+                        <li><button class="edit-post-button" onclick="saveData()" style="position: relative; top: 10px">Save </button></li>
                     </ul>
 
                     <table border="1">
