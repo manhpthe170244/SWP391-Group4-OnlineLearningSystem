@@ -11,16 +11,19 @@ import dto.UserEditProfileDto;
 import entity.Gender;
 import entity.Province;
 import entity.User;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.util.Vector;
+import java.util.regex.Pattern;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.sql.Date;
-import java.util.Vector;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -61,10 +64,10 @@ public class EditProfileController extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         HttpSession session = request.getSession();
-        
+
         Pattern phoneRegex = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})\\b");
         String phoneErr = "";
-        
+
         int uid = Integer.parseInt(request.getParameter("uid"));
         String fname = request.getParameter("fullname");
         int gender = Integer.parseInt(request.getParameter("gender"));
@@ -78,17 +81,17 @@ public class EditProfileController extends HttpServlet {
             response.sendRedirect("editProfile?uid=" + uid);
             return;
         }
-        
+
         UserEditProfileDto user = new UserEditProfileDto(uid, fname, gender, dob, phone, address);
-        
+
         boolean f = userDAO.editProfile(user);
-        
-        if(f) {
+
+        if (f) {
             session.setAttribute("msgSuccess", "Update Thanh Cong!");
             response.sendRedirect("editProfile?uid=" + uid);
             return;
         }
-        
+
         out.print("Edit Fail");
 
     }
