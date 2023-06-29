@@ -167,6 +167,11 @@ hr{
 .LessonDesc{
     width: 90%;
     margin: 30px auto;
+    
+}
+.LessonDesc .left{
+    position: relative;
+    left: 70px;
 }
 .btnDes{
     border: none;
