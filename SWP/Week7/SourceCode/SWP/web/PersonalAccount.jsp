@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css?version=12">
         <link rel="stylesheet" href="assets/css/owl.css?version=10">
         <link rel="stylesheet" href="assets/css/lightbox.css?version=10">
-        <link rel="stylesheet" href="assets/css/styling.css?version=10">
+        <link rel="stylesheet" href="assets/css/styling.css?version=23">
         <!--
         
         TemplateMo 569 Edu Meeting

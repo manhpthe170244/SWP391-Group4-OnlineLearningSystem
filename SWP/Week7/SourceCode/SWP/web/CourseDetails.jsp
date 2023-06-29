@@ -139,7 +139,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="main-button-red">
-                                    <a href="CourseRegister?course_id=${requestScope.course.getCourse_id()}"> ÐANG KÍ NGAY </a>
+                                    <a href="CourseRegister?course_id=${requestScope.course.getCourse_id()}"> ĐĂNG KÍ NGAY </a>
                                 </div>
                             </div>
                         </div>

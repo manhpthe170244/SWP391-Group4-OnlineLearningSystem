@@ -5,6 +5,7 @@
 package entity;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -67,6 +68,12 @@ public class Post {
 
     public Date getPost_date() {
         return post_date;
+    }
+    
+    public String getPost_dateFormated() {
+        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+        String formatedDate = s.format(post_date);
+        return formatedDate;
     }
 
     public void setPost_date(Date post_date) {
