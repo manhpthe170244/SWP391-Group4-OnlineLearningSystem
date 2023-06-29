@@ -172,9 +172,9 @@ background-color: #f2f2f2;
                             <th>Blog_id</th>
                             <th>Action</th>
                         </tr>
-                        <c:forEach items="${requestScope.postList}" var="post">
+                        <c:forEach items="${requestScope.postList}" var="post" varStatus="loop">
                             <tr id="post_${post.getPost_id()}">
-                                <td>${post.getPost_title()}</td>
+                                <td>${loop.index+1}</td>
                                 <td>${post.getPost_img()}</td>
                                 <td>${post.getPost_date()}</td>
                                 <td>${(post.getPost_status()) ? "Active" : "Inactive"}</td>
