@@ -8,6 +8,8 @@ import entity.QuizResult;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,7 +70,7 @@ public class QuizResultDAO extends MyDAO {
         }
         return quizResult;
     }
-    
+
     public int getMaxAttempByUserIdAndQuizId(int user_id, int quiz_id) {
         int maxAttempt = 0;
         xSql = "SELECT COALESCE(MAX(attempt), 0) AS max_attempt\n"
@@ -79,7 +81,7 @@ public class QuizResultDAO extends MyDAO {
             ps.setInt(1, quiz_id);
             ps.setInt(2, user_id);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 maxAttempt = rs.getInt("max_attempt");
             }
         } catch (SQLException ex) {
@@ -87,7 +89,7 @@ public class QuizResultDAO extends MyDAO {
         }
         return maxAttempt;
     }
-    
+
     public Vector<QuizResult> getQuizResultByUserIdAndQuizId(int filter_user_id, int filter_quiz_id) {
         Vector<QuizResult> vector = new Vector<QuizResult>();
         xSql = "select* from Quiz_Result where user_id=? and quiz_id=?";
@@ -139,6 +141,49 @@ public class QuizResultDAO extends MyDAO {
         return vector;
     }
 
+    public Map<String, Integer> getDashBoardDataPop(String sortType, int quizId) {
+        Map<String, Integer> map = new LinkedHashMap<>();
+        xSql = "SELECT scores.score AS qGrade, COUNT(subquery.qGrade) AS user_count\n"
+                + "FROM (\n"
+                + "  SELECT 1 AS score UNION ALL\n"
+                + "  SELECT 2 AS score UNION ALL\n"
+                + "  SELECT 3 AS score UNION ALL\n"
+                + "  SELECT 4 AS score UNION ALL\n"
+                + "  SELECT 5 AS score UNION ALL\n"
+                + "  SELECT 6 AS score UNION ALL\n"
+                + "  SELECT 7 AS score UNION ALL\n"
+                + "  SELECT 8 AS score UNION ALL\n"
+                + "  SELECT 9 AS score UNION ALL\n"
+                + "  SELECT 10 AS score\n"
+                + ") AS scores\n"
+                + "LEFT JOIN (\n"
+                + "  SELECT u.user_email, u.full_name, SUM(qr.quiz_grade) AS qGrade \n"
+                + "  FROM Quiz_Result qr\n"
+                + "  INNER JOIN [User] u ON qr.user_id = u.user_id\n"
+                + "  WHERE qr.quiz_id = ?\n"
+                + "  GROUP BY u.user_email, u.full_name\n"
+                + ") AS subquery ON scores.score = subquery.qGrade\n"
+                + "GROUP BY scores.score\n";
+        if (sortType.equalsIgnoreCase("most")) {
+            xSql += "ORDER BY scores.score DESC";
+        } else {
+            xSql += "ORDER BY scores.score ASC";
+        }
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, quizId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int qGrade = rs.getInt("qGrade");
+                int userCount = rs.getInt("user_count");
+                map.put(String.valueOf(qGrade), userCount);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
     public static void main(String[] args) {
         QuizResultDAO pd = new QuizResultDAO();
         System.out.println("Test insertQuizResult");
@@ -155,7 +200,6 @@ public class QuizResultDAO extends MyDAO {
 //        System.out.println("Test getMaxAttempByUserIdAndQuizId");
 //        int maxAttempt = pd.getMaxAttempByUserIdAndQuizId(1, 1);
 //        System.out.println(maxAttempt);
-          
 //          System.out.println("Test getQuizResultByQuizResultId");
 //          QuizResult quizResult = pd.getQuizResultByQuizResultId(35);
 //          System.out.println(quizResult.getQuiz_id());
