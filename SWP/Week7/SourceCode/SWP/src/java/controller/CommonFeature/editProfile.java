@@ -11,25 +11,24 @@ import dto.UserEditProfileDto;
 import entity.Gender;
 import entity.Province;
 import entity.User;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.util.Vector;
-import java.util.regex.Pattern;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.sql.Date;
+import java.util.Vector;
+import java.util.regex.Pattern;
 
 /**
  *
- * @author admin
+ * @author ACER
  */
-public class EditProfileController extends HttpServlet {
+@WebServlet(name = "editProfile", urlPatterns = {"/editProfile"})
+public class editProfile extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private UserDAO userDAO = new UserDAO();
@@ -95,5 +94,4 @@ public class EditProfileController extends HttpServlet {
         out.print("Edit Fail");
 
     }
-
 }
