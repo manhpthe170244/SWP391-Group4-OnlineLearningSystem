@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="Template Mo">
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
 
         <title>Education Template - Meeting Detail Page</title>
 
@@ -28,6 +28,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
+
         <style>
             .topnav {
                 width: 20%;
@@ -78,20 +79,9 @@
 
         <!-- ***** Header Area End ***** -->
 
-        <section class="heading-page header-text" id="top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <!--          <h6>Get all details</h6>-->
-                        <h2>${requestScope.post}</h2>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="meetings-page" id="meetings">
             <div class="topnav">
-
+                
             </div>
 
             <div class="container">
@@ -101,13 +91,14 @@
                             <div class="col-lg-12">
                                 <div class="meeting-single-item">
                                     <div class="thumb">
-                                        <div class="date">
-                                            <h6>${requestScope.post.getPost_date()}</h6>
-                                        </div>
+
                                         <a href="meeting-details.html"><img src="${requestScope.post.getPost_img()}" alt=""></a>
                                     </div>
                                     <div class="down-content">
                                         <a href="meeting-details.html"><h4>${requestScope.post.getPost_title()}</h4></a>
+                                        <div class="date">
+                                            <h6>Thời gian: ${requestScope.post.getPost_dateFormated()}</h6>
+                                        </div>
                                         <p class="description">
                                             ${requestScope.post.getPost_desc()}
                                         </p>

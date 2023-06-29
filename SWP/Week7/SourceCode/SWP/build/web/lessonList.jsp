@@ -35,7 +35,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <link rel="stylesheet" href="assets/css/styling.css?version=4"/>
+        <link rel="stylesheet" href="assets/css/styling.css?version=5"/>
         <!--
         
         TemplateMo 569 Edu Meeting

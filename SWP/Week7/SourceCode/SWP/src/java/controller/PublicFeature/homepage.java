@@ -14,6 +14,7 @@ import entity.Slider;
 import entity.Subject;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -68,6 +69,24 @@ public class homepage extends HttpServlet {
         List<Course> courseList = courseDAO.Get4HottestBySubId(sub_id);
         request.setAttribute("courseList", courseList);
 
+        Cookie[] cookies = request.getCookies();
+        int user_id = 0;
+        String linkContent = "";
+        String linkAdress = "";
+        if (cookies != null) {
+
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                    linkContent = "Học ngay ";
+                    linkAdress = "courseList?sub_id=0";
+                } else {
+                    linkContent = "Tham gia ngay";
+                    linkAdress = "login.jsp";
+                }
+            }
+        } 
+
         SubjectDAO subjectDAO = new SubjectDAO();
         List<Subject> subjectList = subjectDAO.getAll();
         request.setAttribute("subjectList", subjectList);
@@ -92,7 +111,8 @@ public class homepage extends HttpServlet {
         SliderDAO sliderDAO = new SliderDAO();
         List<Slider> sliderList = sliderDAO.getAll();
         request.setAttribute("sliderList", sliderList);
-
+        request.setAttribute("linkContent", linkContent);
+        request.setAttribute("linkAddress", linkAdress);
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
 
