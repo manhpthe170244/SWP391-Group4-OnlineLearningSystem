@@ -55,7 +55,7 @@
                     <div class="col-lg-8 Per">
                         <h2 style="font-size: 150%; display: inline-block; position: relative; left: -85px">Personal Info</h2> 
                         <div class="EditProfileButton">
-                            <a href="EditProfile.jsp">Edit Profile</a>
+                            <a href="${pageContext.request.contextPath}/editProfile?uid=${currUser.getUserId()}">Edit Profile</a>
                         </div>
                         <div class="PersonalInfo">
                             <div style="color: white;" class="PersonalInfo-left">                 
