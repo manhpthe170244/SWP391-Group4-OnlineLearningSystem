@@ -65,6 +65,7 @@ hr{
     color: white;
     opacity: 0.1;
     margin: 30px 150px;
+    width: 60%
 }
 .CourseCell{
     margin: 10px 0;
@@ -167,12 +168,9 @@ hr{
 .LessonDesc{
     width: 90%;
     margin: 30px auto;
-    
+    margin-left: 55px !important
 }
-.LessonDesc .left{
-    position: relative;
-    left: 70px;
-}
+
 .btnDes{
     border: none;
     background-color: inherit;

@@ -84,7 +84,7 @@
                                             </div>
 
                                         </div>
-                                        <hr>
+                                        
                                     </c:if>
 
 
@@ -93,7 +93,7 @@
                                     <div class="addnewToSection">
                                         <a href="addnewLessonTosection?section_id=${s.getSection_id()}&course_Id=${Course_id}">
                                             <h4> <i class="fa-solid fa-plus"></i> Add new lesson to this section</h4>
-                                            <hr>
+                                            
                                         </a>
                                     </div>
                                 </c:if>
@@ -116,7 +116,7 @@
                                                     </a>
                                                 </c:if>
                                             </div>
-                                            <hr>
+                                            
                                         </c:if>
                                     </div>
 
@@ -125,7 +125,7 @@
                                     <div class="addnewToSection">
                                         <a href="addnewQuizTosection?section_id=${s.getSection_id()}">
                                             <h4> <i class="fa-solid fa-plus"></i> Add new quizzes to this section</h4>
-                                            <hr>
+                                            
                                         </a>
                                     </div>
                                 </c:if>
@@ -159,7 +159,7 @@
                                                 </div>
 
                                             </div>
-                                            <hr>
+                                            
                                         </c:if>
 
 
@@ -188,7 +188,7 @@
                                                         
                                                     </c:if>
                                                 </div>
-                                                <hr>
+                                                
                                             </c:if>
                                         </div>
 

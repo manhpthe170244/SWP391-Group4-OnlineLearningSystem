@@ -256,7 +256,7 @@ public class CourseDAO extends MyDAO {
                     + "fetch next 9 rows only";
             ps = con.prepareStatement(xSql);
 
-            ps.setString(1, "%" + search_name + "%");
+            ps.setNString(1, "%" + search_name + "%");
             ps.setInt(2, offset);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -418,7 +418,7 @@ public class CourseDAO extends MyDAO {
         xSql = "select * from Course where course_name like ? and sub_id =?";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setString(1, "%" + search_name + "%");
+            ps.setNString(1, "%" + search_name + "%");
             ps.setInt(2, filter_sub_id);
             rs = ps.executeQuery();
             while (rs.next()) {
