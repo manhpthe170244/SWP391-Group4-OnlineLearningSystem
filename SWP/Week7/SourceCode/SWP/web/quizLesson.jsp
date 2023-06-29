@@ -79,7 +79,7 @@
 
 
 
-         <jsp:include page="header.jsp"/>
+        <jsp:include page="header.jsp"/>
         <!-- ***** Header Area End ***** -->
 
         <section class="heading-page header-text tQuiz" id="top">
@@ -99,9 +99,9 @@
                         <h2>Ten Bai Quiz</h2>
                     </div>
                 </div>
-                
+
             </div>
-       
+
             <div class="container p-3" style="color: white;">
                 <div class="row">
                     <div class="col-lg-12">
@@ -109,16 +109,16 @@
                     </div>
                 </div>
             </div>
-             <div style="color: white;margin-bottom: 50px" class="col-lg-12">
-                                Sort By <select id="sortType">
-                                    <option value="recent">Recent</option>
-                                    <option value="name">Highest Scores</option>
-                                </select>
-                            </div>
-            
-                                    <div class="main-button-red">
-                            <a href="postList?blog_id=1"> Bat dau lam </a>
-                        </div>
+            <div style="color: white;margin-bottom: 50px" class="col-lg-12">
+                Sort By <select id="sortType">
+                    <option value="recent">Recent</option>
+                    <option value="name">Highest Scores</option>
+                </select>
+            </div>
+
+            <div class="main-button-red">
+                <a href="postList?blog_id=1"> Bat dau lam </a>
+            </div>
 
             <div class="container" >
                 <div class="row">
@@ -139,9 +139,11 @@
                                         <th scope="row">${quizResult.getAttempt()}</th>
                                         <td>
                                             <p style="color: white;">${quizResult.isQuiz_status() ? "Pass" : "Not Pass"}</p>
-                                            <p style="color: white;">Submitted ${quizResult.getQuiz_end()}</p>
+                                            <fmt:formatDate value="${quizResult.getQuiz_end()}" pattern="HH:mm:ss dd/MM/yyyy" />
                                         </td>
-                                        <td>${quizResult.getQuiz_start()}</td>
+                                        <td>
+                                            <fmt:formatDate value="${quizResult.getQuiz_start()}" pattern="HH:mm:ss dd/MM/yyyy" />
+                                        </td>
                                         <td>${quizResult.getQuiz_grade()}</td>
                                         <td>
                                             <a href="QuizReview?quiz_result_id=${quizResult.getQuiz_result_id()}">Review</a>

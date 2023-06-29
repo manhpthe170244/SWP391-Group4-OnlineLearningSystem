@@ -149,9 +149,9 @@
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                        <c:forEach items="${requestScope.sliderList}" var="slider">
+                        <c:forEach items="${requestScope.sliderList}" var="slider" varStatus="loop">
                             <tr id="slider_${slider.getSlider_id()}">
-                                <td>${slider.getSlider_id()}</td>
+                                <td>${loop.index+1}</td>
                                 <td>${slider.getSlider_title()}</td>
                                 <td>${slider.getSlider_img()}</td>
                                 <td>${slider.getSlider_link()}</td>

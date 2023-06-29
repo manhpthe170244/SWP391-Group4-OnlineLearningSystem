@@ -5,6 +5,7 @@
 package entity;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -15,14 +16,14 @@ public class QuizResult {
     int quiz_result_id, quiz_id, user_id;
     boolean quiz_status;
     float quiz_grade;
-    Date quiz_start;
-    Date quiz_end;
+    Timestamp quiz_start;
+    Timestamp quiz_end;
     int attempt;
 
     public QuizResult() {
     }
 
-    public QuizResult(int quiz_result_id, int quiz_id, int user_id, boolean quiz_status, float quiz_grade, Date quiz_start, Date quiz_end, int attempt) {
+    public QuizResult(int quiz_result_id, int quiz_id, int user_id, boolean quiz_status, float quiz_grade, Timestamp quiz_start, Timestamp quiz_end, int attempt) {
         this.quiz_result_id = quiz_result_id;
         this.quiz_id = quiz_id;
         this.user_id = user_id;
@@ -73,19 +74,19 @@ public class QuizResult {
         this.quiz_grade = quiz_grade;
     }
 
-    public Date getQuiz_start() {
+    public Timestamp getQuiz_start() {
         return quiz_start;
     }
 
-    public void setQuiz_start(Date quiz_start) {
+    public void setQuiz_start(Timestamp quiz_start) {
         this.quiz_start = quiz_start;
     }
 
-    public Date getQuiz_end() {
+    public Timestamp getQuiz_end() {
         return quiz_end;
     }
 
-    public void setQuiz_end(Date quiz_end) {
+    public void setQuiz_end(Timestamp quiz_end) {
         this.quiz_end = quiz_end;
     }
 

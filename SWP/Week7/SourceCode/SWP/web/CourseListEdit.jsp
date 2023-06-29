@@ -195,9 +195,9 @@
                             <th>duration</th>
                             <th>action</th>
                         </tr>
-                        <c:forEach items="${requestScope.courseList}" var="course">
+                        <c:forEach items="${requestScope.courseList}" var="course" varStatus="loop">
                             <tr id="course_${course.getCourse_id()}">
-                                <td>${course.getCourse_name()}</td>
+                                <td>${loop.index+1}</td>
                                 <td>${course.getCourse_img()}</td>
                                 <td>${course.getCourse_price()}</td>
                                 <td>${course.getSub_id()}</td>

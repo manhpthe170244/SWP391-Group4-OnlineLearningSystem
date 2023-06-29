@@ -59,8 +59,8 @@ public class QuizResultDAO extends MyDAO {
                 int user_id = rs.getInt("user_id");
                 boolean quiz_status = rs.getBoolean("quiz_status");
                 float quiz_grade = rs.getFloat("quiz_grade");
-                Date quiz_start = rs.getDate("quiz_start");
-                Date quiz_end = rs.getDate("quiz_end");
+                Timestamp quiz_start = rs.getTimestamp("quiz_start");
+                Timestamp quiz_end = rs.getTimestamp("quiz_end");
                 int attempt = rs.getInt("attempt");
 
                 quizResult = new QuizResult(quiz_result_id, quiz_id, user_id, quiz_status, quiz_grade, quiz_start, quiz_end, attempt);
@@ -104,8 +104,8 @@ public class QuizResultDAO extends MyDAO {
                 int user_id = rs.getInt("user_id");
                 boolean quiz_status = rs.getBoolean("quiz_status");
                 float quiz_grade = rs.getFloat("quiz_grade");
-                Date quiz_start = rs.getDate("quiz_start");
-                Date quiz_end = rs.getDate("quiz_end");
+                Timestamp quiz_start = rs.getTimestamp("quiz_start");
+                Timestamp quiz_end = rs.getTimestamp("quiz_end");
                 int attempt = rs.getInt("attempt");
 
                 vector.add(new QuizResult(quiz_result_id, quiz_id, user_id, quiz_status, quiz_grade, quiz_start, quiz_end, attempt));
@@ -129,8 +129,8 @@ public class QuizResultDAO extends MyDAO {
                 int user_id = rs.getInt("user_id");
                 boolean quiz_status = rs.getBoolean("quiz_status");
                 float quiz_grade = rs.getFloat("quiz_grade");
-                Date quiz_start = rs.getDate("quiz_start");
-                Date quiz_end = rs.getDate("quiz_end");
+                Timestamp quiz_start = rs.getTimestamp("quiz_start");
+                Timestamp quiz_end = rs.getTimestamp("quiz_end");
                 int attempt = rs.getInt("attempt");
 
                 vector.add(new QuizResult(quiz_result_id, quiz_id, user_id, quiz_status, quiz_grade, quiz_start, quiz_end, attempt));
