@@ -15,8 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="Template Mo">
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
         <title> Personal Info </title>
 
         <!-- Bootstrap core CSS -->
@@ -28,7 +27,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css?version=12">
         <link rel="stylesheet" href="assets/css/owl.css?version=10">
         <link rel="stylesheet" href="assets/css/lightbox.css?version=10">
-        <link rel="stylesheet" href="assets/css/styling.css?version=23">
+        <link rel="stylesheet" href="assets/css/styling.css?version=27">
         <!--
         
         TemplateMo 569 Edu Meeting
@@ -36,6 +35,12 @@
         https://templatemo.com/tm-569-edu-meeting
         
         -->
+        <style>
+            .CourseStatus{
+                display: flex;
+                justify-content: space-around
+            }
+        </style>
     </head>
 
     <body>
@@ -59,60 +64,86 @@
                         </div>
                         <div class="PersonalInfo">
                             <div style="color: white;" class="PersonalInfo-left">                 
-                                <h4>Full Name:</h4>
-                                <h4>Gender:</h4>
-                                <h4>Date of birth:</h4>
-                                <h4>Phone number:</h4>
-                                <h4>Address: </h4>
-                                <h4>Budget: </h4>
-                                <h4>Registration date: </h4>
+                                <h4>Tên người dùng:</h4>
+                                <h4>Giới tính:</h4>
+                                <h4>Ngày sinh:</h4>
+                                <h4>Số điện thoại:</h4>
+                                <h4>Địa chỉ: </h4>
+                                <h4>Ví: </h4>
+                                <h4>Ngày tham gia: </h4>
                             </div>
                             <div style="color: white;" class="PersonalInfo-right">
                                 <h4>${currUser.getFullName()}(${role.getRoleName()})</h4>
                                 <h4>${gender.getGenderName()}</h4>
-                                <h4>${currUser.getDob()}</h4>
+                                <h4>${currUser.getDobFormated()}</h4>
                                 <h4>${currUser.getUserPhone()}</h4>
                                 <h4>${currUser.getUserAddress()}</h4>
                                 <h4>${currUser.getUserWallet()} (vnd)</h4>
-                                <h4>${currUser.getUserTime()}</h4>
+                                <h4>${currUser.getUserTimeFormated()}</h4>
                             </div>
                         </div>
                     </div>
                 </div>
                 <hr>
-                <div class="row myCourse">
-                    <div class="col-lg-10 offset-1">
-                        <h2 style="font-size: 150%; text-align: left">My Courses</h2> 
-                    </div>
-                    <div class="cucourseList col-lg-10 offset-1">
-                        <ul class="dropdown">
-                            <c:forEach items="${currUserCourses}" var="cuc">
-                                <li>
-                                    <a href="#">
-                                        <div class="CourseCell">
-                                            <img src="${cuc.getUserCourse().getCourse_img()}" alt="alt"/>
-                                            <div class="CourseCell_Info">
-                                                <h4>${cuc.getUserCourse().getCourse_name()}</h4>
-                                                <p>${cuc.getUserCourse().getCourse_desc()}</p>
-                                                <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDate()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDate()}</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </c:forEach>
-                        </ul>
+                <c:if test="${currUser.getRoleId() == 2 || currUser.getRoleId() == 3}">
+                    <div class="row myCourse">
+                        <div class="col-lg-10 offset-1">
+                            <h4 style="color: white; font-size: 200%; text-align: left">Khoá học của tôi</h4> 
+                        </div>
+                        <div class="cucourseList col-lg-10 offset-1">
+                            <ul class="dropdown">
+                                <c:if test="${currUserCourses.size() == 0}">
+                                    <div class="emptyCourse">
+                                        <img src="img/My project.png" alt="alt"/>
+                                        <h4 style="color: white">bạn chưa tham gia khoá học nào cả, nhấn vào <a href="courseList">đây</a> để tìm kiếm khoá học phù hợp nhé</h4>
 
+                                    </div>
+                                </c:if>
+                                <c:forEach items="${currUserCourses}" var="cuc">
+                                    <li>
+                                        <a href="LessonListController?Course_id=${cuc.getUserCourse().getCourse_id()}">
+                                            <div class="CourseCell">
+                                                <img src="${cuc.getUserCourse().getCourse_img()}" alt="alt"/>
+                                                <div class="CourseCell_Info">
+                                                    <h4>${cuc.getUserCourse().getCourse_name()}</h4>
+                                                    <p>${cuc.getUserCourse().getCourse_desc()}</p>
+                                                    <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDate()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDate()}</p>
+                                                    <div class="CourseStatus">
+                                                        <c:if test="${currUser.getRoleId() == 2}">
+                                                            <c:if test="${cuc.isDone() == true}">
+                                                                <p  style="color: #41c86a; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #41c86a;"></i>&nbsp&nbspFinished</p>
+                                                            </c:if>
+                                                            <c:if test="${cuc.isDone() == false}">
+                                                                <p style="color: #ccd656; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #ccd656;"></i>&nbsp&nbspUnfinished</p> 
+                                                            </c:if>
+                                                        </c:if>
+
+                                                        <c:if test="${cuc.getUserCourse().getCourse_status() == false}">
+                                                            <p style="color: #ff8d8d; margin-top: 15px"><i class="fa fa-circle" style="color: #ff8d8d;"></i>&nbsp&nbspInActive</p> 
+                                                        </c:if>   
+                                                        <c:if test="${cuc.getUserCourse().getCourse_status() == true}">
+                                                            <p style="color: #41c86a; margin-top: 15px"><i class="fa fa-circle" style="color: #41c86a;"></i>&nbsp&nbspActive</p> 
+                                                        </c:if>   
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+
+                        </div>
                     </div>
-                </div>
+                </c:if>
                 <div class="row LogOutButton">
                     <a href="logout">Log Out</a>
                 </div>
             </div>
         </section>
 
-        <section class="meetings-page" id="meetings">
+        <section class="meetings-page" id="meetings" style="padding-top: 0">
 
-            <div class="footer">
+            <div class="footer" style="margin-top: 0">
                 <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
                     <br>Design: <a href="https://templatemo.com/page/1" target="_parent" title="website templates">TemplateMo</a></p>
             </div>

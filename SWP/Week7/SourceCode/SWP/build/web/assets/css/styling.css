@@ -38,7 +38,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: rgb(161,44,47);
     padding: 10px 0;
     border-radius: 30px;
-    margin: 100px auto 0 auto;
+    margin: 100px auto 0 auto !important;
     display: inline-block;
 }
 .LogOutButton a{

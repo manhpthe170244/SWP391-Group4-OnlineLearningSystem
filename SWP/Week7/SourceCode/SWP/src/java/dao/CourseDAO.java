@@ -10,6 +10,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import entity.ManageCourse;
+import entity.User;
 import java.sql.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -54,11 +55,14 @@ public class CourseDAO extends MyDAO {
         }
         return n;
     }
-
+//    public User getLectureByCourseId(int courseId){
+//        
+//    }
+    
     // Son
     public Vector<ManageCourse> getmyCourseList(int user_Id, String sub_idRaw, String searchName, String sortType) {
         Vector<ManageCourse> vector = new Vector<ManageCourse>();
-        xSql = "select c.*,mc.course_Start, mc.course_end from Course c, Manage_Course mc\n"
+        xSql = "select c.*,mc.course_Start, mc.course_end, mc.done from Course c, Manage_Course mc\n"
                 + "where c.course_id = mc.course_id\n"
                 + "and mc.user_id = ?";
         if (sub_idRaw != null) {
@@ -92,7 +96,8 @@ public class CourseDAO extends MyDAO {
                 String courseTitle = rs.getString("course_Title");
                 Date course_Start = rs.getDate("course_Start");
                 Date course_End = rs.getDate("course_end");
-                vector.add(new ManageCourse(course_Start, course_End, course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
+                boolean done = rs.getBoolean("done"); 
+                vector.add(new ManageCourse(course_Start, course_End, course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle, done));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);

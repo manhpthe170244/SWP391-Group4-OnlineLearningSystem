@@ -14,12 +14,18 @@ public class ManageCourse {
     Date startDate; 
     Date endDate;
     Course userCourse;
+    boolean done;
     public ManageCourse(Date startDate, Date endDate, int course_id, String course_name, String course_img, float course_price, String course_desc, String last_update, int sub_id, int level_id, Boolean course_status, int duration, String CourseTitle) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.userCourse = new Course(course_id, course_name, course_img, course_price, course_desc, last_update, sub_id, level_id, course_status, duration, CourseTitle);
     }
-    
+    public ManageCourse(Date startDate, Date endDate, int course_id, String course_name, String course_img, float course_price, String course_desc, String last_update, int sub_id, int level_id, Boolean course_status, int duration, String CourseTitle, boolean done) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.userCourse = new Course(course_id, course_name, course_img, course_price, course_desc, last_update, sub_id, level_id, course_status, duration, CourseTitle);
+        this.done = done;
+    }
     
     public Date getStartDate() {
         return startDate;
@@ -43,6 +49,14 @@ public class ManageCourse {
 
     public void setUserCourse(Course userCourse) {
         this.userCourse = userCourse;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
     
 }
