@@ -61,12 +61,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .myCourse{
     text-align: center;
 }
-hr{
-    color: white;
-    opacity: 0.1;
-    margin: 30px 150px;
-    width: 60%
-}
 .CourseCell{
     margin: 10px 0;
     display: flex;
@@ -167,7 +161,7 @@ hr{
 }
 .LessonDesc{
     width: 90%;
-    margin: 30px auto;
+    margin: 30px auto !important;
     margin-left: 55px !important
 }
 
