@@ -8,10 +8,12 @@ import dao.CourseDAO;
 import dao.PostDAO;
 import dao.SliderDAO;
 import dao.SubjectDAO;
+import dao.UserDAO;
 import entity.Course;
 import entity.Post;
 import entity.Slider;
 import entity.Subject;
+import entity.User;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -73,11 +75,14 @@ public class homepage extends HttpServlet {
         int user_id = 0;
         String linkContent = "";
         String linkAdress = "";
+
+        UserDAO ud = new UserDAO();
         if (cookies != null) {
 
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("currUserId")) {
                     user_id = Integer.parseInt(cookie.getValue());
+                    
                     linkContent = "Học ngay ";
                     linkAdress = "courseList?sub_id=0";
                 } else {
@@ -110,6 +115,7 @@ public class homepage extends HttpServlet {
 
         SliderDAO sliderDAO = new SliderDAO();
         List<Slider> sliderList = sliderDAO.getAll();
+        request.setAttribute("currUserId", user_id);
         request.setAttribute("sliderList", sliderList);
         request.setAttribute("linkContent", linkContent);
         request.setAttribute("linkAddress", linkAdress);

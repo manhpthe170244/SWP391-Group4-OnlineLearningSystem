@@ -32,17 +32,8 @@ public class PersonalAccountServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        int user_id = 0;
-        Cookie[] cookies = request.getCookies();
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("currUserId")) {
-                    user_id = Integer.parseInt(cookie.getValue());
-                }
-            }
-        }
+        int user_id = Integer.parseInt(request.getParameter("viewerId"));
+        int profileId = Integer.parseInt(request.getParameter("ProfileId"));
         
         GenderDAO gd = new GenderDAO();
         RoleDAO rd = new RoleDAO();
@@ -51,17 +42,23 @@ public class PersonalAccountServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
         } else {
             UserDAO userDAO = new UserDAO();
-            User currUser = userDAO.getUserById(user_id);
+            User profile = userDAO.getUserById(profileId);
             
-            Gender g = gd.getGenderById(currUser.getGenderId());
-            Role r = rd.getRoleById(currUser.getRoleId());
-            Vector<ManageCourse> currUserCourses = cd.getmyCourseList(currUser.getUserId(), null, null, null);
-            request.setAttribute("currUserCourses", currUserCourses);
-            request.setAttribute("currUser", currUser);
+            Gender g = gd.getGenderById(profile.getGenderId());
+            Role r = rd.getRoleById(profile.getRoleId());
+            
+            Vector<ManageCourse> profileCourses = cd.getmyCourseList(profile.getUserId(), null, null, null);
+            if(user_id == profileId){
+                request.setAttribute("viewOwn", true);
+            }else{
+                request.setAttribute("viewOwn", false);
+            }
+            request.setAttribute("profileCourses", profileCourses);
+            request.setAttribute("profile", profile);
             request.setAttribute("gender", g);
             request.setAttribute("role", r);
             request.getRequestDispatcher("PersonalAccount.jsp").forward(request, response);
-            return;
+         
         }
 
     }

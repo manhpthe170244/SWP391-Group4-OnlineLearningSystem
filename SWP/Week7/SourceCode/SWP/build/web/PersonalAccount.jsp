@@ -54,14 +54,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 offset-1">
-                        <img class="rounded-circle shadow-4-strong" src="${currUser.getUserImg()}" alt="alt"/>
+                        <img class="rounded-circle shadow-4-strong" src="${profile.getUserImg()}" alt="alt"/>
                         <p style="color: white; margin-top: 15px">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
                     </div>
                     <div class="col-lg-8 Per">
                         <h2 style="font-size: 150%; display: inline-block; position: relative; left: -85px">Personal Info</h2> 
-                        <div class="EditProfileButton">
-                            <a href="${pageContext.request.contextPath}/editProfile?uid=${currUser.getUserId()}">Edit Profile</a>
-                        </div>
+                        <c:if test="${requestScope.viewOwn == true}">
+                            <div class="EditProfileButton">
+                                <a href="${pageContext.request.contextPath}/editProfile?uid=${profile.getUserId()}">Edit Profile</a>
+                            </div>
+                        </c:if>
+
                         <div class="PersonalInfo">
                             <div style="color: white;" class="PersonalInfo-left">                 
                                 <h4>Tên người dùng:</h4>
@@ -69,55 +72,63 @@
                                 <h4>Ngày sinh:</h4>
                                 <h4>Số điện thoại:</h4>
                                 <h4>Địa chỉ: </h4>
-                                <h4>Ví: </h4>
+                                <c:if test="${requestScope.viewOwn == true}">
+                                    <h4>Ví: </h4>
+                                </c:if>
                                 <h4>Ngày tham gia: </h4>
                             </div>
                             <div style="color: white;" class="PersonalInfo-right">
-                                <h4>${currUser.getFullName()}(${role.getRoleName()})</h4>
+                                <h4>${profile.getFullName()}(${role.getRoleName()})</h4>
                                 <h4>${gender.getGenderName()}</h4>
-                                <h4>${currUser.getDobFormated()}</h4>
-                                <h4>${currUser.getUserPhone()}</h4>
-                                <h4>${currUser.getUserAddress()}</h4>
-                                <h4>${currUser.getUserWallet()} (vnd)</h4>
-                                <h4>${currUser.getUserTimeFormated()}</h4>
+                                <h4>${profile.getDobFormated()}</h4>
+                                <h4>${profile.getUserPhone()}</h4>
+                                <h4>${profile.getUserAddress()}</h4>
+                                <c:if test="${requestScope.viewOwn == true}">
+                                    <h4>${profile.getUserWallet()} (vnd)</h4>
+                                </c:if>
+                                <h4>${profile.getUserTimeFormated()}</h4>
                             </div>
                         </div>
                     </div>
                 </div>
                 <hr>
-                <c:if test="${currUser.getRoleId() == 2 || currUser.getRoleId() == 3}">
+                <c:if test="${profile.getRoleId() == 2 || profile.getRoleId() == 3}">
                     <div class="row myCourse">
                         <div class="col-lg-10 offset-1">
                             <h4 style="color: white; font-size: 200%; text-align: left">Khoá học của tôi</h4> 
                         </div>
                         <div class="cucourseList col-lg-10 offset-1">
                             <ul class="dropdown">
-                                <c:if test="${currUserCourses.size() == 0}">
+                                <c:if test="${profileCourses.size() == 0}">
                                     <div class="emptyCourse">
                                         <img src="img/My project.png" alt="alt"/>
                                         <h4 style="color: white">bạn chưa tham gia khoá học nào cả, nhấn vào <a href="courseList">đây</a> để tìm kiếm khoá học phù hợp nhé</h4>
 
                                     </div>
                                 </c:if>
-                                <c:forEach items="${currUserCourses}" var="cuc">
+                                <c:forEach items="${profileCourses}" var="cuc">
                                     <li>
-                                        <a href="LessonListController?Course_id=${cuc.getUserCourse().getCourse_id()}">
+                                        <a href="courseDetails?course_id=${cuc.getUserCourse().getCourse_id()}">
                                             <div class="CourseCell">
                                                 <img src="${cuc.getUserCourse().getCourse_img()}" alt="alt"/>
                                                 <div class="CourseCell_Info">
                                                     <h4>${cuc.getUserCourse().getCourse_name()}</h4>
                                                     <p>${cuc.getUserCourse().getCourse_desc()}</p>
-                                                    <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDate()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDate()}</p>
+                                                    <c:if test="${requestScope.profile.getRoleId()==2}">
+                                                        <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDate()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDate()}</p>
+                                                    </c:if>
                                                     <div class="CourseStatus">
-                                                        <c:if test="${currUser.getRoleId() == 2}">
-                                                            <c:if test="${cuc.isDone() == true}">
-                                                                <p  style="color: #41c86a; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #41c86a;"></i>&nbsp&nbspFinished</p>
-                                                            </c:if>
-                                                            <c:if test="${cuc.isDone() == false}">
-                                                                <p style="color: #ccd656; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #ccd656;"></i>&nbsp&nbspUnfinished</p> 
+                                                        <c:if test="${requestScope.viewOwn == true}">
+
+                                                            <c:if test="${profile.getRoleId() == 2}">
+                                                                <c:if test="${cuc.isDone() == true}">
+                                                                    <p  style="color: #41c86a; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #41c86a;"></i>&nbsp&nbspFinished</p>
+                                                                </c:if>
+                                                                <c:if test="${cuc.isDone() == false}">
+                                                                    <p style="color: #ccd656; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #ccd656;"></i>&nbsp&nbspUnfinished</p> 
+                                                                </c:if>
                                                             </c:if>
                                                         </c:if>
-
                                                         <c:if test="${cuc.getUserCourse().getCourse_status() == false}">
                                                             <p style="color: #ff8d8d; margin-top: 15px"><i class="fa fa-circle" style="color: #ff8d8d;"></i>&nbsp&nbspInActive</p> 
                                                         </c:if>   
@@ -135,9 +146,12 @@
                         </div>
                     </div>
                 </c:if>
-                <div class="row LogOutButton">
-                    <a href="logout">Log Out</a>
-                </div>
+                <c:if test="${requestScope.viewOwn == true}">
+                    <div class="row LogOutButton">
+                        <a href="logout">Log Out</a>
+                    </div>
+                </c:if>
+
             </div>
         </section>
 

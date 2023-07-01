@@ -3,9 +3,25 @@
     Created on : May 18, 2023, 8:30:02 PM
     Author     : Phan Nguyen Tu Anh
 --%>
-
+<%@page import="jakarta.servlet.http.Cookie" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+        Cookie[] cookies = request.getCookies();
+        int user_id = 0;
+
+
+
+        if (cookies != null) {
+
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                }
+            }
+        } 
+        pageContext.setAttribute("currUserId", user_id);
+%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -26,6 +42,7 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
     </head>
+
     <body>
         <div class="sub-header">
             <div class="container">
@@ -67,7 +84,7 @@
                                         <li><a href="meeting-details.html">Meeting Details</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="PersonalAccountServlet">TRANG CÁ NHÂN</a></li> 
+                                <li><a href="PersonalAccountServlet?viewerId=${currUserId}&ProfileId=${currUserId}">TRANG CÁ NHÂN</a></li> 
                             </ul>        
                             <a class='menu-trigger'>
                                 <span>Menu</span>

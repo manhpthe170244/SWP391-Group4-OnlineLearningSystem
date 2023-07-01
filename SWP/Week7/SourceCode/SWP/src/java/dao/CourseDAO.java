@@ -58,7 +58,7 @@ public class CourseDAO extends MyDAO {
 //    public User getLectureByCourseId(int courseId){
 //        
 //    }
-    
+
     // Son
     public Vector<ManageCourse> getmyCourseList(int user_Id, String sub_idRaw, String searchName, String sortType) {
         Vector<ManageCourse> vector = new Vector<ManageCourse>();
@@ -96,7 +96,7 @@ public class CourseDAO extends MyDAO {
                 String courseTitle = rs.getString("course_Title");
                 Date course_Start = rs.getDate("course_Start");
                 Date course_End = rs.getDate("course_end");
-                boolean done = rs.getBoolean("done"); 
+                boolean done = rs.getBoolean("done");
                 vector.add(new ManageCourse(course_Start, course_End, course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle, done));
             }
         } catch (SQLException ex) {
@@ -657,13 +657,55 @@ public class CourseDAO extends MyDAO {
         return n;
     }
 
+    //checkCourseRegistered
+    public ManageCourse checkCourseRegistered(int courseId, int userId) {
+        xSql = "select mc.* from Manage_Course mc\n"
+                + "where mc.user_id = ?\n"
+                + "and course_id = ?";
+        ManageCourse registered = null;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, userId);
+            ps.setInt(2, courseId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Date course_Start = rs.getDate("course_Start");
+                Date course_End = rs.getDate("course_end");
+                boolean done = rs.getBoolean("done");
+                registered = new ManageCourse(course_Start, course_End, done);
+            }
+        } catch (Exception e) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return registered;
+    }
+
+    public int getCoursePublisher(int courseId) {
+        xSql = "select u.user_id from Manage_Course mc, \"User\" u\n"
+                + "where course_id = ?\n"
+                + "and mc.user_id = u.user_id\n"
+                + "and u.role_id = 3";
+        int publisher_id = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, courseId);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                publisher_id = rs.getInt("user_id");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return publisher_id;
+
+    }
+
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
 
 //        System.out.println("Test addCourse");
 //        int n = pd.addCourse("Test", "Test", 75000, "Test", Date.valueOf("2022-03-04"), 2, 1, true, 30, "test");
 //        System.out.println(n);
-
         System.out.println("Test deleteCourse");
         Boolean deleted = pd.deleteCourse(136);
         System.out.println(deleted);

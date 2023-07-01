@@ -26,6 +26,12 @@ public class ManageCourse {
         this.userCourse = new Course(course_id, course_name, course_img, course_price, course_desc, last_update, sub_id, level_id, course_status, duration, CourseTitle);
         this.done = done;
     }
+
+    public ManageCourse(Date startDate, Date endDate, boolean done) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.done = done;
+    }
     
     public Date getStartDate() {
         return startDate;
