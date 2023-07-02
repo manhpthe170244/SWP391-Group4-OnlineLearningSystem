@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.CourseDAO;
 import dao.LessonDAO;
 import dao.QuizDAO;
 import dao.SectionDAO;
@@ -55,6 +56,8 @@ public class LessonListController extends HttpServlet {
         UserDAO ud = new UserDAO();
         User currUser = ud.getUserById(user_id);
         int courseId = Integer.parseInt(request.getParameter("Course_id"));
+        CourseDAO cd = new CourseDAO();
+        String courseName = cd.searchById(courseId).getCourse_name();
         SectionDAO secDAO = new SectionDAO();
         LessonDAO lesDAO = new LessonDAO();
         QuizDAO quizDao = new QuizDAO();
@@ -67,6 +70,7 @@ public class LessonListController extends HttpServlet {
         HttpSession session = request.getSession();
         
         session.setAttribute("Course_id", courseId);
+        request.setAttribute("courseName", courseName);
         request.setAttribute("currUser", currUser);
         request.setAttribute("SectionList", vs);
         request.getRequestDispatcher("lessonList.jsp").forward(request, response);

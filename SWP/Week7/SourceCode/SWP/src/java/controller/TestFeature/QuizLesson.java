@@ -74,6 +74,7 @@ public class QuizLesson extends HttpServlet {
         
         QuizResultDAO quizResultDAO = new QuizResultDAO();
         Vector<QuizResult> quizResultList = quizResultDAO.getQuizResultByUserIdAndQuizId(user_id, quiz_id);
+        request.setAttribute("quiz_id", quiz_id);
         request.setAttribute("quizResultList", quizResultList);
         request.getRequestDispatcher("quizLesson.jsp").forward(request, response);
     }

@@ -93,13 +93,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .meeting-item p{
     color: white;
-    margin: 5px 10px;
+    margin-left: 10px !important;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 85%;
+    width: 95%;
     font-size: 110%
 }
 

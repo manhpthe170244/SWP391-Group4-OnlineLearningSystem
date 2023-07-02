@@ -89,23 +89,69 @@
                 text-align: left;
                 color: white;
                 margin: 10px 0;
+                display: inline-block;
+                width: 50%;
             }
             .lessonDesc{
-                margin: 20px 0;
-                
+                margin-top: 30px !important;
+                display: flex;
             }
-            .markAsDone{
+            .markAsDone {
                 width: 30%;
                 background-color: #336699;
                 padding: 20px 0;
-                margin: 0 auto;
-                margin-top: 30px;
+                margin: 50px auto !important;
+                border-radius: 25px;
             }
-            .markAsDone h4{
+            .markAsDone button{
+                background-color: inherit;
+                border: none
+            }
+            .Done {
+                width: 30%;
+                background-color: #47d06e;
+                padding: 20px 0;
+                margin: 50px auto !important;
+                border-radius: 25px;
+            }
+            .markAsDone h4, .Done h4{
                 color: white;
             }
             .markAsDone h4:hover{
                 color: #d8e379
+            }
+            .navigation {
+                display: flex !important;
+                justify-content: left;
+                margin-bottom: 30px;
+            }
+            .navigation a{
+                display: inline-block !important;
+
+            }
+            .navigation h4{
+                display: inline-block
+            }
+            .navigation a:nth-child(3){
+                position: relative;
+                left: 600px;
+            }
+            .lessonStatus{
+                display: flex;
+                align-items: center;
+                justify-content: end;
+                border: 1px solid
+            }
+            .lessonStatusWrapper{
+                display: inline-block;
+                width: 50% !important
+
+            }
+            .footer{
+                margin-top: 0 !important
+            }
+            .meetings-page{
+                padding-top: 0 !important;
             }
         </style>
         <!--
@@ -124,17 +170,47 @@
         giua roi chen noi dug trang vao phan ben duoi -->
         <section class="heading-page header-text">
             <div class="container">
+                <div class="navigation">
+                    <a href="LessonListController?Course_id=${Course_id}"><h4 style="text-align: left">${requestScope.courseName} / </h4></a>
+                    <a href="#"><h4 style="text-align: left; color: #ffcc66">${lesson.getLesson_name()} </h4></a>
+                    <c:if test="${requestScope.currUser.getRoleId()==3}">
+                        <a href="EditLessonContent?lesson_id=${lesson.getLesson_id()}&lesson_Name=${lesson.getLesson_name()}&lesson_Video=${lesson.getLesson_video()}&Lesson_desc=${lesson.getLesson_desc()}">
+                            <i class="fa fa-edit fa-2x" style="color:#31c8ff"></i>
+                        </a>
+                    </c:if>
+
+                </div>
                 <div class="row">
-                    <h2 style="text-align: left;">${lesson.getLesson_name()}</h2>
                     <iframe width="400" height="700" src="${lesson.getLesson_video()}" frameborder="0" allowfullscreen></iframe>                   
                 </div>
                 <div class="row lessonDesc">
                     <h4>Nội dung bài học</h4>
-                    <h4>${lesson.getLesson_desc()}</h4>
+                    <c:if test="${requestScope.lesson.isLesson_status() == true}">
+                        <div class="lessonStatusWrapper">
+                            <div class="lessonStatus">
+                                <i class="fa fa-circle" style="color: #75ff91;"></i><p style="color: #75ff91;">&nbsp;&nbsp;&nbsp;Active</p>
+                            </div>
+                        </div>
+                    </c:if>
+
                 </div>
-                <div class="row markAsDone">
-                    <h4>Mark as Done</h4>
+                <div class="lessonDesc1">
+                    <h5 style="color: white; text-align: left">${lesson.getLesson_desc()}</h5>
                 </div>
+                <c:if test="${requestScope.currUser.getRoleId()==2}">
+                    <c:if test="${requestScope.done == false}">
+                        <div class="row markAsDone" id="markAsDone">
+                            <button onclick="markAsDone(${requestScope.currUser.getUserId()}, ${requestScope.lesson.getLesson_id()})">
+                                <h4>Mark as Done</h4>
+                            </button>
+                        </div>
+                    </c:if>
+                    <c:if test="${requestScope.done == true}">
+                        <div class="row Done" id="Done">
+                            <h4>Done</h4>
+                        </div>
+                    </c:if>
+                </c:if>
             </div>
         </section>
 
@@ -154,25 +230,21 @@
         <script src="assets/js/slick-slider.js"></script>
         <script src="assets/js/custom.js"></script>
         <script>
-//           
-            // set sort_type
-            const sortType = document.getElementById("sortType");
-            sortType.addEventListener("change", function () {
-                if (sortType.value === "recent") {
-                    window.location.href = "?sort_type=recent";
-                } else if (sortType.value === "name") {
-                    window.location.href = "?sort_type=name";
-                }
-            });
-
-            var paramValue = "${sessionScope.sort_type}";
-            for (var i = 0; i < sortType.options.length; i++) {
-                if (sortType.options[i].value === paramValue) {
-                    sortType.options[i].selected = true;
-                    break;
-                }
+            function markAsDone(userId, lessonId) {
+                var url = "markAsDone?userId=" + encodeURIComponent(userId)+"&lessonId="+encodeURIComponent(lessonId);
+                console.log(url);
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("POST", url, true);
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                        var StatusButton = document.getElementById("markAsDone");
+                        StatusButton.classList.remove("markAsDone");
+                        StatusButton.classList.add("Done");
+                        StatusButton.innerHTML = "<h4>Done</h4>";
+                    }
+                };
+                xmlHttp.send();
             }
-
 
 
             var showSection = function showSection(section, isAnimate) {

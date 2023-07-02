@@ -565,8 +565,8 @@ public class CourseDAO extends MyDAO {
     }
 
     public Vector<Course> SortCoursesByParRate(int offset, int fetch, int sub_id, String search) {
-        xSql = "select distinct c.*, COUNT(mc.user_id) as parRate from Course c, Manage_Course mc\n"
-                + "where mc.course_id = c.course_id\n";
+        xSql = "select distinct c.*, COUNT(mc.user_id) as parRate from Course c left join Manage_Course mc\n"
+                + "on mc.course_id = c.course_id";
 
         Vector<Course> vector = new Vector<>();
         try {
@@ -576,7 +576,7 @@ public class CourseDAO extends MyDAO {
             if (search != null) {
                 xSql += " and c.course_name like '%" + search + "%'";
             }
-            xSql += "group by mc.course_id, c.course_id, c.course_name, c.course_desc, c.course_img, c.course_price, c.course_status,\n"
+            xSql += " group by mc.course_id, c.course_id, c.course_name, c.course_desc, c.course_img, c.course_price, c.course_status,\n"
                     + "c.course_Title, c.durationDAY, c.last_update, c.level_id, c.sub_id\n"
                     + "order by parRate desc\n"
                     + "offset ? row\n"
@@ -690,7 +690,7 @@ public class CourseDAO extends MyDAO {
             ps = con.prepareStatement(xSql);
             ps.setInt(1, courseId);
             rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 publisher_id = rs.getInt("user_id");
             }
         } catch (Exception e) {

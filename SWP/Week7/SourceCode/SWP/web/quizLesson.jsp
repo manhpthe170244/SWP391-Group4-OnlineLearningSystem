@@ -109,15 +109,15 @@
                     </div>
                 </div>
             </div>
-            <div style="color: white;margin-bottom: 50px" class="col-lg-12">
+            <div style="color: white;margin-bottom: 50px; margin-left: 115px" class="col-lg-12">
                 Sort By <select id="sortType">
                     <option value="recent">Recent</option>
                     <option value="name">Highest Scores</option>
                 </select>
             </div>
 
-            <div class="main-button-red">
-                <a href="postList?blog_id=1"> Bat dau lam </a>
+            <div class="main-button-red" style="margin-bottom: 30px">
+                <a href="QuizHandle?quiz_id=${requestScope.quiz_id}"> Bắt đầu làm </a>
             </div>
 
             <div class="container" >

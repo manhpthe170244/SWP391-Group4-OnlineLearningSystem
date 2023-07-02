@@ -33,30 +33,25 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
         <style>
-            
+
             .submit1{
-  background-color: #E05A7D; /* Màu nền của nút */
-  border: none; /* Không có viền */
-  color: white; /* Màu chữ */
-  padding: 10px 20px; /* Kích thước lề trong nút */
-  text-align: center; /* Căn giữa chữ trong nút */
-  text-decoration: none; /* Không gạch chân chữ */
-  display: inline-block; /* Hiển thị nút như một khối */
-  font-size: 16px; /* Kích thước chữ */
-  cursor: pointer; /* Con trỏ chuột trở thành bàn tay khi di chuột vào nút */
-  border-radius: 4px; /* Đường cong viền của nút */
-}
-
-
-
-
-
+                background-color: #ced3b6; /* Màu nền của nút */
+                border: none; /* Không có viền */
+                color: white; /* Màu chữ */
+                padding: 10px 20px; /* Kích thước lề trong nút */
+                text-align: center; /* Căn giữa chữ trong nút */
+                text-decoration: none; /* Không gạch chân chữ */
+                display: inline-block; /* Hiển thị nút như một khối */
+                font-size: 16px; /* Kích thước chữ */
+                cursor: pointer; /* Con trỏ chuột trở thành bàn tay khi di chuột vào nút */
+                border-radius: 4px; /* Đường cong viền của nút */
+            }
             th, td {
                 text-align: left;
                 padding: 8px;
-                border: 3px solid #ddd;
+                border: 3px solid #b9b9b9 !important;
                 color: Black;
-                background-color: white;
+                background-color: #e7e9dc;
             }
 
             .table-container {
@@ -67,6 +62,7 @@
                 display: block;
                 margin: 0 auto;
                 width: 1000px;
+                border-radius: 15px
             }
             td{
                 width: 850px;
@@ -78,9 +74,8 @@
             }
             .sidebar {
                 width: 100%;
-
                 padding: 20px;
-                background-color: #f2f2f2;
+                background-color: #edeee7;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
             .sidebar h3 {
@@ -111,12 +106,10 @@
             }
             .navbar2 {
                 left: -10px;
-                background-color: #f9f9f9;
-                border-bottom: 1px solid #e5e5e5;
                 padding-top: 10px;
                 padding-bottom: 10px;
             }
-
+           
             .navbar2-brand {
                 font-size: 20px;
                 font-weight: bold;
@@ -124,7 +117,9 @@
                 margin-right: 10px;
                 margin-left: 10px;
             }
-
+            .navbar2-brand-divider{
+                color: #2ea7be;
+            }
             .navbar2-divider {
                 font-size: 20px;
                 color: #333;
@@ -135,9 +130,12 @@
                 display: flex;
                 flex-wrap: wrap;
                 justify-content:  flex-start;
-
+                
             }
-
+            
+            .quiz-all a{
+                color: #646464
+            }
             .quiz-square {
                 width: 30px;
                 height: 30px;
@@ -172,16 +170,16 @@
             .flag-icon {
                 color: black;
             }
-            
+
             .col-sm-9 table {
-                     width: 100%;
+                width: 100%;
             }
             .quiz-all mb-9{
                 background-color: #E05A7D;
-                
+
             }
             .quiz-square{
-                background-color:#E1ADFF;
+                background-color: #9edcde;
             }
         </style>
     </head>
@@ -194,14 +192,14 @@
 
 
         <section class="heading-page header-text" style="padding-top: 100px;">
-            <div class="navbar2">
-                <div class="container2" style="text-align: left;">
+            <div class="navbar2" style="text-align: left; margin-top: 30px">
+                <div class="container2" style="display: inline-block; border-bottom: 1px solid #2EA7BE">
                     <span class="navbar2-brand"><a href="">Home</a></span>
-                    <span class="navbar2-brand-divider ">/</span>
+                    <span class="navbar2-brand-divider">/</span>
                     <span class="navbar2-brand"><a href="">My Course</a></span>
-                    <span class="navbar2-brand-divider ">/</span>
+                    <span class="navbar2-brand-divider">/</span>
                     <span class="navbar2-brand"><a href="">MAE101</a></span>
-                    <span class="navbar2-brand-divider ">/</span>
+                    <span class="navbar2-brand-divider">/</span>
                     <span class="navbar2-brand"><a href="">Review Progress Test</a></span>
 
                 </div>

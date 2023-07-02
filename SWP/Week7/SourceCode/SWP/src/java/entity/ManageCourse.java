@@ -5,6 +5,7 @@
 package entity;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -36,7 +37,10 @@ public class ManageCourse {
     public Date getStartDate() {
         return startDate;
     }
-
+    public String getStartDateFormated(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+        return sdf.format(this.getStartDate());
+    }
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -45,6 +49,11 @@ public class ManageCourse {
         return endDate;
     }
 
+    public String getEndDateFormated(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+        return sdf.format(this.getEndDate());
+    }
+    
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
