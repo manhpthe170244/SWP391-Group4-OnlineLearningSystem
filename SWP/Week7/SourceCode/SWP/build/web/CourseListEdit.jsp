@@ -31,6 +31,14 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
+            table, td, th {
+  border: 1px solid white !important;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
             th, td {
                 padding: 8px;
                 border: 1px solid #ddd;

@@ -87,7 +87,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h6>Thông tin quiz</h6>
-                        <h2>Các bài quizz online</h2>
+                        <h2>${requestScope.quiz.getQuiz_name()}</h2>
                     </div>
                 </div>
             </div>
@@ -109,15 +109,15 @@
                     </div>
                 </div>
             </div>
-            <div style="color: white;margin-bottom: 50px" class="col-lg-12">
+            <div style="color: white;margin-bottom: 50px;margin-left: 115px" class="col-lg-12">
                 Sort By <select id="sortType">
                     <option value="recent">Recent</option>
                     <option value="name">Highest Scores</option>
                 </select>
             </div>
 
-            <div class="main-button-red">
-                <a href="postList?blog_id=1"> Bat dau lam </a>
+            <div class="main-button-red" style="margin-bottom: 10px">
+                <a href="QuizHandle?quiz_id=1"> Bắt đầu làm </a>
             </div>
 
             <div class="container" >

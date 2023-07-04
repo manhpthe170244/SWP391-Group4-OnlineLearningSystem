@@ -41,6 +41,27 @@ public class QuizDAO extends MyDAO {
         return vector;
     }
 
+    public Quiz getQuizById(int id) {
+        Quiz quiz = null;
+        xSql = "Select * from Quiz where quiz_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int quiz_id = rs.getInt("quiz_id");
+                String quiz_name = rs.getString("quiz_name");
+                String quiz_desc = rs.getString("quiz_desc");
+                int section_id = rs.getInt("section_id");
+                boolean quiz_status = rs.getBoolean("quiz_status");
+                quiz = new Quiz(quiz_id, quiz_name, quiz_desc, section_id, quiz_status);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuizDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return quiz;
+    }
+
     public Vector<Choice> getChoicebyQuestionId(int search_ques_id) {
         Vector<Choice> vector = new Vector<Choice>();
 
@@ -315,10 +336,13 @@ public class QuizDAO extends MyDAO {
 
     public static void main(String[] args) {
         QuizDAO pd = new QuizDAO();
-        System.out.println("Test getAllQuestionCorrectAnswer");
-        Vector<String> correctAnswers = pd.getAllCorrectAnswer(2);
-        for (String a : correctAnswers) {
-            System.out.println(a);
-        }
+//        System.out.println("Test getAllQuestionCorrectAnswer");
+//        Vector<String> correctAnswers = pd.getAllCorrectAnswer(2);
+//        for (String a : correctAnswers) {
+//            System.out.println(a);
+//        }
+        System.out.println("Test getQuizById: ");
+        Quiz quiz = pd.getQuizById(1);
+        System.out.println(quiz.getQuiz_name());
     }
 }

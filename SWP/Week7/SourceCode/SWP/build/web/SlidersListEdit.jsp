@@ -28,11 +28,19 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
+            table, td, th {
+                border: 1px solid white !important;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
             .table-container {
-  text-align: center;
-  overflow-x: auto;
-}
-            
+                text-align: center;
+                overflow-x: auto;
+            }
+
             table{
                 width:100%;
 
@@ -53,9 +61,9 @@
                 color: white;
             }
 
-/*            .table-container {
-                text-align: center;
-            }*/
+            /*            .table-container {
+                            text-align: center;
+                        }*/
 
             table {
                 width: auto;
@@ -175,17 +183,17 @@
     </body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function deleteSlider(sliderId) {
-            //Send an AJAX request to your server-side script
-            $.ajax({
-                url: "deleteSlider",
-                type: "POST",
-                data: {slider_id: sliderId},
-                success: function (response) {
-                    // Remove the row from the table
-                    $("#slider_" + sliderId).remove();
-                }
-            });
-        }
+                                        function deleteSlider(sliderId) {
+                                            //Send an AJAX request to your server-side script
+                                            $.ajax({
+                                                url: "deleteSlider",
+                                                type: "POST",
+                                                data: {slider_id: sliderId},
+                                                success: function (response) {
+                                                    // Remove the row from the table
+                                                    $("#slider_" + sliderId).remove();
+                                                }
+                                            });
+                                        }
     </script>
 </html>
