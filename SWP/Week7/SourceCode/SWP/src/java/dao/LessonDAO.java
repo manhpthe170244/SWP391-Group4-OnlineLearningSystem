@@ -85,7 +85,8 @@ public class LessonDAO extends MyDAO {
         }
         return lesson;
     }
-//son
+
+    //son
     public Vector<Lesson> getLessonBySectionId(int SectionId) {
         xSql = "select l.* from Lesson l, Section s\n"
                 + "where l.section_id = s.section_id\n"
@@ -114,6 +115,7 @@ public class LessonDAO extends MyDAO {
         }
         return vector;
     }
+
     //son
     public void SetLessonStatus(int UpdateStatus, int lessonId) {
         xSql = "update Lesson set lesson_status = ? where lesson_id = ?";
@@ -126,6 +128,7 @@ public class LessonDAO extends MyDAO {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     //son
     public void editLessonDetail(String lessonName, String lessonVideo, String lessonDesc, int lessonId) {
         xSql = "update Lesson\n"
@@ -145,6 +148,7 @@ public class LessonDAO extends MyDAO {
         }
 
     }
+
     //son
     public void AddnewLessonToSection(int Section_id, String lesson_Name, String lesson_video, String lesson_desc) {
         xSql = "insert into Lesson (lesson_name, lesson_video, section_id, lesson_desc, lesson_status) values (?, ?, ?, ?, ?)";
@@ -159,6 +163,42 @@ public class LessonDAO extends MyDAO {
         } catch (Exception e) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
         }
-                
+
     }
+
+    //son
+    public boolean checkLessonDone(int userId, int lessonId) {
+        xSql = "select * from Lesson_Result\n"
+                + "where user_id = ?\n"
+                + "and lesson_id = ?";
+        boolean done = false;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, userId);
+            ps.setInt(2, lessonId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                done = true;
+            }
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return done;
+    }
+
+    public void markasDone(int userId, int lessonId) {
+        xSql = "insert into Lesson_Result (user_id, lesson_id, lesson_status) values (?, ?, 1)";
+
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, userId);
+            ps.setInt(2, lessonId);
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+    }
+
 }

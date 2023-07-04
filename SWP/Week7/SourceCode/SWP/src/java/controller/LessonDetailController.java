@@ -4,9 +4,13 @@
  */
 package controller;
 
+import dao.CourseDAO;
 import dao.LessonDAO;
+import dao.UserDAO;
 import dto.LessonDto;
+import entity.Course;
 import entity.Lesson;
+import entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,32 +30,53 @@ import java.util.List;
  */
 public class LessonDetailController extends HttpServlet {
 
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private LessonDAO lessonDAO = new LessonDAO();
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        Cookie[] cookies = request.getCookies();
+        int user_id = 0;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                }
+            }
+        }
+        if (user_id == 0) {
+            response.sendRedirect("login.jsp");
+            return;
+        } else {
+            UserDAO ud = new UserDAO();
+            User currUser = ud.getUserById(user_id);
+            int lId = Integer.parseInt(request.getParameter("lId"));
+            int cid = Integer.parseInt(request.getParameter("courseId"));
+            CourseDAO cd = new CourseDAO();
+            Course course = cd.searchById(cid);
+            String courseName = course.getCourse_name();
+            Lesson lesson = lessonDAO.getLessonDetails(lId);
+            boolean done = lessonDAO.checkLessonDone(user_id, lId);
+            request.setAttribute("currUser", currUser);
+            request.setAttribute("courseName", courseName);
+            request.setAttribute("done", done);
+            request.setAttribute("lesson", lesson);
+            request.getRequestDispatcher("lessonDetail.jsp").forward(request, response);
+        }
 
-                int lId = Integer.parseInt(request.getParameter("lId"));
-                
-                Lesson lesson = lessonDAO.getLessonDetails(lId);
-                
-                request.setAttribute("lesson", lesson);
-                request.getRequestDispatcher("lessonDetail.jsp").forward(request, response);
-                
-	}
+    }
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
 
-	}
+    }
 
 }

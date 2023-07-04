@@ -10,6 +10,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import entity.ManageCourse;
+import entity.User;
 import java.sql.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -54,11 +55,14 @@ public class CourseDAO extends MyDAO {
         }
         return n;
     }
+//    public User getLectureByCourseId(int courseId){
+//        
+//    }
 
     // Son
     public Vector<ManageCourse> getmyCourseList(int user_Id, String sub_idRaw, String searchName, String sortType) {
         Vector<ManageCourse> vector = new Vector<ManageCourse>();
-        xSql = "select c.*,mc.course_Start, mc.course_end from Course c, Manage_Course mc\n"
+        xSql = "select c.*,mc.course_Start, mc.course_end, mc.done from Course c, Manage_Course mc\n"
                 + "where c.course_id = mc.course_id\n"
                 + "and mc.user_id = ?";
         if (sub_idRaw != null) {
@@ -92,7 +96,8 @@ public class CourseDAO extends MyDAO {
                 String courseTitle = rs.getString("course_Title");
                 Date course_Start = rs.getDate("course_Start");
                 Date course_End = rs.getDate("course_end");
-                vector.add(new ManageCourse(course_Start, course_End, course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle));
+                boolean done = rs.getBoolean("done");
+                vector.add(new ManageCourse(course_Start, course_End, course_id, course_name, course_img, course_price, course_desc, last_update.toString(), sub_id, level_id, course_status, duration, courseTitle, done));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -256,7 +261,7 @@ public class CourseDAO extends MyDAO {
                     + "fetch next 9 rows only";
             ps = con.prepareStatement(xSql);
 
-            ps.setString(1, "%" + search_name + "%");
+            ps.setNString(1, "%" + search_name + "%");
             ps.setInt(2, offset);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -418,7 +423,7 @@ public class CourseDAO extends MyDAO {
         xSql = "select * from Course where course_name like ? and sub_id =?";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setString(1, "%" + search_name + "%");
+            ps.setNString(1, "%" + search_name + "%");
             ps.setInt(2, filter_sub_id);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -560,8 +565,8 @@ public class CourseDAO extends MyDAO {
     }
 
     public Vector<Course> SortCoursesByParRate(int offset, int fetch, int sub_id, String search) {
-        xSql = "select distinct c.*, COUNT(mc.user_id) as parRate from Course c, Manage_Course mc\n"
-                + "where mc.course_id = c.course_id\n";
+        xSql = "select distinct c.*, COUNT(mc.user_id) as parRate from Course c left join Manage_Course mc\n"
+                + "on mc.course_id = c.course_id";
 
         Vector<Course> vector = new Vector<>();
         try {
@@ -571,7 +576,7 @@ public class CourseDAO extends MyDAO {
             if (search != null) {
                 xSql += " and c.course_name like '%" + search + "%'";
             }
-            xSql += "group by mc.course_id, c.course_id, c.course_name, c.course_desc, c.course_img, c.course_price, c.course_status,\n"
+            xSql += " group by mc.course_id, c.course_id, c.course_name, c.course_desc, c.course_img, c.course_price, c.course_status,\n"
                     + "c.course_Title, c.durationDAY, c.last_update, c.level_id, c.sub_id\n"
                     + "order by parRate desc\n"
                     + "offset ? row\n"
@@ -652,13 +657,55 @@ public class CourseDAO extends MyDAO {
         return n;
     }
 
+    //checkCourseRegistered
+    public ManageCourse checkCourseRegistered(int courseId, int userId) {
+        xSql = "select mc.* from Manage_Course mc\n"
+                + "where mc.user_id = ?\n"
+                + "and course_id = ?";
+        ManageCourse registered = null;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, userId);
+            ps.setInt(2, courseId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Date course_Start = rs.getDate("course_Start");
+                Date course_End = rs.getDate("course_end");
+                boolean done = rs.getBoolean("done");
+                registered = new ManageCourse(course_Start, course_End, done);
+            }
+        } catch (Exception e) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return registered;
+    }
+
+    public int getCoursePublisher(int courseId) {
+        xSql = "select u.user_id from Manage_Course mc, \"User\" u\n"
+                + "where course_id = ?\n"
+                + "and mc.user_id = u.user_id\n"
+                + "and u.role_id = 3";
+        int publisher_id = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, courseId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                publisher_id = rs.getInt("user_id");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return publisher_id;
+
+    }
+
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
 
 //        System.out.println("Test addCourse");
 //        int n = pd.addCourse("Test", "Test", 75000, "Test", Date.valueOf("2022-03-04"), 2, 1, true, 30, "test");
 //        System.out.println(n);
-
         System.out.println("Test deleteCourse");
         Boolean deleted = pd.deleteCourse(136);
         System.out.println(deleted);

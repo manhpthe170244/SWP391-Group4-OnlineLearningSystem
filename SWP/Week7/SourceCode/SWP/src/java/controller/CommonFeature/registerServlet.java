@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.regex.Pattern;
 
 
@@ -56,6 +57,11 @@ public class registerServlet extends HttpServlet {
         }
         String password1 = request.getParameter("password1");
         String password2 = request.getParameter("password2");
+        String passwordPattern = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$";
+        String PasswordPatternErr = "Mật khẩu cần phải bao gồm cả chữ cái và số và có độ dài ít nhất là 6 kí tự";
+        if(!password1.matches(PasswordPatternErr)){
+            request.setAttribute("PasswordPatternErr", PasswordPatternErr);
+        }
         String passworderr = "";
         if (!password1.equals(password2)) {
             passworderr = "The re-entered password does not match the first one !";
@@ -79,6 +85,15 @@ public class registerServlet extends HttpServlet {
         String gender = request.getParameter("gender");
         String dobRaw = request.getParameter("dob");
         Date dob = Date.valueOf(dobRaw);
+        LocalDate ldDob = LocalDate.parse(dobRaw);
+        LocalDate currDate = LocalDate.now();
+        Period age = Period.between(ldDob, currDate);
+        out.print(age.getYears());
+        String ageErr = "";
+        if(age.getYears() < 13){
+            ageErr = "Người dùng ít nhất phải 13 tuổi";
+            request.setAttribute("ageErr", ageErr);
+        }
         Pattern phoneRegex = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})\\b");
         String phone = request.getParameter("phone");
         String phoneErr = "";

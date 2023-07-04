@@ -38,7 +38,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: rgb(161,44,47);
     padding: 10px 0;
     border-radius: 30px;
-    margin: 100px auto 0 auto;
+    margin: 100px auto 0 auto !important;
     display: inline-block;
 }
 .LogOutButton a{
@@ -60,11 +60,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 .myCourse{
     text-align: center;
-}
-hr{
-    color: white;
-    opacity: 0.1;
-    margin: 30px 150px;
 }
 .CourseCell{
     margin: 10px 0;
@@ -98,13 +93,13 @@ hr{
 
 .meeting-item p{
     color: white;
-    margin: 5px 10px;
+    margin-left: 10px !important;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 85%;
+    width: 95%;
     font-size: 110%
 }
 
@@ -166,13 +161,10 @@ hr{
 }
 .LessonDesc{
     width: 90%;
-    margin: 30px auto;
-    
+    margin: 30px auto !important;
+    margin-left: 55px !important
 }
-.LessonDesc .left{
-    position: relative;
-    left: 70px;
-}
+
 .btnDes{
     border: none;
     background-color: inherit;

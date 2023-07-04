@@ -23,14 +23,12 @@ import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
-
 /**
  *
  * @author ACER
  */
 public class courseList extends HttpServlet {
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -79,7 +77,7 @@ public class courseList extends HttpServlet {
         int recordsPerPage = 9;
 
         CourseDAO courseDAO = new CourseDAO();
-        List courseToDisplay = new ArrayList<>();
+        List<Course> courseToDisplay = new ArrayList<>();
 
         SubjectDAO subjectDAO = new SubjectDAO();
         List<Subject> subjectList = subjectDAO.getAll();
@@ -94,20 +92,22 @@ public class courseList extends HttpServlet {
         // Get courseList by search and sub_id
         if (search == null) {
             if ((int) session.getAttribute("sub_id") == 0) {
-                courseToDisplay = courseDAO.getAllCoursewithPagination((currentPage - 1)*9, 9, sort_type);
+                courseToDisplay = courseDAO.getAllCoursewithPagination((currentPage - 1) * 9, 9, sort_type);
                 totalRecords = courseDAO.getTotalNumber(0, search);
             } else {
-                courseToDisplay = courseDAO.getCourseBySubId(sub_id, (currentPage - 1)*9, 9, sort_type);
+                courseToDisplay = courseDAO.getCourseBySubId(sub_id, (currentPage - 1) * 9, 9, sort_type);
                 totalRecords = courseDAO.getTotalNumber(sub_id, search);
             }
 
         } else {
-            courseToDisplay = courseDAO.searchByName(search, sort_type, (currentPage - 1)*9);
+            courseToDisplay = courseDAO.searchByName(search, sort_type, (currentPage - 1) * 9);
             totalRecords = courseDAO.getTotalNumber(0, search);
         }
-        if(sort_type.equalsIgnoreCase("mostparticipant")){
-            courseToDisplay = courseDAO.SortCoursesByParRate((currentPage-1)*9, 9, (int)session.getAttribute("sub_id"), search);
+        if (sort_type.equalsIgnoreCase("Mostparticipant")) {
+            courseToDisplay = courseDAO.SortCoursesByParRate((currentPage - 1) * 9, 9, (int) session.getAttribute("sub_id"), search);
             totalRecords = courseToDisplay.size();
+
+
         }
         totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
         request.setAttribute("courseToDisplay", courseToDisplay);

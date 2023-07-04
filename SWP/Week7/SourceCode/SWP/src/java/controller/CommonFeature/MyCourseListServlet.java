@@ -6,6 +6,7 @@ package controller.CommonFeature;
 
 import dao.CourseDAO;
 import dao.SubjectDAO;
+import dao.UserDAO;
 import entity.Course;
 import entity.ManageCourse;
 import entity.Subject;
@@ -35,11 +36,14 @@ public class MyCourseListServlet extends HttpServlet {
             throws ServletException, IOException {
         int user_id = 0;
         Cookie[] cookies = request.getCookies();
-
+        User currUser = null;
+        UserDAO ud = new UserDAO();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("currUserId")) {
                     user_id = Integer.parseInt(cookie.getValue());
+                    currUser = ud.getUserById(user_id); 
+                    request.setAttribute("currUser", currUser);
                 }
             }
         }
@@ -76,7 +80,8 @@ public class MyCourseListServlet extends HttpServlet {
         Vector<ManageCourse> myCourses = cd.getmyCourseList(user_id, subIdRaw, search, sort_type);
         request.setAttribute("myCourses", myCourses);
 
-        
+        PrintWriter out = response.getWriter();
+        out.print(myCourses.size());
 
         request.getRequestDispatcher("MyCourseList.jsp").forward(request, response);
 

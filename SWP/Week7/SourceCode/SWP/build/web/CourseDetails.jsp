@@ -64,6 +64,26 @@
             .topnav .search-container button:hover {
                 background: #ccc;
             }
+            .publisher{
+                border: 2px solid #dbdbda;
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                border-radius: 15px;
+                background-color: #f0f2e5;
+                margin-top: 5px
+            }
+            .publisher img{
+                width: 60px;
+                height: 60px;
+                border-radius: 50px;
+                margin-right: 20px
+            }
+            @media only screen and (max-width: 600px) {
+                .publisher{
+                    margin-top: 20px
+                }
+            }
         </style>
         <!--
         
@@ -119,14 +139,28 @@
                                         <div class="date">
                                             <h6>Nov <span>12</span></h6>
                                         </div>
-                                        <a href="meeting-details.html"><img src="${requestScope.course.getCourse_img()}" alt=""></a>
+                                        <a href="meeting-details.html"><img style="border: 1px solid #dbdbda" src="${requestScope.course.getCourse_img()}" alt=""></a>
                                     </div>
                                     <div class="down-content">
-                                        <a href="meeting-details.html"><h4>${requestScope.course.getCourse_name()}</h4></a>
-                                        <p>${requestScope.course.getCourseTilte()}</p>
+                                        <div class="row" style="display: flex; align-items: start">
+                                            <div class="col-lg-9 col-sm-12 left">
+                                                <a href="meeting-details.html"><h4>${requestScope.course.getCourse_name()}</h4></a>
+                                                <p>${requestScope.course.getCourseTilte()}</p>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-12 right">
+                                                <h6>Xuất bản bởi: &nbsp;</h6>
+                                                <a href="PersonalAccountServlet?viewerId=${requestScope.viewerId}&ProfileId=${requestScope.publisher.getUserId()}">
+                                                    <div class="publisher">
+                                                        <img src="${requestScope.publisher.getUserImg()}" alt="alt"/>
+                                                        <p>${requestScope.publisher.getFullName()}<br>${requestScope.publisher.getUserEmail()}</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
                                         <p class="description">
                                             ${requestScope.course.getCourse_desc()}
                                         </p>
+
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="share">
@@ -139,7 +173,17 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="main-button-red">
-                                    <a href="CourseRegister?course_id=${requestScope.course.getCourse_id()}"> ĐĂNG KÍ NGAY </a>
+                                    <h1>${requestScope.registerd}</h1>
+                                    <c:if test="${requestScope.currUser == null || requestScope.currUser.getRoleId() == 2}">
+                                        <c:choose>
+                                            <c:when test="${requestScope.registerd == true}">
+                                                <a href="LessonListController?Course_id=${requestScope.course.getCourse_id()}"> Bạn đã đăng kí khoá học này, học ngay </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="CourseRegister?course_id=${requestScope.course.getCourse_id()}"> ĐĂNG KÍ NGAY </a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

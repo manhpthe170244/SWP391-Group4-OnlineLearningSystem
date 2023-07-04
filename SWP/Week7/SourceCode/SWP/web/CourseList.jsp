@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <link rel="stylesheet" href="assets/css/styling.css">
+        <link rel="stylesheet" href="assets/css/styling.css?version=10">
         <style>
             .topnav {
                 width: 20%;
@@ -64,6 +64,9 @@
 
             .topnav .search-container button:hover {
                 background: #ccc;
+            }
+            .down-content{
+                min-height: 214px
             }
         </style>
         <!--

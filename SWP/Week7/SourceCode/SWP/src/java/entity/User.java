@@ -9,12 +9,13 @@ package entity;
  * @author FPT
  */
 import java.sql.Date;
-
+import java.text.SimpleDateFormat;
 
 public class User {
-    int userId; 
+
+    int userId;
     String userEmail;
-    String password; 
+    String password;
     String fullName;
     String userImg;
     int genderId;
@@ -92,6 +93,11 @@ public class User {
         this.genderId = genderId;
     }
 
+    public String getDobFormated() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return simpleDateFormat.format(this.getDob());
+    }
+
     public Date getDob() {
         return dob;
     }
@@ -132,6 +138,11 @@ public class User {
         this.roleId = roleId;
     }
 
+    public String getUserTimeFormated() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return simpleDateFormat.format(this.getUserTime());
+    }
+
     public Date getUserTime() {
         return userTime;
     }
@@ -156,16 +167,9 @@ public class User {
         this.Score = Score;
     }
 
-    
-    
-    
-    
-
     @Override
     public String toString() {
         return "User{" + "userId=" + userId + ", userEmail=" + userEmail + ", password=" + password + ", fullName=" + fullName + ", userImg=" + userImg + ", genderId=" + genderId + ", dob=" + dob + ", userPhone=" + userPhone + ", userAddress=" + userAddress + ", userWallet=" + userWallet + ", roleId=" + roleId + ", userTime=" + userTime + ", userStatus=" + userStatus + '}';
     }
-    
-    
-    
+
 }

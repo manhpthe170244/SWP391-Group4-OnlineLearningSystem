@@ -53,7 +53,7 @@
                 <div class="row pageT">
                     <div class="col-lg-10 offset-1">
                         <h2>My Courses</h2> 
-                        
+
                     </div>
                 </div>
                 <div class="row search-container" style="margin-bottom: 30px">
@@ -95,7 +95,7 @@
                         <div class="emptyCourse">
                             <img src="img/My project.png" alt="alt"/>
                             <h4 style="color: white">bạn chưa tham gia khoá học nào cả, nhấn vào <a href="courseList">đây</a> để tìm kiếm khoá học phù hợp nhé</h4>
-                           
+
                         </div>
                     </c:if>
 
@@ -109,7 +109,10 @@
                                         <div class="CourseCell_Info">
                                             <h4>${cuc.getUserCourse().getCourse_name()}</h4>
                                             <p>${cuc.getUserCourse().getCourse_desc()}</p>
-                                            <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDate()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDate()}</p>
+                                            <c:if test="${requestScope.currUser.getRoleId()==2}">
+                                                <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDateFormated()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDateFormated()}</p>
+                                            </c:if>
+
                                         </div>
                                     </div>
                                 </a>

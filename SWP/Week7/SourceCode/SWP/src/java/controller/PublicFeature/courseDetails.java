@@ -6,11 +6,15 @@ package controller.PublicFeature;
 
 import dao.CourseDAO;
 import dao.PricePackageDAO;
+import dao.UserDAO;
 import entity.Course;
+import entity.ManageCourse;
 import entity.Price_Package;
+import entity.User;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,7 +37,7 @@ public class courseDetails extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,7 +57,34 @@ public class courseDetails extends HttpServlet {
         CourseDAO courseDAO = new CourseDAO();
         Course course = courseDAO.searchById(course_id);
         request.setAttribute("course", course);
+        //view only
+        int user_id = -1;
+        UserDAO ud = new UserDAO();
+        int publisherId = courseDAO.getCoursePublisher(course_id);
+        User Publisher = ud.getUserById(publisherId);
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                    
+                }
+            }
+        }
         
+        if(user_id != 0){
+            
+            CourseDAO cd = new CourseDAO();
+            User currUser = ud.getUserById(user_id);
+            request.setAttribute("currUser", currUser);
+            ManageCourse registerd = cd.checkCourseRegistered(course_id, user_id);
+            if(registerd != null){
+                request.setAttribute("registerd", true);
+            }
+        }
+        request.setAttribute("viewerId", user_id);
+        request.setAttribute("publisher", Publisher);
         RequestDispatcher rd = request.getRequestDispatcher("CourseDetails.jsp");
         rd.forward(request, response);
     }
