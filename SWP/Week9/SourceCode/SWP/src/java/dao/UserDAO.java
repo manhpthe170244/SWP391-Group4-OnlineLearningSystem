@@ -86,7 +86,7 @@ public class UserDAO extends MyDAO {
         }
         return u;
     }
-    
+
     public User getUserByEmail(String email) {
         xSql = "select * from [dbo].[User] WHERE [user_email] = ?";
         User uByEmail = null;
@@ -165,11 +165,11 @@ public class UserDAO extends MyDAO {
                 + "where user_id = ?";
         try {
             ps = con.prepareStatement(xSql);
-            ps.setString(1, "%"+fullName+"%");
+            ps.setString(1, "%" + fullName + "%");
             ps.setInt(2, genderId);
             ps.setDate(3, Date.valueOf(dobString));
-            ps.setString(4, "%"+Address+"%");
-            ps.setString(5, "%"+phoneNumber+"%");
+            ps.setString(4, "%" + Address + "%");
+            ps.setString(5, "%" + phoneNumber + "%");
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,7 +218,7 @@ public class UserDAO extends MyDAO {
         return map;
 
     }
-    
+
     public boolean editProfile(UserEditProfileDto user) {
 
         xSql = "update [User] set full_name = ?,"
@@ -226,30 +226,46 @@ public class UserDAO extends MyDAO {
                 + "user_dob = ?, "
                 + "user_address = ?, "
                 + "user_phone = ? where user_id = ?";
-        
+
         boolean f = false;
-        
+
         try {
 
             ps = con.prepareStatement(xSql);
-            
+
             ps.setString(1, user.getFullName());
             ps.setInt(2, user.getGenderId());
             ps.setDate(3, user.getDob());
             ps.setString(4, user.getUserAddress());
             ps.setString(5, user.getUserPhone());
             ps.setInt(6, user.getUserId());
-            
+
             int rs = ps.executeUpdate();
-            
-            if(rs == 1) {
+
+            if (rs == 1) {
                 f = true;
             }
-            
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return f;
     }
-    
+
+    public void Deposit(int userId, int amount) {
+        xSql = "update \"User\"\n"
+                + "set user_wallet = user_wallet + ?\n"
+                + "where user_id = ?";
+        try {
+
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, amount);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 }

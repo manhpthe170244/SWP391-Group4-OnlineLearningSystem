@@ -48,7 +48,7 @@
                     <div class="col-lg-12 align-self-center">
                         <div class="row align-content-center justify-content-center">
                             <div class="col-lg-6">
-                                <form id="contact" action="resetPassword" method="post">
+                                <form id="contact" action="Deposit" method="post">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <h2 class="text-center" >Nạp thêm tiền</h2>
@@ -56,39 +56,37 @@
                                         <div id="MoneyFormatErr" style="display: none">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-danger">
-                                                    <strong>Error!</strong> ${err}
-                                                </div>
-
-
-                                                <div class="col-lg-12">
-                                                    <div class="alert alert-success">
-                                                        <strong>RESET THÀNH CÔNG</strong> 
-                                                    </div>
+                                                    <strong>Số tiền không hợp lệ</strong> ${err}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="MoneyFormatErr" style="display: none">
+                                        <c:if test="${requestScope.success != null}">
                                             <div class="col-lg-12">
-                                                <div class="alert alert-danger">
-                                                    <strong>Error!</strong> ${err}
-                                                </div>
-
-
                                                 <div class="col-lg-12">
                                                     <div class="alert alert-success">
                                                         <strong>RESET THÀNH CÔNG</strong> 
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </c:if>
+
+
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <input name="depoAmount" type="text" pattern="\d+" id="depoAmount" onchange="MULTIPLYValue()" placeholder="Số tiền muốn nạp thêm..." required="">
+                                                <input name="depoAmount" type="text" id="depoAmount" onchange="MULTIPLYValue()" placeholder="Số tiền muốn nạp thêm..." required="">
                                             </fieldset>
                                         </div>
+                                        <c:if test="${requestScope.passwordErr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-danger">
+                                                    <strong>${requestScope.passwordErr}</strong>
+                                                </div>
+                                            </div>
+                                        </c:if>
+
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <input name="password" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Nhập mật khẩu...." required="">
+                                                <input name="password" type="password" id="password" placeholder="Nhập mật khẩu...." required="">
                                             </fieldset>
                                         </div>
 
@@ -126,9 +124,6 @@
         <script>
                                                     //according to loftblog tut
                                                     $('.nav li:first').addClass('active');
-
-
-
 
                                                     function  MULTIPLYValue() {
                                                         var numberPattern = /^\d+(\.\d+)?$/;
