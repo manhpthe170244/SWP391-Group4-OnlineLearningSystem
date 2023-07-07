@@ -13,14 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Vector;
 
 /**
  *
- * @author Phan Nguyen Tu Anh
+ * @author ACER
  */
-@WebServlet(name = "pricePackageEdit", urlPatterns = {"/pricePackageEdit"})
-public class pricePackageEdit extends HttpServlet {
+@WebServlet(name = "addPricePackage", urlPatterns = {"/addPricePackage"})
+public class addPricePackage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class pricePackageEdit extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet pricePakageEdit</title>");
+            out.println("<title>Servlet addPricePackage</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet pricePakageEdit at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet addPricePackage at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,10 +60,10 @@ public class pricePackageEdit extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        Vector<Price_Package> pricePackage = pricePackageDAO.getAll();
-        request.setAttribute("pricePackage", pricePackage);
-        request.getRequestDispatcher("PricePackage.jsp").forward(request, response);
-        
+        // default pricePackage (id not important, id will increase automatic)
+        Price_Package pricePackage = new Price_Package(0, "default", 0, true, 0, "default");
+        pricePackageDAO.addPricePackage(pricePackage);
+        response.sendRedirect("pricePackageEdit");
     }
 
     /**
@@ -78,7 +77,7 @@ public class pricePackageEdit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**

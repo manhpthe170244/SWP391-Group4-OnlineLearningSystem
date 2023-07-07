@@ -5,7 +5,6 @@
 package controller.SaleFeature;
 
 import dao.PricePackageDAO;
-import entity.Price_Package;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Vector;
 
 /**
  *
- * @author Phan Nguyen Tu Anh
+ * @author ACER
  */
-@WebServlet(name = "pricePackageEdit", urlPatterns = {"/pricePackageEdit"})
-public class pricePackageEdit extends HttpServlet {
+@WebServlet(name = "deletePricePackage", urlPatterns = {"/deletePricePackage"})
+public class deletePricePackage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +37,10 @@ public class pricePackageEdit extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet pricePakageEdit</title>");
+            out.println("<title>Servlet deletePricePackage</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet pricePakageEdit at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet deletePricePackage at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,11 +58,7 @@ public class pricePackageEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        Vector<Price_Package> pricePackage = pricePackageDAO.getAll();
-        request.setAttribute("pricePackage", pricePackage);
-        request.getRequestDispatcher("PricePackage.jsp").forward(request, response);
-        
+        processRequest(request, response);
     }
 
     /**
@@ -78,7 +72,9 @@ public class pricePackageEdit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("pricePackage_id"));
+        PricePackageDAO pricePackageDAO = new PricePackageDAO();
+        pricePackageDAO.deleteById(id);
     }
 
     /**

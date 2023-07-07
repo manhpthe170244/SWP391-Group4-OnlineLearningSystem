@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.SaleFeature;
+package controller.MarketingFeature;
 
-import dao.PricePackageDAO;
-import entity.Price_Package;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +11,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Vector;
 
 /**
  *
- * @author Phan Nguyen Tu Anh
+ * @author ACER
  */
-@WebServlet(name = "pricePackageEdit", urlPatterns = {"/pricePackageEdit"})
-public class pricePackageEdit extends HttpServlet {
+@WebServlet(name = "deleteSubject", urlPatterns = {"/deleteSubject"})
+public class deleteSubject extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +36,10 @@ public class pricePackageEdit extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet pricePakageEdit</title>");
+            out.println("<title>Servlet deleteSubject</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet pricePakageEdit at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet deleteSubject at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,11 +57,7 @@ public class pricePackageEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        Vector<Price_Package> pricePackage = pricePackageDAO.getAll();
-        request.setAttribute("pricePackage", pricePackage);
-        request.getRequestDispatcher("PricePackage.jsp").forward(request, response);
-        
+        processRequest(request, response);
     }
 
     /**

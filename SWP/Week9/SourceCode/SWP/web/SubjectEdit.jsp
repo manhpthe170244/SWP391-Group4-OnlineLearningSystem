@@ -231,16 +231,12 @@
                                 <th>Hành động</th>
                             </tr>
 
-                            <c:forEach items="${requestScope.pricePackage}" var="pricePackage">
-                                <tr id="package_${pricePackage.getPackage_id()}">
-                                    <td><input type="text" value="${pricePackage.getPackage_name()}" name="name${pricePackage.getPackage_id()}"></td>
-                                    <td><input type="number" value="${pricePackage.getDuration()}" name="duration${pricePackage.getPackage_id()}"></td>
-                                    <!--                            <input type="hidden" value="true" name="status">-->
-                                    <td><input type="checkbox" <c:if test="${pricePackage.isPack_status()}">checked</c:if> name="status" value="${pricePackage.getPackage_id()}"></td>
-                                    <td><input type="number" step="1000" min="0" value="${Integer.parseInt(String.valueOf(Math.floor(pricePackage.getPrice())).substring(0, String.valueOf(Math.floor(pricePackage.getPrice())).length() - 2))}" name="price${pricePackage.getPackage_id()}"></td>
-                                    <td><textarea name="description${pricePackage.getPackage_id()}">${pricePackage.getDescription()}</textarea></td>
+                            <c:forEach items="${requestScope.subjectList}" var="subject">
+                                <tr id="package_${subject.getPackage_id()}">
+                                    <td><input type="text" value="${subject.getSub_name()}" name="name${subject.getSub_name()}"></td>
+                                    <td><input type="text" value="${subject.getSub_desc()}" name="name${subject.getSub_desc()}"></td>
                                     <td>
-                                        <button class="delete-post-button" onclick="Delete(${pricePackage.getPackage_id()})">Delete</button>                              
+                                        <button class="delete-post-button" onclick="Delete(${subject.setSub_id()})">Delete</button>                              
                                     </td>
                                 </tr>             
                             </c:forEach>
@@ -262,7 +258,7 @@
                                                 $.ajax({
                                                     url: "deletePricePackage",
                                                     type: "POST",
-                                                    data: {pricePackage_id: id},
+                                                    data: {subject_id: id},
                                                     success: function (response) {
                                                         // Remove the row from the table
                                                         $("#package_" + id).remove();

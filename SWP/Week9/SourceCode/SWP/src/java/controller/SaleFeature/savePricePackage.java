@@ -4,8 +4,7 @@
  */
 package controller.SaleFeature;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import dao.PricePackageDAO;
 import entity.Price_Package;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -13,8 +12,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  *
@@ -65,9 +65,57 @@ public class savePricePackage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Get the updated data from the request
-        String postData = request.getReader().lines().collect(Collectors.joining());
-        List<Price_Package> newData = new Gson().fromJson(postData, new TypeToken<List<Price_Package>>(){}.getType());
-        
+        PrintWriter out = response.getWriter();
+
+        Enumeration<String> paramNames = request.getParameterNames();
+        Vector<String> name = new Vector<>();
+        Vector<Integer> duration = new Vector<>();
+        String[] status = request.getParameterValues("status");
+        Vector<Float> price = new Vector<>();
+        Vector<String> description = new Vector<>();
+
+        while (paramNames.hasMoreElements()) {
+            String paramName = paramNames.nextElement();
+            if (paramName.startsWith("name")) {
+                String n = request.getParameter(paramName);
+                name.add(n);
+            }
+            if (paramName.startsWith("duration")) {
+                int n = Integer.parseInt(request.getParameter(paramName));
+                duration.add(n);
+            }
+            if (paramName.startsWith("status")) {
+
+            }
+            if (paramName.startsWith("price")) {
+                float n = Float.parseFloat(request.getParameter(paramName));
+                price.add(n);
+            }
+            if (paramName.startsWith("description")) {
+                String n = request.getParameter(paramName);
+                description.add(n);
+            }
+        }
+
+        out.println("name " + name.size());
+        out.println("duration " + duration.size());
+        out.println("price " + price.size());
+        out.println("description " + description.size());
+        PricePackageDAO pricePackageDAO = new PricePackageDAO();
+        Vector<Price_Package> pricePackageList = pricePackageDAO.getAll();
+        for (int i = 0; i < pricePackageList.size(); i++) {
+            boolean active = false;
+            if (status != null) {
+                for (int j = 0; j < status.length; j++) {
+                    if (String.valueOf(pricePackageList.get(i).getPackage_id()).equals(status[j])) {
+                        active = true;
+                        break;
+                    }
+                }
+            }
+            pricePackageDAO.updatePricePackage(pricePackageList.get(i).getPackage_id(), name.get(i), duration.get(i), active, price.get(i), description.get(i));
+        }
+        response.sendRedirect("pricePackageEdit");
     }
 
     /**

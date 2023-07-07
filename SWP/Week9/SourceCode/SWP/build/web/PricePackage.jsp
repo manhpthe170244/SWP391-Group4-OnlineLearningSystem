@@ -215,69 +215,60 @@
 
             <div class="container">
                 <div class="row">
-                    <ul>
-                        <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add </button></li>
-                        <li><button class="edit-post-button" onclick="saveData()" style="position: relative; top: 10px">Save </button></li>
-                    </ul>
+                    <form method="post" action="savePricePackage">
+                        <ul>
+                            <li><button class="add-post-button" onclick="Add()" type="button">Add </button></li>
+                            <li><button class="edit-post-button" style="position: relative; top: 10px" type="submit">Save </button></li>
+                        </ul>
 
-                    <table border="1">
-                        <tr>
-                            <th>Package_name</th>
-                            <th>Duration</th>
-                            <th>Pack_status</th>
-                            <th>Price</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
+                        <table border="1" id="table">
+                            <tr>
+                                <th>Tên gói</th>
+                                <th>Thời hạn (ngày)</th>
+                                <th>Trạng thái</th>
+                                <th>Giá</th>
+                                <th>Mô tả</th>
+                                <th>Hành động</th>
+                            </tr>
 
-                        <c:forEach items="${requestScope.pricePackage}" var="pricePackage">
-                            <tr id="package_${pricePackage.getPackage_id()}" onclick="editPricePackage(${pricePackage.getPackage_id()})">
-                                <td contenteditable="true">${pricePackage.getPackage_name()}</td>
-                                <td contenteditable="true">${pricePackage.getDuration()}</td>
-                                <td contenteditable="true">${pricePackage.isPack_status()}</td>
-                                <td contenteditable="true">${(pricePackage.getPrice())}</td>
-                                <td contenteditable="true">${pricePackage.getDescription()}</td>
-                                <td>
-                                    <button class="delete-post-button" onclick="deletePricePackage(${pricePackage.getPackage_id()})">Delete</button>                              
-                                </td>
-                            </tr>             
-                        </c:forEach>
-                    </table>
+                            <c:forEach items="${requestScope.pricePackage}" var="pricePackage">
+                                <tr id="package_${pricePackage.getPackage_id()}">
+                                    <td><input type="text" value="${pricePackage.getPackage_name()}" name="name${pricePackage.getPackage_id()}"></td>
+                                    <td><input type="number" value="${pricePackage.getDuration()}" name="duration${pricePackage.getPackage_id()}"></td>
+                                    <!--                            <input type="hidden" value="true" name="status">-->
+                                    <td><input type="checkbox" <c:if test="${pricePackage.isPack_status()}">checked</c:if> name="status" value="${pricePackage.getPackage_id()}"></td>
+                                    <td><input type="number" step="1000" min="0" value="${Integer.parseInt(String.valueOf(Math.floor(pricePackage.getPrice())).substring(0, String.valueOf(Math.floor(pricePackage.getPrice())).length() - 2))}" name="price${pricePackage.getPackage_id()}"></td>
+                                    <td><textarea name="description${pricePackage.getPackage_id()}">${pricePackage.getDescription()}</textarea></td>
+                                    <td>
+                                        <button class="delete-post-button" onclick="Delete(${pricePackage.getPackage_id()})">Delete</button>                              
+                                    </td>
+                                </tr>             
+                            </c:forEach>
+                        </table>
+                    </form>
                 </div>
         </section>
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                        function saveData() {
-                                            var data = [];
-                                            $('#pricePackageTable tr').each(function (row, tr) {
-                                                if (row > 0) {
-                                                    var packageId = $(tr).find('td:eq(0)').text();
-                                                    var packageName = $(tr).find('td:eq(1)').text();
-                                                    var duration = $(tr).find('td:eq(2)').text();
-                                                    var packStatus = $(tr).find('td:eq(3)').text();
-                                                    var price = $(tr).find('td:eq(4)').text();
-                                                    var description = $(tr).find('td:eq(5)').text();
-                                                    data.push({'package_id': packageId, 'package_name': packageName, 'duration': duration, 'pack_status': packStatus, 'price': price, 'description': description});
+                                            function Add() {
+                                                if (window.confirm("Những thay đổi hiện tại sẽ bị mất nếu chưa được Save, bạn có chắc muốn Add?")) {
+                                                    window.location.href = 'addPricePackage';
                                                 }
-                                            });
-
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "savePricePackage", // Replace with your servlet URL
-                                                data: JSON.stringify(data),
-                                                contentType: "application/json; charset=utf-8",
-                                                success: function (response) {
-                                                    console.log(response);
-                                                    alert("Data saved successfully!");
-                                                },
-                                                error: function (xhr, status, error) {
-                                                    console.error(xhr.responseText);
-                                                    alert("Error saving data.");
-                                                }
-                                            });
-                                        }
-                                        
+                                            }
+                                            function Delete(id) {
+                                                //Send an AJAX request to your server-side script
+                                                console.log("delete price package");
+                                                $.ajax({
+                                                    url: "deletePricePackage",
+                                                    type: "POST",
+                                                    data: {pricePackage_id: id},
+                                                    success: function (response) {
+                                                        // Remove the row from the table
+                                                        $("#package_" + id).remove();
+                                                    }
+                                                });
+                                            }
         </script>
     </body>
 </html>
