@@ -32,6 +32,7 @@
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
 <<<<<<< HEAD
+<<<<<<< HEAD
             table, th, tr, td{
                 border-collapse: collapse;
             }
@@ -40,6 +41,8 @@
                 background-color: #e9e8e1
             }
 =======
+=======
+>>>>>>> 1dfc0523f57713353d3ccdb65374c3f58a1cfb14
             table, td, th {
   border: 1px solid white !important;
 }

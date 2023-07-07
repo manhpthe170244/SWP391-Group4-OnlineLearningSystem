@@ -31,15 +31,6 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
-<<<<<<< HEAD
-            table, th, tr, td{
-                border-collapse: collapse;
-            }
-            table, td, th {
-                border: 2px solid #828282 !important;
-                background-color: #e9e8e1
-            }
-=======
             table, td, th {
   border: 1px solid white !important;
 }
@@ -59,68 +50,105 @@ th{
      color: white; 
 }
 
->>>>>>> 1dfc0523f57713353d3ccdb65374c3f58a1cfb14
             table{
-                width: 100% !important;
+                width:100%;
+
             }
-            .postImg img{
+            .anh{
+                background-color: white
+                    ;
+            }
+            /*            table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin-bottom: 1em;
+                            border: 2px solid #ddd;
+                        }*/
+            table {
                 width: 100%;
-                height: 150px
+                margin-bottom: 1em;
+                border: 2px solid #ddd;
+                table-layout: fixed;
+            }
+/*            th, td {
+                text-align: left;
+                padding: 8px;
+                border: 1px solid #ddd;
+                color: white;
+            }*/
+            th, td {
+              padding: 8px;
+        border: 1px solid #ddd;
+        word-wrap: break-word;
+        vertical-align: top;
+    }
+            .table-container {
+                text-align: center;
             }
 
-            .title{
-                padding: 10px !important
+            table {
+                width: auto;
+                margin: 0 auto;
             }
-            table button{
-                display: block;
-                margin: 5px auto !important;
+
+/*            th, td {
+                text-align: left;
+                padding: 8px;
+                border: 1px solid #ddd;
+background-color: #f2f2f2;
+            }*/
+            .sidebar {
+                width: 100%;
+
+                padding: 20px;
+                background-color: white;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
-            .delete-post-button{
+            .sidebar h3 {
+                margin-top: 0;
+            }
+            .search-form {
+                margin-bottom: 20px;
+            }
+            .search-form input[type="text"] {
+                width: 500px;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .widget-title {
                 color: white;
-                background-color: #cc4040;
-                width: 60%;
-                border-radius: 15px;
-                padding: 7px 15px;
-                border: none
             }
-            .edit-post-button{
-                color: white;
-                background-color: #34bceb;
-                width: 60%;
-                border-radius: 15px;
-                padding: 7px 15px;
-                border: none
+            .widgetre ul a {
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 5px;
+                margin-right: 5px;
             }
-            .addAndSearch{
-                display: flex;
-                padding: 10px 0 !important
+            .add-post-button {
+                float: left;
+                margin: 10px;
             }
-            .search-box{
-                text-align: left
+            .search-box {
+                float: right;
+                left:  370px;
+                position: absolute;
+                margin: -40px 0;
             }
-            .search-box button{
-                background-color: #34BCEB;
-                color: white;
-                border-radius: 0 15px 15px 0;
-                padding: 1px 10px;
-                position: relative;
-                left: -3px
+
+            .search-box input[type="text"] {
+                width: 500px;
+                padding: 5px 5px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
             }
-            .search-box input{
-                border-radius: 15px 0 0 15px;
-                width: 60%
+            .search-box button[type="submit"] {
+                width: 100px;
+                height: 30px;
             }
-            .addBtn{
-                text-align: right;
-                position: relative;
-                left: -25px
-            }
-            .addBtn button{
-                color: white;
-                background-color: #3aa25d;
-                padding: 7px 15px;
-                border-radius: 15px
-            }
+
         </style>
     </head>
     <body>
@@ -134,20 +162,16 @@ th{
 
             <div class="container">
                 <div class="row">
-                    <div class="addAndSearch">
-                        <div class="search-box col-lg-6" >
-                            <form action="#" method="post">
-                                <input type="text" name="search_name" placeholder="   Search...">
-                                <button type="submit"><i class="fa fa-search"></i></button>
-                            </form>
-                        </div>
-                        <div class="addBtn col-lg-6">
-                            <button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add Post</button>
-                        </div>
-
+                    <div class="search-box" >
+                        <form action="#" method="post">
+                            <input type="text" name="search_name" placeholder="Search...">
+                            <button type="submit">Search</button>
+                        </form>
                     </div>
+                    <li><button class="add-post-button" onclick="window.location.href = 'postDetailsEdit?type=add'">Add Post</button></li>
 
-                    <table class="table table-striped">
+
+                    <table border="1">
                         <tr>
                             <th>Title</th>
                             <th>Image</th>
@@ -158,14 +182,14 @@ th{
                         </tr>
                         <c:forEach items="${requestScope.postList}" var="post" varStatus="loop">
                             <tr id="post_${post.getPost_id()}">
-                                <td class="title col-lg-4">${post.getPost_title()}</td>
-                                <td class="postImg col-lg-3"><img src="${post.getPost_img()}"/></td>
-                                <td>${post.getPost_dateFormated()}</td>
+                                <td>${loop.index+1}</td>
+                                <td>${post.getPost_img()}</td>
+                                <td>${post.getPost_date()}</td>
                                 <td>${(post.getPost_status()) ? "Active" : "Inactive"}</td>
                                 <td>${post.getBlog_id()}</td>
                                 <td>
-                                    <button class="delete-post-button" onclick="deletePost(${post.getPost_id()})">Delete</button>
-                                    <button class="edit-post-button" onclick="window.location.href = 'postDetailsEdit?post_id=${post.getPost_id()}&type=edit'">Edit</button>
+                                    <button onclick="deletePost(${post.getPost_id()})">Delete</button>
+                                    <button onclick="window.location.href = 'postDetailsEdit?post_id=${post.getPost_id()}&type=edit'">Edit</button>
                                 </td>
                             </tr>             
                         </c:forEach>
@@ -174,20 +198,20 @@ th{
         </section>
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-                                        function deletePost(postId) {
-                                            //Send an AJAX request to your server-side script
-                                            console.log("delete post");
-                                            $.ajax({
-                                                url: "deletePost",
-                                                type: "POST",
-                                                data: {post_id: postId},
-                                                success: function (response) {
-                                                    // Remove the row from the table
-                                                    $("#post_" + postId).remove();
-                                                }
-                                            });
-                                        }
-        </script>
+    <script>
+        function deletePost(postId) {
+            //Send an AJAX request to your server-side script
+            console.log("delete post");
+            $.ajax({
+                url: "deletePost",
+                type: "POST",
+                data: {post_id: postId},
+                success: function (response) {
+                    // Remove the row from the table
+                    $("#post_" + postId).remove();
+                }
+            });
+        }
+    </script>
     </body>
 </html>
