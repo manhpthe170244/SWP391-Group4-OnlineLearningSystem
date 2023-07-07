@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <link rel="stylesheet" href="assets/css/styling.css?version=15"/>
+        <link rel="stylesheet" href="assets/css/styling.css?version=19"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     </head>
     <body>

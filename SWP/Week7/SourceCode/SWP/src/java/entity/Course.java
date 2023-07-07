@@ -4,6 +4,9 @@
  */
 package entity;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author ACER
@@ -73,7 +76,11 @@ public class Course {
     public void setCourse_desc(String course_desc) {
         this.course_desc = course_desc;
     }
-
+    public String getlastUpdatedFormated() {
+        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+        String formatedDate = s.format(Date.valueOf(this.getLast_update()));
+        return formatedDate;
+    }
     public String getLast_update() {
         return last_update;
     }
