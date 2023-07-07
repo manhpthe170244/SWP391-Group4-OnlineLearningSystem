@@ -240,7 +240,7 @@
                                     <td><input type="number" step="1000" min="0" value="${Integer.parseInt(String.valueOf(Math.floor(pricePackage.getPrice())).substring(0, String.valueOf(Math.floor(pricePackage.getPrice())).length() - 2))}" name="price${pricePackage.getPackage_id()}"></td>
                                     <td><textarea name="description${pricePackage.getPackage_id()}">${pricePackage.getDescription()}</textarea></td>
                                     <td>
-                                        <button class="delete-post-button" onclick="Delete(${pricePackage.getPackage_id()})">Delete</button>                              
+                                        <button class="delete-post-button" type="button" onclick="Delete(${pricePackage.getPackage_id()})">Delete</button>                              
                                     </td>
                                 </tr>             
                             </c:forEach>

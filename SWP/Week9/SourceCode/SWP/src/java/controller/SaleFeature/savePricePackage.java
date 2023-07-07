@@ -97,10 +97,6 @@ public class savePricePackage extends HttpServlet {
             }
         }
 
-        out.println("name " + name.size());
-        out.println("duration " + duration.size());
-        out.println("price " + price.size());
-        out.println("description " + description.size());
         PricePackageDAO pricePackageDAO = new PricePackageDAO();
         Vector<Price_Package> pricePackageList = pricePackageDAO.getAll();
         for (int i = 0; i < pricePackageList.size(); i++) {
