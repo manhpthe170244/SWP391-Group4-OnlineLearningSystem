@@ -211,6 +211,7 @@
                         </div>
                     </c:if>
                 </c:if>
+                <h4 style="all:unset; color: #33ccf4">Hoàn thành 1 bài học video sẽ thêm 5 điểm tích luỹ</h4>
             </div>
         </section>
 

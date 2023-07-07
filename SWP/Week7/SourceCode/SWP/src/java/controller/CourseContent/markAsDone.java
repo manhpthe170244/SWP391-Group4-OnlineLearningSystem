@@ -31,6 +31,7 @@ public class markAsDone extends HttpServlet {
         int lessonId  = Integer.parseInt(request.getParameter("lessonId"));
         
         LessonDAO ld = new LessonDAO();
+        ld.AddScore(userId, 5);
         ld.markasDone(userId, lessonId);
         
     }

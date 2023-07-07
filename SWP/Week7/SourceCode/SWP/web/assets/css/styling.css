@@ -145,7 +145,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 }
 .dashBoardInput{
-    width: 17%;
+    width: 17% !important;
     position: relative;
     top: 40px;
     left: 750px;

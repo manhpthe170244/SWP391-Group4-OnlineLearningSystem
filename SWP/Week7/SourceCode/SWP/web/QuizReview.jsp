@@ -38,8 +38,9 @@
             th, td {
                 text-align: left;
                 padding: 8px;
-                border: 1px solid #ddd;
-                color: white;
+                border: 3px solid #b9b9b9 !important;
+                color: Black;
+                background-color: #e7e9dc;
             }
 
             .table-container {
@@ -61,9 +62,8 @@
             }
             .sidebar {
                 width: 100%;
-
                 padding: 20px;
-                background-color: #f2f2f2;
+                background-color: #edeee7;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
             .sidebar h3 {
@@ -92,40 +92,21 @@
                 float: left;
                 margin: 10px;
             }
-            .navbar2 {
-                left: -10px;
-                background-color: #f9f9f9;
-                border-bottom: 1px solid #e5e5e5;
-                padding-top: 10px;
-                padding-bottom: 10px;
-            }
-
-            .navbar2-brand {
-                font-size: 20px;
-                font-weight: bold;
-                color: #333;
-                margin-right: 10px;
-                margin-left: 10px;
-            }
-
-            .navbar2-divider {
-                font-size: 20px;
-                color: #333;
-                margin-right: 10px;
-                margin-left: 10px;
-            }
+            
             .quiz-all {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content:  flex-start;
 
             }
-
+            .quiz-all a{
+                color: #646464
+            }
             .quiz-square {
                 width: 30px;
                 height: 30px;
                 margin: 3px;
-                background-color: #ccc;
+                background-color: #9edcde;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -145,8 +126,31 @@
                 text-align: start;
 
             }
-             .col-sm-9 table {
-                     width: 100%;
+            .col-sm-9 table {
+                width: 100%;
+            }
+            .navbar2 {
+                left: -10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+               
+            }
+
+            .navbar2-brand {
+                font-size: 20px;
+                font-weight: bold;
+                color: #333;
+                margin-right: 10px;
+                margin-left: 10px;
+            }
+            .navbar2-brand-divider{
+                color: #2ea7be;
+            }
+            .navbar2-divider {
+                font-size: 20px;
+                color: #333;
+                margin-right: 10px;
+                margin-left: 10px;
             }
 
         </style>
@@ -163,7 +167,18 @@
             QuizResult quizResult = (QuizResult) request.getAttribute("quizResult");
         %>
         <section class="heading-page header-text" style="padding-top: 100px;">
+            <div class="navbar2" style="text-align: left; margin-top: 30px">
+                <div class="container2" style="display: inline-block; border-bottom: 1px solid #2EA7BE">
+                    <span class="navbar2-brand"><a href="">Home</a></span>
+                    <span class="navbar2-brand-divider">/</span>
+                    <span class="navbar2-brand"><a href="">My Course</a></span>
+                    <span class="navbar2-brand-divider">/</span>
+                    <span class="navbar2-brand"><a href="">MAE101</a></span>
+                    <span class="navbar2-brand-divider">/</span>
+                    <span class="navbar2-brand"><a href="">Review Progress Test</a></span>
 
+                </div>
+            </div>
             <div class="container" style="margin-top: 30px;">
                 <div class="row">
 
@@ -203,8 +218,8 @@
                                     <span class="small-text">(Complete)</span><br>
                                     <span class="small-text">Flag: <%= quesResultList.get(i).isQues_flag() %></span>
                                 </th>
-                            <td>Câu hỏi <%=i+1%></td>
-                            <td><%=quesResultList.get(i).isQues_status() ? "Đúng" : "Sai"%></td>
+                                <td>Câu hỏi <%=i+1%></td>
+                                <td><%=quesResultList.get(i).isQues_status() ? "Đúng" : "Sai"%></td>
                             </tr>
                             <tr>
                                 <td>Câu trả lời của bạn: <%=quesResultList.get(i).getQues_answer()%></td>
@@ -223,7 +238,7 @@
                                     <a href="#ques-section<%=i%>"><div class="quiz-square rounded">0<%=i%></div></a>
                                     <%}else{%>
                                     <a href="#ques-section<%=i%>"><div class="quiz-square rounded"><%=i%></div></a>
-                                    <%}}%>
+                                        <%}}%>
                                 </div>
                             </div>
                             <div style="font-size: 10px">

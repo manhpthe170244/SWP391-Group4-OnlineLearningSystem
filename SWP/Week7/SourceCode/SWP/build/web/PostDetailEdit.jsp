@@ -150,7 +150,7 @@
                             <div class="form-group" style="display: flex;align-items: center;">
                                 <label for="post-image" style="margin-right: 10px; color: white"> Image:</label>
                                 <div class="input-wrapper">
-                                    <input type="file" id="post-image" name="post_image" style="color: white">
+                                    <input type="file" id="post-image" name="post_image" value="${requestScope.post.getPost_img()}" style="color: white">
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 740px;">

@@ -5,6 +5,7 @@
 package controller.MarketingFeature;
 
 import dao.PostDAO;
+import entity.Post;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -42,7 +43,7 @@ public class addOrUpdatePost extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,11 +81,13 @@ public class addOrUpdatePost extends HttpServlet {
         Part filePart = null;
         filePart = request.getPart("post_image");
         String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
-        String fileName;
+        String fileName = "";
         if (filePart != null && filePart.getSize() > 0) {
             fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         } else {
+
             fileName = "tempAvatar.jpg";
+
         }
         String filePath = saveDirectory + fileName;
 
@@ -98,16 +101,20 @@ public class addOrUpdatePost extends HttpServlet {
         Calendar calendar = Calendar.getInstance();
         Date currentDate = new Date(calendar.getTime().getTime());
         PostDAO postDAO = new PostDAO();
-        if(update){
+        if (update) {
             int id = Integer.parseInt(request.getParameter("post_id"));
             // update post
-            postDAO.updatePost(id, sqlFilePath, title, description, currentDate, true, blog_id);
-        }
-        else{
+            if (fileName.equals("tempAvatar.jpg")) {
+                Post currPost = postDAO.searchById(id);
+                postDAO.updatePost(id, currPost.getPost_img(), title, description, currentDate, true, blog_id);
+            } else {
+                postDAO.updatePost(id, sqlFilePath, title, description, currentDate, true, blog_id);
+            }
+
+        } else {
             // addPost
             postDAO.addPost(sqlFilePath, title, description, currentDate, true, blog_id);
         }
-        
 
         response.sendRedirect("postListEdit");
     }

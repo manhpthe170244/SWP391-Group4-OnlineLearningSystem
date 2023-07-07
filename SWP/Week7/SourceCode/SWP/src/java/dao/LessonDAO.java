@@ -194,11 +194,26 @@ public class LessonDAO extends MyDAO {
             ps.setInt(1, userId);
             ps.setInt(2, lessonId);
             ps.executeUpdate();
-            
+
         } catch (Exception e) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
         }
 
+    }
+
+    public void AddScore(int userId, int point) {
+        xSql = "update \"User\"\n"
+                + "set Score = Score + ?\n"
+                + "where user_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, point);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
 }

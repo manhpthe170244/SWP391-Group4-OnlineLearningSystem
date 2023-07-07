@@ -75,6 +75,9 @@
                                 <c:if test="${requestScope.viewOwn == true}">
                                     <h4>Ví: </h4>
                                 </c:if>
+                                <c:if test="${profile.getRoleId()==2}">
+                                    <h4>Điểm tích luỹ: </h4>
+                                </c:if>
                                 <h4>Ngày tham gia: </h4>
                             </div>
                             <div style="color: white;" class="PersonalInfo-right">
@@ -84,7 +87,10 @@
                                 <h4>${profile.getUserPhone()}</h4>
                                 <h4>${profile.getUserAddress()}</h4>
                                 <c:if test="${requestScope.viewOwn == true}">
-                                    <h4>${profile.getUserWallet()} (vnd)</h4>
+                                    <h4>${profile.getUserWallet()} (vnd) &nbsp; <a href="Deposit" class="fa fa-plus-square"></a></h4>
+                                </c:if>
+                                <c:if test="${profile.getRoleId()==2}">
+                                    <h4>${profile.getScore()}</h4>
                                 </c:if>
                                 <h4>${profile.getUserTimeFormated()}</h4>
                             </div>

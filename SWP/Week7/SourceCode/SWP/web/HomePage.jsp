@@ -273,7 +273,7 @@
 
                                                     </div>
                                                     <div class="col-8">
-                                                        <span>${post.getPost_date()}</span>
+                                                        <span>${post.getPost_dateFormated() }</span>
                                                     </div>
                                                 </div>
                                             </div>

@@ -3,23 +3,27 @@
     Created on : May 18, 2023, 8:30:02 PM
     Author     : Phan Nguyen Tu Anh
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="entity.User"%>
+<%@page import="dao.UserDAO"%>
 <%@page import="jakarta.servlet.http.Cookie" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
         Cookie[] cookies = request.getCookies();
         int user_id = 0;
-
-
-
+        User currUser = null;
+        UserDAO ud = new UserDAO();
         if (cookies != null) {
 
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("currUserId")) {
                     user_id = Integer.parseInt(cookie.getValue());
+                    currUser = ud.getUserById(user_id);
                 }
             }
         } 
+        pageContext.setAttribute("currUser", currUser);
         pageContext.setAttribute("currUserId", user_id);
 %>
 <html>
@@ -77,13 +81,19 @@
                                 <li><a href="homepage" class="active">TRANG CHỦ</a></li>
                                 <li><a href="mycourselistservlet">KHÓA HỌC CỦA TÔI</a></li>
                                 <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
-                                <li class="has-sub">
-                                    <a href="javascript:void(0)">Pages</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                        <li><a href="meeting-details.html">Meeting Details</a></li>
-                                    </ul>
-                                </li>
+                                    <c:if test="${currUser != null}">
+                                        <c:if test="${currUser.getRoleId() == 1 || currUser.getRoleId() == 4 || currUser.getRoleId() == 5}">
+                                        <li class="has-sub">
+                                            <a href="javascript:void(0)">Pages</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="DashBoard">DashBoard</a></li>
+                                                <li><a href="postListEdit">POST LIST EDIT</a></li>
+                                                <li><a href="slidersListEdit">SLIDER LIST EDIT</a></li>
+                                            </ul>
+                                        </li>
+                                    </c:if>
+                                </c:if>
+
                                 <li><a href="PersonalAccountServlet?viewerId=${currUserId}&ProfileId=${currUserId}">TRANG CÁ NHÂN</a></li> 
                             </ul>        
                             <a class='menu-trigger'>
