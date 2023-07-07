@@ -31,8 +31,7 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             table, th, tr, td{
                 border-collapse: collapse;
             }
@@ -40,29 +39,27 @@
                 border: 2px solid #828282 !important;
                 background-color: #e9e8e1
             }
-=======
-=======
->>>>>>> 1dfc0523f57713353d3ccdb65374c3f58a1cfb14
+
             table, td, th {
-  border: 1px solid white !important;
-}
+                border: 1px solid white !important;
+            }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-           td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    word-wrap: break-word;
-    vertical-align: top;
-    color: white; /* Add this line to change the text color to white */
-}
-th{
-     color: white; 
-}
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            td {
+                padding: 8px;
+                border: 1px solid #ddd;
+                word-wrap: break-word;
+                vertical-align: top;
+              
+            }
+            th{
+                color: white;
+            }
 
->>>>>>> 1dfc0523f57713353d3ccdb65374c3f58a1cfb14
+
             table{
                 width: 100% !important;
             }
@@ -81,7 +78,7 @@ th{
             .delete-post-button{
                 color: white;
                 background-color: #cc4040;
-                width: 60%;
+                width: 70%;
                 border-radius: 15px;
                 padding: 7px 15px;
                 border: none

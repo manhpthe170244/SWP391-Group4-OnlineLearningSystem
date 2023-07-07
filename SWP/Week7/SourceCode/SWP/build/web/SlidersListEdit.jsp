@@ -28,6 +28,8 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
+
+
             table, td, th {
                 border: 1px solid white !important;
             }
@@ -49,82 +51,84 @@
                 background-color: gray;
             }
             table {
+
                 border-collapse: collapse;
-                width: 100%;
-                margin-bottom: 1em;
-                border: 2px solid #ddd;
             }
-            th, td {
-                text-align: left;
-                padding: 8px;
-                border: 1px solid #ddd;
-                color: white;
+            table, td, th {
+                border: 2px solid #828282 !important;
+                background-color: #e9e8e1
+            }
+            table{
+                width: 100% !important;
+            }
+            .postImg img{
+                width: 100%;
+                height: 150px
             }
 
-            /*            .table-container {
-                            text-align: center;
-                        }*/
+            .title{
+                padding: 10px !important
+            }
+            table button{
+                display: block;
+                margin: 5px auto !important;
+            }
+            .delete-post-button{
+                color: white;
+                background-color: #cc4040;
+                width: 60%;
+                border-radius: 15px;
+                padding: 7px 15px;
+                border: none
+            }
+
+            .edit-post-button{
+                color: white;
+                background-color: #34bceb;
+                width: 60%;
+                border-radius: 15px;
+                padding: 7px 15px;
+                border: none
+            }
+
+            .table-container {
+                text-align: center;
+            }
 
             table {
                 width: auto;
                 margin: 0 auto;
+                
             }
-
-            th, td {
-                text-align: left;
-                padding: 8px;
-                border: 1px solid #ddd;
+            .addAndSearch{
+                display: flex;
+                padding: 10px 0 !important
             }
-            .sidebar {
-                width: 100%;
-
-                padding: 20px;
-                background-color: #f2f2f2;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            .search-box{
+                text-align: left
             }
-            .sidebar h3 {
-                margin-top: 0;
+            .search-box button{
+                background-color: #34BCEB;
+                color: white;
+                border-radius: 0 15px 15px 0;
+                padding: 1px 10px;
+                position: relative;
+                left: -3px
             }
-            .search-form {
-                margin-bottom: 20px;
+            .search-box input{
+                border-radius: 15px 0 0 15px;
+                width: 60%
             }
-            .search-form input[type="text"] {
-                width: 500px;
-                padding: 10px;
-                border: none;
-                border-radius: 5px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            .addBtn{
+                text-align: right;
+                position: relative;
+                left: -25px
             }
-
-            .widget-title {
-                color: black;
-            }
-            .widgetre ul a {
-                border: 1px solid black;
-                border-radius: 5px;
-                padding: 5px;
-                margin-right: 5px;
-            }
-            .add-post-button {
-                float: left;
-                margin: 10px;
-            }
-            .search-box {
-                float: right;
-                left:  370px;
-                position: absolute;
-                margin: -40px 0;
-            }
-
-            .search-box input[type="text"] {
-                width: 500px;
-                padding: 5px 5px;
-                border-radius: 5px;
-                border: 1px solid #ccc;
-            }
-            .search-box button[type="submit"] {
-                width: 100px;
-                height: 30px;
+            .addBtn button{
+                color: white;
+                background-color: #3aa25d;
+                padding: 7px 15px;
+                border-radius: 15px
             }
         </style>
     </head>

@@ -28,12 +28,8 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            table, th, tr, td{
-=======
-=======
->>>>>>> 1dfc0523f57713353d3ccdb65374c3f58a1cfb14
+
+
             table, td, th {
                 border: 1px solid white !important;
             }
@@ -55,7 +51,7 @@
                 background-color: gray;
             }
             table {
->>>>>>> 1dfc0523f57713353d3ccdb65374c3f58a1cfb14
+
                 border-collapse: collapse;
             }
             table, td, th {
@@ -70,7 +66,6 @@
                 height: 150px
             }
 
-<<<<<<< HEAD
             .title{
                 padding: 10px !important
             }
@@ -86,7 +81,7 @@
                 padding: 7px 15px;
                 border: none
             }
-<<<<<<< HEAD
+
             .edit-post-button{
                 color: white;
                 background-color: #34bceb;
@@ -94,18 +89,16 @@
                 border-radius: 15px;
                 padding: 7px 15px;
                 border: none
-=======
+            }
 
-=======
->>>>>>> 1dfc0523f57713353d3ccdb65374c3f58a1cfb14
-            /*            .table-container {
-                            text-align: center;
-                        }*/
+            .table-container {
+                text-align: center;
+            }
 
             table {
                 width: auto;
                 margin: 0 auto;
->>>>>>> 1dfc0523f57713353d3ccdb65374c3f58a1cfb14
+                
             }
             .addAndSearch{
                 display: flex;

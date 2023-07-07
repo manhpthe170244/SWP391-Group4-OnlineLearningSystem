@@ -89,10 +89,9 @@
             }
 
             .form-group img {
-                width: 760px;
+                width: 100% !important;
                 margin-left: 10px;
                 border: 1px solid #ddd;
-                padding: 300px;
                 box-sizing: border-box;
                 border-radius: 3px;
             }
@@ -154,7 +153,7 @@
                                 </div>
                             </div>
                             <div class="form-group" style=" width: 740px;">
-                                <img id="preview-image" src="${requestScope.update ? requestScope.post.getPost_img() : " "}" alt="Preview image" style="max-width: 100%">
+                                <img style="width: 100%;" id="preview-image" src="${requestScope.update ? requestScope.post.getPost_img() : " "}" alt="Preview image" style="max-width: 100%">
                             </div>
                         </div>  
                         <div >
