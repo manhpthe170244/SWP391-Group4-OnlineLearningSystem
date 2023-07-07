@@ -74,6 +74,7 @@
                                 <h4>Địa chỉ: </h4>
                                 <c:if test="${requestScope.viewOwn == true}">
                                     <h4>Ví: </h4>
+                                    <h4>Subscription: </h4>
                                 </c:if>
                                 <c:if test="${profile.getRoleId()==2}">
                                     <h4>Điểm tích luỹ: </h4>
@@ -88,6 +89,7 @@
                                 <h4>${profile.getUserAddress()}</h4>
                                 <c:if test="${requestScope.viewOwn == true}">
                                     <h4>${profile.getUserWallet()} (vnd) &nbsp; <a href="Deposit" class="fa fa-plus-square"></a></h4>
+                                    <h4>Subscription</h4>
                                 </c:if>
                                 <c:if test="${profile.getRoleId()==2}">
                                     <h4>${profile.getScore()}</h4>

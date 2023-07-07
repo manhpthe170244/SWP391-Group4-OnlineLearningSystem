@@ -80,7 +80,7 @@
                             <ul class="nav">
                                 <li><a href="homepage" class="active">TRANG CHỦ</a></li>
                                 <li><a href="mycourselistservlet">KHÓA HỌC CỦA TÔI</a></li>
-                                <li class="scroll-to-section"><a href="#apply">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
+                                <li><a href="PricePackageSubcription">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
                                     <c:if test="${currUser != null}">
                                         <c:if test="${currUser.getRoleId() == 1 || currUser.getRoleId() == 4 || currUser.getRoleId() == 5}">
                                         <li class="has-sub">

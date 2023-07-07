@@ -96,6 +96,10 @@
         <servlet-name>ImportQuestion</servlet-name>
         <servlet-class>controller.TestFeature.ImportQuestion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PricePackageSubcription</servlet-name>
+        <servlet-class>controller.CommonFeature.PricePackageSubcription</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PersonalAccountServlet</servlet-name>
         <url-pattern>/PersonalAccountServlet</url-pattern>
@@ -199,6 +203,10 @@
     <servlet-mapping>
         <servlet-name>ImportQuestion</servlet-name>
         <url-pattern>/ImportQuestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PricePackageSubcription</servlet-name>
+        <url-pattern>/PricePackageSubcription</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homepage</welcome-file>
