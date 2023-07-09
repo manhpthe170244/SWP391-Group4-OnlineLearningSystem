@@ -4,6 +4,8 @@
  */
 package controller.MarketingFeature;
 
+import dao.PricePackageDAO;
+import dao.SubjectDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -71,7 +73,9 @@ public class deleteSubject extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("subject_id"));
+        SubjectDAO subjectDAO = new SubjectDAO();
+        subjectDAO.Delete(id);
     }
 
     /**

@@ -58,7 +58,10 @@ public class addSubject extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        SubjectDAO subjectDAO = new SubjectDAO();
+        // default pricePackage (id not important, id will increase automatic)
+        subjectDAO.Add("defaut", "default");
+        response.sendRedirect("subjectEdit");
     }
 
     /**
@@ -72,10 +75,7 @@ public class addSubject extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SubjectDAO subjectDAO = new SubjectDAO();
-        // default pricePackage (id not important, id will increase automatic)
-        //subjectDAO;
-        response.sendRedirect("pricePackageEdit");
+        
     }
 
     /**

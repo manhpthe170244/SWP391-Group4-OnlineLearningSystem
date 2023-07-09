@@ -215,7 +215,7 @@
 
             <div class="container">
                 <div class="row">
-                    <form method="post" action="savePostCategory">
+                    <form method="post" action="saveSubject">
                         <ul>
                             <li><button class="add-post-button" onclick="Add()" type="button">Add </button></li>
                             <li><button class="edit-post-button" style="position: relative; top: 10px" type="submit">Save </button></li>
@@ -228,12 +228,12 @@
                                 <th>Hành động</th>
                             </tr>
                             
-                            <c:forEach items="${requestScope.blogList}" var="blog">
-                                <tr id="blog_${blog.getBlog_id()}">
-                                    <td><input type="text" value="${blog.getBlog_name()}" name="name${blog.getBlog_id()}"></td>
-                                    <td><textarea name="description${blog.getBlog_id()}">${blog.getBlog_desc()}</textarea></td>
+                            <c:forEach items="${requestScope.categoryList}" var="category">
+                                <tr id="category_${category.getSub_id()}">
+                                    <td><input type="text" value="${category.getSub_name()}" name="name${category.getSub_id()}"></td>
+                                    <td><textarea name="description${category.getSub_id()}">${category.getSub_desc()}</textarea></td>
                                     <td>
-                                        <button class="delete-post-button" onclick="Delete(${blog.getBlog_id()})" type="button">Delete</button>                              
+                                        <button class="delete-post-button" onclick="Delete(${category.getSub_id()})" type="button">Delete</button>                              
                                     </td>
                                 </tr>             
                             </c:forEach>
@@ -246,19 +246,19 @@
         <script>
                                             function Add() {
                                                 if (window.confirm("Những thay đổi hiện tại sẽ bị mất nếu chưa được Save, bạn có chắc muốn Add?")) {
-                                                    window.location.href = 'addPostCategory';
+                                                    window.location.href = 'addSubject';
                                                 }
                                             }
                                             function Delete(id) {
                                                 //Send an AJAX request to your server-side script
-                                                console.log("delete subject");
+                                                console.log("delete category");
                                                 $.ajax({
-                                                    url: "deletePostCategory",
+                                                    url: "deleteSubject",
                                                     type: "POST",
-                                                    data: {blog_id: id},
+                                                    data: {category_id: id},
                                                     success: function (response) {
                                                         // Remove the row from the table
-                                                        $("#blog_" + id).remove();
+                                                        $("#category_" + id).remove();
                                                     }
                                                 });
                                             }
