@@ -4,6 +4,9 @@
  */
 package entity;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  *
  * @author Uslaptop
@@ -59,6 +62,14 @@ public class Price_Package {
 
     public void setPack_status(boolean pack_status) {
         this.pack_status = pack_status;
+    }
+
+    public String getPriceFormated() {
+        float price = this.getPrice();
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+        String formattedPrice = format.format(price);
+        return formattedPrice;
     }
 
     public float getPrice() {

@@ -12,7 +12,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="Template Mo">
+        <style>
+            .footer{
+                margin-top: 0
+            }
+            .meetings-page{
+                padding-top: 0 !important
+            }
+        </style>
     </head>
+
     <body>
         <section class="meetings-page" id="meetings">
 

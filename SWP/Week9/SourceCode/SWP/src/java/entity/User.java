@@ -9,7 +9,9 @@ package entity;
  * @author FPT
  */
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class User {
 
@@ -129,7 +131,13 @@ public class User {
     public void setUserWallet(String userWallet) {
         this.userWallet = userWallet;
     }
-
+    public String getUserWalletFormatted(){
+        Locale usLocale = new Locale("vi", "VN");
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(usLocale);
+//        currencyFormatter.setCurrencySymbol("");
+        String formattedCurrency = currencyFormatter.format(Double.valueOf(this.getUserWallet()));
+        return formattedCurrency;
+    }
     public int getRoleId() {
         return roleId;
     }

@@ -88,7 +88,7 @@
                                 <h4>${profile.getUserPhone()}</h4>
                                 <h4>${profile.getUserAddress()}</h4>
                                 <c:if test="${requestScope.viewOwn == true}">
-                                    <h4>${profile.getUserWallet()} (vnd) &nbsp; <a href="Deposit" class="fa fa-plus-square"></a></h4>
+                                    <h4>${profile.getUserWalletFormatted()} &nbsp; <a href="Deposit" class="fa fa-plus-square"></a></h4>
                                     <h4>Subscription</h4>
                                 </c:if>
                                 <c:if test="${profile.getRoleId()==2}">

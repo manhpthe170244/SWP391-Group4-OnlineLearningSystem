@@ -109,24 +109,19 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div style="color: white;margin-bottom: 50px;margin-left: 115px" class="col-lg-12">
-=======
+
+
             <div style="color: white;margin-bottom: 50px; margin-left: 115px" class="col-lg-12">
->>>>>>> 4d588487366f81580afeeca92fb92f5224ecef1f
+
                 Sort By <select id="sortType">
                     <option value="recent">Recent</option>
                     <option value="name">Highest Scores</option>
                 </select>
             </div>
 
-<<<<<<< HEAD
-            <div class="main-button-red" style="margin-bottom: 10px">
-                <a href="QuizHandle?quiz_id=1"> Bắt đầu làm </a>
-=======
             <div class="main-button-red" style="margin-bottom: 30px">
                 <a href="QuizHandle?quiz_id=${requestScope.quiz_id}"> Bắt đầu làm </a>
->>>>>>> 4d588487366f81580afeeca92fb92f5224ecef1f
+
             </div>
 
             <div class="container" >
