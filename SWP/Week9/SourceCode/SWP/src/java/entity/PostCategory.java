@@ -14,17 +14,15 @@ public class PostCategory {
 
     int blog_id;
     String blog_name;
-    String blog_title;
-    Date updated_date;
+    String note;
 
     public PostCategory() {
     }
 
-    public PostCategory(int blog_id, String blog_name, String blog_title, Date updated_date) {
+    public PostCategory(int blog_id, String blog_name, String note) {
         this.blog_id = blog_id;
         this.blog_name = blog_name;
-        this.blog_title = blog_title;
-        this.updated_date = updated_date;
+        this.note = note;
     }
 
     public int getBlog_id() {
@@ -43,20 +41,11 @@ public class PostCategory {
         this.blog_name = blog_name;
     }
 
-    public String getBlog_title() {
-        return blog_title;
+    public String getNote() {
+        return note;
     }
 
-    public void setBlog_title(String blog_title) {
-        this.blog_title = blog_title;
+    public void setNote(String note) {
+        this.note = note;
     }
-
-    public Date getUpdated_date() {
-        return updated_date;
-    }
-
-    public void setUpdated_date(Date updated_date) {
-        this.updated_date = updated_date;
-    }
-
 }

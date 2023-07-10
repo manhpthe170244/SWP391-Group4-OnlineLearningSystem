@@ -215,7 +215,7 @@
 
             <div class="container">
                 <div class="row">
-                    <form method="post" action="saveSubject">
+                    <form method="post" action="savePostCategory">
                         <ul>
                             <li><button class="add-post-button" onclick="Add()" type="button">Add </button></li>
                             <li><button class="edit-post-button" style="position: relative; top: 10px" type="submit">Save </button></li>
@@ -229,11 +229,11 @@
                             </tr>
                             
                             <c:forEach items="${requestScope.categoryList}" var="category">
-                                <tr id="category_${category.getSub_id()}">
-                                    <td><input type="text" value="${category.getSub_name()}" name="name${category.getSub_id()}"></td>
-                                    <td><textarea name="description${category.getSub_id()}">${category.getSub_desc()}</textarea></td>
+                                <tr id="category_${category.getBlog_id()}">
+                                    <td><input type="text" value="${category.getBlog_name()}" name="name${category.getBlog_id()}"></td>
+                                    <td><textarea name="note${category.getBlog_id()}">${category.getNote()}</textarea></td>
                                     <td>
-                                        <button class="delete-post-button" onclick="Delete(${category.getSub_id()})" type="button">Delete</button>                              
+                                        <button class="delete-post-button" onclick="Delete(${category.getBlog_id()})" type="button">Delete</button>                              
                                     </td>
                                 </tr>             
                             </c:forEach>
@@ -246,14 +246,14 @@
         <script>
                                             function Add() {
                                                 if (window.confirm("Những thay đổi hiện tại sẽ bị mất nếu chưa được Save, bạn có chắc muốn Add?")) {
-                                                    window.location.href = 'addSubject';
+                                                    window.location.href = 'addPostCategory';
                                                 }
                                             }
                                             function Delete(id) {
                                                 //Send an AJAX request to your server-side script
                                                 console.log("delete category");
                                                 $.ajax({
-                                                    url: "deleteSubject",
+                                                    url: "deletePostCategory",
                                                     type: "POST",
                                                     data: {category_id: id},
                                                     success: function (response) {

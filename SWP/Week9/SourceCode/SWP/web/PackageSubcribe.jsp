@@ -82,7 +82,7 @@
                                         <p>${p.getDescription()}</p>
                                     </div>
                                     <div class="registerbtn">
-                                        <button onclick="Subcribe(${p.getPackage_id()}, ${p.getPrice()})">Đăng ký</button>
+                                        <button onclick="Subcribe(${p.getPackage_id()}, ${p.getPrice()}, ${p.getDuration()})">Đăng ký</button>
 
                                     </div>
                                 </div>
@@ -155,13 +155,13 @@
         <jsp:include page="footer.jsp"/>
         <script>
 
-            function Subcribe(packageId, packagePrice) {
+            function Subcribe(packageId, packagePrice, packageDuration) {
                 var wallet = ${requestScope.currUser.getUserWallet()};
                 if (wallet < packagePrice) {
                     $('#myModal').modal('show');
                 } else {
                     var userId = ${requestScope.currUser.getUserId()}
-                    var url = "PricePackageSubcription?userId=" + encodeURIComponent(userId) + "&packageId=" + encodeURIComponent(packageId)  + "&price=" + encodeURIComponent(packagePrice);
+                    var url = "PricePackageSubcription?userId=" + encodeURIComponent(userId) + "&packageId=" + encodeURIComponent(packageId)  + "&price=" + encodeURIComponent(packagePrice) + "&duration=" + encodeURIComponent(packageDuration);
                     var xmlHttp = new XMLHttpRequest();
                     xmlHttp.open("POST", url, true);
                     xmlHttp.onreadystatechange = function () {

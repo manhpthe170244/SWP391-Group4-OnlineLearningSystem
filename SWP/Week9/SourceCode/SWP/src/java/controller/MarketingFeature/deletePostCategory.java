@@ -4,6 +4,7 @@
  */
 package controller.MarketingFeature;
 
+import dao.PostCategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -71,7 +72,9 @@ public class deletePostCategory extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("category_id"));
+        PostCategoryDAO postCategoryDAO = new PostCategoryDAO();
+        postCategoryDAO.Delete(id);
     }
 
     /**

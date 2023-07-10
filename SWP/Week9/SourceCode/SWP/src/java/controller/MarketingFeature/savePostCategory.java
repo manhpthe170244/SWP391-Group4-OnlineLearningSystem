@@ -4,6 +4,8 @@
  */
 package controller.MarketingFeature;
 
+import dao.PostCategoryDAO;
+import entity.PostCategory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  *
@@ -71,17 +75,43 @@ public class savePostCategory extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Get the updated data from the request
+        PrintWriter out = response.getWriter();
+
+        Enumeration<String> paramNames = request.getParameterNames();
+        Vector<String> name = new Vector<>();
+        Vector<String> note = new Vector<>();
+        
+        
+
+        while (paramNames.hasMoreElements()) {
+            String paramName = paramNames.nextElement();
+            if (paramName.startsWith("name")) {
+                String n = request.getParameter(paramName);
+                name.add(n);
+            }
+            if (paramName.startsWith("note")) {
+                String n = request.getParameter(paramName);
+                note.add(n);
+            }
+        }
+        
+        PostCategoryDAO blogDAO = new PostCategoryDAO();
+        Vector<PostCategory> blogList = blogDAO.getAll();
+        for (int i = 0; i < blogList.size(); i++) {
+            blogDAO.Update(blogList.get(i).getBlog_id(), name.get(i), note.get(i));
+        }
+        response.sendRedirect("postCategoryEdit");
     }
 
     /**
-     * Returns a short description of the servlet.
+     * Returns a short note of the servlet.
      *
-     * @return a String containing servlet description
+     * @return a String containing servlet note
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Short note";
     }// </editor-fold>
 
 }
