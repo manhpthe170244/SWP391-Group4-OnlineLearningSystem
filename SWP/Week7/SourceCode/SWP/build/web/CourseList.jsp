@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <link rel="stylesheet" href="assets/css/styling.css">
+        <link rel="stylesheet" href="assets/css/styling.css?version=10">
         <style>
             .topnav {
                 width: 20%;
@@ -65,6 +65,10 @@
             .topnav .search-container button:hover {
                 background: #ccc;
             }
+            .down-content{
+                min-height: 214px
+            }
+            
         </style>
         <!--
         
@@ -84,8 +88,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h6>Thông tin khóa hoc</h6>
-                        <h2>Các khóa học online hiệu quả</h2>
+                        <h6>THÔNG TIN KHÓA HỌC</h6>
+                        <h6 style="color: white; font-size: 250%; font-weight: bold">Các khóa học online hiệu quả</h6>
                     </div>
                 </div>
             </div>
@@ -141,7 +145,7 @@
                                                 </div>
                                                 <div class="down-content">
                                                     <div class="date">
-                                                        <h6>${course.getLast_update()}</h6>
+                                                        <h6>${course.getlastUpdatedFormated()}</h6>
                                                     </div>
                                                     <br>
                                                     <div>

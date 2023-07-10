@@ -31,6 +31,14 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
         <style>
+            table, td, th {
+  border: 1px solid white !important;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
             th, td {
                 padding: 8px;
                 border: 1px solid #ddd;
@@ -195,9 +203,9 @@
                             <th>duration</th>
                             <th>action</th>
                         </tr>
-                        <c:forEach items="${requestScope.courseList}" var="course">
+                        <c:forEach items="${requestScope.courseList}" var="course" varStatus="loop">
                             <tr id="course_${course.getCourse_id()}">
-                                <td>${course.getCourse_name()}</td>
+                                <td>${loop.index+1}</td>
                                 <td>${course.getCourse_img()}</td>
                                 <td>${course.getCourse_price()}</td>
                                 <td>${course.getSub_id()}</td>

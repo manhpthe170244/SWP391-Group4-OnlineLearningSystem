@@ -35,7 +35,7 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <link rel="stylesheet" href="assets/css/styling.css?version=4"/>
+        <link rel="stylesheet" href="assets/css/styling.css?version=20"/>
         <!--
         
         TemplateMo 569 Edu Meeting
@@ -43,6 +43,12 @@
         https://templatemo.com/tm-569-edu-meeting
         
         -->
+        <style>
+            hr{
+                color: white !important;
+                margin-top: 20px !important;
+            }
+        </style>
     </head>
 
     <body>
@@ -51,7 +57,7 @@
         <section class="heading-page header-text">
             <div class="container">
                 <div class="row">
-                    <h4 style="color: white; font-size: 250%; margin-bottom: 30px">Nội dung khoá học</h4>
+                    <h4 style="color: white; font-size: 250%; margin-bottom: 30px">${requestScope.courseName}</h4>
                 </div>
 
 
@@ -65,7 +71,7 @@
                                     <c:if test="${l.isLesson_status() == true}">
                                         <div class="LessonDesc row">
                                             <div class="left col-10 les${l.getLesson_id()}">
-                                                <a href="LessonDetail?lId=${l.getLesson_id()}" style="font-size: 150%">${l.getLesson_name()}</a>
+                                                <a href="LessonDetail?lId=${l.getLesson_id()}&courseId=${Course_id}" style="font-size: 150%">${l.getLesson_name()}</a>
                                                 <button class="btnDes" onclick="toggleDisplay('des${l.getLesson_id()}')">
                                                     <i class="fa fa-caret-down fa-2x" style="color: white" aria-hidden="true"></i>
                                                 </button>
@@ -82,56 +88,59 @@
                                                     </a>
                                                 </c:if>
                                             </div>
-
+                                            <hr>
                                         </div>
-                                        <hr>
-                                    </c:if>
 
+                                    </c:if>
 
                                 </c:forEach>
                                 <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
                                     <div class="addnewToSection">
                                         <a href="addnewLessonTosection?section_id=${s.getSection_id()}&course_Id=${Course_id}">
                                             <h4> <i class="fa-solid fa-plus"></i> Add new lesson to this section</h4>
-                                            <hr>
+
                                         </a>
                                     </div>
                                 </c:if>
                                 <h4 style="display: block; margin: 20px 0 0 63px">Practice Quizzes</h4>
                                 <c:forEach items="${s.getQuizList()}" var="q">
-                                    <div class="LessonDesc row">
-                                        <c:if test="${q.isQuiz_status() == true}">
-                                            <div class="left col-10">
-                                                <a href="QuizLesson?quiz_id=${q.getQuiz_id()}" style="font-size: 150%">${q.getQuiz_name()}</a>
-                                                <p id="quiz${q.getQuiz_id()}" style="color:white">${q.getQuiz_desc()}</p>
-                                            </div>
-                                            <div class="lessonListEditright col-2">
-                                                <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
-                                                    <button class="DeactivateButton" style="display: inline-block" onclick="SetQuizStatus(0, ${q.getQuiz_id()}, ${Course_id})">
-                                                        <i class="fa-solid fa-ban fa-2x" style="margin-right: 10px"></i>
-                                                    </button>
-                                                    <p style="color: white; display: inline-block">/&emsp;</p>
-                                                    <a href="EditQuizContent?quiz_id=${q.getQuiz_id()}&quiz_name=${q.getQuiz_name()}">
-                                                        <i class="fas fa-edit fa-2x" style="color:#31c8ff"></i>
-                                                    </a>
-                                                </c:if>
-                                            </div>
+                                    <c:if test="${q.isQuiz_status() == true}">
+                                        <div class="LessonDesc row">
+                                            <c:if test="${q.isQuiz_status() == true}">
+                                                <div class="left col-10">
+                                                    <a href="QuizLesson?quiz_id=${q.getQuiz_id()}" style="font-size: 150%">${q.getQuiz_name()}</a>
+                                                    <p id="quiz${q.getQuiz_id()}" style="color:white">${q.getQuiz_desc()}</p>
+                                                </div>
+                                                <div class="lessonListEditright col-2">
+                                                    <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                                                        <button class="DeactivateButton" style="display: inline-block" onclick="SetQuizStatus(0, ${q.getQuiz_id()}, ${Course_id})">
+                                                            <i class="fa-solid fa-ban fa-2x" style="margin-right: 10px"></i>
+                                                        </button>
+                                                        <p style="color: white; display: inline-block">/&emsp;</p>
+                                                        <a href="EditQuizContent?quiz_id=${q.getQuiz_id()}&quiz_name=${q.getQuiz_name()}">
+                                                            <i class="fas fa-edit fa-2x" style="color:#31c8ff"></i>
+                                                        </a>
+                                                    </c:if>
+                                                </div>
+
+                                            </c:if>
                                             <hr>
-                                        </c:if>
-                                    </div>
+                                        </div>
+
+                                    </c:if>
 
                                 </c:forEach>
                                 <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
                                     <div class="addnewToSection">
                                         <a href="addnewQuizTosection?section_id=${s.getSection_id()}">
                                             <h4> <i class="fa-solid fa-plus"></i> Add new quizzes to this section</h4>
-                                            <hr>
+
                                         </a>
                                     </div>
                                 </c:if>
                             </div>
                             <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
-                                <div class="disabledLesson">
+                                <div class="disabledLesson" style="margin-top: 30px">
                                     <div class="disabledLessonheader" style="color: white">
                                         <i class="fa-solid fa-trash-can fa-shake fa-2x"></i></i><h4>Disabled lessons</h4>
                                     </div>
@@ -157,9 +166,9 @@
                                                         </a>
                                                     </c:if>
                                                 </div>
-
+                                                <hr>
                                             </div>
-                                            <hr>
+
                                         </c:if>
 
 
@@ -172,8 +181,9 @@
                                     </div>
 
                                     <c:forEach items="${s.getQuizList()}" var="q">
-                                        <div class="LessonDesc row">
-                                            <c:if test="${q.isQuiz_status() == false}">
+
+                                        <c:if test="${q.isQuiz_status() == false}">
+                                            <div class="LessonDesc row">
                                                 <div class="left col-10">
                                                     <a href="QuizLesson?quiz_id=${q.getQuiz_id()}" style="font-size: 150%">${q.getQuiz_name()}</a>
                                                     <p id="quiz${q.getQuiz_id()}" style="color:white">${q.getQuiz_desc()}</p>
@@ -185,12 +195,13 @@
                                                         </button>
                                                         <p style="color: white; display: inline-block">/&emsp;</p>
                                                         <a href="EditQuizContent?quiz_id=${q.getQuiz_id()}&quiz_name=${q.getQuiz_name()}"><i class="fas fa-edit fa-2x" style="color:#31c8ff"></i></a>
-                                                        
+
                                                     </c:if>
                                                 </div>
                                                 <hr>
-                                            </c:if>
-                                        </div>
+                                            </div>
+                                        </c:if>
+
 
                                     </c:forEach>
 

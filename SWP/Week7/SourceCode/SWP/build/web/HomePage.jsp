@@ -63,7 +63,7 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-            
+
 
 
         </style>
@@ -90,8 +90,9 @@
                                 <h2>Welcome to Education</h2>
                                 <p>This is an edu meeting HTML CSS template provided by <a rel="nofollow" href="https://templatemo.com/page/1" target="_blank">TemplateMo website</a>. This is a Bootstrap v5.1.3 layout. The video background is taken from Pexels website, a group of young people by <a rel="nofollow" href="https://www.pexels.com/@pressmaster" target="_blank">Pressmaster</a>.</p>
                                 <div class="main-button-red">
-                                    <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
+                                    <div><a href="${requestScope.linkAddress}">${requestScope.linkContent}</a></div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -175,7 +176,7 @@
                                     </div>
                                 </div>
                             </div>
-                                    
+
                             <div class="col-lg-6">
                                 <div class="meeting-item">
                                     <div class="thumb">
@@ -262,20 +263,23 @@
                         <div class="owl-courses-item owl-carousel">
                             <c:forEach items="${requestScope.postList}" var="post">
                                 <div class="item">
-                                    <img src="${post.getPost_img()}" alt="Course One">
-                                    <div class="down-content">
-                                        <h4>${post.getPost_title()}</h4>
-                                        <div class="info">
-                                            <div class="row">
-                                                <div class="col-4">
+                                    <a href="postDetails?post_id=${post.getPost_id()}">
+                                        <img style="width: 301.5px; height: 158px" src="${post.getPost_img()}" alt="Course One">
+                                        <div class="down-content">
+                                            <h4>${post.getPost_title()}</h4>
+                                            <div class="info">
+                                                <div class="row">
+                                                    <div class="col-4">
 
-                                                </div>
-                                                <div class="col-8">
-                                                    <span>${post.getPost_date()}</span>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <span>${post.getPost_dateFormated() }</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
+
                                 </div>
 
                             </c:forEach>
@@ -290,8 +294,8 @@
                     </div>
                 </div>
         </section>
-        <section class="contact-us" id="contact">
-            <div class="footer">
+        <section style="padding: 100px" class="contact-us" id="contact">
+            <div style="margin: 0" class="footer">
                 <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
                     <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p>
             </div>

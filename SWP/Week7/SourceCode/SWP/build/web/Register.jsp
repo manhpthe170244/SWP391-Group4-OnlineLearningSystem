@@ -108,15 +108,16 @@
                                                 <input name="email" type="text" id="email" placeholder="YOUR EMAIL..." required="">
                                             </fieldset>
                                         </div>
-
+                                        <c:if test="${PasswordPatternErr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${PasswordPatternErr}
+                                                </div>
+                                            </div>
+                                        </c:if>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <input name="password1" type="password" id="password" placeholder="YOUR PASSWORD..." required="">
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                                <input name="password2" type="password" id="password" placeholder="RE-ENTER YOUR PASSWORD..." required="">
                                             </fieldset>
                                         </div>
                                         <c:if test="${passworderr != null}">
@@ -126,6 +127,12 @@
                                                 </div>
                                             </div>
                                         </c:if>
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                                <input name="password2" type="password" id="password" placeholder="RE-ENTER YOUR PASSWORD..." required="">
+                                            </fieldset>
+                                        </div>
+                                        
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <input name="fullname" type="text" id="fullname" placeholder="YOUR FULLNAME..." required="">
@@ -143,6 +150,13 @@
                                                 </c:forEach>
                                             </select>
                                         </div>
+                                        <c:if test="${ageErr != null}">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-warning">
+                                                    <strong>Warning!</strong> ${ageErr}
+                                                </div>
+                                            </div>
+                                        </c:if>
                                         <div class="col-lg-12">
                                             <p style="opacity: 0.7; margin-left: 10px">YOUR DATE OF BIRTH</p>
                                             <fieldset>

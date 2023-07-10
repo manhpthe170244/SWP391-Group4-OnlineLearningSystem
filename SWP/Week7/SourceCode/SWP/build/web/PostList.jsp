@@ -62,6 +62,26 @@
             .topnav .search-container button:hover {
                 background: #ccc;
             }
+            .filters li{
+                margin: 10px !important;
+            }
+            .thumb img{
+                height: 202px;
+                border: 1px solid #d1cfcf
+            }
+            .PostTitle{
+/*                width: 90%;
+                display: -webkit-box !important;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;*/
+          
+            }
+            .down-content{
+                height: 180px;
+                
+            }
         </style>
         <!--
         
@@ -105,7 +125,7 @@
                                     <ul>
                                         <c:forEach items="${requestScope.blogList}" var="postCategory">
                                             <a href="?blog_id=${postCategory.getBlog_id()}"><li>${postCategory.getBlog_name()}</li></a>
-                                        </c:forEach>
+                                                </c:forEach>
                                     </ul>
                                 </div>
                             </div>
@@ -128,7 +148,7 @@
                                                     <div class="date">
                                                         <h6>${post.getPost_date()}</h6>
                                                     </div>
-                                                    <a href="/SWP/postDetails?post_id=${post.getPost_id()}"><h4>${post.getPost_title()}</h4></a><br>
+                                                    <a href="/SWP/postDetails?post_id=${post.getPost_id()}"><h4 class="PostTitle">${post.getPost_title()}</h4></a><br>
                                                 </div>
                                             </div>
                                         </div>
@@ -217,7 +237,7 @@
                     break;
                 }
             }
-            
+
             var showSection = function showSection(section, isAnimate) {
                 var
                         direction = section.replace(/#/, ''),

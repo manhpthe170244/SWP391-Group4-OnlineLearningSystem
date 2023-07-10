@@ -75,7 +75,7 @@
                                         <c:if test="${success != null}">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-success">
-                                                    <strong>Reset tha</strong> 
+                                                    <strong>RESET THÀNH CÔNG</strong> 
                                                 </div>
                                             </div>
                                         </c:if>
