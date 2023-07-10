@@ -267,5 +267,19 @@ public class UserDAO extends MyDAO {
         }
     }
 
+    public void handTransaction(int userId, int amount) {
+        xSql = "update \"User\"\n"
+                + "set user_wallet = user_wallet - ?\n"
+                + "where user_id = ?";
+        try {
+
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, amount);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

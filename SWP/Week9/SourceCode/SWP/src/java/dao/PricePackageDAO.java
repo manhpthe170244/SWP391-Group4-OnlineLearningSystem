@@ -106,24 +106,44 @@ public class PricePackageDAO extends MyDAO {
         return false;
     }
 
+    public Price_Package getUserSubcription(int userid) {
+        xSql = "select p.* from Subscription s, Price_Package p where\n"
+                + "s.user_id = ?\n"
+                + "and p.package_id = s.package_id";
+        Price_Package pc = null;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, userid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int package_id = rs.getInt("package_id");
+                String package_name = rs.getString("package_name");
+                int duration = rs.getInt("duration");
+                boolean pack_status = rs.getBoolean("pack_status");
+                float price = rs.getFloat("price");
+                String description = rs.getString("description");
+                pc = new Price_Package(package_id, package_name, duration, pack_status, price, description);
+            }
+        } catch (Exception e) {
+        }
+        return pc;
+    }
+
     public static void main(String[] args) {
         PricePackageDAO pc = new PricePackageDAO();
 
 //        System.out.println("Test updatePricePackage");
 //        boolean updated = pc.updatePricePackage(5, "Test2", 0, true, 0, "description");
 //        System.out.println(updated);
-        
 //        System.out.println("Test getAll");
 //        Vector<Price_Package> list = pc.getAll();
 //        for (Price_Package c : list) {
 //            System.out.println(c.getDescription());
 //        }
-
 //        System.out.println("Test addPricePackage");
 //        Price_Package pricePackage = new Price_Package(4, "Test", 90, true, 100, "Test");
 //        boolean added = pc.addPricePackage(pricePackage);
 //        System.out.println(added);
-
         System.out.println("Test deleteById");
         boolean deleted = pc.deleteById(4);
         System.out.println(deleted);
