@@ -73,9 +73,16 @@ public class PricePackageSubcription extends HttpServlet {
         int packageId = Integer.parseInt(request.getParameter("packageId"));
         int userId = Integer.parseInt(request.getParameter("userId"));
         int packagePrice = Integer.parseInt(request.getParameter("price"));
+        int packageDuration = Integer.parseInt(request.getParameter("duration"));
         LocalDate ld = LocalDate.now();
         Date reg_date = Date.valueOf(ld);
-        Date expireDate = Date.valueOf(ld.plusDays(90));
+        Date expireDate;
+        if(packageDuration > 6){
+            expireDate = Date.valueOf(ld.plusYears(10));
+        }else{
+            expireDate = Date.valueOf(ld.plusMonths(packageDuration));
+        }
+        
         SubscriptionDAO sd = new SubscriptionDAO();
         int a = sd.addSubcription(userId, packageId, reg_date, expireDate);
         UserDAO ud = new UserDAO();
