@@ -4,10 +4,14 @@
  */
 package controller.TestFeature;
 
+import dao.CourseDAO;
 import dao.QuizDAO;
 import dao.QuizResultDAO;
+import dao.UserDAO;
+import entity.ManageCourse;
 import entity.Quiz;
 import entity.QuizResult;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -40,7 +44,7 @@ public class QuizLesson extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet QuizLesson</title>");            
+            out.println("<title>Servlet QuizLesson</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet QuizLesson at " + request.getContextPath() + "</h1>");
@@ -62,7 +66,7 @@ public class QuizLesson extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
-        
+
         int user_id = 0;
         Cookie[] cookies = request.getCookies();
 
@@ -73,20 +77,34 @@ public class QuizLesson extends HttpServlet {
                 }
             }
         }
-        
-        QuizResultDAO quizResultDAO = new QuizResultDAO();
-        Vector<QuizResult> quizResultList = quizResultDAO.getQuizResultByUserIdAndQuizId(user_id, quiz_id);
 
-        
-        QuizDAO quizDAO = new QuizDAO();
-        Quiz quiz = quizDAO.getQuizById(quiz_id);
-        
-        request.setAttribute("quiz", quiz);
+        if (user_id == 0) {
+            response.sendRedirect("login.jsp");
+            return;
+        } else {
+            UserDAO ud = new UserDAO();
+            User currUser = ud.getUserById(user_id);
+            CourseDAO cd = new CourseDAO();
+            int cid = cd.getCourseidFromQuiz(quiz_id);   
+            ManageCourse checkRegisterdCourse = cd.checkCourseRegistered(cid, user_id);
+            if (checkRegisterdCourse == null) {
+                response.sendRedirect("courseDetails?course_id=" + cid);
+            } else {
+                QuizResultDAO quizResultDAO = new QuizResultDAO();
+                Vector<QuizResult> quizResultList = quizResultDAO.getQuizResultByUserIdAndQuizId(user_id, quiz_id);
 
-        request.setAttribute("quiz_id", quiz_id);
+                QuizDAO quizDAO = new QuizDAO();
+                Quiz quiz = quizDAO.getQuizById(quiz_id);
 
-        request.setAttribute("quizResultList", quizResultList);
-        request.getRequestDispatcher("quizLesson.jsp").forward(request, response);
+                request.setAttribute("quiz", quiz);
+
+                request.setAttribute("quiz_id", quiz_id);
+
+                request.setAttribute("quizResultList", quizResultList);
+                request.getRequestDispatcher("quizLesson.jsp").forward(request, response);
+            }
+        }
+
     }
 
     /**

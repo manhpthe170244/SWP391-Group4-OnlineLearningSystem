@@ -10,6 +10,7 @@ import dao.QuizDAO;
 import dao.SectionDAO;
 import dao.UserDAO;
 import entity.Lesson;
+import entity.ManageCourse;
 import entity.Section;
 import entity.User;
 import java.io.IOException;
@@ -48,32 +49,38 @@ public class LessonListController extends HttpServlet {
                 }
             }
         }
-        
+
         if (user_id == 0) {
             response.sendRedirect("login.jsp");
             return;
+        } else {
+            UserDAO ud = new UserDAO();
+            User currUser = ud.getUserById(user_id);
+            int courseId = Integer.parseInt(request.getParameter("Course_id"));
+            CourseDAO cd = new CourseDAO();
+            ManageCourse checkRegisterdCourse = cd.checkCourseRegistered(courseId, user_id);
+            if (checkRegisterdCourse == null) {
+                response.sendRedirect("courseDetails?course_id=" + courseId);
+            } else {
+                String courseName = cd.searchById(courseId).getCourse_name();
+                SectionDAO secDAO = new SectionDAO();
+                LessonDAO lesDAO = new LessonDAO();
+                QuizDAO quizDao = new QuizDAO();
+                Vector<Section> vs = secDAO.getSectionListByCourseId(courseId);
+
+                for (Section v : vs) {
+                    v.setLessonList(lesDAO.getLessonBySectionId(v.getSection_id()));
+                    v.setQuizList(quizDao.getQuizListBySectionId(v.getSection_id()));
+                }
+                HttpSession session = request.getSession();
+
+                session.setAttribute("Course_id", courseId);
+                request.setAttribute("courseName", courseName);
+                request.setAttribute("currUser", currUser);
+                request.setAttribute("SectionList", vs);
+                request.getRequestDispatcher("lessonList.jsp").forward(request, response);
+            }
         }
-        UserDAO ud = new UserDAO();
-        User currUser = ud.getUserById(user_id);
-        int courseId = Integer.parseInt(request.getParameter("Course_id"));
-        CourseDAO cd = new CourseDAO();
-        String courseName = cd.searchById(courseId).getCourse_name();
-        SectionDAO secDAO = new SectionDAO();
-        LessonDAO lesDAO = new LessonDAO();
-        QuizDAO quizDao = new QuizDAO();
-        Vector<Section> vs = secDAO.getSectionListByCourseId(courseId);
-       
-        for (Section v : vs) {
-           v.setLessonList(lesDAO.getLessonBySectionId(v.getSection_id()));
-           v.setQuizList(quizDao.getQuizListBySectionId(v.getSection_id()));
-        }
-        HttpSession session = request.getSession();
-        
-        session.setAttribute("Course_id", courseId);
-        request.setAttribute("courseName", courseName);
-        request.setAttribute("currUser", currUser);
-        request.setAttribute("SectionList", vs);
-        request.getRequestDispatcher("lessonList.jsp").forward(request, response);
 
     }
 

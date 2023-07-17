@@ -10,6 +10,7 @@ import dao.UserDAO;
 import dto.LessonDto;
 import entity.Course;
 import entity.Lesson;
+import entity.ManageCourse;
 import entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,15 +58,20 @@ public class LessonDetailController extends HttpServlet {
             int lId = Integer.parseInt(request.getParameter("lId"));
             int cid = Integer.parseInt(request.getParameter("courseId"));
             CourseDAO cd = new CourseDAO();
-            Course course = cd.searchById(cid);
-            String courseName = course.getCourse_name();
-            Lesson lesson = lessonDAO.getLessonDetails(lId);
-            boolean done = lessonDAO.checkLessonDone(user_id, lId);
-            request.setAttribute("currUser", currUser);
-            request.setAttribute("courseName", courseName);
-            request.setAttribute("done", done);
-            request.setAttribute("lesson", lesson);
-            request.getRequestDispatcher("lessonDetail.jsp").forward(request, response);
+            ManageCourse checkRegisterdCourse = cd.checkCourseRegistered(cid, user_id);
+            if (checkRegisterdCourse == null) {
+                response.sendRedirect("courseDetails?course_id=" + cid);
+            } else {
+                Course course = cd.searchById(cid);
+                String courseName = course.getCourse_name();
+                Lesson lesson = lessonDAO.getLessonDetails(lId);
+                boolean done = lessonDAO.checkLessonDone(user_id, lId);
+                request.setAttribute("currUser", currUser);
+                request.setAttribute("courseName", courseName);
+                request.setAttribute("done", done);
+                request.setAttribute("lesson", lesson);
+                request.getRequestDispatcher("lessonDetail.jsp").forward(request, response);
+            }
         }
 
     }
