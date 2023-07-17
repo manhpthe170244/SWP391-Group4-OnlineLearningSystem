@@ -93,19 +93,11 @@
             </div>
         </section>
         <section class="meetings-page" style="padding-top: 0px;" id="meetings" >
-            <div class="container p-3" style="color: white;">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2>Ten Bai Quiz</h2>
-                    </div>
-                </div>
-
-            </div>
 
             <div class="container p-3" style="color: white;">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h5>Tat ca nhung lan da tham gia bai Quiz</h5>
+                        <h4>Lịch sử làm Quiz</h4>
                     </div>
                 </div>
             </div>
@@ -133,7 +125,7 @@
                                     <th scope="col">Attempt</th>
                                     <th scope="col">State</th>
                                     <th scope="col">Start</th>
-                                    <th scope="col">Grade/10.00</th>
+                                    <th scope="col">Grade/10</th>
                                     <th scope="col">Review</th>
                                 </tr>
                             </thead>
