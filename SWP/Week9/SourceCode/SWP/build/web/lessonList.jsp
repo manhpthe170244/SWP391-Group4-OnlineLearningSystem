@@ -71,7 +71,7 @@
                                     <c:if test="${l.isLesson_status() == true}">
                                         <div class="LessonDesc row">
                                             <div class="left col-10 les${l.getLesson_id()}">
-                                                <a href="LessonDetail?lId=${l.getLesson_id()}&courseId=${Course_id}" style="font-size: 150%">${l.getLesson_name()}</a>
+                                                <a href="LessonDetail?lId=${l.getLesson_id()}" style="font-size: 150%">${l.getLesson_name()}</a>
                                                 <button class="btnDes" onclick="toggleDisplay('des${l.getLesson_id()}')">
                                                     <i class="fa fa-caret-down fa-2x" style="color: white" aria-hidden="true"></i>
                                                 </button>

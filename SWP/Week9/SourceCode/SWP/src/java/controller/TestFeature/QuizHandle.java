@@ -4,8 +4,11 @@
  */
 package controller.TestFeature;
 
+import dao.CourseDAO;
 import dao.QuizDAO;
+import entity.ManageCourse;
 import entity.Question;
+import entity.Quiz;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,14 +78,26 @@ public class QuizHandle extends HttpServlet {
             String quizIdString = request.getParameter("quiz_id");
             int quiz_id = Integer.parseInt(quizIdString);
             // Truyen danh sach cau hoi
-            QuizDAO quizDAO = new QuizDAO();
-            Vector<Question> quesList = quizDAO.getQuestionByQuizId(quiz_id);
-            request.setAttribute("quesList", quesList);
-            request.setAttribute("quiz_id", quiz_id);
-            RequestDispatcher rd = request.getRequestDispatcher("QuizHandle.jsp");
-            rd.forward(request, response);
-        }
-        else{
+            CourseDAO cd = new CourseDAO();
+            int cid = cd.getCourseidFromQuiz(quiz_id);
+            ManageCourse checkRegisterdCourse = cd.checkCourseRegistered(cid, user_id);
+            if (checkRegisterdCourse == null) {
+                response.sendRedirect("courseDetails?course_id=" + cid);
+            } else {
+                QuizDAO quizDAO = new QuizDAO();
+                Quiz requestedQuiz = quizDAO.getQuizById(quiz_id);
+                if (requestedQuiz.isQuiz_status() == false) {
+                    response.sendRedirect("UnactiveLesson.jsp");
+                    return;
+                }
+                Vector<Question> quesList = quizDAO.getQuestionByQuizId(quiz_id);
+                request.setAttribute("quesList", quesList);
+                request.setAttribute("quiz_id", quiz_id);
+                RequestDispatcher rd = request.getRequestDispatcher("QuizHandle.jsp");
+                rd.forward(request, response);
+            }
+
+        } else {
             response.sendRedirect("login.jsp");
         }
     }

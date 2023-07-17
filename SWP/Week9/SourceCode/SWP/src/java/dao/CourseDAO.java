@@ -701,12 +701,30 @@ public class CourseDAO extends MyDAO {
         xSql = "select distinct mc.course_id from Course mc, quiz q, Section s\n"
                 + "where q.section_id = s.section_id\n"
                 + "and s.course_id = mc.course_id\n"
-                + "and q.quiz_status = 1\n"
                 + "and q.quiz_id = ?";
         int courseId = 0;
         try {
             ps = con.prepareStatement(xSql);
             ps.setInt(1, quizId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                courseId = rs.getInt("course_id");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return courseId;
+    }
+
+    public int getCourseidFromLeson(int lesonId) {
+        xSql = "select distinct l.*, mc.course_id from Course mc, Lesson l, Section s\n"
+                + "where l.section_id = s.section_id\n"
+                + "and s.course_id = mc.course_id\n"
+                + "and l.lesson_id = ?";
+        int courseId = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, lesonId);
             rs = ps.executeQuery();
             if (rs.next()) {
                 courseId = rs.getInt("course_id");

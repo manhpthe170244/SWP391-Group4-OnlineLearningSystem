@@ -91,11 +91,15 @@ public class QuizLesson extends HttpServlet {
                 response.sendRedirect("courseDetails?course_id=" + cid);
             } else {
                 QuizResultDAO quizResultDAO = new QuizResultDAO();
+                
                 Vector<QuizResult> quizResultList = quizResultDAO.getQuizResultByUserIdAndQuizId(user_id, quiz_id);
 
                 QuizDAO quizDAO = new QuizDAO();
                 Quiz quiz = quizDAO.getQuizById(quiz_id);
-
+                if(quiz.isQuiz_status()==false){
+                    response.sendRedirect("UnactiveLesson.jsp");
+                    return;
+                }
                 request.setAttribute("quiz", quiz);
 
                 request.setAttribute("quiz_id", quiz_id);

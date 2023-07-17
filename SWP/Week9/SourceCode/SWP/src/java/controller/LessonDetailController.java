@@ -54,10 +54,10 @@ public class LessonDetailController extends HttpServlet {
             return;
         } else {
             UserDAO ud = new UserDAO();
+            CourseDAO cd = new CourseDAO();
             User currUser = ud.getUserById(user_id);
             int lId = Integer.parseInt(request.getParameter("lId"));
-            int cid = Integer.parseInt(request.getParameter("courseId"));
-            CourseDAO cd = new CourseDAO();
+            int cid = cd.getCourseidFromLeson(lId);
             ManageCourse checkRegisterdCourse = cd.checkCourseRegistered(cid, user_id);
             if (checkRegisterdCourse == null) {
                 response.sendRedirect("courseDetails?course_id=" + cid);
@@ -65,6 +65,10 @@ public class LessonDetailController extends HttpServlet {
                 Course course = cd.searchById(cid);
                 String courseName = course.getCourse_name();
                 Lesson lesson = lessonDAO.getLessonDetails(lId);
+                if(lesson.isLesson_status()==false){
+                    response.sendRedirect("UnactiveLesson.jsp");
+                    return;
+                }
                 boolean done = lessonDAO.checkLessonDone(user_id, lId);
                 request.setAttribute("currUser", currUser);
                 request.setAttribute("courseName", courseName);
