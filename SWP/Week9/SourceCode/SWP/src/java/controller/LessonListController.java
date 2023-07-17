@@ -8,10 +8,12 @@ import dao.CourseDAO;
 import dao.LessonDAO;
 import dao.QuizDAO;
 import dao.SectionDAO;
+import dao.SubscriptionDAO;
 import dao.UserDAO;
 import entity.Lesson;
 import entity.ManageCourse;
 import entity.Section;
+import entity.Subscription;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -66,6 +68,8 @@ public class LessonListController extends HttpServlet {
                 SectionDAO secDAO = new SectionDAO();
                 LessonDAO lesDAO = new LessonDAO();
                 QuizDAO quizDao = new QuizDAO();
+                SubscriptionDAO subScriptionDAO = new SubscriptionDAO();
+                Subscription currentSubscription = subScriptionDAO.GetCurrentSubscription(user_id);
                 Vector<Section> vs = secDAO.getSectionListByCourseId(courseId);
 
                 for (Section v : vs) {
@@ -76,6 +80,7 @@ public class LessonListController extends HttpServlet {
 
                 session.setAttribute("Course_id", courseId);
                 request.setAttribute("courseName", courseName);
+                request.setAttribute("currSubscription", currentSubscription);
                 request.setAttribute("currUser", currUser);
                 request.setAttribute("SectionList", vs);
                 request.getRequestDispatcher("lessonList.jsp").forward(request, response);
