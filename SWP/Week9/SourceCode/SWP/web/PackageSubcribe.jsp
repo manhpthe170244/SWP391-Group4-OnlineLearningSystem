@@ -61,35 +61,31 @@
         <jsp:include page="header.jsp"/>
         <section class="heading-page header-text">
             <c:if test="${requestScope.currentSubscription == null}">
-                <h4 style="color: white; margin-bottom: 50px; font-size: 200%">Đăng kí góp vjp</h4>
+                <h4 style="color: white; margin-bottom: 50px; font-size: 200%">Đăng kí góp vip</h4>
                 <div class="container">
                     <div class="row">
                         <div class="pricePackageWrapper" style="padding: 10px;">
 
                             <c:forEach items="${requestScope.packageList}" var="p">
+                                <c:if test="${p.isPack_status() == true}">
+                                    <div class="pricePackageItem" style="border: 1px solid black; width: ${Math.floor(100/requestScope.packageList.size())-5}%">
+                                        <div class="packageInfo">
+                                            <h4>${p.getPackage_name()}</h4>
+                                            <c:if test="${p.getDuration() <= 10}">
+                                                <h4>Thời hạn: ${p.getDuration()} tháng</h4>
+                                            </c:if>
+                                            <c:if test="${p.getDuration() == 100000}">
+                                                <h4>Thời hạn: vô hạn</h4>
+                                            </c:if>
+                                            <h4>Giá cả: ${p.getPriceFormated()}</h4>
+                                            <p>${p.getDescription()}</p>
+                                        </div>
+                                        <div class="registerbtn">
+                                            <button onclick="Subcribe(${p.getPackage_id()}, ${p.getPrice()}, ${p.getDuration()})">Đăng ký</button>
 
-
-                                <div class="pricePackageItem" style="border: 1px solid black; width: ${Math.floor(100/requestScope.packageList.size())-5}%">
-                                    <div class="packageInfo">
-                                        <h4>${p.getPackage_name()}</h4>
-                                        <c:if test="${p.getDuration() <= 10}">
-                                            <h4>Thời hạn: ${p.getDuration()} tháng</h4>
-                                        </c:if>
-                                        <c:if test="${p.getDuration() == 100000}">
-                                            <h4>Thời hạn: vô hạn</h4>
-                                        </c:if>
-                                        <h4>Giá cả: ${p.getPriceFormated()}</h4>
-                                        <p>${p.getDescription()}</p>
+                                        </div>
                                     </div>
-                                    <div class="registerbtn">
-                                        <button onclick="Subcribe(${p.getPackage_id()}, ${p.getPrice()}, ${p.getDuration()})">Đăng ký</button>
-
-                                    </div>
-                                </div>
-
-
-
-
+                                </c:if>
                             </c:forEach>
 
                         </div>
@@ -132,7 +128,7 @@
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h6 style="color: black" class="modal-title">Bạn không đủ tiền trong ví để thực hiện giao dịch này</h6>
-                            
+
                         </div>
 
                         <!-- Modal body -->
@@ -161,7 +157,7 @@
                     $('#myModal').modal('show');
                 } else {
                     var userId = ${requestScope.currUser.getUserId()}
-                    var url = "PricePackageSubcription?userId=" + encodeURIComponent(userId) + "&packageId=" + encodeURIComponent(packageId)  + "&price=" + encodeURIComponent(packagePrice) + "&duration=" + encodeURIComponent(packageDuration);
+                    var url = "PricePackageSubcription?userId=" + encodeURIComponent(userId) + "&packageId=" + encodeURIComponent(packageId) + "&price=" + encodeURIComponent(packagePrice) + "&duration=" + encodeURIComponent(packageDuration);
                     var xmlHttp = new XMLHttpRequest();
                     xmlHttp.open("POST", url, true);
                     xmlHttp.onreadystatechange = function () {
