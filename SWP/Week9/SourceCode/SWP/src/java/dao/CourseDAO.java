@@ -55,9 +55,6 @@ public class CourseDAO extends MyDAO {
         }
         return n;
     }
-//    public User getLectureByCourseId(int courseId){
-//        
-//    }
 
     // Son
     public Vector<ManageCourse> getmyCourseList(int user_Id, String sub_idRaw, String searchName, String sortType) {
@@ -700,15 +697,52 @@ public class CourseDAO extends MyDAO {
 
     }
 
+    public int getCourseidFromQuiz(int quizId) {
+        xSql = "select distinct mc.course_id from Course mc, quiz q, Section s\n"
+                + "where q.section_id = s.section_id\n"
+                + "and s.course_id = mc.course_id\n"
+                + "and q.quiz_id = ?";
+        int courseId = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, quizId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                courseId = rs.getInt("course_id");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return courseId;
+    }
+
+    public int getCourseidFromLeson(int lesonId) {
+        xSql = "select distinct l.*, mc.course_id from Course mc, Lesson l, Section s\n"
+                + "where l.section_id = s.section_id\n"
+                + "and s.course_id = mc.course_id\n"
+                + "and l.lesson_id = ?";
+        int courseId = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, lesonId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                courseId = rs.getInt("course_id");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return courseId;
+    }
+
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
 
 //        System.out.println("Test addCourse");
 //        int n = pd.addCourse("Test", "Test", 75000, "Test", Date.valueOf("2022-03-04"), 2, 1, true, 30, "test");
 //        System.out.println(n);
-        System.out.println("Test deleteCourse");
-        Boolean deleted = pd.deleteCourse(136);
-        System.out.println(deleted);
+        int a = pd.getCourseidFromQuiz(50);
+        System.out.println(a);
 
 //        System.out.println("Test getHottestCourse");
 //        Vector<Course> cv = pd.getHottestCourse();

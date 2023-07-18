@@ -105,7 +105,7 @@ public class courseList extends HttpServlet {
         }
         if (sort_type.equalsIgnoreCase("Mostparticipant")) {
             courseToDisplay = courseDAO.SortCoursesByParRate((currentPage - 1) * 9, 9, (int) session.getAttribute("sub_id"), search);
-            totalRecords = courseToDisplay.size();
+            totalRecords = courseDAO.getTotalNumber(0, null);
 
 
         }

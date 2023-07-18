@@ -29,7 +29,7 @@
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
@@ -71,7 +71,7 @@
                                     <c:if test="${l.isLesson_status() == true}">
                                         <div class="LessonDesc row">
                                             <div class="left col-10 les${l.getLesson_id()}">
-                                                <a href="LessonDetail?lId=${l.getLesson_id()}&courseId=${Course_id}" style="font-size: 150%">${l.getLesson_name()}</a>
+                                                <a href="LessonDetail?lId=${l.getLesson_id()}" style="font-size: 150%">${l.getLesson_name()}</a>
                                                 <button class="btnDes" onclick="toggleDisplay('des${l.getLesson_id()}')">
                                                     <i class="fa fa-caret-down fa-2x" style="color: white" aria-hidden="true"></i>
                                                 </button>
@@ -108,7 +108,7 @@
                                         <div class="LessonDesc row">
                                             <c:if test="${q.isQuiz_status() == true}">
                                                 <div class="left col-10">
-                                                    <a href="QuizLesson?quiz_id=${q.getQuiz_id()}" style="font-size: 150%">${q.getQuiz_name()}</a>
+                                                    <a  href="QuizLesson?quiz_id=${q.getQuiz_id()}" style="font-size: 150%" onclick="CheckSubscription('${requestScope.currSubscription}', '${requestScope.currUser.getRoleId()}', '${q.getQuiz_id()}')">${q.getQuiz_name()}</a>
                                                     <p id="quiz${q.getQuiz_id()}" style="color:white">${q.getQuiz_desc()}</p>
                                                 </div>
                                                 <div class="lessonListEditright col-2">
@@ -210,11 +210,34 @@
 
 
                         </c:forEach>
+                        
                     </div>
                 </div>
             </div>
         </section>
+        <div class="modal" id="myModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
 
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h6 style="color: black" class="modal-title">Bạn chưa có quyền sử dụng tính năng này</h6>
+
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        Hãy đăng kí các gói vip của chúng tôi để mở khoá tính năng làm quiz và theo dõi tiến độ của bản thân tại <a href="PricePackageSubcription">đây</a>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <jsp:include page="footer.jsp"/>
 
 
@@ -232,104 +255,115 @@
         <script src="assets/js/slick-slider.js"></script>
         <script src="assets/js/custom.js"></script>
         <script>
-                                                            //according to loftblog tut
-                                                            $('.nav li:first').addClass('active');
 
-                                                            // set sort_type
-                                                            const sortType = document.getElementById("sortType");
-                                                            sortType.addEventListener("change", function () {
-                                                                if (sortType.value === "recent") {
-                                                                    window.location.href = "?sort_type=recent";
-                                                                } else if (sortType.value === "name") {
-                                                                    window.location.href = "?sort_type=name";
-                                                                }
-                                                            });
 
-                                                            var paramValue = "${sessionScope.sort_type}";
-                                                            for (var i = 0; i < sortType.options.length; i++) {
-                                                                if (sortType.options[i].value === paramValue) {
-                                                                    sortType.options[i].selected = true;
-                                                                    break;
-                                                                }
-                                                            }
+                            //according to loftblog tut
+                            $('.nav li:first').addClass('active');
 
-                                                            function SetLessonStatus(updateStatus, lessonId, courseId) {
-                                                                //Send an AJAX request to your server-side script
-                                                                $.ajax({
-                                                                    url: "UpdateLessonStatus",
-                                                                    type: "GET",
-                                                                    data: {lessonId: lessonId,
-                                                                        updateStatus: updateStatus
-                                                                    },
+                            // set sort_type
+                            const sortType = document.getElementById("sortType");
+                            sortType.addEventListener("change", function () {
+                                if (sortType.value === "recent") {
+                                    window.location.href = "?sort_type=recent";
+                                } else if (sortType.value === "name") {
+                                    window.location.href = "?sort_type=name";
+                                }
+                            });
 
-                                                                    success: function (response) {
-                                                                        console.log("success");
-                                                                        window.location.href = "LessonListController?Course_id=" + courseId;
-                                                                    }
-                                                                });
-                                                            }
-                                                            function SetQuizStatus(updateStatus, QuizId, courseId) {
-                                                                //Send an AJAX request to your server-side script
-                                                                $.ajax({
-                                                                    url: "UpdateQuizStatus",
-                                                                    type: "POST",
-                                                                    data: {Quizid: QuizId,
-                                                                        updateStatus: updateStatus
-                                                                    },
+                            var paramValue = "${sessionScope.sort_type}";
+                            for (var i = 0; i < sortType.options.length; i++) {
+                                if (sortType.options[i].value === paramValue) {
+                                    sortType.options[i].selected = true;
+                                    break;
+                                }
+                            }
 
-                                                                    success: function (response) {
-                                                                        console.log("success");
-                                                                        window.location.href = "LessonListController?Course_id=" + courseId;
-                                                                    }
-                                                                });
-                                                            }
-                                                            function toggleDisplay(DesId) {
-                                                                var currentDisplay = document.getElementById(DesId);
-                                                                currentDisplay.style.display = currentDisplay.style.display != "none" ? "none" : "block";
-                                                                console.log(DesId);
-                                                            }
+                            function SetLessonStatus(updateStatus, lessonId, courseId) {
+                                //Send an AJAX request to your server-side script
 
-                                                            var showSection = function showSection(section, isAnimate) {
-                                                                var
-                                                                        direction = section.replace(/#/, ''),
-                                                                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-                                                                        reqSectionPos = reqSection.offset().top - 0;
+                                $.ajax({
+                                    url: "UpdateLessonStatus",
+                                    type: "GET",
+                                    data: {lessonId: lessonId,
+                                        updateStatus: updateStatus
+                                    },
 
-                                                                if (isAnimate) {
-                                                                    $('body, html').animate({
-                                                                        scrollTop: reqSectionPos},
-                                                                            800);
-                                                                } else {
-                                                                    $('body, html').scrollTop(reqSectionPos);
-                                                                }
+                                    success: function (response) {
+                                        console.log("success");
+                                        window.location.href = "LessonListController?Course_id=" + courseId;
+                                    }
+                                });
+                            }
+                            function CheckSubscription(subscription, role, quizId) {
+                                event.preventDefault();
+                                if (subscription == "" && role == 2) {
+                                    $('#myModal').modal('show');
+                                }else{
+                                    window.location.href = "QuizLesson?quiz_id="+quizId
+                                }
+                            }
+                            function SetQuizStatus(updateStatus, QuizId, courseId) {
+                                //Send an AJAX request to your server-side script
+                                $.ajax({
+                                    url: "UpdateQuizStatus",
+                                    type: "POST",
+                                    data: {Quizid: QuizId,
+                                        updateStatus: updateStatus
+                                    },
 
-                                                            };
+                                    success: function (response) {
+                                        console.log("success");
+                                        window.location.href = "LessonListController?Course_id=" + courseId;
+                                    }
+                                });
+                            }
+                            function toggleDisplay(DesId) {
+                                var currentDisplay = document.getElementById(DesId);
+                                currentDisplay.style.display = currentDisplay.style.display != "none" ? "none" : "block";
+                                console.log(DesId);
+                            }
 
-                                                            var checkSection = function checkSection() {
-                                                                $('.section').each(function () {
-                                                                    var
-                                                                            $this = $(this),
-                                                                            topEdge = $this.offset().top - 80,
-                                                                            bottomEdge = topEdge + $this.height(),
-                                                                            wScroll = $(window).scrollTop();
-                                                                    if (topEdge < wScroll && bottomEdge > wScroll) {
-                                                                        var
-                                                                                currentId = $this.data('section'),
-                                                                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-                                                                        reqLink.closest('li').addClass('active').
-                                                                                siblings().removeClass('active');
-                                                                    }
-                                                                });
-                                                            };
+                            var showSection = function showSection(section, isAnimate) {
+                                var
+                                        direction = section.replace(/#/, ''),
+                                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                                        reqSectionPos = reqSection.offset().top - 0;
 
-                                                            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-                                                                e.preventDefault();
-                                                                showSection($(this).attr('href'), true);
-                                                            });
+                                if (isAnimate) {
+                                    $('body, html').animate({
+                                        scrollTop: reqSectionPos},
+                                            800);
+                                } else {
+                                    $('body, html').scrollTop(reqSectionPos);
+                                }
 
-                                                            $(window).scroll(function () {
-                                                                checkSection();
-                                                            });
+                            };
+
+                            var checkSection = function checkSection() {
+                                $('.section').each(function () {
+                                    var
+                                            $this = $(this),
+                                            topEdge = $this.offset().top - 80,
+                                            bottomEdge = topEdge + $this.height(),
+                                            wScroll = $(window).scrollTop();
+                                    if (topEdge < wScroll && bottomEdge > wScroll) {
+                                        var
+                                                currentId = $this.data('section'),
+                                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                                        reqLink.closest('li').addClass('active').
+                                                siblings().removeClass('active');
+                                    }
+                                });
+                            };
+
+                            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                                e.preventDefault();
+                                showSection($(this).attr('href'), true);
+                            });
+
+                            $(window).scroll(function () {
+                                checkSection();
+                            });
         </script>
     </body>
 

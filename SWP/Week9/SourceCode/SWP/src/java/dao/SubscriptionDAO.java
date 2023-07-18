@@ -7,7 +7,10 @@ package dao;
 import entity.Price_Package;
 import entity.Subscription;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,6 +64,32 @@ public class SubscriptionDAO extends MyDAO {
             Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return a;
+    }
+
+    public Map<String, Integer> getSubscriptionDataPop(String sortType) {
+        Map<String, Integer> map = new LinkedHashMap<>();
+        xSql = "SELECT [Course_DB].[dbo].[Price_Package].package_name, COUNT(user_id) AS user_count\n"
+                + "FROM [Course_DB].[dbo].[Subscription]\n"
+                + "JOIN [Course_DB].[dbo].[Price_Package]\n"
+                + "ON [Course_DB].[dbo].[Price_Package].package_id = [Course_DB].[dbo].[Subscription].package_id\n"
+                + "GROUP BY [Course_DB].[dbo].[Price_Package].package_name\n";
+        if (sortType.equalsIgnoreCase("most")) {
+            xSql += "ORDER BY user_count DESC";
+        } else {
+            xSql += "ORDER BY user_count ASC";
+        }
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String packageId = rs.getNString("package_name");
+                int userCount = rs.getInt("user_count");
+                map.put(packageId, userCount);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 
     public static void main(String[] args) {
