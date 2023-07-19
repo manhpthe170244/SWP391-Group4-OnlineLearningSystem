@@ -58,7 +58,7 @@ public class LoginController extends HttpServlet {
             response.addCookie(userCookie);
             response.sendRedirect("homepage");
         } else {
-            request.setAttribute("err", "Wrong email or password!");
+            request.setAttribute("err", "Sai email hoặc mật khẩu!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }

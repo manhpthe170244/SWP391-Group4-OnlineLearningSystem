@@ -58,10 +58,10 @@
                         <p style="color: white; margin-top: 15px">"Lorem ipsum dolor sit amet, consectetur adipiscing elit."</p>
                     </div>
                     <div class="col-lg-8 Per">
-                        <h2 style="font-size: 150%; display: inline-block; position: relative; left: -85px">Personal Info</h2> 
+                        <h2 style="font-size: 150%; display: inline-block; position: relative; left: -85px">Thông tin cá nhân</h2> 
                         <c:if test="${requestScope.viewOwn == true}">
                             <div class="EditProfileButton">
-                                <a href="${pageContext.request.contextPath}/editProfile?uid=${profile.getUserId()}">Edit Profile</a>
+                                <a href="${pageContext.request.contextPath}/editProfile?uid=${profile.getUserId()}">Chỉnh sửa hồ sơ</a>
                             </div>
                         </c:if>
 

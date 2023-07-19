@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,8 +48,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h6>Login</h6>
-                        <h2>Login Here</h2>
+                        <h6>Chào mừng tới khóa học của chúng tôi!</h6>
+                        <h6 style=" font-size: 250%; margin-top: 20px">ĐĂNG NHẬP</h6>
                     </div>
                 </div>
             </div>
@@ -63,46 +64,46 @@
                                 <form id="contact" action="login" method="post">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h2 class="text-center" >Login</h2>
+                                            <h2 class="text-center" >Đăng nhập</h2>
                                         </div>
                                         <c:if test="${err != null}">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-danger">
-                                                    <strong>Wrong!</strong> ${err}
+                                                    <strong>${err}</strong> 
                                                 </div>
                                             </div>
                                         </c:if>
                                         <c:if test="${success != null}">
                                             <div class="col-lg-12">
                                                 <div class="alert alert-success">
-                                                    <strong>Success!</strong> Login Success
+                                                    <strong>Success!</strong> Đăng nhập thành công
                                                     <div class="alert alert-warning">
-                                                        <strong>Warning!</strong> ${err}
+                                                        <strong>Warning!${err}</strong> 
                                                     </div>
                                                 </div>
                                             </c:if>
                                             <div class="col-lg-12">
                                                 <fieldset>
-                                                    <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="YOUR EMAIL..." required="">
+                                                    <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Email" required="">
                                                 </fieldset>
                                             </div>
 
                                             <div class="col-lg-12">
                                                 <fieldset>
-                                                    <input name="password" type="password" id="password" placeholder="YOUR PASSWORD..." required="">
+                                                    <input name="password" type="password" id="password" placeholder="Mật khẩu" required="">
                                                 </fieldset>
                                             </div>
 
                                             <div class="col-lg-12">
                                                 <fieldset>
-                                                    <button type="submit" id="form-submit" class="button">LOGIN</button>
+                                                    <button type="submit" id="form-submit" class="button">ĐĂNG NHẬP</button>
                                                 </fieldset>
                                             </div>
                                             <div style="margin: 5px 0 0 5px">
-                                                Don't have an account ? Sign up <a href="Register.jsp"> here</a>
+                                                Chưa có tài khoản? Đăng ký ngay <a href="Register.jsp">tại đây</a>
                                             </div>
                                             <div style="margin: 5px 0 0 5px">
-                                                Forgot your password ? Reset <a href="resetPassword.jsp">here</a>
+                                                Quên mật khẩu? Thiết lập lại <a href="resetPassword.jsp">tại đây</a>
                                             </div>
 
                                         </div>
@@ -113,7 +114,7 @@
                 </div>
             </div>
             <div class="footer">
-                <p>Copyright � 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
+                <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
                     <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p>
             </div>
         </section>

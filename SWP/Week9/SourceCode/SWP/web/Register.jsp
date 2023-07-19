@@ -72,7 +72,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>Sign Up Here</h2>
+                        <h2>ĐĂNG KÝ TÀI KHOẢN</h2>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                                 <form id="contact" action="register" method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h2 class="text-center" >Sign Up</h2>
+                                            <h2 class="text-center" >Đăng ký</h2>
                                         </div>
                                         <c:if test="${duplicateEmailErr != null}">
                                             <div class="col-lg-12">
