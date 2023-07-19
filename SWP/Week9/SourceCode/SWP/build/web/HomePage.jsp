@@ -88,7 +88,7 @@
                             <div class="caption">
                                 <h6>Hello Students</h6>
                                 <h2>Welcome to Education</h2>
-                                <p>This is an edu meeting HTML CSS template provided by <a rel="nofollow" href="https://templatemo.com/page/1" target="_blank">TemplateMo website</a>. This is a Bootstrap v5.1.3 layout. The video background is taken from Pexels website, a group of young people by <a rel="nofollow" href="https://www.pexels.com/@pressmaster" target="_blank">Pressmaster</a>.</p>
+                                <p>Xin chào và chào mừng bạn đến với nền tảng cung cấp dịch vụ hỗ trợ học tập của chúng tôi, Để biết thêm chi tiết, liên lạc với chúng tôi tại <a rel="nofollow" href="contactInfo.html" target="_blank">đây</a>. This is a Bootstrap v5.1.3 layout. The video background is taken from Pexels website, a group of young people by <a rel="nofollow" href="https://www.pexels.com/@pressmaster" target="_blank">Pressmaster</a>.</p>
                                 <div class="main-button-red">
                                     <div><a href="${requestScope.linkAddress}">${requestScope.linkContent}</a></div>
                                 </div>

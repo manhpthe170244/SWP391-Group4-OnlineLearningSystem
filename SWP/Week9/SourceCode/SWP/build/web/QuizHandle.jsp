@@ -109,7 +109,7 @@
                 padding-top: 10px;
                 padding-bottom: 10px;
             }
-           
+
             .navbar2-brand {
                 font-size: 20px;
                 font-weight: bold;
@@ -130,9 +130,9 @@
                 display: flex;
                 flex-wrap: wrap;
                 justify-content:  flex-start;
-                
+
             }
-            
+
             .quiz-all a{
                 color: #646464
             }
@@ -181,6 +181,12 @@
             .quiz-square{
                 background-color: #9edcde;
             }
+            .answered{
+                background-color: #00ff00
+            }
+            .flagged{
+                background-color: #e05a7d !important
+            }
         </style>
     </head>
     <!--    chay dong ho khi trang load-->
@@ -193,14 +199,10 @@
 
         <section class="heading-page header-text" style="padding-top: 100px;">
             <div class="navbar2" style="text-align: left; margin-top: 30px">
-                <div class="container2" style="display: inline-block; border-bottom: 1px solid #2EA7BE">
-                    <span class="navbar2-brand"><a href="">Home</a></span>
+                <div class="container2" style="display: inline-block; border-bottom: 1px solid #2EA7BE; margin-left: 7%">
+                    <span class="navbar2-brand"><a href="LessonListController?Course_id=${requestScope.Course.getCourse_id()}">${requestScope.Course.getCourse_name()}</a></span>
                     <span class="navbar2-brand-divider">/</span>
-                    <span class="navbar2-brand"><a href="">My Course</a></span>
-                    <span class="navbar2-brand-divider">/</span>
-                    <span class="navbar2-brand"><a href="">MAE101</a></span>
-                    <span class="navbar2-brand-divider">/</span>
-                    <span class="navbar2-brand"><a href="">Review Progress Test</a></span>
+                    <span class="navbar2-brand"><a href="" style="color: #f4c463;pointer-events: none;cursor: default;">${requestScope.requestedQuiz.getQuiz_name()}</a></span>
 
                 </div>
             </div>
@@ -245,9 +247,9 @@
                                 <% for(int i = 1; i <= quesList.size(); i++){ %>
                                 <tr id="ques-section<%=i%>">
                                     <th class="vertical-header top-header" rowspan="2">Question <%=i%><br><span class="small-text">(Complete)</span><br><span class="small-text">Mark:1.0</span><div class="small-text"">
-                                            <input type="hidden" name="flag<%=i%>" value="false">
+                                            <input type="hidden" name="flag<%=i%>" id="flag<%=i%>" value="false">
                                             <input type="hidden" name="ques<%=i%>" value="<%= quesList.get(i-1).getQues_id() %>"><!-- send question id to servlet -->
-                                            <a onclick="toggleFlag(this, <%=i%>)">
+                                            <a onclick="toggleFlag('<%=i%>')">
                                                 <i class="far fa-flag  flag-icon" ><br>
                                                     <span class="small-text"> Flag question</span>
                                                 </i>
@@ -263,10 +265,8 @@
                                             for(Choice c : quesList.get(i-1).getChoices()){
                                         %>
                                         <input type="radio" name="answer<%=i%>" value="<%=c.getChoice_content()%>"
-                                               <% if(!hasSelectedOption){ %>
-                                               checked
-                                               <% hasSelectedOption = true; %>
-                                               <% } %>
+                                               onclick="HandleChoiceSelection('<%=i%>', '<%=c.getChoice_id()%>')"
+                                               id="radio<%=c.getChoice_id()%>"
                                                ><%=c.getChoice_content()%><br> 
                                         <% } %>
                                         <input type="radio" name="answer<%=i%>" value="not answered" checked hidden>
@@ -285,9 +285,9 @@
                                         <%
                                         for(int i = 1; i <= quesList.size(); i++){
                                         if(i<10){%>
-                                        <a href="#ques-section<%=i%>"><div class="quiz-square rounded question-square-<%=i%>">0<%=i%></div></a>
+                                        <a href="#ques-section<%=i%>"><div id="question-square-<%=i%>" class="quiz-square rounded question-square-<%=i%>">0<%=i%></div></a>
                                         <%}else{%>
-                                        <a href="#ques-section<%=i%>"><div class="quiz-square rounded question-square-<%=i%>"><%=i%></div></a>
+                                        <a href="#ques-section<%=i%>"><div id="question-square-<%=i%>" class="quiz-square rounded question-square-<%=i%>"><%=i%></div></a>
                                             <%}}%>
                                     </div>
                                 </div>
@@ -309,46 +309,24 @@
 
 </body>
 <script>
-    function toggleFlag(element, index) {
-        element.querySelector("i").classList.toggle("active");
-        var flaggedInput = document.getElementsByName("flag" + index)[0];
-        flaggedInput.value = flaggedInput.value === "true" ? "false" : "true";
-        var square = document.querySelector('.question-square-' + index);
-        if (square.style.backgroundColor === 'rgb(224, 90, 125)') {
-            var radioAnswers = document.getElementsByName('answer' + index);
-            var checkedNumber = 4;
-            for (var i = 0; i < radioAnswers.length; i++) {
-                if (radioAnswers[i].checked) {
-                    checkedNumber = i;
-                    break;
-                }
-            }
-
-            if (checkedNumber !== 4) {
-                // At least one radio button is selected
-                square.style.backgroundColor = '#00ff00';
-            } else {
-                // No radio button is selected
-                square.style.backgroundColor = '';
-            }
+    function toggleFlag(i) {
+        var questionBox = document.getElementById("question-square-" + i);
+        var flag = document.getElementById("flag" + i);
+//        console.log(questionBox.class)
+        if (questionBox.classList.contains("flagged")) {
+            questionBox.classList.remove("flagged");
+            flag.value = "false";
         } else {
-            square.style.backgroundColor = '#E05A7D'; // Thay đổi màu sắc hình vuông thành màu đỏ
+            flag.value = "true";
+            questionBox.classList.add("flagged");
         }
-    }
 
-    var radioButtons = document.querySelectorAll('input[type=radio]');
-    radioButtons.forEach(function (radio) {
-        // Thêm một trình lắng nghe sự kiện cho mỗi nút radio
-        radio.addEventListener('change', function () {
-            // Lấy số thứ tự câu hỏi từ tên nút radio (vd: 'answer1' => 1)
-            var questionNumber = this.name.replace('answer', '');
-            // Chọn hình vuông tương ứng và thay đổi màu sắc
-            var square = document.querySelector('.question-square-' + questionNumber);
-            if (square.style.backgroundColor !== '#E05A7D') {
-                square.style.backgroundColor = '#00ff00'; // Thay đổi màu sắc thành màu xanh lá cây
-            }
-        });
-    });
+    }
+    function HandleChoiceSelection(i, choice_id) {
+        var questionBox = document.getElementById("question-square-" + i);
+        var radioButton = document.getElementById("radio" + choice_id);
+        questionBox.classList.add("answered")
+    }
 
     var referenceTime = new Date(); // start with the current time
     var year = referenceTime.getFullYear().toString();

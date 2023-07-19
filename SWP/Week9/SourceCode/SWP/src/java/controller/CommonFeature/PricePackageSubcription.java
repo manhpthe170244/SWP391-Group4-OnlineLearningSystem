@@ -86,7 +86,7 @@ public class PricePackageSubcription extends HttpServlet {
         SubscriptionDAO sd = new SubscriptionDAO();
         int a = sd.addSubcription(userId, packageId, reg_date, expireDate);
         UserDAO ud = new UserDAO();
-        ud.handTransaction(userId, packagePrice);
+        ud.handleTransaction(userId, packagePrice);
         out.println(a);
     }
 
