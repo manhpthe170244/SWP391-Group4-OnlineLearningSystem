@@ -92,7 +92,7 @@
                 float: left;
                 margin: 10px;
             }
-
+            
             .quiz-all {
                 display: flex;
                 flex-wrap: wrap;
@@ -106,7 +106,7 @@
                 width: 30px;
                 height: 30px;
                 margin: 3px;
-                background-color: #edf3a7;
+                background-color: #9edcde;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -133,7 +133,7 @@
                 left: -10px;
                 padding-top: 10px;
                 padding-bottom: 10px;
-
+               
             }
 
             .navbar2-brand {
@@ -152,16 +152,7 @@
                 margin-right: 10px;
                 margin-left: 10px;
             }
-            .correctAnswer{
-                background-color: #6bf48f
-            }
-            .Flagged{
-                background-color: #e96363 !important
-            }
-            .CurrentQuiz{
-                background-color: #9edcde !important
-                    
-            }
+
         </style>
     </head>
     <body>
@@ -177,10 +168,14 @@
         %>
         <section class="heading-page header-text" style="padding-top: 100px;">
             <div class="navbar2" style="text-align: left; margin-top: 30px">
-                <div class="container2" style="display: inline-block; border-bottom: 1px solid #2EA7BE; margin-left: 7%">
-                    <span class="navbar2-brand"><a href="LessonListController?Course_id=${requestScope.Course.getCourse_id()}">${requestScope.Course.getCourse_name()}</a></span>
+                <div class="container2" style="display: inline-block; border-bottom: 1px solid #2EA7BE">
+                    <span class="navbar2-brand"><a href="">Home</a></span>
                     <span class="navbar2-brand-divider">/</span>
-                    <span class="navbar2-brand"><a href="" style="color: #f4c463;pointer-events: none;cursor: default;">Review ${requestScope.requestedQuiz.getQuiz_name()}</a></span>
+                    <span class="navbar2-brand"><a href="">My Course</a></span>
+                    <span class="navbar2-brand-divider">/</span>
+                    <span class="navbar2-brand"><a href="">MAE101</a></span>
+                    <span class="navbar2-brand-divider">/</span>
+                    <span class="navbar2-brand"><a href="">Review Progress Test</a></span>
 
                 </div>
             </div>
@@ -240,13 +235,14 @@
                                 <div class="quiz-all mb-9">
                                     <%for(int i = 1; i <= quesResultList.size(); i++){
                                     if(i<10){%>
-                                    <a href="#ques-section<%=i%>"><div class="quiz-square rounded  <%=quesResultList.get(i-1).isQues_status() ? "correctAnswer" : ""%><%= quesResultList.get(i-1).isQues_flag() ? "Flagged" : ""%>" onclick="HandleNav('<%=i%>')" id="quiz<%=i%>">0<%=i%></div></a>
+                                    <a href="#ques-section<%=i%>"><div class="quiz-square rounded">0<%=i%></div></a>
                                     <%}else{%>
-                                    <a href="#ques-section<%=i%>"><div class="quiz-square rounded <%=quesResultList.get(i-1).isQues_status() ? "correctAnswer" : ""%> <%= quesResultList.get(i-1).isQues_flag() ? "Flagged" : ""%>" onclick="HandleNav('<%=i%>')" id="quiz<%=i%>"><%=i%></div></a>
+                                    <a href="#ques-section<%=i%>"><div class="quiz-square rounded"><%=i%></div></a>
                                         <%}}%>
                                 </div>
                             </div>
                             <div style="font-size: 10px">
+                                <p><a href="">show one page that time</a></p>
                                 <p><a href="QuizLesson?quiz_id=${requestScope.quizResult.getQuiz_id()}">Finish Review</a></p>
                             </div>                                       
                         </div>
@@ -260,21 +256,5 @@
 
 
     <jsp:include page="footer.jsp"/>
-    <script>
-        function HandleNav(i) {
-            var quizBox = document.getElementById("quiz" + i);
-
-            if (quizBox.classList.contains("CurrentQuiz")) {
-
-                quizBox.classList.remove("CurrentQuiz");
-            } else {
-                const elements = document.querySelectorAll(".CurrentQuiz");
-                elements.forEach((element) => {
-                    element.classList.remove("CurrentQuiz");
-                });
-                quizBox.classList.add("CurrentQuiz");
-            }
-        }
-    </script>
 </body>
 </html>

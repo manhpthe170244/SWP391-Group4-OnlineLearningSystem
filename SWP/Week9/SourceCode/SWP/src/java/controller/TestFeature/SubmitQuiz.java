@@ -142,7 +142,11 @@ public class SubmitQuiz extends HttpServlet {
         }
         double num = (double)correctQues / (double)totalQues * 10;
         double grade = (double) Math.round(num * 100) / 100.0;
-        PrintWriter out = response.getWriter();       
+        PrintWriter out = response.getWriter();
+        out.println(correctQues);
+        out.println(totalQues);
+        out.println(grade);
+        
         // Save quiz result to database
         int quizResultId = quizResultDAO.insertQuizResult(quiz_id, user_id, grade > 5, (float)grade, start_time, end_time, maxAttempt+1);
         for(int i = 0; i < answers.size(); i++){
@@ -150,7 +154,7 @@ public class SubmitQuiz extends HttpServlet {
         }
         
         request.setAttribute("quiz_result_id", quizResultId);
-        request.getRequestDispatcher("QuizReview").forward(request, response);
+        //request.getRequestDispatcher("QuizReview").forward(request, response);
     }
 
     /**

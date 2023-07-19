@@ -172,6 +172,7 @@
             postImageInput.addEventListener('change', () => {
                 const file = postImageInput.files[0];
                 const reader = new FileReader();
+
                 reader.onload = (event) => {
                     previewImage.src = event.target.result;
                 };

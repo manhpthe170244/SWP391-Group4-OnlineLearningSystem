@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
             // Set user da login vao cookie
             Cookie userCookie = new Cookie("currUserId", String.valueOf(userLogin.getUserId()));
             // Thoi gian cookie ton tai
-            int maxAge = 60 * 60 * 3; // 24 hours in seconds
+            int maxAge = 60 * 60 * 24; // 24 hours in seconds
             userCookie.setMaxAge(maxAge);
             response.addCookie(userCookie);
             response.sendRedirect("homepage");

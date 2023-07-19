@@ -197,7 +197,6 @@ public class UserDAO extends MyDAO {
         xSql = "select top 5 u.user_address, COUNT(u.user_id) as uNumber\n"
                 + "from \"User\" u, province p\n"
                 + "where u.user_address = p.name\n"
-                + "and u.role_id = 2\n"
                 + "group by (u.user_address)\n";
         if (sortType.equalsIgnoreCase("most")) {
             xSql += "order by uNumber desc";
@@ -268,7 +267,7 @@ public class UserDAO extends MyDAO {
         }
     }
 
-    public void handleTransaction(int userId, int amount) {
+    public void handTransaction(int userId, int amount) {
         xSql = "update \"User\"\n"
                 + "set user_wallet = user_wallet - ?\n"
                 + "where user_id = ?";

@@ -39,12 +39,6 @@
         https://templatemo.com/tm-569-edu-meeting
         
         -->
-        <style>
-            .CourseStatus{
-                display: flex;
-                justify-content: space-around
-            }
-        </style>
     </head>
 
     <body>
@@ -65,7 +59,7 @@
                 <div class="row search-container" style="margin-bottom: 30px">
                     <form action="#">
                         <input type="text" placeholder="Search.." name="search">
-                        <button type="submit" style="background-color: #d6d6d6; border: none; height: 29px; width: 29px; "><i style="color: #959595" class="fa fa-search"></i></button>
+                        <button type="submit"><i class="fa fa-search"></i></button>
                     </form>
                 </div>
                 <div class="row">
@@ -118,23 +112,7 @@
                                             <c:if test="${requestScope.currUser.getRoleId()==2}">
                                                 <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDateFormated()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDateFormated()}</p>
                                             </c:if>
-                                            <div class="CourseStatus">
-                                                <c:if test="${requestScope.currUser.getRoleId() == 2}">
-                                                    <c:if test="${cuc.isDone() == true}">
-                                                        <p  style="color: #41c86a; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #41c86a;"></i>&nbsp&nbspFinished</p>
-                                                    </c:if>
-                                                    <c:if test="${cuc.isDone() == false}">
-                                                        <p style="color: #ccd656; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #ccd656;"></i>&nbsp&nbspUnfinished</p> 
-                                                    </c:if>
-                                                </c:if>
 
-                                                <c:if test="${cuc.getUserCourse().getCourse_status() == false}">
-                                                    <p style="color: #ff8d8d; margin-top: 15px"><i class="fa fa-circle" style="color: #ff8d8d;"></i>&nbsp&nbspInActive</p> 
-                                                </c:if>   
-                                                <c:if test="${cuc.getUserCourse().getCourse_status() == true}">
-                                                    <p style="color: #41c86a; margin-top: 15px"><i class="fa fa-circle" style="color: #41c86a;"></i>&nbsp&nbspActive</p> 
-                                                </c:if>   
-                                            </div>
                                         </div>
                                     </div>
                                 </a>
