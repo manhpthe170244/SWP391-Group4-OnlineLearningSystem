@@ -76,7 +76,6 @@ public class addOrUpdatePost extends HttpServlet {
         String description = request.getParameter("post_des");
         int blog_id = Integer.parseInt(request.getParameter("blog_id"));
         Boolean update = Boolean.parseBoolean(request.getParameter("update"));
-
         // Get post image
         Part filePart = null;
         filePart = request.getPart("post_image");

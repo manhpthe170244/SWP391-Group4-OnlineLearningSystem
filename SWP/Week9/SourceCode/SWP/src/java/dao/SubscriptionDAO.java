@@ -8,6 +8,8 @@ import entity.Price_Package;
 import entity.Subscription;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,6 +63,40 @@ public class SubscriptionDAO extends MyDAO {
             Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return a;
+    }
+
+    public HashMap<Integer, Integer> GetSubScriptionDashBoardData(String SortTypeRevenue, int year, int monthF) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        LocalDate ld = LocalDate.now();
+        xSql = "select MONTH(s.reg_time) as month, (p.price*COUNT(s.user_id)) as Revenue from Subscription s, Price_Package p\n"
+                + "where s.package_id = p.package_id\n"
+                + "and Month(s.reg_time) <= ?\n"
+                + "and Year(s.reg_time) = ?\n"
+                + "group by MONTH(s.reg_time), p.price";
+        int month = 0, Revenue = 0;
+        for (int i = 1; i <= monthF; i++) {
+            map.put(i, 0);
+        }
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, monthF);
+            ps.setInt(2, year);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Revenue = rs.getInt("Revenue");
+                month = rs.getInt("month");
+                for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                    if (entry.getKey()==month) {
+                        map.replace(month, Revenue);
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return map;
+
     }
 
     public static void main(String[] args) {

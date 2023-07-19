@@ -4,10 +4,13 @@
  */
 package controller.TestFeature;
 
+import dao.CourseDAO;
 import dao.QuesResultDAO;
 import dao.QuizDAO;
 import dao.QuizResultDAO;
+import entity.Course;
 import entity.QuesResult;
+import entity.Quiz;
 import entity.QuizResult;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,9 +53,17 @@ public class QuizReview extends HttpServlet {
         Vector<QuesResult> quesResultList = quesResultDAO.getQuesResultBy(quiz_result_id);
         // Get quiz result list
         QuizResult quizResult = quizResultDAO.getQuizResultByQuizResultId(quiz_result_id);
+
+        //lay thong tin cho navigation
+        int quizId = quizResult.getQuiz_id();
+        CourseDAO courseDAO = new CourseDAO();
+        int courseId = courseDAO.getCourseidFromQuiz(quizId);
+        Course course = courseDAO.searchById(courseId);
+        Quiz requestedQuiz = quizDAO.getQuizById(quizId);
         // Get correct answers
         Vector<String> correctAnswers = quizDAO.getAllCorrectAnswer(quizResult.getQuiz_id());
-        
+        request.setAttribute("Course", course);
+        request.setAttribute("requestedQuiz", requestedQuiz);
         request.setAttribute("quizResult", quizResult);
         request.setAttribute("quesResultList", quesResultList);
         request.setAttribute("correctAnswers", correctAnswers);
