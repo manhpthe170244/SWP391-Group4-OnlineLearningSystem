@@ -50,6 +50,11 @@
                     </select>
                     <canvas class="myChart" id="population" style="width:100%"></canvas>
                 </div>
+
+                <div class="row">
+                    <input type="date" id="DateInput" onchange="dateChange()" class="dashBoardInput" style="position: relative; left: 880px"/>
+                    <canvas class="myChart" id="Revenue" style="width:100%"></canvas>
+                </div>
                 <div class="row">
                     Sort:
                     <select class="dashBoardInput" name="sortTypePar" id="sortTypePar">
@@ -58,19 +63,22 @@
                     </select>
                     <canvas class="myChart" id="participant" style="width:100%"></canvas>
                 </div>
-                <div class="row">
-                    Sort:
-                    <select class="dashBoardInput" name="sortTypePar" id="sortTypePar">
-                        <option value="most">Nhiều học sinh nhất</option>
-                        <option value="least">Ít học sinh nhất</option>
-                    </select>
-                    <canvas class="myChart" id="Revenue" style="width:100%"></canvas>
-                </div>
             </div>
         </section>
 
         <jsp:include page="footer.jsp"/>
         <script>
+            if ('${sessionScope.DateInput}' === null || '${sessionScope.DateInput}' === "") {
+                const currentDate = new Date();
+
+                // Format the date as "yyyy-mm-dd" for the input value
+                const formattedDate = currentDate.toISOString().slice(0, 10);
+
+                // Set the formatted date as the default value for the input
+                document.getElementById("DateInput").value = formattedDate;
+            } else {
+                document.getElementById("DateInput").value = '${sessionScope.DateInput}';
+            }
 
             var xValuesPop = [<% 
                for (int i = 0; i < keys.length; i++) {
@@ -243,7 +251,7 @@
                     title: {
                         display: true,
                         fontColor: 'white',
-                        text: 'Doanh thu',
+                        text: 'Doanh thu từ tháng 1 đến',
                         fontSize: 35
                     },
                     scales: {
@@ -294,6 +302,13 @@
                     break;
                 }
             }
+            function dateChange() {
+                var dateValue = document.getElementById("DateInput").value;
+                console.log(dateValue);
+                window.location.href = "?DateInput=" + dateValue;
+            }
+
+
             const sortTypePar = document.getElementById("sortTypePar");
             sortTypePar.addEventListener("change", function () {
                 if (sortTypePar.value === "most") {

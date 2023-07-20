@@ -275,4 +275,7 @@
         <servlet-name>logout</servlet-name>
         <servlet-class>controller.CommonFeature.logout</servlet-class>
     </servlet>
+    <session-config>
+    <session-timeout>3</session-timeout> <!-- Set the session timeout in minutes -->
+  </session-config>
 </web-app>

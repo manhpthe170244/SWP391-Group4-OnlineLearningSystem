@@ -78,7 +78,7 @@
                             <!-- *** Logo End *** -->
                             <!-- *** Menu Start *** -->
                             <ul class="nav">
-                                <li><a href="homepage" class="active">TRANG CHỦ</a></li>
+                                <li><a href="LeaderBoard">Bảng xếp hạng người dùng</a></li>
                                 <li><a href="mycourselistservlet">KHÓA HỌC CỦA TÔI</a></li>
                                 <li><a href="PricePackageSubcription">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
                                     <c:if test="${currUser != null}">

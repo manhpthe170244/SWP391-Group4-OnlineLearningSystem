@@ -6,10 +6,13 @@ package dao;
 
 import dto.UserEditProfileDto;
 import entity.User;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  *
@@ -266,6 +269,74 @@ public class UserDAO extends MyDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public HashMap<Integer, User> Top3UserLeaderBoard() {
+        HashMap<Integer, User> map = new HashMap<>();
+        User u = null;
+        xSql = "select top 3 * from \"User\" u\n"
+                + "where u.role_id = 2\n"
+                + "order by u.Score desc";
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                u = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_email"),
+                        rs.getString("password"),
+                        rs.getString("full_name"),
+                        rs.getString("user_img"),
+                        rs.getInt("gender_id"),
+                        rs.getDate("user_dob"),
+                        rs.getString("user_phone"),
+                        rs.getString("user_address"),
+                        rs.getString("user_wallet"),
+                        rs.getInt("role_id"),
+                        rs.getDate("user_time"),
+                        rs.getBoolean("user_status"),
+                        rs.getInt("Score")
+                );
+                map.put(rs.getInt("Score"), u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return map;
+    }
+
+    public Vector<User> GetAllStudentSortedByScore() {
+        Vector<User> StudentList = new Vector<>();
+        xSql = "select * from \"User\" u\n"
+                + "where u.role_id = 2\n"
+                + "order by u.Score desc\n";
+        User u = null;
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                u = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_email"),
+                        rs.getString("password"),
+                        rs.getString("full_name"),
+                        rs.getString("user_img"),
+                        rs.getInt("gender_id"),
+                        rs.getDate("user_dob"),
+                        rs.getString("user_phone"),
+                        rs.getString("user_address"),
+                        rs.getString("user_wallet"),
+                        rs.getInt("role_id"),
+                        rs.getDate("user_time"),
+                        rs.getBoolean("user_status"),
+                        rs.getInt("Score")
+                );
+                StudentList.add(u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return StudentList;
     }
 
     public void handleTransaction(int userId, int amount) {

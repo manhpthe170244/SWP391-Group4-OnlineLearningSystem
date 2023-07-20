@@ -33,8 +33,14 @@ public class DashBoard extends HttpServlet {
         String sortTypePop = request.getParameter("sortTypePop");
         String sortTypePar = request.getParameter("sortTypePar");
         String sortTypeRevenue = request.getParameter("sortTypeRevenue");
-        String rawYear = request.getParameter("RevByYear");
-        String rawMonth = request.getParameter("RevByMonth");
+        String rawDate = request.getParameter("DateInput");
+        String rawYear = null;
+        String rawMonth = null;
+        if (rawDate != null) {
+            rawYear = rawDate.substring(0, 4);
+            rawMonth = rawDate.substring(5, 7);
+        }
+
         LocalDate ld = LocalDate.now();
         int year = 0;
         int month = 0;
@@ -44,24 +50,25 @@ public class DashBoard extends HttpServlet {
         if (sortTypePar == null) {
             sortTypePar = "most";
         }
-        if(rawYear == null){
+        if (rawYear == null) {
             year = ld.getYear();
             month = ld.getMonthValue();
-        }else{
+        } else {
             year = Integer.valueOf(rawYear);
-            if(rawMonth == null){
+            if (rawMonth == null) {
                 month = 12;
-            }else{
+            } else {
                 month = Integer.parseInt(rawMonth);
             }
         }
-        
+
         HttpSession session = request.getSession();
         session.setAttribute("sort_type", sortTypePop);
         session.setAttribute("sort_typePar", sortTypePar);
+        session.setAttribute("DateInput", rawDate);
         UserDAO ud = new UserDAO();
         CourseDAO cd = new CourseDAO();
-        
+
         SubscriptionDAO sd = new SubscriptionDAO();
         Map<String, Integer> UserOnProvinceMap = ud.getDashBoardDataPop(sortTypePop);
         Map<String, Integer> CourseParticipantMap = cd.getDashBoardDataPar(sortTypePar);
@@ -91,19 +98,17 @@ public class DashBoard extends HttpServlet {
             k++;
 //             out.print(entry.getKey()+"  "+entry.getValue()+"  /");
         }
-        for(int a = 0; a < key2.length; a++){
-            out.print(key2[a]+"  "+values2[a]+"  /");
+        for (int a = 0; a < key2.length; a++) {
+            out.print(key2[a] + "  " + values2[a] + "  /");
         }
-        
 
-        
         request.setAttribute("key1", key1);
         request.setAttribute("values1", values1);
         request.setAttribute("key", key);
         request.setAttribute("values", values);
         request.setAttribute("key2", key2);
         request.setAttribute("values2", values2);
-       request.getRequestDispatcher("DashBoard.jsp").forward(request, response);
+        request.getRequestDispatcher("DashBoard.jsp").forward(request, response);
 
     }
 
