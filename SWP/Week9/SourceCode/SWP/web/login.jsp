@@ -48,7 +48,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h6>Chào mừng tới khóa học của chúng tôi!</h6>
+                        <h6>Chào mừng tới trang web của chúng tôi!</h6>
                         <h6 style=" font-size: 250%; margin-top: 20px">ĐĂNG NHẬP</h6>
                     </div>
                 </div>
