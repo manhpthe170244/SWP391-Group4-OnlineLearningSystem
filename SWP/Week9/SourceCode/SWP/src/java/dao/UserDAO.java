@@ -6,10 +6,13 @@ package dao;
 
 import dto.UserEditProfileDto;
 import entity.User;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  *
@@ -197,6 +200,7 @@ public class UserDAO extends MyDAO {
         xSql = "select top 5 u.user_address, COUNT(u.user_id) as uNumber\n"
                 + "from \"User\" u, province p\n"
                 + "where u.user_address = p.name\n"
+                + "and u.role_id = 2\n"
                 + "group by (u.user_address)\n";
         if (sortType.equalsIgnoreCase("most")) {
             xSql += "order by uNumber desc";
@@ -267,7 +271,75 @@ public class UserDAO extends MyDAO {
         }
     }
 
-    public void handTransaction(int userId, int amount) {
+    public HashMap<Integer, User> Top3UserLeaderBoard() {
+        HashMap<Integer, User> map = new HashMap<>();
+        User u = null;
+        xSql = "select top 3 * from \"User\" u\n"
+                + "where u.role_id = 2\n"
+                + "order by u.Score desc";
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                u = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_email"),
+                        rs.getString("password"),
+                        rs.getString("full_name"),
+                        rs.getString("user_img"),
+                        rs.getInt("gender_id"),
+                        rs.getDate("user_dob"),
+                        rs.getString("user_phone"),
+                        rs.getString("user_address"),
+                        rs.getString("user_wallet"),
+                        rs.getInt("role_id"),
+                        rs.getDate("user_time"),
+                        rs.getBoolean("user_status"),
+                        rs.getInt("Score")
+                );
+                map.put(rs.getInt("Score"), u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return map;
+    }
+
+    public Vector<User> GetAllStudentSortedByScore() {
+        Vector<User> StudentList = new Vector<>();
+        xSql = "select * from \"User\" u\n"
+                + "where u.role_id = 2\n"
+                + "order by u.Score desc\n";
+        User u = null;
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                u = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_email"),
+                        rs.getString("password"),
+                        rs.getString("full_name"),
+                        rs.getString("user_img"),
+                        rs.getInt("gender_id"),
+                        rs.getDate("user_dob"),
+                        rs.getString("user_phone"),
+                        rs.getString("user_address"),
+                        rs.getString("user_wallet"),
+                        rs.getInt("role_id"),
+                        rs.getDate("user_time"),
+                        rs.getBoolean("user_status"),
+                        rs.getInt("Score")
+                );
+                StudentList.add(u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return StudentList;
+    }
+
+    public void handleTransaction(int userId, int amount) {
         xSql = "update \"User\"\n"
                 + "set user_wallet = user_wallet - ?\n"
                 + "where user_id = ?";

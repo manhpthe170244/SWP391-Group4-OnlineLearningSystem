@@ -110,7 +110,11 @@
                     <option value="name">Highest Scores</option>
                 </select>
             </div>
-
+            
+            <div class="row">
+                <h6 style="color: #33CAFD; text-align: center">Làm bài quiz với kết quả >= 5 sẽ cộng thêm 10 điểm tích luỹ ;)</h6>
+            </div>
+            
             <div class="main-button-red" style="margin-bottom: 30px">
                 <a href="QuizHandle?quiz_id=${requestScope.quiz_id}"> Bắt đầu làm </a>
 

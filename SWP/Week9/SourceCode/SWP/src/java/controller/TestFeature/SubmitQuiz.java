@@ -4,6 +4,7 @@
  */
 package controller.TestFeature;
 
+import dao.LessonDAO;
 import dao.QuesResultDAO;
 import dao.QuizDAO;
 import dao.QuizResultDAO;
@@ -81,10 +82,10 @@ public class SubmitQuiz extends HttpServlet {
         QuesResultDAO quesResultDAO = new QuesResultDAO();
         QuizResultDAO quizResultDAO = new QuizResultDAO();
         QuizDAO quizDAO = new QuizDAO();
-        
+
         // Get list of question id
         Vector<Integer> quesList = new Vector<>();
-        
+
         Enumeration<String> paramNames = request.getParameterNames();
         // Get list of answers
         Vector<String> answers = new Vector<>();
@@ -97,20 +98,20 @@ public class SubmitQuiz extends HttpServlet {
                 String answer = request.getParameter(paramName);
                 answers.add(answer);
             }
-            if (paramName.startsWith("flag")){
+            if (paramName.startsWith("flag")) {
                 Boolean flag = Boolean.parseBoolean(request.getParameter(paramName));
                 flags.add(flag);
             }
-            if(paramName.startsWith("ques")){
+            if (paramName.startsWith("ques")) {
                 int ques_id = Integer.parseInt(request.getParameter(paramName));
                 quesList.add(ques_id);
             }
         }
-        
+
         // Get user_id
         int user_id = 0;
         Cookie[] cookies = request.getCookies();
-        
+
         // Get quiz_id
         int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
 
@@ -121,12 +122,12 @@ public class SubmitQuiz extends HttpServlet {
                 }
             }
         }
-        
+
         // Get start and finish time
         String start_time_string = request.getParameter("start_time");
         Timestamp start_time = Timestamp.valueOf(start_time_string);
         Timestamp end_time = new Timestamp(System.currentTimeMillis());
-        
+
         // Get attempt number
         int maxAttempt = quizResultDAO.getMaxAttempByUserIdAndQuizId(user_id, quiz_id);
         // Caculate grade
@@ -134,27 +135,27 @@ public class SubmitQuiz extends HttpServlet {
         Vector<String> correctAnswers = quizDAO.getAllCorrectAnswer(quiz_id);
         int totalQues = correctAnswers.size();
         int correctQues = 0;
-        for(int i = 0; i < answers.size(); i++){
+        for (int i = 0; i < answers.size(); i++) {
             // Caculate grade
-            if(answers.get(i).equals(correctAnswers.get(i))){
+            if (answers.get(i).equals(correctAnswers.get(i))) {
                 correctQues += 1;
             }
         }
-        double num = (double)correctQues / (double)totalQues * 10;
+        double num = (double) correctQues / (double) totalQues * 10;
         double grade = (double) Math.round(num * 100) / 100.0;
         PrintWriter out = response.getWriter();
-        out.println(correctQues);
-        out.println(totalQues);
-        out.println(grade);
-        
         // Save quiz result to database
-        int quizResultId = quizResultDAO.insertQuizResult(quiz_id, user_id, grade > 5, (float)grade, start_time, end_time, maxAttempt+1);
-        for(int i = 0; i < answers.size(); i++){
+        int quizResultId = quizResultDAO.insertQuizResult(quiz_id, user_id, grade > 5, (float) grade, start_time, end_time, maxAttempt + 1);
+        if (grade > 5) {
+            LessonDAO ld = new LessonDAO();
+            ld.AddScore(user_id, 10);
+        }
+        for (int i = 0; i < answers.size(); i++) {
             quesResultDAO.insertQuesResult(quesList.get(i), user_id, answers.get(i).equals(correctAnswers.get(i)), flags.get(i), answers.get(i), quizResultId);
         }
-        
+
         request.setAttribute("quiz_result_id", quizResultId);
-        //request.getRequestDispatcher("QuizReview").forward(request, response);
+        request.getRequestDispatcher("QuizReview").forward(request, response);
     }
 
     /**

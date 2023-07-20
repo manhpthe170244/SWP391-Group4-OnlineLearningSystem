@@ -6,6 +6,7 @@ package controller.TestFeature;
 
 import dao.CourseDAO;
 import dao.QuizDAO;
+import entity.Course;
 import entity.ManageCourse;
 import entity.Question;
 import entity.Quiz;
@@ -90,7 +91,10 @@ public class QuizHandle extends HttpServlet {
                     response.sendRedirect("UnactiveLesson.jsp");
                     return;
                 }
+                Course course = cd.searchById(cid);
                 Vector<Question> quesList = quizDAO.getQuestionByQuizId(quiz_id);
+                request.setAttribute("Course", course);
+                request.setAttribute("requestedQuiz", requestedQuiz);
                 request.setAttribute("quesList", quesList);
                 request.setAttribute("quiz_id", quiz_id);
                 RequestDispatcher rd = request.getRequestDispatcher("QuizHandle.jsp");
