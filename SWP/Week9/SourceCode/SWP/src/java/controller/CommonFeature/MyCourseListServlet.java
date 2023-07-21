@@ -42,48 +42,51 @@ public class MyCourseListServlet extends HttpServlet {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("currUserId")) {
                     user_id = Integer.parseInt(cookie.getValue());
-                    currUser = ud.getUserById(user_id); 
+                    currUser = ud.getUserById(user_id);
                     request.setAttribute("currUser", currUser);
                 }
             }
         }
-        
+
         if (user_id == 0) {
             response.sendRedirect("login.jsp");
             return;
-        }
-        CourseDAO cd = new CourseDAO();
-        SubjectDAO sd = new SubjectDAO();
+        } else {
+            if (currUser.getRoleId() == 2 || currUser.getRoleId() == 3) {
+                CourseDAO cd = new CourseDAO();
+                SubjectDAO sd = new SubjectDAO();
 
+                String subIdRaw = request.getParameter("sub_id");
+                // Search name
+                String search = request.getParameter("search");
 
-        String subIdRaw = request.getParameter("sub_id");
-        // Search name
-        String search = request.getParameter("search");
+                // Sort type
+                HttpSession session = request.getSession();
+                String sort_type = request.getParameter("sort_type");
+                System.out.println(sort_type);
+                if (sort_type == null) {
+                    if (session.getAttribute("sort_type") != null) {
+                        sort_type = (String) session.getAttribute("sort_type");
+                    } else {
+                        sort_type = "recent";
+                    }
+                }
+                session.setAttribute("sort_type", sort_type);
 
-        // Sort type
-        HttpSession session = request.getSession();
-        String sort_type = request.getParameter("sort_type");
-        System.out.println(sort_type);
-        if (sort_type == null) {
-            if (session.getAttribute("sort_type") != null) {
-                sort_type = (String) session.getAttribute("sort_type");
-            } else {
-                sort_type = "recent";
+                List<Subject> subjectList = sd.getAll();
+                request.setAttribute("subjectList", subjectList);
+
+                Vector<ManageCourse> myCourses = cd.getmyCourseList(user_id, subIdRaw, search, sort_type);
+                request.setAttribute("myCourses", myCourses);
+
+                PrintWriter out = response.getWriter();
+                out.print(myCourses.size());
+
+                request.getRequestDispatcher("MyCourseList.jsp").forward(request, response);
+            }else{
+                response.sendRedirect("UnauthorizedAccess.jsp");
             }
         }
-        session.setAttribute("sort_type", sort_type);
-        
-
-        List<Subject> subjectList = sd.getAll();
-        request.setAttribute("subjectList", subjectList);
-
-        Vector<ManageCourse> myCourses = cd.getmyCourseList(user_id, subIdRaw, search, sort_type);
-        request.setAttribute("myCourses", myCourses);
-
-        PrintWriter out = response.getWriter();
-        out.print(myCourses.size());
-
-        request.getRequestDispatcher("MyCourseList.jsp").forward(request, response);
 
     }
 

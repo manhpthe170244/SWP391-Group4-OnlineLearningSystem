@@ -68,7 +68,7 @@
             .down-content{
                 min-height: 214px
             }
-            
+           
         </style>
         <!--
         
@@ -116,7 +116,7 @@
                                                     <c:forEach items="${requestScope.subjectList}" var="subject">
 <!--                                                <input type="button" onclick="filterBySubject(${subject.getSub_id()})" value="${subject.getSub_name()}"/>-->
                                                 <a href="courseList?sub_id=${subject.getSub_id()}" class="filter-link"><li>${subject.getSub_name()}</li></a>
-                                            </c:forEach>
+                                                    </c:forEach>
                                         </ul>
                                     </form>
                                 </div>
@@ -132,6 +132,13 @@
 
                             <div class="col-lg-12">
                                 <div class="row grid">
+                                    <c:if test="${requestScope.courseToDisplay.size() == 0}">
+                                        <div class="emptyCourse">
+                                            <img src="img/My project.png" alt="alt"/>
+                                            <h4 style="color: white">bạn chưa tham gia khoá học nào cả, nhấn vào <a href="courseList">đây</a> để tìm kiếm khoá học phù hợp nhé</h4>
+
+                                        </div>
+                                    </c:if>
                                     <c:forEach items="${requestScope.courseToDisplay}" var="course">
                                         <div class="col-lg-4 templatemo-item-col all soon">
                                             <div class="meeting-item">
@@ -221,39 +228,39 @@
         <script src="assets/js/custom.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                                    //according to loftblog tut
-                                                    $('.nav li:first').addClass('active');
+            //according to loftblog tut
+            $('.nav li:first').addClass('active');
 
-                                                    // set sort_type
-                                                    const sortType = document.getElementById("sortType");
-                                                    sortType.addEventListener("change", function () {
-                                                        if (sortType.value === "recent") {
-                                                            window.location.href = "?sort_type=recent";
-                                                        } else if (sortType.value === "name") {
-                                                            window.location.href = "?sort_type=name";
-                                                        } else if (sortType.value === "Mostparticipant") {
-                                                            window.location.href = "?sort_type=Mostparticipant";
-                                                        }
-                                                    });
+            // set sort_type
+            const sortType = document.getElementById("sortType");
+            sortType.addEventListener("change", function () {
+                if (sortType.value === "recent") {
+                    window.location.href = "?sort_type=recent";
+                } else if (sortType.value === "name") {
+                    window.location.href = "?sort_type=name";
+                } else if (sortType.value === "Mostparticipant") {
+                    window.location.href = "?sort_type=Mostparticipant";
+                }
+            });
 
-                                                    var paramValue = "${sessionScope.sort_type}";
-                                                    for (var i = 0; i < sortType.options.length; i++) {
-                                                        if (sortType.options[i].value === paramValue) {
-                                                            sortType.options[i].selected = true;
-                                                            break;
-                                                        }
-                                                    }
+            var paramValue = "${sessionScope.sort_type}";
+            for (var i = 0; i < sortType.options.length; i++) {
+                if (sortType.options[i].value === paramValue) {
+                    sortType.options[i].selected = true;
+                    break;
+                }
+            }
 
-                                                    function filterBySubject(sub_id) {
-                                                        console.log(sub_id);
-                                                        var url = "CourseListFilter?sub_id=" + encodeURIComponent(sub_id);
-                                                        var xmlHttp = new XMLHttpRequest();
-                                                        xmlHttp.open("GET", url, true);
+            function filterBySubject(sub_id) {
+                console.log(sub_id);
+                var url = "CourseListFilter?sub_id=" + encodeURIComponent(sub_id);
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("GET", url, true);
 
-                                                        xmlHttp.onreadystatechange = function () {
-                                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                                                var result = document.getElementById("result");
-                                                                result.innerHTML = xmlHttp.responseText;
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                        var result = document.getElementById("result");
+                        result.innerHTML = xmlHttp.responseText;
 //                                                                var responseObj = JSON.parse(xmlHttp.responseText);
 //                                                                var courseToDisplay = responseObj.jsonDatacourseToDisplay;
 //                                                                var totalPage = responseObj.jsonTotalPage;
@@ -261,56 +268,56 @@
 //                                                                console.log("courseToDisplay: " + jsonDatacourseToDisplay);
 //                                                                console.log("totalPage: " + jsonTotalPage);
 //                                                                console.log("currentPage: " + jsonCurrentPage);
-                                                            }
-                                                        };
+                    }
+                };
 
-                                                        xmlHttp.send();
-                                                    }
-
-
+                xmlHttp.send();
+            }
 
 
-                                                    var showSection = function showSection(section, isAnimate) {
-                                                        var
-                                                                direction = section.replace(/#/, ''),
-                                                                reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-                                                                reqSectionPos = reqSection.offset().top - 0;
 
-                                                        if (isAnimate) {
-                                                            $('body, html').animate({
-                                                                scrollTop: reqSectionPos},
-                                                                    800);
-                                                        } else {
-                                                            $('body, html').scrollTop(reqSectionPos);
-                                                        }
 
-                                                    };
+            var showSection = function showSection(section, isAnimate) {
+                var
+                        direction = section.replace(/#/, ''),
+                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                        reqSectionPos = reqSection.offset().top - 0;
 
-                                                    var checkSection = function checkSection() {
-                                                        $('.section').each(function () {
-                                                            var
-                                                                    $this = $(this),
-                                                                    topEdge = $this.offset().top - 80,
-                                                                    bottomEdge = topEdge + $this.height(),
-                                                                    wScroll = $(window).scrollTop();
-                                                            if (topEdge < wScroll && bottomEdge > wScroll) {
-                                                                var
-                                                                        currentId = $this.data('section'),
-                                                                        reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-                                                                reqLink.closest('li').addClass('active').
-                                                                        siblings().removeClass('active');
-                                                            }
-                                                        });
-                                                    };
+                if (isAnimate) {
+                    $('body, html').animate({
+                        scrollTop: reqSectionPos},
+                            800);
+                } else {
+                    $('body, html').scrollTop(reqSectionPos);
+                }
 
-                                                    $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-                                                        e.preventDefault();
-                                                        showSection($(this).attr('href'), true);
-                                                    });
+            };
 
-                                                    $(window).scroll(function () {
-                                                        checkSection();
-                                                    });
+            var checkSection = function checkSection() {
+                $('.section').each(function () {
+                    var
+                            $this = $(this),
+                            topEdge = $this.offset().top - 80,
+                            bottomEdge = topEdge + $this.height(),
+                            wScroll = $(window).scrollTop();
+                    if (topEdge < wScroll && bottomEdge > wScroll) {
+                        var
+                                currentId = $this.data('section'),
+                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                        reqLink.closest('li').addClass('active').
+                                siblings().removeClass('active');
+                    }
+                });
+            };
+
+            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                e.preventDefault();
+                showSection($(this).attr('href'), true);
+            });
+
+            $(window).scroll(function () {
+                checkSection();
+            });
 
         </script>
     </body>

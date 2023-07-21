@@ -20,9 +20,9 @@ import java.util.logging.Logger;
 public class SubscriptionDAO extends MyDAO {
 
     public Subscription GetCurrentSubscription(int userId) {
-        xSql = "select p.*, s.reg_time, s.user_id, s.expireDate, s.reg_id from Subscription s, Price_Package p where\n"
-                + "p.package_id = s.package_id\n"
-                + "and s.user_id = ?";
+            xSql = "select p.*, s.reg_time, s.user_id, s.expireDate, s.reg_id, s.status from Subscription s, Price_Package p where\n"
+                    + "p.package_id = s.package_id\n"
+                    + "and s.user_id = ?";
         Subscription currentSubscription = null;
         int a = 0;
         try {
@@ -40,7 +40,8 @@ public class SubscriptionDAO extends MyDAO {
                 Date reg_time = rs.getDate("reg_time");
                 Date expireDate = rs.getDate("expireDate");
                 int reg_id = rs.getInt("reg_id");
-                currentSubscription = new Subscription(reg_id, Date.valueOf("2023-07-09"), userId, pc, Date.valueOf("2023-07-09"));
+                boolean SubscriptionStatus = rs.getBoolean("status");
+                currentSubscription = new Subscription(reg_id, Date.valueOf("2023-07-09"), userId, pc, Date.valueOf("2023-07-09"),SubscriptionStatus);
 
             }
         } catch (Exception e) {
@@ -50,7 +51,7 @@ public class SubscriptionDAO extends MyDAO {
     }
 
     public int addSubcription(int userId, int packageId, Date reg_time, Date expireDate) {
-        xSql = "insert into Subscription (user_id, package_id, reg_time, expireDate) values (?, ?, ?, ?)";
+        xSql = "insert into Subscription (user_id, package_id, reg_time, expireDate, status) values (?, ?, ?, ?, 1)";
         int a = 0;
         try {
             ps = con.prepareStatement(xSql);

@@ -210,7 +210,7 @@
 
 
                         </c:forEach>
-                        
+                        <a id="addnewsecBtn" href="AddnewSection?CourseId=${Course_id}"><h4 style="color: white; text-align: left; padding: 10px; border: white solid 1px"><i class="fa fa-plus"></i> Add new Section to this course</h4></a>
                     </div>
                 </div>
             </div>
@@ -257,113 +257,113 @@
         <script>
 
 
-                            //according to loftblog tut
-                            $('.nav li:first').addClass('active');
+                                                            //according to loftblog tut
+                                                            $('.nav li:first').addClass('active');
 
-                            // set sort_type
-                            const sortType = document.getElementById("sortType");
-                            sortType.addEventListener("change", function () {
-                                if (sortType.value === "recent") {
-                                    window.location.href = "?sort_type=recent";
-                                } else if (sortType.value === "name") {
-                                    window.location.href = "?sort_type=name";
-                                }
-                            });
+                                                            // set sort_type
+                                                            const sortType = document.getElementById("sortType");
+                                                            sortType.addEventListener("change", function () {
+                                                                if (sortType.value === "recent") {
+                                                                    window.location.href = "?sort_type=recent";
+                                                                } else if (sortType.value === "name") {
+                                                                    window.location.href = "?sort_type=name";
+                                                                }
+                                                            });
 
-                            var paramValue = "${sessionScope.sort_type}";
-                            for (var i = 0; i < sortType.options.length; i++) {
-                                if (sortType.options[i].value === paramValue) {
-                                    sortType.options[i].selected = true;
-                                    break;
-                                }
-                            }
+                                                            var paramValue = "${sessionScope.sort_type}";
+                                                            for (var i = 0; i < sortType.options.length; i++) {
+                                                                if (sortType.options[i].value === paramValue) {
+                                                                    sortType.options[i].selected = true;
+                                                                    break;
+                                                                }
+                                                            }
 
-                            function SetLessonStatus(updateStatus, lessonId, courseId) {
-                                //Send an AJAX request to your server-side script
+                                                            function SetLessonStatus(updateStatus, lessonId, courseId) {
+                                                                //Send an AJAX request to your server-side script
 
-                                $.ajax({
-                                    url: "UpdateLessonStatus",
-                                    type: "GET",
-                                    data: {lessonId: lessonId,
-                                        updateStatus: updateStatus
-                                    },
+                                                                $.ajax({
+                                                                    url: "UpdateLessonStatus",
+                                                                    type: "GET",
+                                                                    data: {lessonId: lessonId,
+                                                                        updateStatus: updateStatus
+                                                                    },
 
-                                    success: function (response) {
-                                        console.log("success");
-                                        window.location.href = "LessonListController?Course_id=" + courseId;
-                                    }
-                                });
-                            }
-                            function CheckSubscription(subscription, role, quizId) {
-                                event.preventDefault();
-                                if (subscription == "" && role == 2) {
-                                    $('#myModal').modal('show');
-                                }else{
-                                    window.location.href = "QuizLesson?quiz_id="+quizId
-                                }
-                            }
-                            function SetQuizStatus(updateStatus, QuizId, courseId) {
-                                //Send an AJAX request to your server-side script
-                                $.ajax({
-                                    url: "UpdateQuizStatus",
-                                    type: "POST",
-                                    data: {Quizid: QuizId,
-                                        updateStatus: updateStatus
-                                    },
+                                                                    success: function (response) {
+                                                                        console.log("success");
+                                                                        window.location.href = "LessonListController?Course_id=" + courseId;
+                                                                    }
+                                                                });
+                                                            }
+                                                            function CheckSubscription(subscription, role, quizId) {
+                                                                event.preventDefault();
+                                                                if (subscription == "" && role == 2) {
+                                                                    $('#myModal').modal('show');
+                                                                } else {
+                                                                    window.location.href = "QuizLesson?quiz_id=" + quizId
+                                                                }
+                                                            }
+                                                            function SetQuizStatus(updateStatus, QuizId, courseId) {
+                                                                //Send an AJAX request to your server-side script
+                                                                $.ajax({
+                                                                    url: "UpdateQuizStatus",
+                                                                    type: "POST",
+                                                                    data: {Quizid: QuizId,
+                                                                        updateStatus: updateStatus
+                                                                    },
 
-                                    success: function (response) {
-                                        console.log("success");
-                                        window.location.href = "LessonListController?Course_id=" + courseId;
-                                    }
-                                });
-                            }
-                            function toggleDisplay(DesId) {
-                                var currentDisplay = document.getElementById(DesId);
-                                currentDisplay.style.display = currentDisplay.style.display != "none" ? "none" : "block";
-                                console.log(DesId);
-                            }
+                                                                    success: function (response) {
+                                                                        console.log("success");
+                                                                        window.location.href = "LessonListController?Course_id=" + courseId;
+                                                                    }
+                                                                });
+                                                            }
+                                                            function toggleDisplay(DesId) {
+                                                                var currentDisplay = document.getElementById(DesId);
+                                                                currentDisplay.style.display = currentDisplay.style.display != "none" ? "none" : "block";
+                                                                console.log(DesId);
+                                                            }
 
-                            var showSection = function showSection(section, isAnimate) {
-                                var
-                                        direction = section.replace(/#/, ''),
-                                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-                                        reqSectionPos = reqSection.offset().top - 0;
+                                                            var showSection = function showSection(section, isAnimate) {
+                                                                var
+                                                                        direction = section.replace(/#/, ''),
+                                                                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                                                                        reqSectionPos = reqSection.offset().top - 0;
 
-                                if (isAnimate) {
-                                    $('body, html').animate({
-                                        scrollTop: reqSectionPos},
-                                            800);
-                                } else {
-                                    $('body, html').scrollTop(reqSectionPos);
-                                }
+                                                                if (isAnimate) {
+                                                                    $('body, html').animate({
+                                                                        scrollTop: reqSectionPos},
+                                                                            800);
+                                                                } else {
+                                                                    $('body, html').scrollTop(reqSectionPos);
+                                                                }
 
-                            };
+                                                            };
 
-                            var checkSection = function checkSection() {
-                                $('.section').each(function () {
-                                    var
-                                            $this = $(this),
-                                            topEdge = $this.offset().top - 80,
-                                            bottomEdge = topEdge + $this.height(),
-                                            wScroll = $(window).scrollTop();
-                                    if (topEdge < wScroll && bottomEdge > wScroll) {
-                                        var
-                                                currentId = $this.data('section'),
-                                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-                                        reqLink.closest('li').addClass('active').
-                                                siblings().removeClass('active');
-                                    }
-                                });
-                            };
+                                                            var checkSection = function checkSection() {
+                                                                $('.section').each(function () {
+                                                                    var
+                                                                            $this = $(this),
+                                                                            topEdge = $this.offset().top - 80,
+                                                                            bottomEdge = topEdge + $this.height(),
+                                                                            wScroll = $(window).scrollTop();
+                                                                    if (topEdge < wScroll && bottomEdge > wScroll) {
+                                                                        var
+                                                                                currentId = $this.data('section'),
+                                                                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                                                                        reqLink.closest('li').addClass('active').
+                                                                                siblings().removeClass('active');
+                                                                    }
+                                                                });
+                                                            };
 
-                            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-                                e.preventDefault();
-                                showSection($(this).attr('href'), true);
-                            });
+                                                            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                                                                e.preventDefault();
+                                                                showSection($(this).attr('href'), true);
+                                                            });
 
-                            $(window).scroll(function () {
-                                checkSection();
-                            });
+                                                            $(window).scroll(function () {
+                                                                checkSection();
+                                                            });
         </script>
     </body>
 

@@ -45,9 +45,68 @@
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            .ContactIcon{
+                display: inline-block;
+                height: 30px;
+                width: 30px;
+                position: fixed;
+                right: 60px;
+                bottom: 50px;
+                z-index: 9999;
+                pointer-events: auto;
+            }
+            #MessageBox{
+                background-color: black;
+                width: 300px;
+                padding: 10px;
+                height: 350px;
+                position: fixed;
+                right: 100px;
+                bottom: 70px;
+                z-index: 999;
+                border: 1px solid #2f7479
+            }
+            .ContactIcon i{
+                color: #52c7d0;
+                cursor: pointer
+            }
+            .Toast{
+                display: inline-block;
+                width: 15%;
+                position: fixed;
+                top: 100px;
+                right: 0;
+                z-index: 999;
+                padding: 15px 10px
+            }
+        </style>
     </head>
 
     <body>
+        <c:if test="${currUser != null}">
+            <div class="Toast" id="Toast" style="background-color: #e92a53; color: white; display: none">Message Sent Successfully!!</div>
+            <div class="ContactIcon"><i onclick="ToggleMessageBox()" class="far fa-comment-dots fa-2x"></i></div>
+            <div id="MessageBox" class="MessageBox" style="display: none">
+                <form action="SendMessage" method="Post">
+                    <div class="input-group mb-3">
+                        <p class="form-text col-12" style="color: white">Send To: </p>
+                        <input id="receiverEmail" type="text" name="receiver" class="form-control" placeholder="example@gmail.com" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    </div>
+                    <div class="input-group mb-3">
+                        <p class="form-text col-12" style="color: white">Content: </p>
+                        <textarea id="content" class="col-12" rows="7" name="content">
+                        
+                        </textarea>
+                    </div>
+                    <div class="input-group mb-3" style="justify-content: right">
+                        <button type="button" onclick="SendMessage()" class="btn btn-info"><i class="fa fa-paper-plane-o"></i></button>
+                    </div>
+
+                </form>
+            </div>
+        </c:if>
         <div class="sub-header">
             <div class="container">
                 <div class="row">
@@ -78,20 +137,36 @@
                             <!-- *** Logo End *** -->
                             <!-- *** Menu Start *** -->
                             <ul class="nav">
-                                <li><a href="LeaderBoard">Bảng xếp hạng người dùng</a></li>
+                                <li><a href="LeaderBoard">BXH người dùng <i class="fa-sharp fa-solid fa-ranking-star fa-2x"></i></a></li>
                                 <li><a href="mycourselistservlet">KHÓA HỌC CỦA TÔI</a></li>
-                                <li><a href="PricePackageSubcription">ĐƠN ĐĂNG KÝ CỦA TÔI</a></li>
+                                <li><a href="MailBox">HÒM THƯ</a></li>
                                     <c:if test="${currUser != null}">
-                                        <c:if test="${currUser.getRoleId() == 1 || currUser.getRoleId() == 4 || currUser.getRoleId() == 5}">
+
+                                    <c:if test="${currUser.getRoleId() == 1 || currUser.getRoleId() == 3 || currUser.getRoleId() == 4 || currUser.getRoleId() == 5}">
                                         <li class="has-sub">
                                             <a href="javascript:void(0)">Pages</a>
                                             <ul class="sub-menu">
-                                                <li><a href="DashBoard">DashBoard</a></li>
-                                                <li><a href="postListEdit">POST LIST EDIT</a></li>
-                                                <li><a href="slidersListEdit">SLIDER LIST EDIT</a></li>
+                                                <c:if test="${currUser.getRoleId() == 1 || currUser.getRoleId() == 4}">
+
+                                                    <li><a href="DashBoard">DashBoard</a></li>
+                                                    <li><a href="postListEdit">POST LIST EDIT</a></li>
+                                                    <li><a href="slidersListEdit">SLIDER LIST EDIT</a></li>
+
+                                                </c:if>
+                                                <c:if test="${currUser.getRoleId() == 3}">
+
+                                                    <li><a href="courseListEdit">Edit Course List</a></li>                                        </c:if>
+
+                                                <c:if test="${currUser.getRoleId() == 5}">
+
+                                                    <li><a href="pricePackageEdit">Chỉnh sửa gói đăng kí List</a></li>
+
+                                                </c:if>
                                             </ul>
+
                                         </li>
                                     </c:if>
+
                                 </c:if>
 
                                 <li><a href="PersonalAccountServlet?viewerId=${currUserId}&ProfileId=${currUserId}">TRANG CÁ NHÂN</a></li> 
@@ -108,6 +183,34 @@
 
 
     </body>
+    <script>
+        function ToggleMessageBox() {
+            var mb = document.getElementById("MessageBox");
+            if (mb.style.display == "none") {
+                mb.style.display = "inline-block";
+            } else {
+                mb.style.display = "none";
+            }
+        }
+        function SendMessage() {
+            var receiverEmail = document.getElementById("receiverEmail").value;
+            var content = document.getElementById("content").value;
+            var Toast = document.getElementById("Toast");
+            var url = "SendMessage?receiver=" + encodeURIComponent(receiverEmail) + "&content=" + encodeURIComponent(content);
+            console.log(url)
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("Post", url, true);
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                    Toast.style.display = "inline-block";
+                    setTimeout(() => {
+                        Toast.style.display = "none";
+                    }, 3000);
+                }
+            };
+            xmlHttp.send();
+        }
+    </script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

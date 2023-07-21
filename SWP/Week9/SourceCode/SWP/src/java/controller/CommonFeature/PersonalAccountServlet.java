@@ -7,11 +7,13 @@ package controller.CommonFeature;
 import dao.CourseDAO;
 import dao.GenderDAO;
 import dao.RoleDAO;
+import dao.SubscriptionDAO;
 import dao.UserDAO;
 import entity.Gender;
 import entity.Role;
 import entity.User;
 import entity.ManageCourse;
+import entity.Subscription;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -43,7 +45,8 @@ public class PersonalAccountServlet extends HttpServlet {
         } else {
             UserDAO userDAO = new UserDAO();
             User profile = userDAO.getUserById(profileId);
-            
+            SubscriptionDAO sd = new SubscriptionDAO();
+            Subscription currSubscription = sd.GetCurrentSubscription(user_id);
             Gender g = gd.getGenderById(profile.getGenderId());
             Role r = rd.getRoleById(profile.getRoleId());
             
@@ -53,6 +56,7 @@ public class PersonalAccountServlet extends HttpServlet {
             }else{
                 request.setAttribute("viewOwn", false);
             }
+            request.setAttribute("currSubscription", currSubscription);
             request.setAttribute("profileCourses", profileCourses);
             request.setAttribute("profile", profile);
             request.setAttribute("gender", g);

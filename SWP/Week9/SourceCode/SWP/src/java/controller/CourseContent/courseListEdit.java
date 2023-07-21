@@ -5,8 +5,10 @@
 package controller.CourseContent;
 
 import dao.CourseDAO;
+import dao.UserDAO;
 import entity.Course;
 import entity.ManageCourse;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -48,26 +50,37 @@ public class courseListEdit extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int user_id = 0;
+        UserDAO ud = new UserDAO();
         Cookie[] cookies = request.getCookies();
-
+        User currUser = null;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("currUserId")) {
                     user_id = Integer.parseInt(cookie.getValue());
+                    currUser = ud.getUserById(user_id);
                 }
             }
         }
-        
+
         // Get course by user id
         CourseDAO courseDAO = new CourseDAO();
-        Vector<ManageCourse> manageCourse = courseDAO.getmyCourseList(user_id, null, null, null);
-        Vector<Course> courseList = new Vector<Course>();
-        for(ManageCourse m : manageCourse){
-            courseList.add(m.getUserCourse());
+
+        if (user_id == 0) {
+            response.sendRedirect("login");
+        } else {
+            if (currUser.getRoleId() == 3) {
+                Vector<ManageCourse> manageCourse = courseDAO.getmyCourseList(user_id, null, null, null);
+                Vector<Course> courseList = new Vector<Course>();
+                for (ManageCourse m : manageCourse) {
+                    courseList.add(m.getUserCourse());
+                }
+                request.setAttribute("courseList", courseList);
+                request.getRequestDispatcher("CourseListEdit.jsp").forward(request, response);
+            }else{
+                response.sendRedirect("UnauthorizedAccess.jsp");
+            }
         }
-        
-        request.setAttribute("courseList", courseList);
-        request.getRequestDispatcher("CourseListEdit.jsp").forward(request, response);
+
     }
 
     /**

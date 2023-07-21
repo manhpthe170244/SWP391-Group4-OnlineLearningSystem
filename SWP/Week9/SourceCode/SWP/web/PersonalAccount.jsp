@@ -89,7 +89,12 @@
                                 <h4>${profile.getUserAddress()}</h4>
                                 <c:if test="${requestScope.viewOwn == true}">
                                     <h4>${profile.getUserWalletFormatted()} &nbsp; <a href="Deposit" class="fa fa-plus-square"></a></h4>
-                                    <h4>Subscription</h4>
+                                    <c:if test="${requestScope.currSubscription != null}">
+                                        <a href="PricePackageSubcription">${requestScope.currSubscription.getCurrentPackage().getPackage_name()}</a>
+                                    </c:if>
+                                        <c:if test="${requestScope.currSubscription == null}">
+                                        <a href="PricePackageSubcription">Miễn phí</a>
+                                    </c:if>
                                 </c:if>
                                 <c:if test="${profile.getRoleId()==2}">
                                     <h4>${profile.getScore()}</h4>

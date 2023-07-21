@@ -59,7 +59,7 @@ public class registerServlet extends HttpServlet {
         String password2 = request.getParameter("password2");
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$";
         String PasswordPatternErr = "Mật khẩu cần phải bao gồm cả chữ cái và số và có độ dài ít nhất là 6 kí tự";
-        if(!password1.matches(PasswordPatternErr)){
+        if(!password1.matches(passwordPattern)){
             request.setAttribute("PasswordPatternErr", PasswordPatternErr);
         }
         String passworderr = "";

@@ -4,12 +4,18 @@
  */
 package controller.SaleFeature;
 
+import dao.CourseDAO;
 import dao.PricePackageDAO;
+import dao.UserDAO;
+import entity.Course;
+import entity.ManageCourse;
 import entity.Price_Package;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -60,11 +66,33 @@ public class pricePackageEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        Vector<Price_Package> pricePackage = pricePackageDAO.getAll();
-        request.setAttribute("pricePackage", pricePackage);
-        request.getRequestDispatcher("PricePackage.jsp").forward(request, response);
-        
+        int user_id = 0;
+        UserDAO ud = new UserDAO();
+        Cookie[] cookies = request.getCookies();
+        User currUser = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                    currUser = ud.getUserById(user_id);
+                }
+            }
+        }
+
+        // Get course by user id
+        if (user_id == 0) {
+            response.sendRedirect("login");
+        } else {
+            if (currUser.getRoleId() == 5 || currUser.getRoleId() == 1) {
+                PricePackageDAO pricePackageDAO = new PricePackageDAO();
+                Vector<Price_Package> pricePackage = pricePackageDAO.getAll();
+                request.setAttribute("pricePackage", pricePackage);
+                request.getRequestDispatcher("PricePackage.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("UnauthorizedAccess.jsp");
+            }
+        }
+
     }
 
     /**
