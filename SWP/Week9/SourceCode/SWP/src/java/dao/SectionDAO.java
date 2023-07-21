@@ -34,4 +34,15 @@ public class SectionDAO extends MyDAO {
         }
         return vector;
     }
+    public void AddNewSection(int CourseId){
+        xSql = "Insert into Section (course_id, section_name, section_status) values (?, 'Please edit this Section', 1)";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, CourseId);
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

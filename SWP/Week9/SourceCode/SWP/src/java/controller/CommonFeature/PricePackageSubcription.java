@@ -47,7 +47,7 @@ public class PricePackageSubcription extends HttpServlet {
                     PricePackageDAO ppd = new PricePackageDAO();
                     SubscriptionDAO sd = new SubscriptionDAO();
                     Subscription currentSubscription = sd.GetCurrentSubscription(user_id);
-                    if (currentSubscription != null) {
+                    if (currentSubscription != null && currentSubscription.isStatus() == true) {
                         request.setAttribute("currentSubscription", currentSubscription);
                     }
                     Vector<Price_Package> packageList = ppd.getAll();

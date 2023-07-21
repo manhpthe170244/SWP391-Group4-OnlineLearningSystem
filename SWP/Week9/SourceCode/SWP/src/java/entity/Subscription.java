@@ -16,13 +16,15 @@ public class Subscription {
     int user_id;
     Price_Package currentPackage;
     Date expireDate;
+    boolean Status;
 
-    public Subscription(int reg_id, Date reg_time, int user_id, Price_Package currentPackage, Date expireDate) {
+    public Subscription(int reg_id, Date reg_time, int user_id, Price_Package currentPackage, Date expireDate, boolean Status) {
         this.reg_id = reg_id;
         this.reg_time = reg_time;
         this.user_id = user_id;
         this.currentPackage = currentPackage;
         this.expireDate = expireDate;
+        this.Status = Status;
     }
 
     
@@ -69,6 +71,14 @@ public class Subscription {
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public boolean isStatus() {
+        return Status;
+    }
+
+    public void setStatus(boolean Status) {
+        this.Status = Status;
     }
     
 }

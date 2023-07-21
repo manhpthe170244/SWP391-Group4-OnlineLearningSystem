@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,17 +42,38 @@ public class editProfile extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
+        Cookie[] cookies = request.getCookies();
+        int user_id = 0;
+        User currUser = null;
+        UserDAO ud = new UserDAO();
+        if (cookies != null) {
+
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                    currUser = ud.getUserById(user_id);
+                }
+            }
+        }
 
         int uid = Integer.parseInt(request.getParameter("uid"));
+        if (user_id == 0) {
+            response.sendRedirect("login");
+        } else {
+            if (uid != user_id) {
+                response.sendRedirect("UnauthorizedAccess.jsp");
+            } else {
+                User user = userDAO.getUserById(uid);
+                Vector<Province> provinceList = pd.getAllProvince();
+                Vector<Gender> genderList = gd.getAllGender();
 
-        User user = userDAO.getUserById(uid);
-        Vector<Province> provinceList = pd.getAllProvince();
-        Vector<Gender> genderList = gd.getAllGender();
+                request.setAttribute("genderList", genderList);
+                request.setAttribute("provinceList", provinceList);
+                request.setAttribute("currUser", user);
+                request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
 
-        request.setAttribute("genderList", genderList);
-        request.setAttribute("provinceList", provinceList);
-        request.setAttribute("currUser", user);
-        request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
+            }
+        }
 
     }
 

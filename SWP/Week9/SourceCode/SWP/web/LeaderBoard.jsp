@@ -173,6 +173,11 @@
                                         fontSize: 15,
 
                                     },
+                                    gridLines: {
+                                        color: '#A09F9F',
+                                        lineWidth: 1,
+                                        
+                                    }
 
                                 }],
                             yAxes: [{
