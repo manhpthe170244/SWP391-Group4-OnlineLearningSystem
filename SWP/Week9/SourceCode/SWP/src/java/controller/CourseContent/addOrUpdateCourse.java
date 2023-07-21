@@ -4,7 +4,9 @@
  */
 package controller.CourseContent;
 
+import controller.LecturerValidator;
 import dao.CourseDAO;
+import dao.LessonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -83,6 +85,8 @@ public class addOrUpdateCourse extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        CourseDAO cd = new CourseDAO();
+        Cookie[] cookies = request.getCookies();
         String name = request.getParameter("course_name");
         String title = request.getParameter("course_title");
         String description = request.getParameter("course_des");
@@ -118,22 +122,39 @@ public class addOrUpdateCourse extends HttpServlet {
 
         if (update) {
             int id = Integer.parseInt(request.getParameter("course_id"));
+            LecturerValidator lv = new LecturerValidator();
+            int val = lv.val(cookies, -1, id);
+            if (val == 0) {
+                response.sendRedirect("login");
+            } else if (val == 1) {
+                response.sendRedirect("UnauthorizedAccess.jsp");
+            } else {
+                courseDAO.updateCourse(id, name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
+            }
             // updateCourse
-            courseDAO.updateCourse(id, name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
+
         } else {
             // addCourse
-            int course_id = courseDAO.addCourse(name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
-            int user_id = 0;
-            Cookie[] cookies = request.getCookies();
+            LecturerValidator lv = new LecturerValidator();
+            int val = lv.val(cookies, -1, -1);
+            if (val == 0) {
+                response.sendRedirect("login");
+            } else if (val == 1) {
+                response.sendRedirect("UnauthorizedAccess.jsp");
+            } else {
+                int course_id = courseDAO.addCourse(name, sqlFilePath, price, description, currentDate, sub_id, level_id, true, duration, title);
+                int user_id = 0;
 
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("currUserId")) {
-                        user_id = Integer.parseInt(cookie.getValue());
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("currUserId")) {
+                            user_id = Integer.parseInt(cookie.getValue());
+                        }
                     }
                 }
+                courseDAO.addCourseToUser(course_id, user_id, currentDate, currentDate);
             }
-            courseDAO.addCourseToUser(course_id, user_id, currentDate, currentDate);
+
         }
 
         response.sendRedirect("courseListEdit");

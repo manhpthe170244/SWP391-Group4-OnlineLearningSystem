@@ -4,6 +4,7 @@
  */
 package controller.SaleFeature;
 
+import controller.LogginValidate;
 import dao.CourseDAO;
 import dao.PricePackageDAO;
 import dao.UserDAO;
@@ -66,24 +67,17 @@ public class pricePackageEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int user_id = 0;
-        UserDAO ud = new UserDAO();
+
+        LogginValidate logginVal = new LogginValidate();
         Cookie[] cookies = request.getCookies();
         User currUser = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("currUserId")) {
-                    user_id = Integer.parseInt(cookie.getValue());
-                    currUser = ud.getUserById(user_id);
-                }
-            }
-        }
-
-        // Get course by user id
-        if (user_id == 0) {
+        UserDAO ud = new UserDAO();
+        int logged = logginVal.checkLoggedIn(cookies);
+        if (logged == 0) {
             response.sendRedirect("login");
         } else {
-            if (currUser.getRoleId() == 5 || currUser.getRoleId() == 1) {
+            currUser = ud.getUserById(logged);
+            if (currUser.getRoleId() == 1 || currUser.getRoleId() == 5) {
                 PricePackageDAO pricePackageDAO = new PricePackageDAO();
                 Vector<Price_Package> pricePackage = pricePackageDAO.getAll();
                 request.setAttribute("pricePackage", pricePackage);

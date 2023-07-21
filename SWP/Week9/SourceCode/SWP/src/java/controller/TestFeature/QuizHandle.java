@@ -6,10 +6,12 @@ package controller.TestFeature;
 
 import dao.CourseDAO;
 import dao.QuizDAO;
+import dao.SubscriptionDAO;
 import entity.Course;
 import entity.ManageCourse;
 import entity.Question;
 import entity.Quiz;
+import entity.Subscription;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -85,6 +87,8 @@ public class QuizHandle extends HttpServlet {
             if (checkRegisterdCourse == null) {
                 response.sendRedirect("courseDetails?course_id=" + cid);
             } else {
+                SubscriptionDAO subScriptionDAO = new SubscriptionDAO();
+                Subscription currentSubscription = subScriptionDAO.GetCurrentSubscription(user_id);
                 QuizDAO quizDAO = new QuizDAO();
                 Quiz requestedQuiz = quizDAO.getQuizById(quiz_id);
                 if (requestedQuiz.isQuiz_status() == false) {
@@ -93,6 +97,7 @@ public class QuizHandle extends HttpServlet {
                 }
                 Course course = cd.searchById(cid);
                 Vector<Question> quesList = quizDAO.getQuestionByQuizId(quiz_id);
+                request.setAttribute("currentSubscription", currentSubscription);
                 request.setAttribute("Course", course);
                 request.setAttribute("requestedQuiz", requestedQuiz);
                 request.setAttribute("quesList", quesList);

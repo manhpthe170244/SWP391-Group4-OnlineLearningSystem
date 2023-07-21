@@ -23,6 +23,8 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 
         <!-- Additional CSS Files -->
@@ -300,6 +302,27 @@
             </form>
         </div>
     </div>
+    <div class="modal show" id="myModal" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h6 style="color: black" class="modal-title">Bạn chưa có quyền sử dụng tính năng này</h6>
+
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Hãy đăng kí các gói vip của chúng tôi để mở khoá tính năng làm quiz và theo dõi tiến độ của bản thân tại <a href="PricePackageSubcription">đây</a>
+                </div>
+
+                <!-- Modal footer -->
+
+
+            </div>
+        </div>
+    </div>
 
 </section>
 
@@ -309,6 +332,16 @@
 
 </body>
 <script>
+    var currSub = '${requestScope.currSubscription}';
+    document.addEventListener("DOMContentLoaded", function () {
+        if (currSub == "") {
+            var myModal = new bootstrap.Modal(document.getElementById("myModal"));
+            myModal.show();
+            setTimeout(() => {
+                window.location.href = "PricePackageSubcription"
+            }, 5000);
+        }
+    });
     function toggleFlag(i) {
         var questionBox = document.getElementById("question-square-" + i);
         var flag = document.getElementById("flag" + i);

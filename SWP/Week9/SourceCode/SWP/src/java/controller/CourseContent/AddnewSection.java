@@ -4,11 +4,15 @@
  */
 package controller.CourseContent;
 
+import dao.CourseDAO;
 import dao.SectionDAO;
+import dao.UserDAO;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -58,10 +62,39 @@ public class AddnewSection extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int courseId = Integer.parseInt(request.getParameter("CourseId"));
-        SectionDAO sd = new SectionDAO();
-        sd.AddNewSection(courseId);
-        response.sendRedirect("LessonListController?Course_id="+courseId+"#addnewsecBtn");
+        int user_id = 0;
+        UserDAO ud = new UserDAO();
+        CourseDAO cd = new CourseDAO();
+        Cookie[] cookies = request.getCookies();
+        User currUser = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("currUserId")) {
+                    user_id = Integer.parseInt(cookie.getValue());
+                    currUser = ud.getUserById(user_id);
+                }
+            }
+        }
+        if (user_id == 0) {
+            response.sendRedirect("login");
+        } else {
+            if (currUser.getRoleId() == 3) {
+                int courseId = Integer.parseInt(request.getParameter("CourseId"));
+                int author = cd.getCoursePublisher(courseId);
+                if (author != currUser.getUserId()) {
+                    response.sendRedirect("UnauthorizedAccess.jsp");
+                    return;
+                } else {
+                    SectionDAO sd = new SectionDAO();
+                    sd.AddNewSection(courseId);
+                    response.sendRedirect("LessonListController?Course_id=" + courseId + "#addnewsecBtn");
+                }
+
+            } else {
+                response.sendRedirect("UnauthorizedAccess.jsp");
+            }
+        }
+
     }
 
     /**
@@ -78,7 +111,7 @@ public class AddnewSection extends HttpServlet {
         int courseId = Integer.parseInt(request.getParameter("CourseId"));
         SectionDAO sd = new SectionDAO();
         sd.AddNewSection(courseId);
-        response.sendRedirect("LessonListController?Course_id="+courseId+"#addnewsecBtn");
+        response.sendRedirect("LessonListController?Course_id=" + courseId + "#addnewsecBtn");
     }
 
     /**

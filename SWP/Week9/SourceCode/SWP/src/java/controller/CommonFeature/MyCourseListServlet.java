@@ -34,6 +34,7 @@ public class MyCourseListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         int user_id = 0;
         Cookie[] cookies = request.getCookies();
         User currUser = null;
@@ -77,9 +78,10 @@ public class MyCourseListServlet extends HttpServlet {
                 request.setAttribute("subjectList", subjectList);
 
                 Vector<ManageCourse> myCourses = cd.getmyCourseList(user_id, subIdRaw, search, sort_type);
+                out.print("catch");
                 request.setAttribute("myCourses", myCourses);
 
-                PrintWriter out = response.getWriter();
+               
                 out.print(myCourses.size());
 
                 request.getRequestDispatcher("MyCourseList.jsp").forward(request, response);
