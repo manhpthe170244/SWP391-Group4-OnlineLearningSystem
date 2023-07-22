@@ -10,7 +10,7 @@ public class DBConnect {
     {
         try {
             // Edit URL , username, password to authenticate with your MS SQL Server
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=Course_DB";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=Course_DB1";
             String username = "sa";
             String password = "sa";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

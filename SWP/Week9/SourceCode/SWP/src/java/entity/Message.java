@@ -13,13 +13,21 @@ public class Message {
     int SenderId;
     int ReceiverId;
     String content;
+    boolean marked;
+    boolean reported;
+    User sender;
+    User receiver;
 
-    public Message(int MessageId, int SenderId, int ReceiverId, String content) {
+    public Message(int MessageId, int SenderId, int ReceiverId, String content, boolean marked, boolean reported) {
         this.MessageId = MessageId;
         this.SenderId = SenderId;
         this.ReceiverId = ReceiverId;
         this.content = content;
+        this.marked = marked;
+        this.reported = reported;
     }
+     
+    
 
     public Message() {
     }
@@ -54,6 +62,38 @@ public class Message {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public boolean isMarked() {
+        return marked;
+    }
+
+    public void setMarked(boolean marked) {
+        this.marked = marked;
+    }
+
+    public boolean isReported() {
+        return reported;
+    }
+
+    public void setReported(boolean reported) {
+        this.reported = reported;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
     
 }

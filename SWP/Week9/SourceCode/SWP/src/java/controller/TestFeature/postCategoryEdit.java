@@ -4,12 +4,18 @@
  */
 package controller.TestFeature;
 
+import controller.LogginValidate;
 import dao.PostCategoryDAO;
+import dao.PricePackageDAO;
+import dao.UserDAO;
 import entity.PostCategory;
+import entity.Price_Package;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,7 +45,7 @@ public class postCategoryEdit extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet postCategoryEdit</title>");            
+            out.println("<title>Servlet postCategoryEdit</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet postCategoryEdit at " + request.getContextPath() + "</h1>");
@@ -60,10 +66,26 @@ public class postCategoryEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PostCategoryDAO blogDAO = new PostCategoryDAO();
-        Vector<PostCategory> categoryList = blogDAO.getAll();
-        request.setAttribute("categoryList", categoryList);
-        request.getRequestDispatcher("PostCategoryEdit.jsp").forward(request, response);
+
+        LogginValidate logginVal = new LogginValidate();
+        Cookie[] cookies = request.getCookies();
+        User currUser = null;
+        UserDAO ud = new UserDAO();
+        int logged = logginVal.checkLoggedIn(cookies);
+        if (logged == 0) {
+            response.sendRedirect("login");
+        } else {
+            currUser = ud.getUserById(logged);
+            if (currUser.getRoleId() == 1 || currUser.getRoleId() == 4) {
+                PostCategoryDAO blogDAO = new PostCategoryDAO();
+                Vector<PostCategory> categoryList = blogDAO.getAll();
+                request.setAttribute("categoryList", categoryList);
+                request.getRequestDispatcher("PostCategoryEdit.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("UnauthorizedAccess.jsp");
+            }
+        }
+
     }
 
     /**

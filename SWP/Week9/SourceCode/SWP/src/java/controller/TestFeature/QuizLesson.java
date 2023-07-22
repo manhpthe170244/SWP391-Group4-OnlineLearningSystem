@@ -7,10 +7,12 @@ package controller.TestFeature;
 import dao.CourseDAO;
 import dao.QuizDAO;
 import dao.QuizResultDAO;
+import dao.SubscriptionDAO;
 import dao.UserDAO;
 import entity.ManageCourse;
 import entity.Quiz;
 import entity.QuizResult;
+import entity.Subscription;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -90,6 +92,9 @@ public class QuizLesson extends HttpServlet {
             if (checkRegisterdCourse == null) {
                 response.sendRedirect("courseDetails?course_id=" + cid);
             } else {
+                SubscriptionDAO subScriptionDAO = new SubscriptionDAO();
+                Subscription currentSubscription = subScriptionDAO.GetCurrentSubscription(user_id);
+                
                 QuizResultDAO quizResultDAO = new QuizResultDAO();
                 
                 Vector<QuizResult> quizResultList = quizResultDAO.getQuizResultByUserIdAndQuizId(user_id, quiz_id);
@@ -101,10 +106,11 @@ public class QuizLesson extends HttpServlet {
                     return;
                 }
                 request.setAttribute("quiz", quiz);
-
+                request.setAttribute("currSubscription", currentSubscription);
                 request.setAttribute("quiz_id", quiz_id);
 
                 request.setAttribute("quizResultList", quizResultList);
+                PrintWriter out = response.getWriter();
                 request.getRequestDispatcher("quizLesson.jsp").forward(request, response);
             }
         }

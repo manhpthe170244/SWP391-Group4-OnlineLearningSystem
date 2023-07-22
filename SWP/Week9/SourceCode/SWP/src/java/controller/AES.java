@@ -60,4 +60,11 @@ public class AES {
         }
         return null;
     }
+    public static void main(String[] args){
+        String ss = "chu quy son";
+        String e = encrypt(ss, "abababa23reewfw4");
+        String d = decrypt(e, "abababa23reewfw4");
+        System.out.println(e);
+        System.out.println(d);
+    }
 }

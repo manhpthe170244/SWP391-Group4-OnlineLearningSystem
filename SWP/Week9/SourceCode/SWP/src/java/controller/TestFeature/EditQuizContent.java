@@ -96,7 +96,7 @@ public class EditQuizContent extends HttpServlet {
 
         }
         String[] editedChocies = request.getParameterValues("EditedChoiceContent");
-        if (editedChocies.length > 0 && editedChocies != null) {
+        if (editedChocies != null) {
             for (int i = 0; i < editedChocies.length; i++) {
                 for (Integer rci : rightChoicesId) {
 //                out.print("(" + ChoicesIdByQuesId.get(i) + "--" + rci + ")");

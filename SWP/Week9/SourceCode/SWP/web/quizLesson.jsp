@@ -26,7 +26,7 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
@@ -74,9 +74,8 @@
         
         -->
     </head>
-
+    
     <body>
-
 
 
         <jsp:include page="header.jsp"/>
@@ -110,11 +109,11 @@
                     <option value="name">Highest Scores</option>
                 </select>
             </div>
-            
+
             <div class="row">
                 <h6 style="color: #33CAFD; text-align: center">Làm bài quiz với kết quả >= 5 sẽ cộng thêm 10 điểm tích luỹ ;)</h6>
             </div>
-            
+
             <div class="main-button-red" style="margin-bottom: 30px">
                 <a href="QuizHandle?quiz_id=${requestScope.quiz_id}"> Bắt đầu làm </a>
 
@@ -154,7 +153,33 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="modal show" id="myModal" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h6 style="color: black" class="modal-title">Bạn chưa có quyền sử dụng tính năng này</h6>
+
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                Hãy đăng kí các gói vip của chúng tôi để mở khoá tính năng làm quiz và theo dõi tiến độ của bản thân tại <a href="PricePackageSubcription">đây</a>
+                            </div>
+
+                            <!-- Modal footer -->
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
+
             <div class="footer">
                 <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
                     <br>Design: <a href="https://templatemo.com/page/1" target="_parent" title="website templates">TemplateMo</a></p>
@@ -178,9 +203,18 @@
         <script>
             //according to loftblog tut
             $('.nav li:first').addClass('active');
+            var currSub = '${requestScope.currSubscription}';
 
+            document.addEventListener("DOMContentLoaded", function () {
+                if (currSub == "") {
+                    var myModal = new bootstrap.Modal(document.getElementById("myModal"));
+                    myModal.show();
+
+                }
+            });
             // set sort_type
-            const sortType = document.getElementById("sortType");
+            const
+                    sortType = document.getElementById("sortType");
             sortType.addEventListener("change", function () {
                 if (sortType.value === "recent") {
                     window.location.href = "?sort_type=recent";
@@ -197,7 +231,13 @@
                 }
             }
 
+            function CheckSubscription(subscription) {
 
+                if (subscription == "") {
+                    console.log(subscription)
+                    $('#myModal').modal('show');
+                }
+            }
 
             var showSection = function showSection(section, isAnimate) {
                 var

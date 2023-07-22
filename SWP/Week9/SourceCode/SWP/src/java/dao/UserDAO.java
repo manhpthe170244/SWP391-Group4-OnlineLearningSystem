@@ -339,6 +339,39 @@ public class UserDAO extends MyDAO {
         return StudentList;
     }
 
+    public Vector<User> GetAllUser() {
+        Vector<User> StudentList = new Vector<>();
+        xSql = "select * from \"User\" u";
+                
+        User u = null;
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                u = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_email"),
+                        rs.getString("password"),
+                        rs.getString("full_name"),
+                        rs.getString("user_img"),
+                        rs.getInt("gender_id"),
+                        rs.getDate("user_dob"),
+                        rs.getString("user_phone"),
+                        rs.getString("user_address"),
+                        rs.getString("user_wallet"),
+                        rs.getInt("role_id"),
+                        rs.getDate("user_time"),
+                        rs.getBoolean("user_status"),
+                        rs.getInt("Score")
+                );
+                StudentList.add(u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return StudentList;
+    }
+
     public void handleTransaction(int userId, int amount) {
         xSql = "update \"User\"\n"
                 + "set user_wallet = user_wallet - ?\n"

@@ -61,7 +61,7 @@
                 background-color: black;
                 width: 300px;
                 padding: 10px;
-                height: 350px;
+                height: 370px;
                 position: fixed;
                 right: 100px;
                 bottom: 70px;
@@ -81,18 +81,36 @@
                 z-index: 999;
                 padding: 15px 10px
             }
+            #Suggestion{
+                position: fixed;
+                background-color: #fdfffd;
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                width: 279px;
+                top: 55%;
+                max-height: 200px;
+                overflow-y: auto;
+                z-index: 9999;
+            }
+            .suggestEmail{
+                padding: 5px;
+                padding-left: 15px;
+                border-bottom: 1px solid #ababab
+            }
         </style>
     </head>
 
     <body>
         <c:if test="${currUser != null}">
-            <div class="Toast" id="Toast" style="background-color: #e92a53; color: white; display: none">Message Sent Successfully!!</div>
-            <div class="ContactIcon"><i onclick="ToggleMessageBox()" class="far fa-comment-dots fa-2x"></i></div>
+            <div class="Toast" id="Toast" style="background-color: #66ff66; color: white; display: none">Message Sent Successfully!!</div>
+            <div class="ContactIcon"><i onclick="ToggleMessageBox(); checkValidEmail()" class="far fa-comment-dots fa-2x"></i></div>
             <div id="MessageBox" class="MessageBox" style="display: none">
                 <form action="SendMessage" method="Post">
                     <div class="input-group mb-3">
                         <p class="form-text col-12" style="color: white">Send To: </p>
-                        <input id="receiverEmail" type="text" name="receiver" class="form-control" placeholder="example@gmail.com" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <input id="receiverEmail" oninput="Suggest()" type="text" name="receiver" class="form-control" placeholder="example@gmail.com" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div id="Suggestion">
+                            <ul></ul>
+                        </div>
                     </div>
                     <div class="input-group mb-3">
                         <p class="form-text col-12" style="color: white">Content: </p>
@@ -100,7 +118,7 @@
                         
                         </textarea>
                     </div>
-                    <div class="input-group mb-3" style="justify-content: right">
+                    <div class="input-group mb-3" style="justify-content: right; margin-bottom: 10px !important">
                         <button type="button" onclick="SendMessage()" class="btn btn-info"><i class="fa fa-paper-plane-o"></i></button>
                     </div>
 
@@ -139,7 +157,7 @@
                             <ul class="nav">
                                 <li><a href="LeaderBoard">BXH người dùng <i class="fa-sharp fa-solid fa-ranking-star fa-2x"></i></a></li>
                                 <li><a href="mycourselistservlet">KHÓA HỌC CỦA TÔI</a></li>
-                                <li><a href="MailBox">HÒM THƯ</a></li>
+                                <li><a href="MailBox?mode=inbox">HÒM THƯ</a></li>
                                     <c:if test="${currUser != null}">
 
                                     <c:if test="${currUser.getRoleId() == 1 || currUser.getRoleId() == 3 || currUser.getRoleId() == 4 || currUser.getRoleId() == 5}">
@@ -174,6 +192,7 @@
                             <a class='menu-trigger'>
                                 <span>Menu</span>
                             </a>
+
                             <!-- *** Menu End *** -->
                         </nav>
                     </div>
@@ -184,6 +203,18 @@
 
     </body>
     <script>
+
+
+        var emailList;
+
+
+        document.getElementById("content").addEventListener("click", function () {
+            // Set focus on the text area
+            this.focus();
+
+            // Set the cursor to the top left position (index 0)
+            this.setSelectionRange(0, 0);
+        });
         function ToggleMessageBox() {
             var mb = document.getElementById("MessageBox");
             if (mb.style.display == "none") {
@@ -192,6 +223,44 @@
                 mb.style.display = "none";
             }
         }
+        function Suggest() {
+            var receiverEmail = document.getElementById("receiverEmail").value;
+            var Suggestion = document.getElementById("Suggestion");
+            Suggestion.innerHTML = "";
+            emailList.forEach(function (e) {
+                if (e.includes(receiverEmail) && receiverEmail !== "" && receiverEmail !== e) {
+                    let li = document.createElement('li');
+                    let suggestionDiv = document.createElement('div');
+                    suggestionDiv.classList.add("suggestEmail");
+                    const email = document.createElement('p');
+                    email.textContent = e;
+                    li.onmouseover = function () {
+                        document.getElementById("receiverEmail").value = e;
+//                        li.style.backgroundColor = "#8BF0F2";
+                    }
+                    suggestionDiv.appendChild(email);
+                    li.appendChild(suggestionDiv);
+                    Suggestion.appendChild(li);
+                }
+            });
+        }
+        function checkValidEmail() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'GetAllEmail', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // Parse the response text as JSON to get the array
+                    var response = xhr.responseText;
+                    // Make sure emailList is an array before using forEach
+                    emailList = response.split(',');
+                    emailList.forEach(function (e) {
+                        console.log(e);
+                    });
+                }
+            };
+            xhr.send();
+        }
+
         function SendMessage() {
             var receiverEmail = document.getElementById("receiverEmail").value;
             var content = document.getElementById("content").value;
