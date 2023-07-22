@@ -32,10 +32,13 @@
             .MailBoxWrapper{
                 background-color: rgb(0,0,0, 0.3);
                 padding: 0 !important;
+                height: 600px;
+                overflow-y: auto
             }
             .sidebar{
                 background-color: rgb(50,52,54, 0.5);
-                padding: 0 !important
+                padding: 0 !important;
+
             }
             .title{
                 /*                border: white 1px solid;*/
@@ -78,6 +81,10 @@
                 position: relative;
                 right: -1000px
             }
+            .markButton{
+                position: relative;
+                right: -1100px
+            }
             .content p {
                 width: 85% !important;
                 word-break: break-all;
@@ -93,7 +100,7 @@
         giua roi chen noi dug trang vao phan ben duoi -->
         <section class="heading-page header-text">
             <div class="containerFluid">
-                <div class="row col-12" style="min-height: 600px">
+                <div class="row col-12">
                     <div class="sidebar col-2">
                         <div class="title col-12">
                             <h5 style="font-family: sans-serif"> Hòm thư </h5>
@@ -108,7 +115,7 @@
                                 </li>
                                 <li class="col-10">
                                     <div class=" item act">
-                                        <a href="MailBox?mode=sent">Thư dã gửi</a>
+                                        <a href="MailBox?mode=sent">Thư đã gửi</a>
                                     </div>
                                 </li>
                                 <li class="col-10">
@@ -128,17 +135,28 @@
                         <c:forEach items="${requestScope.displayList}" var="message">
                             <div class="col-11 messageItem">
                                 <div class="from">
-                                    <c:if test="${requestScope.mode.equals('inbox') || requestScope.mode.equals('reported') || requestScope.mode.equals('marked') }">
+
+                                    <c:if test="${requestScope.mode.equals('inbox') ||  requestScope.mode.equals('marked') }">
                                         <h6 style="color: white">
                                             Từ: ${message.getSender().getFullName()} 
                                         </h6>
+                                        <i class="fa fa-star fa-2x markButton" style="color: #eec156"></i>
+                                        <i class="fa fa-warning fa-2x reportbutton" style="color: #f02031" onclick="reportMessage('${message.getMessageId()}')"></i>
+                                        <p style="color: #8a8a8a; padding-left: 33px" >${message.getSender().getUserEmail()}</p>
+
+                                    </c:if>
+                                    <c:if test="${requestScope.mode.equals('reported') }">
+
+                                        <h6 style="color: white">
+                                            Từ: ${message.getSender().getFullName()} 
+                                        </h6>
+                                        <i class="fa fa-warning fa-2x reportbutton" style="color: #f02031" onclick="reportMessage('${message.getMessageId()}')"></i>
                                         <p style="color: #8a8a8a; padding-left: 33px" >${message.getSender().getUserEmail()}</p>
                                     </c:if>
                                     <c:if test="${requestScope.mode.equals('sent') }">
                                         <h6 style="color: white; display: inline-block">
                                             Tới: ${message.getReceiver().getFullName()} 
                                         </h6>
-                                        <i class="fa fa-warning fa-2x reportbutton" style="color: #e2c357"></i>
                                         <p style="color: #8a8a8a; padding-left: 37px" >${message.getReceiver().getUserEmail()}</p>
                                     </c:if>
 
@@ -172,6 +190,21 @@
                 }
             });
 
+            function reportMessage(messageId) {
+                var xhr = new XMLHttpRequest();
+                var url = 'reportMessage?messageId=' + encodeURIComponent(messageId);
+                xhr.open('POST', url, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        // Parse the response text as JSON to get the array
+                        console.log(xhr.responseText);
+
+                    }
+
+                }
+                ;
+                xhr.send();
+            }
         </script>
     </body>
 
