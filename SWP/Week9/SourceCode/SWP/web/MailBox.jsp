@@ -67,7 +67,20 @@
                 padding: 20px 0px 10px 30px
             }
             .from, .content{
-                text-align: left
+                text-align: left;
+
+            }
+            .content{
+                display: flex;
+                align-items: flex-start;
+            }
+            .reportbutton{
+                position: relative;
+                right: -1000px
+            }
+            .content p {
+                width: 85% !important;
+                word-break: break-all;
             }
 
         </style>
@@ -89,22 +102,22 @@
                         <div class="mailPages">
                             <ul class="navMail">
                                 <li class="col-10">
-                                    <div class=" item nav-link">
+                                    <div class=" item act">
                                         <a href="MailBox?mode=inbox">Thư đến</a>
                                     </div>
                                 </li>
                                 <li class="col-10">
-                                    <div class=" item nav-link">
+                                    <div class=" item act">
                                         <a href="MailBox?mode=sent">Thư dã gửi</a>
                                     </div>
                                 </li>
                                 <li class="col-10">
-                                    <div class=" item nav-link">
+                                    <div class=" item act">
                                         <a href="MailBox?mode=reported">Thư đã báo cáo</a>
                                     </div>
                                 </li>
                                 <li class="col-10">
-                                    <div class=" item nav-link">
+                                    <div class=" item act">
                                         <a href="MailBox?mode=marked">Thư đã đánh dấu</a>
                                     </div>
                                 </li>
@@ -122,9 +135,10 @@
                                         <p style="color: #8a8a8a; padding-left: 33px" >${message.getSender().getUserEmail()}</p>
                                     </c:if>
                                     <c:if test="${requestScope.mode.equals('sent') }">
-                                        <h6 style="color: white">
+                                        <h6 style="color: white; display: inline-block">
                                             Tới: ${message.getReceiver().getFullName()} 
                                         </h6>
+                                        <i class="fa fa-warning fa-2x reportbutton" style="color: #e2c357"></i>
                                         <p style="color: #8a8a8a; padding-left: 37px" >${message.getReceiver().getUserEmail()}</p>
                                     </c:if>
 
@@ -133,7 +147,7 @@
                                     <h6 style="color: white; display: inline-block">
                                         Nội dung: 
                                     </h6>
-                                    <p style="color: white; padding-left: 30px;display: inline-block" >${message.getContent()}</p>
+                                    <p style="color: white; padding-left: 30px;display: inline-block;" >${message.getContent()}</p>
                                 </div>
                             </div>
                             <hr style="color: white">
@@ -146,14 +160,15 @@
         <jsp:include page="footer.jsp"/>
         <script>
             // Get the current path from the URL
-            const currentPath = window.location.pathname;
+            const currentPath1 = window.location.pathname + '?mode=${requestScope.mode}';
+            const currentPath = currentPath1.substring(5)
             console.log(currentPath);
             // Loop through each link and check if it matches the current path
-            document.querySelectorAll('.nav-link a').forEach(link => {
+            document.querySelectorAll('.act a').forEach(link => {
                 if (link.getAttribute('href') === currentPath) {
-                    link.classList.add('active'); // Add the "active" class to the link
+                    link.closest('.item').classList.add('active');
                 } else {
-                    link.classList.remove('active'); // Remove the "active" class from other links
+                    link.closest('.item').classList.remove('active');
                 }
             });
 

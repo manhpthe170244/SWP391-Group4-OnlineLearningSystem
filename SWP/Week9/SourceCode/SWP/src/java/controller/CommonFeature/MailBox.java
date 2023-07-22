@@ -88,11 +88,11 @@ public class MailBox extends HttpServlet {
                     }
                 }
             }
+            request.setAttribute("mode", mode);
+            request.setAttribute("displayList", displayList);
+            request.getRequestDispatcher("MailBox.jsp").forward(request, response);
 
         }
-        request.setAttribute("mode", mode);
-        request.setAttribute("displayList", displayList);
-        request.getRequestDispatcher("MailBox.jsp").forward(request, response);
 
     }
 }
