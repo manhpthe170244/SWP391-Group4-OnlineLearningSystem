@@ -332,14 +332,14 @@
 
 </body>
 <script>
-    var currSub = '${requestScope.currSubscription}';
+    var currSub = '${requestScope.currentSubscription}';
     document.addEventListener("DOMContentLoaded", function () {
         if (currSub == "") {
             var myModal = new bootstrap.Modal(document.getElementById("myModal"));
             myModal.show();
-            setTimeout(() => {
-                window.location.href = "PricePackageSubcription"
-            }, 5000);
+//            setTimeout(() => {
+//                window.location.href = "PricePackageSubcription"
+//            }, 5000);
         }
     });
     function toggleFlag(i) {
