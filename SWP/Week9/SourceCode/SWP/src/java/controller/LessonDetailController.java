@@ -65,7 +65,7 @@ public class LessonDetailController extends HttpServlet {
                 Course course = cd.searchById(cid);
                 String courseName = course.getCourse_name();
                 Lesson lesson = lessonDAO.getLessonDetails(lId);
-                if(lesson.isLesson_status()==false){
+                if(lesson.isLesson_status()==false && currUser.getRoleId() == 2){
                     response.sendRedirect("UnactiveLesson.jsp");
                     return;
                 }

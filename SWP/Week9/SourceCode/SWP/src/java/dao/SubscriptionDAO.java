@@ -22,7 +22,8 @@ public class SubscriptionDAO extends MyDAO {
     public Subscription GetCurrentSubscription(int userId) {
             xSql = "select p.*, s.reg_time, s.user_id, s.expireDate, s.reg_id, s.status from Subscription s, Price_Package p where\n"
                     + "p.package_id = s.package_id\n"
-                    + "and s.user_id = ?";
+                    + "and s.user_id = ?\n"
+                    + "and s.status = 1";
         Subscription currentSubscription = null;
         int a = 0;
         try {
@@ -51,7 +52,7 @@ public class SubscriptionDAO extends MyDAO {
     }
 
     public int addSubcription(int userId, int packageId, Date reg_time, Date expireDate) {
-        xSql = "insert into Subscription (user_id, package_id, reg_time, expireDate, status) values (?, ?, ?, ?, 1)";
+        xSql = "insert into Subscription (user_id, package_id, reg_time, expireDate, status) values (?, ?, ?, ?, ?)";
         int a = 0;
         try {
             ps = con.prepareStatement(xSql);
@@ -59,6 +60,7 @@ public class SubscriptionDAO extends MyDAO {
             ps.setInt(2, packageId);
             ps.setDate(3, reg_time);
             ps.setDate(4, expireDate);
+            ps.setBoolean(1, true);
             a = ps.executeUpdate();
         } catch (Exception e) {
             Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, e);

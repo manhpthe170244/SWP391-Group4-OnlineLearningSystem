@@ -4,11 +4,16 @@
  */
 package controller.SaleFeature;
 
+import controller.LogginValidate;
 import dao.PricePackageDAO;
+import dao.UserDAO;
+import entity.Price_Package;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,7 +42,7 @@ public class deletePricePackage extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet deletePricePackage</title>");            
+            out.println("<title>Servlet deletePricePackage</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet deletePricePackage at " + request.getContextPath() + "</h1>");
@@ -58,7 +63,23 @@ public class deletePricePackage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        LogginValidate logginVal = new LogginValidate();
+        Cookie[] cookies = request.getCookies();
+        User currUser = null;
+        UserDAO ud = new UserDAO();
+        int logged = logginVal.checkLoggedIn(cookies);
+        if (logged == 0) {
+            response.sendRedirect("login");
+        } else {
+            currUser = ud.getUserById(logged);
+            if (currUser.getRoleId() == 1 || currUser.getRoleId() == 5) {
+                int id = Integer.parseInt(request.getParameter("pricePackage_id"));
+                PricePackageDAO pricePackageDAO = new PricePackageDAO();
+                pricePackageDAO.deleteById(id);
+            } else {
+                response.sendRedirect("UnauthorizedAccess.jsp");
+            }
+        }
     }
 
     /**
@@ -72,9 +93,24 @@ public class deletePricePackage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("pricePackage_id"));
-        PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        pricePackageDAO.deleteById(id);
+        LogginValidate logginVal = new LogginValidate();
+        Cookie[] cookies = request.getCookies();
+        User currUser = null;
+        UserDAO ud = new UserDAO();
+        int logged = logginVal.checkLoggedIn(cookies);
+        if (logged == 0) {
+            response.sendRedirect("login");
+        } else {
+            currUser = ud.getUserById(logged);
+            if (currUser.getRoleId() == 1 || currUser.getRoleId() == 5) {
+                int id = Integer.parseInt(request.getParameter("pricePackage_id"));
+                PricePackageDAO pricePackageDAO = new PricePackageDAO();
+                pricePackageDAO.deleteById(id);
+            } else {
+                response.sendRedirect("UnauthorizedAccess.jsp");
+            }
+        }
+
     }
 
     /**
