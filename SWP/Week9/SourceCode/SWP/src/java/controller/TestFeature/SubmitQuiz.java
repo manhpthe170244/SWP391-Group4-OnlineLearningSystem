@@ -4,6 +4,7 @@
  */
 package controller.TestFeature;
 
+import dao.CourseDAO;
 import dao.LessonDAO;
 import dao.QuesResultDAO;
 import dao.QuizDAO;
@@ -81,6 +82,7 @@ public class SubmitQuiz extends HttpServlet {
             throws ServletException, IOException {
         QuesResultDAO quesResultDAO = new QuesResultDAO();
         QuizResultDAO quizResultDAO = new QuizResultDAO();
+        response.setContentType("text/html;charset=UTF-8");
         QuizDAO quizDAO = new QuizDAO();
 
         // Get list of question id
@@ -133,10 +135,12 @@ public class SubmitQuiz extends HttpServlet {
         // Caculate grade
         // Get all question correct answer
         Vector<String> correctAnswers = quizDAO.getAllCorrectAnswer(quiz_id);
+        
         int totalQues = correctAnswers.size();
         int correctQues = 0;
         for (int i = 0; i < answers.size(); i++) {
             // Caculate grade
+            response.getWriter().print(correctAnswers.get(i));
             if (answers.get(i).equals(correctAnswers.get(i))) {
                 correctQues += 1;
             }
@@ -153,7 +157,17 @@ public class SubmitQuiz extends HttpServlet {
         for (int i = 0; i < answers.size(); i++) {
             quesResultDAO.insertQuesResult(quesList.get(i), user_id, answers.get(i).equals(correctAnswers.get(i)), flags.get(i), answers.get(i), quizResultId);
         }
-
+        CourseDAO cd = new CourseDAO();
+        int courseId = cd.getCourseidFromQuiz(quiz_id);
+        int passed = quizDAO.quizDone(courseId, user_id);
+        int sum = quizDAO.quizSum(courseId);
+        LessonDAO ld = new LessonDAO();
+        int lessonCount = ld.LessonCount(courseId);
+        int lessonDone = ld.LessonDone(user_id, courseId);
+        if(passed >= sum && lessonDone >= lessonCount){
+            cd.DoneCourse(user_id, courseId);
+        }
+        
         request.setAttribute("quiz_result_id", quizResultId);
         request.getRequestDispatcher("QuizReview").forward(request, response);
     }

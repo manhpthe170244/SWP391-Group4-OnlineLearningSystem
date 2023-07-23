@@ -87,7 +87,6 @@ public class LecturerValidator {
                 if (author != currUser.getUserId()) {
                     return 1;
                 } else {
-
                     return 2;
                 }
 

@@ -84,7 +84,7 @@
                                             </div>
                                         </c:forEach>
                                     </div>
-                                    <button class="addnewchoicebtn" type="button" onclick="addnewChoice('${q.getQues_id()}')">
+                                    <button class="addnewchoicebtn" type="button" onclick="addnewChoice('${q.getQues_id()}', '${requestScope.quiz_id}')">
                                         <h4 style="color: #142254; font-size: 100%; margin: 10px"> <i class="fa-solid fa-plus"></i> Add new choice to this question</h4>
                                     </button>
                                 </div>
@@ -150,10 +150,10 @@
                                     };
                                     xmlHttp.send();
                                 }
-                                function addnewChoice(quesId) {
+                                function addnewChoice(quesId, quizId) {
 //                                        var a = document.getElementById('QuestionEdit' + quesId);
 //                                    var a = document.getElementById('ChoiceList' + quesId);
-                                    var url = "AddChoice?quesId=" + encodeURIComponent(quesId);
+                                    var url = "AddChoice?quesId=" + encodeURIComponent(quesId) + "&Quizid=" + encodeURIComponent(quizId);
                                     var xmlHttp = new XMLHttpRequest();
                                     xmlHttp.open("GET", url, true);
                                     xmlHttp.onreadystatechange = function () {
@@ -174,7 +174,7 @@
                                     xmlHttp.open("GET", url, true);
                                     xmlHttp.onreadystatechange = function () {
                                         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                            a.innerHTML += "<div class='col-12 QuestionEdit' id='QuestionEdit" + xmlHttp.responseText + "'><input type='text' name='quesContent' value='Nhập nội dung cho câu hỏi'><button style='margin-left: 33px' type='button' onclick='storeQuestionDeletion(" + xmlHttp.responseText + ")'/><i style='color: #c93460' class='fa-solid fa-trash-can'></i></button><div id='ChoiceList" + xmlHttp.responseText + "'></div><button class='addnewchoicebtn' type='button' onclick='addnewChoice(" + xmlHttp.responseText + ")'><h4 style='color: #142254; font-size: 100%; margin: 10px'> <i class='fa-solid fa-plus'></i> Add new choice to this question</h4></button></div>";
+                                            a.innerHTML += "<div class='col-12 QuestionEdit' id='QuestionEdit" + xmlHttp.responseText + "'><input type='text' name='quesContent' value='Nhập nội dung cho câu hỏi'><button style='margin-left: 33px' type='button' onclick='storeQuestionDeletion(" + xmlHttp.responseText + ")'/><i style='color: #c93460' class='fa-solid fa-trash-can'></i></button><div id='ChoiceList" + xmlHttp.responseText + "'></div><button class='addnewchoicebtn' type='button' onclick='addnewChoice(" + xmlHttp.responseText + ", "+${requestScope.quiz_id}+")'><h4 style='color: #142254; font-size: 100%; margin: 10px'> <i class='fa-solid fa-plus'></i> Add new choice to this question</h4></button></div>";
 
                                             console.log("aaaaaa");
                                         }

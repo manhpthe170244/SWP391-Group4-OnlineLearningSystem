@@ -216,4 +216,55 @@ public class LessonDAO extends MyDAO {
         }
     }
 
+    public int LessonCount(int courseId) {
+        xSql = "select count(l.lesson_id) as lessonCount from Lesson l, Section s, Course c\n"
+                + "where l.section_id = s.section_id\n"
+                + "and s.course_id = c.course_id\n"
+                + "and c.course_id = ?\n"
+                + "and l.lesson_status = 1";
+        int a = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, courseId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                a = rs.getInt("lessonCount");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return a;
+
+    }
+
+    public int LessonDone(int userId, int courseId) {
+        xSql = "select COUNT(lr.lesson_id) as lessonDone from Lesson_Result lr, Lesson l, Section s, Course c\n"
+                + "where lr.user_id = ?\n"
+                + "and lr.lesson_id = l.lesson_id\n"
+                + "and l.section_id = s.section_id\n"
+                + "and s.course_id = c.course_id\n"
+                + "and c.course_id = ?\n"
+                + "group by lr.user_id";
+        int a = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, userId);
+            ps.setInt(2, courseId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                a = rs.getInt("lessonDone");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return a;
+
+    }
+    public static void main(String[] args) {
+        LessonDAO ld = new LessonDAO();
+        System.out.println(ld.LessonDone(32, 3));
+        System.out.println(ld.LessonCount(3));
+    }
 }

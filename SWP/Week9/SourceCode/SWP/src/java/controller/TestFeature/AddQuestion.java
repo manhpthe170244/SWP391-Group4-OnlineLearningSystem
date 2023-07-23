@@ -41,7 +41,6 @@ public class AddQuestion extends HttpServlet {
         } else if (val == 1) {
             response.sendRedirect("UnauthorizedAccess.jsp");
         } else {
-
             int InsertedQuizId = qd.insertQuestion(quizId, "", "");
             out.print(InsertedQuizId);
         }

@@ -33,6 +33,7 @@ public class AddChoice extends HttpServlet {
         CourseDAO cd = new CourseDAO();
         Cookie[] cookies = request.getCookies();
         int QuizId = Integer.parseInt(request.getParameter("Quizid"));
+        Integer quesId = Integer.parseInt(request.getParameter("quesId"));
         int courseId = cd.getCourseidFromQuiz(QuizId);
         LecturerValidator lv = new LecturerValidator();
         int val = lv.val1(cookies, QuizId);
@@ -41,14 +42,12 @@ public class AddChoice extends HttpServlet {
         } else if (val == 1) {
             response.sendRedirect("UnauthorizedAccess.jsp");
         } else {
-
-            Integer quesId = Integer.parseInt(request.getParameter("quesId"));
             QuizDAO qd = new QuizDAO();
             qd.insertChoice(quesId, "nhập nội dung câu trả lời", false);
             int maxChoiceId = qd.retrieveMaxChoiceId();
             JsonObject responseJson = new JsonObject();
             responseJson.addProperty("maxChoiceId", maxChoiceId);
-            responseJson.addProperty("defaultChoiceContent", "Nhập nội dung tại đêi");
+            responseJson.addProperty("defaultChoiceContent", "Nhập nội dung tại đây");
             response.setContentType("application/json");
 
 // Write the JSON object as the response

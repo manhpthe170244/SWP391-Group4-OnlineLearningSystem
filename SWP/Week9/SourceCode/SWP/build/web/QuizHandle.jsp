@@ -337,9 +337,9 @@
         if (currSub == "") {
             var myModal = new bootstrap.Modal(document.getElementById("myModal"));
             myModal.show();
-//            setTimeout(() => {
-//                window.location.href = "PricePackageSubcription"
-//            }, 5000);
+            setTimeout(() => {
+                window.location.href = "PricePackageSubcription"
+            }, 5000);
         }
     });
     function toggleFlag(i) {

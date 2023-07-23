@@ -89,7 +89,9 @@
                 width: 85% !important;
                 word-break: break-all;
             }
-
+            .reported{
+                color: red !important;
+            }
         </style>
     </head>
 
@@ -133,15 +135,15 @@
                     </div>
                     <div class="MailBoxWrapper col-10">
                         <c:forEach items="${requestScope.displayList}" var="message">
-                            <div class="col-11 messageItem">
+                            <div class="col-11 messageItem" id="message${message.getMessageId()}">
                                 <div class="from">
 
                                     <c:if test="${requestScope.mode.equals('inbox') ||  requestScope.mode.equals('marked') }">
                                         <h6 style="color: white">
                                             Từ: ${message.getSender().getFullName()} 
                                         </h6>
-                                        <i class="fa fa-star fa-2x markButton" style="color: #eec156"></i>
-                                        <i class="fa fa-warning fa-2x reportbutton" style="color: #f02031" onclick="reportMessage('${message.getMessageId()}')"></i>
+                                        <i class="fa fa-star fa-2x markButton" style="color: rgb(159, 159, 159, 0.5);"></i>
+                                        <i id="reportbtn${message.getMessageId()}" class="fa fa-warning fa-2x reportbutton <c:if test="${message.isReported()}">reported</c:if>" style="color: rgb(159, 159, 159, 0.5)" onclick="reportMessage('${message.getMessageId()}')"></i>
                                         <p style="color: #8a8a8a; padding-left: 33px" >${message.getSender().getUserEmail()}</p>
 
                                     </c:if>
@@ -150,7 +152,7 @@
                                         <h6 style="color: white">
                                             Từ: ${message.getSender().getFullName()} 
                                         </h6>
-                                        <i class="fa fa-warning fa-2x reportbutton" style="color: #f02031" onclick="reportMessage('${message.getMessageId()}')"></i>
+                                         <i id="reportbtn${message.getMessageId()}" class="fa fa-warning fa-2x reportbutton <c:if test="${message.isReported()}">reported</c:if>" style="color: rgb(159, 159, 159, 0.5)" onclick="reportMessage('${message.getMessageId()}')"></i>
                                         <p style="color: #8a8a8a; padding-left: 33px" >${message.getSender().getUserEmail()}</p>
                                     </c:if>
                                     <c:if test="${requestScope.mode.equals('sent') }">
@@ -193,11 +195,17 @@
             function reportMessage(messageId) {
                 var xhr = new XMLHttpRequest();
                 var url = 'reportMessage?messageId=' + encodeURIComponent(messageId);
+                var btn = document.getElementById('reportbtn' + messageId);
                 xhr.open('POST', url, true);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                         // Parse the response text as JSON to get the array
                         console.log(xhr.responseText);
+                        if (btn.classList.contains("reported")) {
+                            btn.classList.remove("reported");
+                        } else {
+                            btn.classList.add("reported");
+                        }
 
                     }
 
