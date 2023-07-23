@@ -35,7 +35,7 @@ public class MessageDAO extends MyDAO {
         try {
             ps = con.prepareStatement(xSql);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int contact_id = rs.getInt("contact_id");
                 int senderId = rs.getInt("user1_id");
                 int receiverId = rs.getInt("user2_id");
@@ -50,9 +50,51 @@ public class MessageDAO extends MyDAO {
         }
         return messageList;
     }
+
+    public Message getMessageById(int id) {
+        xSql = "select * from contact\n"
+                + "where contact_id = ?";
+        Message m = new Message();
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int contact_id = rs.getInt("contact_id");
+                int senderId = rs.getInt("user1_id");
+                int receiverId = rs.getInt("user2_id");
+                String content = rs.getString("content");
+                boolean reported = rs.getBoolean("reported");
+                boolean marked = rs.getBoolean("marked");
+                m = new Message(contact_id, senderId, receiverId, content, marked, reported);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return m;
+    }
+
+    public int ReportOrUnreport(int messageId, int changeTo) {
+        xSql = "update contact\n"
+                + "set reported = ?\n"
+                + "where contact_id = ?";
+        int a = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, changeTo);
+            ps.setInt(2, messageId);
+            a = ps.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return a;
+    }
+
     public static void main(String[] args) {
         MessageDAO md = new MessageDAO();
-        System.out.println(md.getAllMessage());
+        System.out.println(md.ReportOrUnreport(10, 1));
     }
 
 }
