@@ -21,16 +21,21 @@
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/lightbox.css">
-        <link rel="stylesheet" href="assets/css/styling.css?version=95"/>
+        <link rel="stylesheet" href="assets/css/styling.css?version=75"/>
 
-
+        <style>
+            .importBtn{
+                position: relative;
+                right: 100px;
+            }
+        </style>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
@@ -41,18 +46,9 @@
             <div class="container">
                 <div class="row">
                     <div class="QuestionListEdit">
-                        <form id="contact" action="ImportQuestion" method="Post" enctype="multipart/form-data">
-
-                            <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
-                                <p style="opacity: 0.7">Import question</p>
-                                <input name="quiz_name" type="text" value="${requestScope.quiz_name}" style="display: none"/>
-                                <input name="quiz_id" type="text" value="${requestScope.quiz_id}" style="display: none"/>
-                                <input name="QuizImport" type="file" accept=".txt, .docx" onchange="this.form.submit()" id="userImg" style="all:unset"/>
-                            </div>
-
-                           
-
-                        </form>
+                        <button id="importBtn" class="btn btn-danger" onclick="showModal()" style="position: relative; right: -500px; top: 30px">
+                            Import question from files
+                        </button>
                         <form action="EditQuizContent" method="Post" id="EditQuizForm">
                             <div class="col-12">
 
@@ -84,7 +80,7 @@
                                             </div>
                                         </c:forEach>
                                     </div>
-                                    <button class="addnewchoicebtn" type="button" onclick="addnewChoice('${q.getQues_id()}')">
+                                    <button class="addnewchoicebtn" type="button" onclick="addnewChoice('${q.getQues_id()}', '${requestScope.quiz_id}')">
                                         <h4 style="color: #142254; font-size: 100%; margin: 10px"> <i class="fa-solid fa-plus"></i> Add new choice to this question</h4>
                                     </button>
                                 </div>
@@ -104,86 +100,123 @@
                     </div>
                 </div>
             </div>
+            <div class="modal show" id="myModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h6 style="color: black" class="modal-title">Tuân thủ định dạng file của chúng tôi</h6>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form id="contact" action="ImportQuestion" method="Post" enctype="multipart/form-data">
+
+                                <div class="col-lg-12" style="margin-bottom: 25px ; margin-left: 10px">
+                                    <h6 style="color: black">Tính năng thêm câu hỏi bằng file excel sẽ được thêm vào trong thời gian không xa, hiện tại, hệ thống chỉ có thể nhận file word với định dạng như sau</h6>
+                                    <img src="img/dinhdang.png"/>
+                                    <input name="quiz_name" type="text" value="${requestScope.quiz_name}" style="display: none"/>
+                                    <input name="quiz_id" type="text" value="${requestScope.quiz_id}" style="display: none"/>
+                                    <input name="QuizImport" type="file" accept=".txt, .docx" onchange="this.form.submit()" id="userImg" style="all:unset"/>
+                                </div>
+
+
+
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+
+
+                    </div>
+                </div>
+            </div>
         </section>
         <jsp:include page="footer.jsp"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                                function updateChoiceContent(choice_id) {
-                                    var a = document.getElementById("EditedChoiceContent" + choice_id);
-                                    var url = "UpdateChoiceOnChange?choice_id=" + encodeURIComponent(choice_id) + "&currentVal=" + encodeURIComponent(a.value);
-                                    var xmlHttp = new XMLHttpRequest();
-                                    xmlHttp.open("GET", url, true);
-                                    xmlHttp.onreadystatechange = function () {
-                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                            a.value = xmlHttp.responseText;
-                                            console.log(xmlHttp.responseText);
-                                        }
-                                    };
-                                    xmlHttp.send();
-                                }
-                                function storeChoiceDeletion(choice_id) {
-                                    var currentDisplay1 = document.getElementById("choiceEdit" + choice_id);
-                                    currentDisplay1.style.display = currentDisplay1.style.display != "none" ? "none" : "block";
-                                    var url = "HandleChoiceDeletion?choice_id=" + encodeURIComponent(choice_id);
-                                    var xmlHttp = new XMLHttpRequest();
-                                    xmlHttp.open("POST", url, true);
-                                    xmlHttp.onreadystatechange = function () {
-                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                            var result = document.getElementById("result");
-                                            result.value += xmlHttp.responseText + ",";
-                                        }
-                                    };
-                                    xmlHttp.send();
-                                }
-                                function storeQuestionDeletion(ques_id) {
-                                    var a = document.getElementById("QuestionEdit" + ques_id);
-                                    a.style.display = a.style.display != "none" ? "none" : "block";
-                                    var url = "HandleChoiceDeletion?question_id=" + encodeURIComponent(ques_id);
-                                    console.log(url)
-                                    var xmlHttp = new XMLHttpRequest();
-                                    xmlHttp.open("GET", url, true);
-                                    xmlHttp.onreadystatechange = function () {
-                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                            var result = document.getElementById("result1");
-                                            result.value += xmlHttp.responseText + ",";
-                                        }
-                                    };
-                                    xmlHttp.send();
-                                }
-                                function addnewChoice(quesId) {
+                                    function showModal() {
+                             
+                                        var myModal = new bootstrap.Modal(document.getElementById("myModal"));
+                                        myModal.show();
+                                    }
+                                    function updateChoiceContent(choice_id) {
+                                        var a = document.getElementById("EditedChoiceContent" + choice_id);
+                                        var url = "UpdateChoiceOnChange?choice_id=" + encodeURIComponent(choice_id) + "&currentVal=" + encodeURIComponent(a.value);
+                                        var xmlHttp = new XMLHttpRequest();
+                                        xmlHttp.open("GET", url, true);
+                                        xmlHttp.onreadystatechange = function () {
+                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                                a.value = xmlHttp.responseText;
+                                                console.log(xmlHttp.responseText);
+                                            }
+                                        };
+                                        xmlHttp.send();
+                                    }
+                                    function storeChoiceDeletion(choice_id) {
+                                        var currentDisplay1 = document.getElementById("choiceEdit" + choice_id);
+                                        currentDisplay1.style.display = currentDisplay1.style.display != "none" ? "none" : "block";
+                                        var url = "HandleChoiceDeletion?choice_id=" + encodeURIComponent(choice_id);
+                                        var xmlHttp = new XMLHttpRequest();
+                                        xmlHttp.open("POST", url, true);
+                                        xmlHttp.onreadystatechange = function () {
+                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                                var result = document.getElementById("result");
+                                                result.value += xmlHttp.responseText + ",";
+                                            }
+                                        };
+                                        xmlHttp.send();
+                                    }
+                                    function storeQuestionDeletion(ques_id) {
+                                        var a = document.getElementById("QuestionEdit" + ques_id);
+                                        a.style.display = a.style.display != "none" ? "none" : "block";
+                                        var url = "HandleChoiceDeletion?question_id=" + encodeURIComponent(ques_id);
+                                        console.log(url)
+                                        var xmlHttp = new XMLHttpRequest();
+                                        xmlHttp.open("GET", url, true);
+                                        xmlHttp.onreadystatechange = function () {
+                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                                var result = document.getElementById("result1");
+                                                result.value += xmlHttp.responseText + ",";
+                                            }
+                                        };
+                                        xmlHttp.send();
+                                    }
+                                    function addnewChoice(quesId, quizId) {
 //                                        var a = document.getElementById('QuestionEdit' + quesId);
 //                                    var a = document.getElementById('ChoiceList' + quesId);
-                                    var url = "AddChoice?quesId=" + encodeURIComponent(quesId);
-                                    var xmlHttp = new XMLHttpRequest();
-                                    xmlHttp.open("GET", url, true);
-                                    xmlHttp.onreadystatechange = function () {
-                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                            var response = JSON.parse(xmlHttp.responseText);
-                                            var a = document.getElementById('ChoiceList' + quesId);
-                                            a.innerHTML += "<div class='choiceEdit' id='choiceEdit" + response.maxChoiceId + "'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "' value='" + response.maxChoiceId + "'><input type='text' id='EditedChoiceContent" + response.maxChoiceId + "' name='EditedChoiceContent' value='" + response.defaultChoiceContent + "' onChange='updateChoiceContent(" + response.maxChoiceId + ")'><button type='button' onclick='storeChoiceDeletion(" + response.maxChoiceId + ")'><i class='fa-solid fa-trash-can'></i></button></div>";
-                                            console.log(xmlHttp.responseText);
+                                        var url = "AddChoice?quesId=" + encodeURIComponent(quesId) + "&Quizid=" + encodeURIComponent(quizId);
+                                        var xmlHttp = new XMLHttpRequest();
+                                        xmlHttp.open("GET", url, true);
+                                        xmlHttp.onreadystatechange = function () {
+                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                                var response = JSON.parse(xmlHttp.responseText);
+                                                var a = document.getElementById('ChoiceList' + quesId);
+                                                a.innerHTML += "<div class='choiceEdit' id='choiceEdit" + response.maxChoiceId + "'><input class='tick' type='radio' name='rightChoiceFor" + quesId + "' value='" + response.maxChoiceId + "'><input type='text' id='EditedChoiceContent" + response.maxChoiceId + "' name='EditedChoiceContent' value='" + response.defaultChoiceContent + "' onChange='updateChoiceContent(" + response.maxChoiceId + ")'><button type='button' onclick='storeChoiceDeletion(" + response.maxChoiceId + ")'><i class='fa-solid fa-trash-can'></i></button></div>";
+                                                console.log(xmlHttp.responseText);
 
-                                        }
-                                    };
-                                    xmlHttp.send();
-                                }
-                                function adnewQuestion(quizId) {
-                                    var a = document.getElementById("addedQuestion");
-                                    var url = "AddQuestion?quizId=" + encodeURIComponent(quizId);
-                                    var xmlHttp = new XMLHttpRequest();
-                                    xmlHttp.open("GET", url, true);
-                                    xmlHttp.onreadystatechange = function () {
-                                        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                                            a.innerHTML += "<div class='col-12 QuestionEdit' id='QuestionEdit" + xmlHttp.responseText + "'><input type='text' name='quesContent' value='Nhập nội dung cho câu hỏi'><button style='margin-left: 33px' type='button' onclick='storeQuestionDeletion(" + xmlHttp.responseText + ")'/><i style='color: #c93460' class='fa-solid fa-trash-can'></i></button><div id='ChoiceList" + xmlHttp.responseText + "'></div><button class='addnewchoicebtn' type='button' onclick='addnewChoice(" + xmlHttp.responseText + ")'><h4 style='color: #142254; font-size: 100%; margin: 10px'> <i class='fa-solid fa-plus'></i> Add new choice to this question</h4></button></div>";
+                                            }
+                                        };
+                                        xmlHttp.send();
+                                    }
+                                    function adnewQuestion(quizId) {
+                                        var a = document.getElementById("addedQuestion");
+                                        var url = "AddQuestion?quizId=" + encodeURIComponent(quizId);
+                                        var xmlHttp = new XMLHttpRequest();
+                                        xmlHttp.open("GET", url, true);
+                                        xmlHttp.onreadystatechange = function () {
+                                            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                                                a.innerHTML += "<div class='col-12 QuestionEdit' id='QuestionEdit" + xmlHttp.responseText + "'><input type='text' name='quesContent' value='Nhập nội dung cho câu hỏi'><button style='margin-left: 33px' type='button' onclick='storeQuestionDeletion(" + xmlHttp.responseText + ")'/><i style='color: #c93460' class='fa-solid fa-trash-can'></i></button><div id='ChoiceList" + xmlHttp.responseText + "'></div><button class='addnewchoicebtn' type='button' onclick='addnewChoice(" + xmlHttp.responseText + ", " +${requestScope.quiz_id} + ")'><h4 style='color: #142254; font-size: 100%; margin: 10px'> <i class='fa-solid fa-plus'></i> Add new choice to this question</h4></button></div>";
 
-                                            console.log("aaaaaa");
-                                        }
-                                    };
-                                    xmlHttp.send();
+                                                console.log("aaaaaa");
+                                            }
+                                        };
+                                        xmlHttp.send();
 
 
 
-                                }
+                                    }
         </script>
     </body>
 </html>

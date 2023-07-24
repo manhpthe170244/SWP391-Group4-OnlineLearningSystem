@@ -342,7 +342,7 @@ public class UserDAO extends MyDAO {
     public Vector<User> GetAllUser() {
         Vector<User> StudentList = new Vector<>();
         xSql = "select * from \"User\" u";
-                
+
         User u = null;
         try {
             ps = con.prepareStatement(xSql);
@@ -385,6 +385,39 @@ public class UserDAO extends MyDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public int StudentCount(int mode) {
+        xSql = "select COUNT(user_id) from \"User\"\n"
+                + "where role_id = ?";
+        int count = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, mode);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int BanUnbanUser(int statusChange, int user_id) {
+        xSql = "update \"User\"\n"
+                + "set user_status = ?\n"
+                + "where user_id = ?";
+        int count = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, statusChange);
+            ps.setInt(2, user_id);
+            count = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
 }

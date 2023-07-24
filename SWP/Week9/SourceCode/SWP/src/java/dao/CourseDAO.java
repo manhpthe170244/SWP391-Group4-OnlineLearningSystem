@@ -735,6 +735,36 @@ public class CourseDAO extends MyDAO {
         return courseId;
     }
 
+    public void DoneCourse(int userId, int courseId) {
+        xSql = "update Manage_Course\n"
+                + "set done = 1\n"
+                + "where user_id = ?\n"
+                + "and course_id = ?";
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, userId);
+            ps.setInt(2, courseId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public int CountPublishedCourse(){
+        int count = 0;
+        xSql = "select count(course_id) from Course";
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
 

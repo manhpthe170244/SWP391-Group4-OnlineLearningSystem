@@ -49,7 +49,7 @@ public class DashBoard extends HttpServlet {
         if (user_id == 0) {
             response.sendRedirect("login");
         } else {
-            if (currUser.getRoleId() != 4 && currUser.getRoleId() != 5) {
+            if (currUser.getRoleId() != 4 && currUser.getRoleId() != 1) {
                 response.sendRedirect("UnauthorizedAccess.jsp");
             } else {
                 String sortTypePop = request.getParameter("sortTypePop");

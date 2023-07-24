@@ -107,7 +107,7 @@
                 <form action="SendMessage" method="Post">
                     <div class="input-group mb-3">
                         <p class="form-text col-12" style="color: white">Send To: </p>
-                        <input id="receiverEmail" oninput="Suggest()" type="text" name="receiver" class="form-control" placeholder="example@gmail.com" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <input id="receiverEmail" oninput="Suggest()" onchange="Suggest()" type="text" name="receiver" class="form-control" placeholder="example@gmail.com" aria-label="Recipient's username" aria-describedby="basic-addon2">
                         <div id="Suggestion">
                             <ul></ul>
                         </div>
@@ -173,13 +173,19 @@
                                                 </c:if>
                                                 <c:if test="${currUser.getRoleId() == 3}">
 
-                                                    <li><a href="courseListEdit">Edit Course List</a></li>                                        </c:if>
+                                                    <li><a href="courseListEdit">Edit Course List</a></li>                                        
+                                                    </c:if>
 
                                                 <c:if test="${currUser.getRoleId() == 5}">
 
                                                     <li><a href="pricePackageEdit">Chỉnh sửa gói đăng kí List</a></li>
 
-                                                </c:if>
+                                                </c:if><c:if test="${currUser.getRoleId() == 1}">
+
+                                                    <li><a href="AdminDashBoard">Admin DashBoard</a></li>
+                                                    <li><a href="subjectEdit">Chỉnh sửa danh sách môn học</a></li>
+                                                    <li><a href="postCategoryEdit">Chỉnh sửa danh mục các post</a></li>
+                                                    </c:if>
                                             </ul>
 
                                         </li>
@@ -271,10 +277,16 @@
             xmlHttp.open("Post", url, true);
             xmlHttp.onreadystatechange = function () {
                 if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                    Toast.style.display = "inline-block";
-                    setTimeout(() => {
-                        Toast.style.display = "none";
-                    }, 3000);
+                    if (xmlHttp.responseText == 1) {
+                        Toast.style.display = "inline-block";
+                        setTimeout(() => {
+                            Toast.style.display = "none";
+                        }, 3000);
+
+                    } else {
+                        window.location.href = "banned.jsp";
+
+                    }
                 }
             };
             xmlHttp.send();

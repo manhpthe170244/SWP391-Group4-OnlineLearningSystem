@@ -4,12 +4,16 @@
  */
 package controller.TestFeature;
 
+import controller.LecturerValidator;
+import dao.CourseDAO;
 import dao.QuizDAO;
+import dao.UserDAO;
 import entity.Choice;
 import entity.Question;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,17 +30,32 @@ public class EditQuizContent extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
+
         String quiz_name = request.getParameter("quiz_name");
         QuizDAO qd = new QuizDAO();
-        Vector<Question> questionList = qd.getQuestionByQuizId(quiz_id);
-        for (Question question : questionList) {
-            Vector<Choice> cv = qd.getChoicebyQuestionId(question.getQues_id());
-            question.setChoices(cv);
+        int user_id = 0;
+        UserDAO ud = new UserDAO();
+        CourseDAO cd = new CourseDAO();
+        Cookie[] cookies = request.getCookies();
+        int courseId = cd.getCourseidFromQuiz(quiz_id);
+        LecturerValidator lv = new LecturerValidator();
+        int val = lv.val1(cookies, quiz_id);
+        if (val == 0) {
+            response.sendRedirect("login");
+        } else if (val == 1) {
+            response.sendRedirect("UnauthorizedAccess.jsp");
+        } else {
+            Vector<Question> questionList = qd.getQuestionByQuizId(quiz_id);
+            for (Question question : questionList) {
+                Vector<Choice> cv = qd.getChoicebyQuestionId(question.getQues_id());
+                question.setChoices(cv);
+            }
+            request.setAttribute("quiz_name", quiz_name);
+            request.setAttribute("quiz_id", quiz_id);
+            request.setAttribute("questionList", questionList);
+            request.getRequestDispatcher("QuestionListEdit.jsp").forward(request, response);
         }
-        request.setAttribute("quiz_name", quiz_name);
-        request.setAttribute("quiz_id", quiz_id);
-        request.setAttribute("questionList", questionList);
-        request.getRequestDispatcher("QuestionListEdit.jsp").forward(request, response);
+
     }
 
     @Override

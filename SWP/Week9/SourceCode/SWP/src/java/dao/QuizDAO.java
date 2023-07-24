@@ -112,7 +112,8 @@ public class QuizDAO extends MyDAO {
                 + "FROM quiz q\n"
                 + "JOIN question qu ON qu.quiz_id = q.quiz_id\n"
                 + "JOIN choices c ON c.ques_id = qu.ques_id\n"
-                + "WHERE q.quiz_id = ? AND c.is_true = 'TRUE'";
+                + "WHERE q.quiz_id = ? AND c.is_true = 'TRUE'"
+                + "order by qu.ques_id asc";
 
         try {
             ps = con.prepareStatement(xSql);
@@ -332,6 +333,50 @@ public class QuizDAO extends MyDAO {
         } catch (Exception e) {
             Logger.getLogger(LessonDAO.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+
+    public int quizDone(int courseId, int user_id) {
+        xSql = "select count(distinct qr.quiz_id) as passed from Quiz_Result qr, Quiz q, Section s, Course c\n"
+                + "where qr.user_id = ?\n"
+                + "and qr.quiz_id = q.quiz_id\n"
+                + "and q.section_id = s.section_id\n"
+                + "and s.course_id = c.course_id\n"
+                + "and c.course_id = ?\n"
+                + "and q.quiz_status = 1\n"
+                + "and qr.quiz_status = 1";
+        int count = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, user_id);
+            ps.setInt(2, courseId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("passed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int quizSum(int courseId) {
+        xSql = "select count(q.quiz_id) as quizCount from Quiz q, Section s, Course c\n"
+                + "where q.section_id = s.section_id \n"
+                + "and s.course_id = c.course_id\n"
+                + "and c.course_id = ?\n"
+                + "and q.quiz_status = 1";
+        int count = 0;
+        try {
+            ps = con.prepareStatement(xSql);
+            ps.setInt(1, courseId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("quizCount");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     public static void main(String[] args) {

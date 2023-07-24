@@ -5,7 +5,9 @@
 
 package controller.CourseContent;
 
+import dao.CourseDAO;
 import dao.LessonDAO;
+import dao.QuizDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -33,6 +35,16 @@ public class markAsDone extends HttpServlet {
         LessonDAO ld = new LessonDAO();
         ld.AddScore(userId, 5);
         ld.markasDone(userId, lessonId);
+        CourseDAO cd = new CourseDAO();
+        QuizDAO quizDAO = new QuizDAO();
+        int courseId = cd.getCourseidFromLeson(lessonId);
+        int passed = quizDAO.quizDone(courseId, userId);
+        int sum = quizDAO.quizSum(courseId);
+        int lessonCount = ld.LessonCount(courseId);
+        int lessonDone = ld.LessonDone(userId, courseId);
+        if(passed >= sum && lessonDone >= lessonCount){
+            cd.DoneCourse(userId, courseId);
+        }
         
     }
 

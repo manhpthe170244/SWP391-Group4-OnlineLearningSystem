@@ -29,7 +29,8 @@ public class MessageDAO extends MyDAO {
     }
 
     public Vector<Message> getAllMessage() {
-        xSql = "select * from contact";
+        xSql = "select * from contact\n"
+                + "order by contact_id desc";
         Vector<Message> messageList = new Vector<>();
         int a = 0;
         try {
