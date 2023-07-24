@@ -749,7 +749,22 @@ public class CourseDAO extends MyDAO {
             e.printStackTrace();
         }
     }
-
+    
+    public int CountPublishedCourse(){
+        int count = 0;
+        xSql = "select count(course_id) from Course";
+        try {
+            ps = con.prepareStatement(xSql);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    
     public static void main(String[] args) {
         CourseDAO pd = new CourseDAO();
 

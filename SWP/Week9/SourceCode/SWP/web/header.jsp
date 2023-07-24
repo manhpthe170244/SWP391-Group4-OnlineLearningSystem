@@ -277,13 +277,15 @@
             xmlHttp.open("Post", url, true);
             xmlHttp.onreadystatechange = function () {
                 if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                    if (XMLHttpRequest.responseText == 1) {
+                    if (xmlHttp.responseText == 1) {
                         Toast.style.display = "inline-block";
                         setTimeout(() => {
                             Toast.style.display = "none";
                         }, 3000);
+
                     } else {
                         window.location.href = "banned.jsp";
+
                     }
                 }
             };
