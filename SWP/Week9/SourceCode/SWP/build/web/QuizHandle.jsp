@@ -341,6 +341,7 @@
                 window.location.href = "PricePackageSubcription"
             }, 5000);
         }
+        
     });
     function toggleFlag(i) {
         var questionBox = document.getElementById("question-square-" + i);

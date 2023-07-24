@@ -106,6 +106,7 @@ public class QuizLesson extends HttpServlet {
                     return;
                 }
                 request.setAttribute("quiz", quiz);
+                request.setAttribute("currUser", currUser);
                 request.setAttribute("currSubscription", currentSubscription);
                 request.setAttribute("quiz_id", quiz_id);
 

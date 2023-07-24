@@ -113,7 +113,9 @@
             <div class="row">
                 <h6 style="color: #33CAFD; text-align: center">Làm bài quiz với kết quả >= 5 sẽ cộng thêm 10 điểm tích luỹ ;)</h6>
             </div>
-
+            <div class="row" style="text-align: right">
+                <i class="fa-sharp fa-solid fa-ranking-star fa-2x" style="color: white"></i>
+            </div>
             <div class="main-button-red" style="margin-bottom: 30px">
                 <a href="QuizHandle?quiz_id=${requestScope.quiz_id}"> Bắt đầu làm </a>
 
@@ -204,9 +206,9 @@
             //according to loftblog tut
             $('.nav li:first').addClass('active');
             var currSub = '${requestScope.currSubscription}';
-
+            var currUserRole = '${requestScope.currUser.getRoleId()}';
             document.addEventListener("DOMContentLoaded", function () {
-                if (currSub == "") {
+                if (currSub == "" && currUserRole == 2) {
                     var myModal = new bootstrap.Modal(document.getElementById("myModal"));
                     myModal.show();
 
