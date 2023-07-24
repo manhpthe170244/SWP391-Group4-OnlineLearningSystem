@@ -46,6 +46,7 @@ public class registerServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         final String secretKey = "a/f/gr'fw=q-=d-";
         String email = request.getParameter("email");
         Pattern emailRegex = Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
@@ -106,7 +107,7 @@ public class registerServlet extends HttpServlet {
         LocalDate ld = java.time.LocalDate.now();
         UserDAO ud = new UserDAO();
         Date userTime = Date.valueOf(ld);
-        if (!phoneErr.isEmpty() || !emailerr.isEmpty() || !passworderr.isEmpty()) {
+        if (!phoneErr.isEmpty() || !emailerr.isEmpty() || !passworderr.isEmpty() || !ageErr.isEmpty() || !PasswordPatternErr.isEmpty()) {
             request.getRequestDispatcher("Register.jsp").forward(request, response);
         } else if (ud.getUserByEmail(email) != null) {
             request.setAttribute("duplicateEmailErr", "Register failed, Duplicated email!");
