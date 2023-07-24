@@ -7,6 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="entity.QuesResult" %>
 <%@ page import="entity.QuizResult" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.time.Duration" %>
+<%@ page import="java.time.Instant" %>
 <%@ page import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -160,7 +163,7 @@
             }
             .CurrentQuiz{
                 background-color: #9edcde !important
-                    
+
             }
         </style>
     </head>
@@ -191,27 +194,38 @@
                         <table>
                             <tr>
                                 <th>Start on:</th>
-                                <td>0</td>
+                                <td><%=quizResult.getQuiz_start()%></td>
                             </tr>
                             <tr>
                                 <th>State</th>
-                                <td>finish</td>
+                                <td><%=quizResult.isQuiz_status() ? "Pass" : "Not Pass"%></td>
                             </tr>
                             <tr>
                                 <th>complate on</th>
-                                <td>Sample Category</td>
+                                <td><%=quizResult.getQuiz_end()%></td>
                             </tr>
                             <tr>
                                 <th>Time taken</th>
-                                <td>Sample Feature</td>
+                                    <%
+                                        // Step 1: Convert the java.sql.Timestamp objects to Instant objects
+            Instant instant1 = quizResult.getQuiz_start().toInstant();
+            Instant instant2 = quizResult.getQuiz_end().toInstant();
+
+            // Step 2: Calculate the duration between the two Instant objects
+            Duration duration = Duration.between(instant1, instant2);
+
+            // Step 3: Get the duration in the desired format
+            long hours = duration.toHours();
+            long minutes = duration.toMinutes() % 60;
+            long seconds = duration.getSeconds() % 60;
+
+            String durationString = hours + " hours, " + minutes + " minutes, " + seconds + " seconds.";
+                                    %>
+                                <td><%=durationString%></td>
                             </tr>
                             <tr>
                                 <th>Mark</th>
-                                <td>Active</td>
-                            </tr>
-                            <tr>
-                                <th>Grade</th>
-                                <td>John Doe</td>
+                                <td><%=quizResult.getQuiz_grade()%></td>
                             </tr>
 
 
