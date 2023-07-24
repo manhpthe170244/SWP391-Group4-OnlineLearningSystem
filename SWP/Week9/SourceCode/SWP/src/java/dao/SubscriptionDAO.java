@@ -60,7 +60,7 @@ public class SubscriptionDAO extends MyDAO {
             ps.setInt(2, packageId);
             ps.setDate(3, reg_time);
             ps.setDate(4, expireDate);
-            ps.setBoolean(1, true);
+            ps.setInt(5, 1);
             a = ps.executeUpdate();
         } catch (Exception e) {
             Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, e);
