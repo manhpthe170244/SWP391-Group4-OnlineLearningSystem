@@ -209,7 +209,8 @@
                 }
 
             };
-
+ 
+            
             var checkSection = function checkSection() {
                 $('.section').each(function () {
                     var

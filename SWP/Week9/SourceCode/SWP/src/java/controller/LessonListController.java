@@ -64,26 +64,32 @@ public class LessonListController extends HttpServlet {
             if (checkRegisterdCourse == null) {
                 response.sendRedirect("courseDetails?course_id=" + courseId);
             } else {
-                String courseName = cd.searchById(courseId).getCourse_name();
-                SectionDAO secDAO = new SectionDAO();
-                LessonDAO lesDAO = new LessonDAO();
-                QuizDAO quizDao = new QuizDAO();
-                SubscriptionDAO subScriptionDAO = new SubscriptionDAO();
-                Subscription currentSubscription = subScriptionDAO.GetCurrentSubscription(user_id);
-                Vector<Section> vs = secDAO.getSectionListByCourseId(courseId);
+                boolean courseStatus = cd.searchById(courseId).getCourse_status();
+                if (courseStatus) {
+                    String courseName = cd.searchById(courseId).getCourse_name();
+                    SectionDAO secDAO = new SectionDAO();
+                    LessonDAO lesDAO = new LessonDAO();
+                    QuizDAO quizDao = new QuizDAO();
+                    SubscriptionDAO subScriptionDAO = new SubscriptionDAO();
+                    Subscription currentSubscription = subScriptionDAO.GetCurrentSubscription(user_id);
+                    Vector<Section> vs = secDAO.getSectionListByCourseId(courseId);
 
-                for (Section v : vs) {
-                    v.setLessonList(lesDAO.getLessonBySectionId(v.getSection_id()));
-                    v.setQuizList(quizDao.getQuizListBySectionId(v.getSection_id()));
+                    for (Section v : vs) {
+                        v.setLessonList(lesDAO.getLessonBySectionId(v.getSection_id()));
+                        v.setQuizList(quizDao.getQuizListBySectionId(v.getSection_id()));
+                    }
+                    HttpSession session = request.getSession();
+
+                    session.setAttribute("Course_id", courseId);
+                    request.setAttribute("courseName", courseName);
+                    request.setAttribute("currSubscription", currentSubscription);
+                    request.setAttribute("currUser", currUser);
+                    request.setAttribute("SectionList", vs);
+                    request.getRequestDispatcher("lessonList.jsp").forward(request, response);
+                }else{
+                    response.sendRedirect("UnauthorizedAccess.jsp");
                 }
-                HttpSession session = request.getSession();
 
-                session.setAttribute("Course_id", courseId);
-                request.setAttribute("courseName", courseName);
-                request.setAttribute("currSubscription", currentSubscription);
-                request.setAttribute("currUser", currUser);
-                request.setAttribute("SectionList", vs);
-                request.getRequestDispatcher("lessonList.jsp").forward(request, response);
             }
         }
 

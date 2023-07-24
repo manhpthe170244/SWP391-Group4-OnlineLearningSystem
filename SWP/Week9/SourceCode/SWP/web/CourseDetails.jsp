@@ -175,14 +175,16 @@
                                 <div class="main-button-red">
                                     <h1>${requestScope.registerd}</h1>
                                     <c:if test="${requestScope.currUser == null || requestScope.currUser.getRoleId() == 2}">
-                                        <c:choose>
-                                            <c:when test="${requestScope.registerd == true}">
-                                                <a href="LessonListController?Course_id=${requestScope.course.getCourse_id()}"> Bạn đã đăng kí khoá học này, học ngay </a>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="CourseRegister?course_id=${requestScope.course.getCourse_id()}"> ĐĂNG KÍ NGAY </a>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <diV  onclick="checkActive(${requestScope.course.getCourse_status()})">
+                                            <c:choose>
+                                                <c:when test="${requestScope.registerd == true}">
+                                                    <a href="LessonListController?Course_id=${requestScope.course.getCourse_id()}"> Bạn đã đăng kí khoá học này, học ngay </a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="CourseRegister?course_id=${requestScope.course.getCourse_id()}"> ĐĂNG KÍ NGAY </a>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </diV>
                                     </c:if>
                                 </div>
                             </div>
@@ -213,6 +215,15 @@
             //according to loftblog tut
             $('.nav li:first').addClass('active');
 
+
+            function checkActive(status) {
+                
+                if (!status) {
+                    event.preventDefault();
+                    alert("Khoá học hiện đang bị vô hiệu hoá bởi giảng viên, liên lạc với giảng viên để biết thêm chi tiết");
+                }
+                return false;
+            }
             var showSection = function showSection(section, isAnimate) {
                 var
                         direction = section.replace(/#/, ''),

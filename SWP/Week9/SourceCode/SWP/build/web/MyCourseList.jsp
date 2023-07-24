@@ -108,39 +108,42 @@
                     <div class="myCourse">
 
                         <div class="cucourseList col-lg-10 offset-1">
-                            <c:forEach items="${myCourses}" var="cuc">
-                                <a href="LessonListController?Course_id=${cuc.getUserCourse().getCourse_id()}">
-                                    <div class="CourseCell">
-                                        <img src="${cuc.getUserCourse().getCourse_img()}" alt="alt"/>
-                                        <div class="CourseCell_Info">
-                                            <h4>${cuc.getUserCourse().getCourse_name()}</h4>
-                                            <p>${cuc.getUserCourse().getCourse_desc()}</p>
-                                            <c:if test="${requestScope.currUser.getRoleId()==2}">
-                                                <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDateFormated()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDateFormated()}</p>
-                                            </c:if>
-                                            <div class="CourseStatus">
-                                                <c:if test="${requestScope.currUser.getRoleId() == 2}">
-                                                    <c:if test="${cuc.isDone() == true}">
-                                                        <p  style="color: #41c86a; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #41c86a;"></i>&nbsp&nbspFinished</p>
+                            <ul>
+                                <c:forEach items="${myCourses}" var="cuc">
+                                    <li>
+                                        <a href="courseDetails?course_id=${cuc.getUserCourse().getCourse_id()}">
+                                            <div class="CourseCell">
+                                                <img src="${cuc.getUserCourse().getCourse_img()}" alt="alt"/>
+                                                <div class="CourseCell_Info">
+                                                    <h4>${cuc.getUserCourse().getCourse_name()}</h4>
+                                                    <p>${cuc.getUserCourse().getCourse_desc()}</p>
+                                                    <c:if test="${requestScope.currUser.getRoleId()==2}">
+                                                        <p class="courseDate"><i class="fa fa-calendar"></i> &nbsp ${cuc.getStartDateFormated()} &nbsp&nbsp To &nbsp&nbsp ${cuc.getEndDateFormated()}</p>
                                                     </c:if>
-                                                    <c:if test="${cuc.isDone() == false}">
-                                                        <p style="color: #ccd656; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #ccd656;"></i>&nbsp&nbspUnfinished</p> 
-                                                    </c:if>
-                                                </c:if>
+                                                    <div class="CourseStatus">
+                                                        <c:if test="${requestScope.currUser.getRoleId() == 2}">
+                                                            <c:if test="${cuc.isDone() == true}">
+                                                                <p  style="color: #41c86a; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #41c86a;"></i>&nbsp&nbspFinished</p>
+                                                            </c:if>
+                                                            <c:if test="${cuc.isDone() == false}">
+                                                                <p style="color: #ccd656; margin-top: 15px"><i class="fa fa-graduation-cap" style="color: #ccd656;"></i>&nbsp&nbspUnfinished</p> 
+                                                            </c:if>
+                                                        </c:if>
 
-                                                <c:if test="${cuc.getUserCourse().getCourse_status() == false}">
-                                                    <p style="color: #ff8d8d; margin-top: 15px"><i class="fa fa-circle" style="color: #ff8d8d;"></i>&nbsp&nbspInActive</p> 
-                                                </c:if>   
-                                                <c:if test="${cuc.getUserCourse().getCourse_status() == true}">
-                                                    <p style="color: #41c86a; margin-top: 15px"><i class="fa fa-circle" style="color: #41c86a;"></i>&nbsp&nbspActive</p> 
-                                                </c:if>   
+                                                        <c:if test="${cuc.getUserCourse().getCourse_status() == false}">
+                                                            <p style="color: #ff8d8d; margin-top: 15px"><i class="fa fa-circle" style="color: #ff8d8d;"></i>&nbsp&nbspInActive</p> 
+                                                        </c:if>   
+                                                        <c:if test="${cuc.getUserCourse().getCourse_status() == true}">
+                                                            <p style="color: #41c86a; margin-top: 15px"><i class="fa fa-circle" style="color: #41c86a;"></i>&nbsp&nbspActive</p> 
+                                                        </c:if>   
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </a>
+                                        </a>
+                                    </li>
+                                </c:forEach>
 
-                            </c:forEach>
-
+                            </ul>
                         </div>
                     </div>
 
@@ -164,71 +167,72 @@
         <script src="assets/js/slick-slider.js"></script>
         <script src="assets/js/custom.js"></script>
         <script>
-            //according to loftblog tut
-            $('.nav li:first').addClass('active');
+                                            //according to loftblog tut
+                                            $('.nav li:first').addClass('active');
 
-            // set sort_type
-            const sortType = document.getElementById("sortType");
-            sortType.addEventListener("change", function () {
-                if (sortType.value === "name") {
-                    window.location.href = "?sort_type=name";
-                } else if (sortType.value === "recent") {
-                    window.location.href = "?sort_type=recent";
+                                            
+                                            // set sort_type
+                                            const sortType = document.getElementById("sortType");
+                                            sortType.addEventListener("change", function () {
+                                                if (sortType.value === "name") {
+                                                    window.location.href = "?sort_type=name";
+                                                } else if (sortType.value === "recent") {
+                                                    window.location.href = "?sort_type=recent";
 
-                }
+                                                }
 
-            });
-            var paramValue = "${sessionScope.sort_type}";
-            for (var i = 0; i < sortType.options.length; i++) {
-                if (sortType.options[i].value === paramValue) {
-                    sortType.options[i].selected = true;
-                    break;
-                }
-            }
+                                            });
+                                            var paramValue = "${sessionScope.sort_type}";
+                                            for (var i = 0; i < sortType.options.length; i++) {
+                                                if (sortType.options[i].value === paramValue) {
+                                                    sortType.options[i].selected = true;
+                                                    break;
+                                                }
+                                            }
 
 
 
-            var showSection = function showSection(section, isAnimate) {
-                var
-                        direction = section.replace(/#/, ''),
-                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-                        reqSectionPos = reqSection.offset().top - 0;
+                                            var showSection = function showSection(section, isAnimate) {
+                                                var
+                                                        direction = section.replace(/#/, ''),
+                                                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                                                        reqSectionPos = reqSection.offset().top - 0;
 
-                if (isAnimate) {
-                    $('body, html').animate({
-                        scrollTop: reqSectionPos},
-                            800);
-                } else {
-                    $('body, html').scrollTop(reqSectionPos);
-                }
+                                                if (isAnimate) {
+                                                    $('body, html').animate({
+                                                        scrollTop: reqSectionPos},
+                                                            800);
+                                                } else {
+                                                    $('body, html').scrollTop(reqSectionPos);
+                                                }
 
-            };
+                                            };
 
-            var checkSection = function checkSection() {
-                $('.section').each(function () {
-                    var
-                            $this = $(this),
-                            topEdge = $this.offset().top - 80,
-                            bottomEdge = topEdge + $this.height(),
-                            wScroll = $(window).scrollTop();
-                    if (topEdge < wScroll && bottomEdge > wScroll) {
-                        var
-                                currentId = $this.data('section'),
-                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-                        reqLink.closest('li').addClass('active').
-                                siblings().removeClass('active');
-                    }
-                });
-            };
+                                            var checkSection = function checkSection() {
+                                                $('.section').each(function () {
+                                                    var
+                                                            $this = $(this),
+                                                            topEdge = $this.offset().top - 80,
+                                                            bottomEdge = topEdge + $this.height(),
+                                                            wScroll = $(window).scrollTop();
+                                                    if (topEdge < wScroll && bottomEdge > wScroll) {
+                                                        var
+                                                                currentId = $this.data('section'),
+                                                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                                                        reqLink.closest('li').addClass('active').
+                                                                siblings().removeClass('active');
+                                                    }
+                                                });
+                                            };
 
-            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-                e.preventDefault();
-                showSection($(this).attr('href'), true);
-            });
+                                            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                                                e.preventDefault();
+                                                showSection($(this).attr('href'), true);
+                                            });
 
-            $(window).scroll(function () {
-                checkSection();
-            });
+                                            $(window).scroll(function () {
+                                                checkSection();
+                                            });
         </script>
     </body>
 
