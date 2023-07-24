@@ -74,7 +74,7 @@ public class registerServlet extends HttpServlet {
         String saveDirectory = request.getServletContext().getRealPath("") + "/img/";
         String fileName;
         if (filePart != null && filePart.getSize() > 0) {
-            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString() + System.currentTimeMillis();
         } else {
             fileName = "tempAvatar.jpg";
         }

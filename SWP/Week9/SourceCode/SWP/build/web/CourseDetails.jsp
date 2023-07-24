@@ -174,11 +174,14 @@
                             <div class="col-lg-12">
                                 <div class="main-button-red">
                                     <h1>${requestScope.registerd}</h1>
-                                    <c:if test="${requestScope.currUser == null || requestScope.currUser.getRoleId() == 2}">
+                                    <c:if test="${requestScope.currUser == null || requestScope.currUser.getRoleId() == 2|| requestScope.currUser.getRoleId() == 3}">
                                         <diV  onclick="checkActive(${requestScope.course.getCourse_status()})">
                                             <c:choose>
-                                                <c:when test="${requestScope.registerd == true}">
+                                                <c:when test="${requestScope.registerd == true && requestScope.currUser.getRoleId()==2}">
                                                     <a href="LessonListController?Course_id=${requestScope.course.getCourse_id()}"> Bạn đã đăng kí khoá học này, học ngay </a>
+                                                </c:when>
+                                                <c:when test="${requestScope.publisher.getUserId() == requestScope.currUser.getUserId()}">
+                                                    <a href="LessonListController?Course_id=${requestScope.course.getCourse_id()}"> Chỉnh sửa khoá học </a>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <a href="CourseRegister?course_id=${requestScope.course.getCourse_id()}"> ĐĂNG KÍ NGAY </a>
@@ -212,59 +215,59 @@
         <script src="assets/js/slick-slider.js"></script>
         <script src="assets/js/custom.js"></script>
         <script>
-            //according to loftblog tut
-            $('.nav li:first').addClass('active');
+                                            //according to loftblog tut
+                                            $('.nav li:first').addClass('active');
 
 
-            function checkActive(status) {
-                
-                if (!status) {
-                    event.preventDefault();
-                    alert("Khoá học hiện đang bị vô hiệu hoá bởi giảng viên, liên lạc với giảng viên để biết thêm chi tiết");
-                }
-                return false;
-            }
-            var showSection = function showSection(section, isAnimate) {
-                var
-                        direction = section.replace(/#/, ''),
-                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-                        reqSectionPos = reqSection.offset().top - 0;
+                                            function checkActive(status) {
 
-                if (isAnimate) {
-                    $('body, html').animate({
-                        scrollTop: reqSectionPos},
-                            800);
-                } else {
-                    $('body, html').scrollTop(reqSectionPos);
-                }
+                                                if (!status) {
+                                                    event.preventDefault();
+                                                    alert("Khoá học hiện đang bị vô hiệu hoá bởi giảng viên, liên lạc với giảng viên để biết thêm chi tiết");
+                                                }
+                                                return false;
+                                            }
+                                            var showSection = function showSection(section, isAnimate) {
+                                                var
+                                                        direction = section.replace(/#/, ''),
+                                                        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+                                                        reqSectionPos = reqSection.offset().top - 0;
 
-            };
+                                                if (isAnimate) {
+                                                    $('body, html').animate({
+                                                        scrollTop: reqSectionPos},
+                                                            800);
+                                                } else {
+                                                    $('body, html').scrollTop(reqSectionPos);
+                                                }
 
-            var checkSection = function checkSection() {
-                $('.section').each(function () {
-                    var
-                            $this = $(this),
-                            topEdge = $this.offset().top - 80,
-                            bottomEdge = topEdge + $this.height(),
-                            wScroll = $(window).scrollTop();
-                    if (topEdge < wScroll && bottomEdge > wScroll) {
-                        var
-                                currentId = $this.data('section'),
-                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-                        reqLink.closest('li').addClass('active').
-                                siblings().removeClass('active');
-                    }
-                });
-            };
+                                            };
 
-            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-                e.preventDefault();
-                showSection($(this).attr('href'), true);
-            });
+                                            var checkSection = function checkSection() {
+                                                $('.section').each(function () {
+                                                    var
+                                                            $this = $(this),
+                                                            topEdge = $this.offset().top - 80,
+                                                            bottomEdge = topEdge + $this.height(),
+                                                            wScroll = $(window).scrollTop();
+                                                    if (topEdge < wScroll && bottomEdge > wScroll) {
+                                                        var
+                                                                currentId = $this.data('section'),
+                                                                reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+                                                        reqLink.closest('li').addClass('active').
+                                                                siblings().removeClass('active');
+                                                    }
+                                                });
+                                            };
 
-            $(window).scroll(function () {
-                checkSection();
-            });
+                                            $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+                                                e.preventDefault();
+                                                showSection($(this).attr('href'), true);
+                                            });
+
+                                            $(window).scroll(function () {
+                                                checkSection();
+                                            });
         </script>
     </body>
 

@@ -49,19 +49,15 @@ public class ImportQuestion extends HttpServlet {
         String quiz_name = request.getParameter("quiz_name");
         filePart = request.getPart("QuizImport");
         String saveDirectory = request.getServletContext().getRealPath("") + "/QuizUpload/";
-        String fileName;
+        String fileName = "";
         if (filePart != null && filePart.getSize() > 0) {
-            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        } else {
-            fileName = "tempAvatar.jpg";
-        }
+            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString() + System.currentTimeMillis();
+        } 
         String filePath = saveDirectory + fileName;
         InputStream fileContent = filePart.getInputStream();
         Files.copy(fileContent, Paths.get(filePath));
         File Quizinput = new File(filePath);
         BufferedReader br = new BufferedReader(new FileReader(Quizinput));
-
-        // Declaring a string variable
         String st;
         Vector<String> QuestionAndAns = new Vector<>();
         Vector<String> QuestionAndAnsSplitted = new Vector<>();
@@ -71,8 +67,6 @@ public class ImportQuestion extends HttpServlet {
         Vector<String> trueOnly = new Vector<>();
         QuizDAO qd = new QuizDAO();
         int maxQuesId = 0;
-        // Condition holds true till
-        // there is character in a string
         while ((st = br.readLine()) != null) // Print the string
         {
             QuestionAndAns.add(st);
@@ -108,13 +102,6 @@ public class ImportQuestion extends HttpServlet {
 
         }
 
-//        for (String string : AnswerOnly) {
-//            out.print(string + "      AAA      ");
-//        }
-//        out.print("                        true                ");
-//        for (String string : trueOnly) {
-//            out.print(string + "      AAA      ");
-//        }
         String encodedQuizName = URLEncoder.encode(quiz_name, "UTF-8");
         out.println(quiz_name);
         response.sendRedirect("EditQuizContent?quiz_id=" + quiz_id + "&quiz_name=" + encodedQuizName);

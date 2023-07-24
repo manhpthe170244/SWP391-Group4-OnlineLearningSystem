@@ -246,12 +246,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border: none;
     background-color: inherit;
 }
-.importQuestion{
-    text-align: right !important;
-}
-.importQuestion p{
-    margin-right: 135px;
-}
+
 .addnewQuestionBtn{
     display: flex;
     align-items: center;
