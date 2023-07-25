@@ -78,7 +78,7 @@
                                         </div>
                                         <div class="To col-6">
                                             <h6>Người báo cáo: ${message.getReceiver().getFullName()} </h6>
-                                            <p style="color: #8a8a8a; padding-left: 33px" >${message.getSender().getUserEmail()}</p>
+                                            <p style="color: #8a8a8a; padding-left: 33px" >${message.getReceiver().getUserEmail()}</p>
                                         </div>
                                     </div>
                                     <div class="content">
