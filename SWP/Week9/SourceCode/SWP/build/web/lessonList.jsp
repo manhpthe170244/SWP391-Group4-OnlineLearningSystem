@@ -210,7 +210,10 @@
 
 
                         </c:forEach>
-                        <a id="addnewsecBtn" href="AddnewSection?CourseId=${Course_id}"><h4 style="color: white; text-align: left; padding: 10px; border: white solid 1px"><i class="fa fa-plus"></i> Add new Section to this course</h4></a>
+                        <c:if test="${currUser.getRoleId() == 3 || currUser.getRoleId() == 1}">
+                            <a id="addnewsecBtn" href="AddnewSection?CourseId=${Course_id}"><h4 style="color: white; text-align: left; padding: 10px; border: white solid 1px"><i class="fa fa-plus"></i> Add new Section to this course</h4></a>
+                        </c:if>
+
                     </div>
                 </div>
             </div>
